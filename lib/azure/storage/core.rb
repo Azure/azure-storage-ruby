@@ -12,6 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-source 'https://rubygems.org'
 
-gemspec :name => 'azure-storage'
+module Azure
+  module Storage
+  end
+end
+
+require 'azure/storage/core/error'
+require 'azure/storage/core/constants'
+require 'azure/storage/core/sr'
+require 'azure/storage/core/utility'

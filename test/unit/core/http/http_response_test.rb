@@ -13,7 +13,7 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 require 'test_helper'
-require 'azure/core/http/http_response'
+require 'azure/storage/core/http/http_response'
 
 describe Azure::Core::Http::HttpResponse do
   # TODO: fill in with better tests.

@@ -12,6 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-source 'https://rubygems.org'
+require 'azure/storage/service/logging'
+require 'azure/storage/service/metrics'
+require 'azure/storage/service/cors'
 
-gemspec :name => 'azure-storage'
+module Azure::Storage
+  module Service
+    class StorageServiceProperties
+      def initialize
+        @logging = Logging.new
+        @hour_metrics = Metrics.new
+        @minute_metrics = Metrics.new
+        @cors = Cors.new
+        yield self if block_given?
+      end
+
+      attr_accessor :logging
+      attr_accessor :hour_metrics
+      attr_accessor :minute_metrics
+      attr_accessor :cors
+      attr_accessor :default_service_version
+    end
+  end
+end

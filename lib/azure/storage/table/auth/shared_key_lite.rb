@@ -12,32 +12,33 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'dotenv'
-Dotenv.load
+require 'azure/storage/table/auth/shared_key'
 
-require 'minitest/autorun'
-require 'mocha/mini_test'
-require 'minitest/reporters'
-Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
-require 'timecop'
-require 'logger'
-require 'stringio'
+module Azure::Storage
+  module Table
+    module Auth
+      class SharedKeyLite < SharedKey
+        # Public: The name of the strategy.
+        #
+        # Returns a String.
+        def name
+          'SharedKeyLite'
+        end
 
-# add to the MiniTest DSL
-module Kernel
-  def need_tests_for(name)
-    describe "##{name}" do
-      it 'needs unit tests' do
-        skip ''
+        # Generate the string to sign.
+        #
+        # verb       - The HTTP request method.
+        # uri        - The URI of the request we're signing.
+        # headers    - A Hash of HTTP request headers.
+        #
+        # Returns a plain text string.
+        def signable_string(method, uri, headers)
+          [
+            headers.fetch('Date') { headers.fetch('x-ms-date') },
+            canonicalized_resource(uri)
+          ].join("\n")
+        end
       end
     end
   end
 end
-
-Dir['./test/support/**/*.rb'].each { |dep| require dep }
-
-# mock configuration setup
-require 'azure/storage'
-
-Azure::Storage.config.storage_account_name     = 'accountname'
-Azure::Storage.config.storage_access_key       = 'YWNjZXNzLWtleQ=='

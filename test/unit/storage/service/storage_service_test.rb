@@ -13,10 +13,10 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 require 'unit/storage/test_helper'
-require 'azure_storage/service/storage_service'
-require 'azure/core/http/http_request'
-require 'azure/core/http/signer_filter'
-require 'azure_storage/service/storage_service_properties'
+require 'azure/storage/service/storage_service'
+require 'azure/storage/core/http/http_request'
+require 'azure/storage/core/http/signer_filter'
+require 'azure/storage/service/storage_service_properties'
 
 describe Azure::Storage::Service::StorageService do
 

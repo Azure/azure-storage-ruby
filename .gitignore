@@ -22,7 +22,7 @@ doc/
 lib/bundler/man
 pkg
 rdoc
-
+.vscode/
 
 .DS_Store
 .ruby-version

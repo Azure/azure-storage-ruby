@@ -13,7 +13,7 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 require 'test_helper'
-require 'azure_storage/auth/shared_key'
+require 'azure/storage/core/auth/shared_key'
 
 describe Azure::Storage::Auth::SharedKey do
   subject { Azure::Storage::Auth::SharedKey.new 'account-name', 'YWNjZXNzLWtleQ==' }

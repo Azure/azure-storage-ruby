@@ -13,15 +13,15 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 require "unit/storage/test_helper"
-require "azure_storage/service/serialization"
+require "azure/storage/service/serialization"
 
-require 'azure_storage/service/signed_identifier'
-require 'azure_storage/service/access_policy'
+require 'azure/storage/service/signed_identifier'
+require 'azure/storage/service/access_policy'
 
-require 'azure_storage/service/storage_service_properties'
-require 'azure_storage/service/logging'
-require 'azure_storage/service/metrics'
-require 'azure_storage/service/retention_policy'
+require 'azure/storage/service/storage_service_properties'
+require 'azure/storage/service/logging'
+require 'azure/storage/service/metrics'
+require 'azure/storage/service/retention_policy'
 
 describe Azure::Storage::Service::Serialization do
   subject { Azure::Storage::Service::Serialization }

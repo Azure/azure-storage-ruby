@@ -12,32 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'dotenv'
-Dotenv.load
+require "azure/storage/core/http/http_filter"
 
-require 'minitest/autorun'
-require 'mocha/mini_test'
-require 'minitest/reporters'
-Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
-require 'timecop'
-require 'logger'
-require 'stringio'
-
-# add to the MiniTest DSL
-module Kernel
-  def need_tests_for(name)
-    describe "##{name}" do
-      it 'needs unit tests' do
-        skip ''
+module Azure
+  module Core
+    module Http 
+      # A HttpFilter implementation that displays information about the request and response for debugging
+      class DebugFilter < HttpFilter
+        def call(req, _next)
+          puts "--REQUEST-BEGIN---------------------------"
+          puts "method:", req.method, "uri:", req.uri, "headers:", req.headers, "body:", req.body
+          puts "--REQUEST-END---------------------------"
+          
+          r = _next.call
+          puts "--RESPONSE-BEGIN---------------------------"
+          puts "status_code:", r.status_code, "headers:", r.headers, "body:", r.body
+          puts "--RESPONSE-END---------------------------"
+          r
+        end
       end
     end
   end
 end
-
-Dir['./test/support/**/*.rb'].each { |dep| require dep }
-
-# mock configuration setup
-require 'azure/storage'
-
-Azure::Storage.config.storage_account_name     = 'accountname'
-Azure::Storage.config.storage_access_key       = 'YWNjZXNzLWtleQ=='

@@ -12,19 +12,40 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require "test_helper"
-require "azure/storage/core/auth/signer"
 
-describe Azure::Core::Auth::Signer do
-  subject { Azure::Core::Auth::Signer.new "YWNjZXNzLWtleQ==" }
+require 'rubygems'
+require 'nokogiri'
+require 'base64'
+require 'openssl'
+require 'uri'
+require 'rexml/document'
+require 'addressable/uri'
+require 'faraday'
+require 'faraday_middleware'
 
-  it "decodes the base64 encoded access_key" do
-    subject.access_key.must_equal "access-key"
-  end
+require 'azure/storage/autoload'
 
-  describe "sign" do
-    it "creates a signature for the body, as a base64 encoded string, which represents a HMAC hash using the access_key" do
-      subject.sign("body").must_equal "iuUxVhs1E7PeSNx/90ViyJNO24160qYpoWeCcOsnMoM="
+module Azure
+  module Storage
+    class << self
+      include Azure::Storage::Configurable
+
+      def setup(options={})
+        @client = Azure::Storage::Client.new(options)
+      end
+
+      def client
+        @client
+      end
+
+      private
+
+      def method_missing(method_name, *args, &block)
+        return Azure::Storage::Client.send(method_name, *args, &block) if Azure::Storage::Client.respond_to?(method_name)
+        return @client.send(method_name, *args, &block) if defined? @client && client.respond_to?(method_name)
+        super
+      end
+
     end
   end
 end

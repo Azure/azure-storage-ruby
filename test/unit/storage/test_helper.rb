@@ -14,7 +14,7 @@
 #--------------------------------------------------------------------------
 
 require 'test_helper'
-require 'azure_storage'
+require 'azure/storage'
 
 module Kernel
   def clear_storage_envs
@@ -57,4 +57,4 @@ module Kernel
 end
 
 # mock configuration setup
-Azure::Storage.setup(:storage_account_name => 'mockaccount', :storage_access_key => 'YWNjZXNzLWtleQ==')
+Azure::Storage.config.setup(:storage_account_name => 'mockaccount', :storage_access_key => 'YWNjZXNzLWtleQ==')

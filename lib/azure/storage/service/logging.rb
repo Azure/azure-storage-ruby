@@ -12,6 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-source 'https://rubygems.org'
+require 'azure/storage/service/retention_policy'
 
-gemspec :name => 'azure-storage'
+module Azure::Storage
+  module Service
+    class Logging 
+      def initialize
+        @retention_policy = RetentionPolicy.new
+        yield self if block_given?
+      end
+
+      attr_accessor :version
+      attr_accessor :delete
+      attr_accessor :read
+      attr_accessor :write
+      attr_accessor :retention_policy
+    end
+  end
+end

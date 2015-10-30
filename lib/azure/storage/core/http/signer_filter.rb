@@ -12,6 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-source 'https://rubygems.org'
+require 'azure/storage/core/http/http_filter'
 
-gemspec :name => 'azure-storage'
+module Azure
+  module Core
+    module Http 
+      # A HttpFilter implementation that creates a authorization signature which is added to the request headers
+      class SignerFilter < HttpFilter
+        def initialize(signer)
+          @signer = signer
+        end
+
+        def call(req, _next)
+          @signer.sign_request(req)
+          _next.call
+        end
+      end
+    end
+  end
+end

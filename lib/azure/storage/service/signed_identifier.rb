@@ -12,6 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-source 'https://rubygems.org'
+require 'azure/storage/service/access_policy'
 
-gemspec :name => 'azure-storage'
+module Azure::Storage
+  module Service
+    class SignedIdentifier
+
+      def initialize 
+        @access_policy = AccessPolicy.new
+        yield self if block_given?
+      end
+
+      attr_accessor :id
+      attr_accessor :access_policy
+    end
+  end
+end

@@ -13,11 +13,11 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 require 'unit/storage/test_helper'
-require 'azure_storage/blob/blob_service'
-require 'azure_storage/blob/serialization'
-require 'azure_storage/blob/container'
-require 'azure_storage/blob/blob'
-require 'azure_storage/service/signed_identifier'
+require 'azure/storage/blob/blob_service'
+require 'azure/storage/blob/serialization'
+require 'azure/storage/blob/container'
+require 'azure/storage/blob/blob'
+require 'azure/storage/service/signed_identifier'
 
 describe Azure::Storage::Blob::BlobService do
 

@@ -13,9 +13,9 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 require "unit/storage/test_helper"
-require "azure_storage/table/edmtype"
+require "azure/storage/table/edmtype"
 
-require "azure_storage/table/guid"
+require "azure/storage/table/guid"
 
 describe Azure::Storage::Table::EdmType do
   describe "#serialize_query_value" do
