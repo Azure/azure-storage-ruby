@@ -39,5 +39,4 @@ Dir['./test/support/**/*.rb'].each { |dep| require dep }
 # mock configuration setup
 require 'azure/storage'
 
-Azure::Storage.config.storage_account_name     = 'accountname'
-Azure::Storage.config.storage_access_key       = 'YWNjZXNzLWtleQ=='
+Azure::Storage.config.setup(:storage_account_name => 'mockaccount', :storage_access_key => 'YWNjZXNzLWtleQ==')

@@ -244,7 +244,7 @@ If you encounter any bugs with the library please file an issue in the [Issues](
 
 # Maintainers
 
-* [Zack Yang](https://github.com/slepox)
+* [Yang Xia](https://github.com/yaxia)
 
 # Azure Storage SDKs and Tooling
 

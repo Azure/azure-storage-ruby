@@ -15,36 +15,6 @@
 
 module Azure::Core
   module HttpClient
-
-    # Creates a new management request for the current configuration
-    # @param method           [Symbol] the HTTP method
-    # @param path             [URI] the path to the management resource
-    # @param options_or_body  [Hash|Body] options which can include body
-    def management_request(method, path, options_or_body = {})
-      options_or_body ||= {}
-      options = if options_or_body.is_a?(Hash)
-                  options_or_body
-                else
-                  {body: options_or_body}
-                end
-      Azure::BaseManagement::ManagementHttpRequest.new(method, path, {client: self}.merge(options))
-    end
-
-    # Creates a new management request for the current configuration
-    # @param method           [Symbol] the HTTP method
-    # @param path             [URI] the path to the management resource
-    # @param options_or_body  [Hash|Body] options which can include body
-    def sql_management_request(method, path, options_or_body = {})
-      options_or_body ||= {}
-      options = if options_or_body.is_a?(Hash)
-                  options_or_body
-                else
-                  {body: options_or_body}
-                end
-      puts [method, path, options]
-      Azure::BaseManagement::SqlManagementHttpRequest.new(method, path, {client: self}.merge(options))
-    end
-
     # Returns the http agent based on uri
     # @param uri  [URI|String] the base uri (scheme, host, port) of the http endpoint
     # @return [Net::HTTP] http agent for a given uri
@@ -71,11 +41,11 @@ module Azure::Core
         ssl_options[:ca_file] = self.ca_file if self.ca_file
         ssl_options[:verify] = true
       end
-
-      proxy_options = if ENV['HTTP_PROXY'] || ENV['HTTPS_PROXY']
-                        ENV['HTTP_PROXY'] ? URI::parse(ENV['HTTP_PROXY']) : URI::parse(ENV['HTTPS_PROXY'])
+      proxy_options = if ENV['HTTP_PROXY']
+                        URI::parse(ENV['HTTP_PROXY'])
+                      elsif ENV['HTTPS_PROXY']
+                        URI::parse(ENV['HTTPS_PROXY'])
                       end || nil
-
       Faraday.new(uri, ssl: ssl_options, proxy: proxy_options) do |conn|
         conn.use FaradayMiddleware::FollowRedirects
         conn.adapter Faraday.default_adapter

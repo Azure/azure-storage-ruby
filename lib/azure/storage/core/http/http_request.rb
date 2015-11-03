@@ -111,7 +111,7 @@ module Azure
         # Build a default headers Hash
         def default_headers(current_time)
           {}.tap do |def_headers|
-            def_headers['User-Agent'] = Azure::Default::USER_AGENT
+            def_headers['User-Agent'] = Azure::Storage::Default::USER_AGENT
             def_headers['x-ms-date'] = current_time
             def_headers['x-ms-version'] = '2014-02-14'
             def_headers['DataServiceVersion'] = '1.0;NetFx'

@@ -72,11 +72,11 @@ module Azure::Storage
 
     # Reset configuration options to default values
     def reset!(options = {})
-      Azure::Configurable.keys.each do |key|
-        value = if self == Azure
-                  Azure::Default.options[key]
+      Azure::Storage::Configurable.keys.each do |key|
+        value = if self == Azure::Storage
+                  Azure::Storage::Default.options[key]
                 else
-                  Azure.send(key)
+                  Azure.Storage.send(key)
                 end
 
         instance_variable_set(:"@#{key}", options.fetch(key, value))
@@ -116,7 +116,7 @@ module Azure::Storage
     end
 
     def options
-      Hash[Azure::Configurable.keys.map { |key| [key, instance_variable_get(:"@#{key}")] }]
+      Hash[Azure::Storage::Configurable.keys.map { |key| [key, instance_variable_get(:"@#{key}")] }]
     end
 
   end

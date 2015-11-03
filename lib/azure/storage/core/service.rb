@@ -25,7 +25,7 @@ module Azure
       # @param options  [Hash] options including {:client} (optional, Default {})
       def initialize(host='', options = {})
         @host = host
-        @client = options[:client] || Azure
+        @client = options[:client] || Azure::Storage
       end
 
       attr_accessor :host, :client
