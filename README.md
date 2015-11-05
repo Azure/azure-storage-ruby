@@ -20,7 +20,7 @@ This project provides a Ruby package that makes it easy to access and manage Mic
 Note: 
 
 * x64 Ruby for Windows is known to have some compatibility issues.
-* azure_storage depends on gem nokogiri, which doesn't support Ruby 2.2+ on Windows.
+* azure-storage depends on gem nokogiri, which doesn't support Ruby 2.2+ on Windows.
 
 # Getting Started
 
@@ -29,7 +29,7 @@ Note:
 You can install the azure rubygem package directly.
 
 ```bash
-gem install azure_storage
+gem install azure-storage
 ```
 
 ## Setup Connection
@@ -47,7 +47,7 @@ There are two ways you can set up the connections:
 
 ```ruby
 
-  require "azure_storage"
+  require "azure-storage"
 
   # Setup a specific instance of an Azure::Storage::Client
   client = Azure::Storage.create(:storage_account_name => "your account name", storage_access_key => "your access key")
