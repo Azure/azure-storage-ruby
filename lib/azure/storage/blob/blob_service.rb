@@ -22,7 +22,7 @@ module Azure::Storage
     class BlobService < Service::StorageService
 
       def initialize(options = {})
-        client_config = options[:client] = options[:client] || Azure::Storage.client
+        client_config = options[:client] || Azure::Storage
         signer = options[:signer] || Azure::Storage::Auth::SharedKey.new(client_config.storage_account_name,
                                                                       client_config.storage_access_key)
         super(signer, client_config.storage_account_name, options)

@@ -24,6 +24,7 @@ require 'azure/storage/queue/queue_service'
 
 module Azure::Storage
   class Client
+    include Azure::Storage::Configurable
     include Azure::Storage::ClientOptions
     include Azure::Core::HttpClient
 

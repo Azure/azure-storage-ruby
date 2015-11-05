@@ -71,21 +71,20 @@ module Azure::Storage
     end
 
     # Reset configuration options to default values
-    def reset!(options = {})
+    def reset_config!(options = {})
       Azure::Storage::Configurable.keys.each do |key|
         value = if self == Azure::Storage
                   Azure::Storage::Default.options[key]
                 else
-                  Azure.Storage.send(key)
+                  Azure::Storage.send(key)
                 end
-
         instance_variable_set(:"@#{key}", options.fetch(key, value))
       end
       self.send(:reset_agents!) if self.respond_to?(:reset_agents!)
       self
     end
 
-    alias setup reset!
+    alias setup reset_config!
     
     # Storage queue host
     # @return [String]
@@ -103,6 +102,12 @@ module Azure::Storage
     # @return [String]
     def storage_table_host
       @storage_table_host || default_host(:table)
+    end
+    
+    # Storage file host
+    # @return [String]
+    def storage_file_host
+      @storage_file_host || default_host(:file)
     end
 
     def config

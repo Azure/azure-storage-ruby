@@ -30,22 +30,20 @@ module Azure
     class << self
       include Azure::Storage::Configurable
 
-      def setup(options={})
+      def client(options={})
         @client = Azure::Storage::Client.new(options)
-      end
-
-      def client
         @client
       end
 
       private
 
       def method_missing(method_name, *args, &block)
-        return Azure::Storage::Client.send(method_name, *args, &block) if Azure::Storage::Client.respond_to?(method_name)
-        return @client.send(method_name, *args, &block) if defined? @client && client.respond_to?(method_name)
-        super
+        return super unless client.respond_to?(method_name)
+        client.send(method_name, *args, &block)
       end
 
     end
   end
+  
+  Azure::Storage.setup
 end

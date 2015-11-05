@@ -46,6 +46,54 @@ module Azure::Storage
     XML_METADATA_MARKER = '$'
     # Marker for atom value.
     XML_VALUE_MARKER = '_'
+    
+    class << self
+      def options
+        Hash[Azure::Storage::Configurable.keys.map{|key| [key, send(key)]}]
+      end
+      
+      # Default storage access key
+      # @return [String]
+      def storage_access_key
+        ENV['AZURE_STORAGE_ACCESS_KEY']
+      end
+
+      # Default storage account name
+      # @return [String]
+      def storage_account_name
+        ENV['AZURE_STORAGE_ACCOUNT']
+      end
+      
+      # Default storage connection string
+      # @return [String]
+      def storage_connection_string
+        ENV['AZURE_STORAGE_CONNECTION_STRING']
+      end
+
+      # Default storage table host
+      # @return [String]
+      def storage_table_host
+        ENV['AZURE_STORAGE_TABLE_HOST']
+      end
+
+      # Default storage blob host
+      # @return [String]
+      def storage_blob_host
+        ENV['AZURE_STORAGE_BLOB_HOST']
+      end
+
+      # Default storage queue host
+      # @return [String]
+      def storage_queue_host
+        ENV['AZURE_STORAGE_QUEUE_HOST']
+      end
+      
+      # Default storage file host
+      # @return [String]
+      def storage_file_host
+        ENV['AZURE_STORAGE_FILE_HOST']
+      end
+    end
   end
 
   # ServiceType prefix to suffix

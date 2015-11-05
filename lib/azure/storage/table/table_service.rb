@@ -23,7 +23,7 @@ module Azure::Storage
     class TableService < Azure::Storage::Service::StorageService
 
       def initialize(options = {})
-        client_config = options[:client] = options[:client] || Azure::Storage.client
+        client_config = options[:client] || Azure::Storage
         signer = options[:signer] || Auth::SharedKey.new(client_config.storage_account_name, client_config.storage_access_key)
         super(signer, client_config.storage_account_name, options)
         @host = client.storage_table_host
@@ -117,9 +117,8 @@ module Azure::Storage
       # Returns an array with an extra continuation_token property on success
       def query_tables(options={})
         query = { }
-        query["NextTable"] = options[:next_table_token] if options[:next_table_token]
+        query["NextTableName"] = options[:next_table_token] if options[:next_table_token]
         query["timeout"] = options[:timeout].to_s if options[:timeout]
-
         uri = collection_uri(query)
 
         response = call(:get, uri)

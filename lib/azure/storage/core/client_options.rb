@@ -18,7 +18,6 @@ require 'azure/storage/core'
 require 'azure/storage/core/client_options_error'
 
 module Azure::Storage
-
   module ClientOptions
 
     attr_accessor :ca_file
@@ -65,13 +64,11 @@ module Azure::Storage
       if options.is_a? String
         options = parse_connection_string(options)
       end
-
+      
       options = load_env if options.length == 0
-
       @ca_file = options.delete(:ca_file)
-
       @options = filter(options)
-
+      self.send(:reset_config!, @options) if self.respond_to?(:reset_config!)
       self
     end
 
@@ -91,11 +88,12 @@ module Azure::Storage
         :development_storage_proxy_uri,
         :storage_account_name,
         :storage_access_key,
+        :storage_connection_string,
         :storage_sas_token,
         :storage_blob_host,
         :storage_table_host,
         :storage_queue_host,
-        # :storage_file_host,
+        :storage_file_host,
         :storage_dns_suffix,
         :default_endpoints_protocol,
         :use_path_style_uri
@@ -108,14 +106,15 @@ module Azure::Storage
     def self.env_vars_mapping
       @env_vars_mapping ||= {
         'EMULATED' => :use_development_storage,
-        'azure/storage_ACCOUNT' => :storage_account_name,
-        'azure/storage_ACCESS_KEY' => :storage_access_key,
-        'azure/storage_BLOB_HOST' => :storage_blob_host,
-        'azure/storage_TABLE_HOST' => :storage_table_host,
-        'azure/storage_QUEUE_HOST' => :storage_queue_host,
-        # 'azure/storage_FILE_HOST' => :storage_file_host,
-        'azure/storage_SAS_TOKEN' => :storage_sas_token,
-        'azure/storage_DNS_SUFFIX' => :storage_dns_suffix
+        'AZURE_STORAGE_ACCOUNT' => :storage_account_name,
+        'AZURE_STORAGE_ACCESS_KEY' => :storage_access_key,
+        'AZURE_STORAGE_CONNECTION_STRING' => :storage_connection_string,
+        'AZURE_STORAGE_BLOB_HOST' => :storage_blob_host,
+        'AZURE_STORAGE_TABLE_HOST' => :storage_table_host,
+        'AZURE_STORAGE_QUEUE_HOST' => :storage_queue_host,
+        'AZURE_STORAGE_FILE_HOST' => :storage_file_host,
+        'AZURE_STORAGE_SAS_TOKEN' => :storage_sas_token,
+        'AZURE_STORAGE_DNS_SUFFIX' => :storage_dns_suffix
       }
     end
 
@@ -132,7 +131,7 @@ module Azure::Storage
         'BlobEndpoint' => :storage_blob_host,
         'TableEndpoint' => :storage_table_host,
         'QueueEndpoint' => :storage_queue_host,
-        # 'FileEndpoint' => :storage_file_host,
+        'FileEndpoint' => :storage_file_host,
         'SharedAccessSignature' => :storage_sas_token,
         'EndpointSuffix' => :storage_dns_suffix
       }
@@ -170,8 +169,19 @@ module Azure::Storage
         return results
       rescue InvalidOptionsError => e
       end
+      
+      # P2 - explicit hosts with account connection string
+      begin
+        results = validated_options(opts,
+                                    :required => [:storage_connection_string],
+                                    :optional => [:use_path_style_uri])
+        results[:use_path_style_uri] = results.key?(:use_path_style_uri)
+        normalize_hosts(results)
+        return results
+      rescue InvalidOptionsError => e
+      end
 
-      # P2 - account name and key or sas with default hosts or an end suffix
+      # P3 - account name and key or sas with default hosts or an end suffix
       begin
         results = validated_options(opts,
                                     :required => [:storage_account_name],
@@ -189,7 +199,7 @@ module Azure::Storage
       rescue InvalidOptionsError => e
       end
 
-      # P3 - explicit hosts with account name and key
+      # P4 - explicit hosts with account name and key
       begin
         results = validated_options(opts,
                                     :required => [:storage_account_name, :storage_access_key],
@@ -201,7 +211,7 @@ module Azure::Storage
       rescue InvalidOptionsError => e
       end
 
-      # P4 - anonymous or sas only for one or more particular services, options with account name/key + hosts should be already validated in P3
+      # P5 - anonymous or sas only for one or more particular services, options with account name/key + hosts should be already validated in P4
       begin
         results = validated_options(opts,
                                     :at_least_one => [:storage_blob_host, :storage_table_host, :storage_file_host, :storage_queue_host],
@@ -262,6 +272,7 @@ module Azure::Storage
         :use_development_storage => is_true,
         :development_storage_proxy_uri => is_url,
         :storage_account_name => lambda { |i| i.is_a?(String) },
+        :storage_account_name => lambda { |i| i.is_a?(String) },
         :storage_access_key => is_base64_encoded,
         :storage_sas_token => lambda { |i| i.is_a?(String) },
         :storage_blob_host => is_url,
@@ -286,8 +297,8 @@ module Azure::Storage
     end
 
     def load_env
-      cs = ENV['azure/storage_CONNECTION_STRING']
-      return create_from_connection_string(cs) if cs
+      cs = ENV['AZURE_STORAGE_CONNECTION_STRING']
+      return parse_connection_string(cs) if cs
 
       opts = {}
       ClientOptions.env_vars_mapping.each { |k,v| opts[v] = ENV[k] if ENV[k] }
