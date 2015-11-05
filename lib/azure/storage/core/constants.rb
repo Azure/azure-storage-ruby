@@ -13,13 +13,11 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 
+require 'rbconfig'
 require 'azure/storage/version'
 
 module Azure::Storage
   module Default
-    # Default User Agent header string
-    USER_AGENT = "Azure-Storage/#{Azure::Storage::Version.to_uas} (Ruby #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL})".freeze
-
     # Default REST service (STG) version number
     STG_VERSION = '2015-02-21'
 
@@ -46,6 +44,27 @@ module Azure::Storage
     XML_METADATA_MARKER = '$'
     # Marker for atom value.
     XML_VALUE_MARKER = '_'
+    
+    def os
+      host_os = RbConfig::CONFIG['host_os']
+      case host_os
+      when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
+        "Windows #{host_os}"
+      when /darwin|mac os/
+        "MacOS #{host_os}"
+      when /linux/
+        "Linux #{host_os}"
+      when /solaris|bsd/
+        "Unix #{host_os}"
+      else
+        "Unknown #{host_os}"
+      end
+    end
+      
+    module_function :os
+
+    # Default User Agent header string
+    USER_AGENT = "Azure-Storage/#{Azure::Storage::Version.to_uas} (Ruby #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}; #{os})".freeze
     
     class << self
       def options

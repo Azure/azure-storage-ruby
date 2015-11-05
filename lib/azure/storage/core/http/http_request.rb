@@ -113,7 +113,7 @@ module Azure
           {}.tap do |def_headers|
             def_headers['User-Agent'] = Azure::Storage::Default::USER_AGENT
             def_headers['x-ms-date'] = current_time
-            def_headers['x-ms-version'] = '2015-02-21'
+            def_headers['x-ms-version'] = Azure::Storage::Default::STG_VERSION
             def_headers['DataServiceVersion'] = '1.0;NetFx'
             def_headers['MaxDataServiceVersion'] = '3.0;NetFx'
             def_headers['Content-Type'] = 'application/atom+xml; charset=utf-8'
