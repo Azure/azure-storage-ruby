@@ -20,6 +20,7 @@ module Azure
   autoload :Storage,                      'azure/storage/core'
 
   module Storage
+    autoload :Default,                    'azure/storage/core/constants'
     autoload :Configurable,               'azure/storage/configurable'
     autoload :Client,                     'azure/storage/client'
     autoload :ClientOptions,              'azure/storage/core/client_options'
