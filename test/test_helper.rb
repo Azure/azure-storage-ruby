@@ -15,6 +15,9 @@
 require 'dotenv'
 Dotenv.load
 
+ENV["AZURE_STORAGE_ACCOUNT"] = 'mockaccount' unless ENV["AZURE_STORAGE_ACCOUNT"]
+ENV["AZURE_STORAGE_ACCESS_KEY"] = 'YWNjZXNzLWtleQ==' unless ENV["AZURE_STORAGE_ACCESS_KEY"]
+
 require 'minitest/autorun'
 require 'mocha/mini_test'
 require 'minitest/reporters'
