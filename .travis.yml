@@ -11,3 +11,4 @@ script:
 - bundle exec rake test:unit
 - if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ] ; then rake test:integration ; fi
 
+sudo: false
