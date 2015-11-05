@@ -12,32 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'dotenv'
-Dotenv.load
+require 'integration/test_helper'
+require "azure/storage/blob/blob_service"
 
-require 'minitest/autorun'
-require 'mocha/mini_test'
-require 'minitest/reporters'
-Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
-require 'timecop'
-require 'logger'
-require 'stringio'
+describe Azure::Storage::Blob::BlobService do
+  subject { Azure::Storage::Blob::BlobService.new }
+  after { TableNameHelper.clean }
 
-# add to the MiniTest DSL
-module Kernel
-  def need_tests_for(name)
-    describe "##{name}" do
-      it 'needs unit tests' do
-        skip ''
+  describe '#delete_container' do
+    let(:container_name) { ContainerNameHelper.name }
+    before { 
+      subject.create_container container_name
+    }
+
+    it 'deletes the container' do
+      result = subject.delete_container container_name
+      result.must_be_nil
+    end
+
+    it 'errors if the container does not exist' do
+      assert_raises(Azure::Core::Http::HTTPError) do
+        subject.delete_container ContainerNameHelper.name
       end
     end
   end
 end
-
-Dir['./test/support/**/*.rb'].each { |dep| require dep }
-
-# mock configuration setup
-require 'azure/storage'
-
-Azure::Storage.config.storage_account_name = 'mockaccount'
-Azure::Storage.config.storage_access_key = 'YWNjZXNzLWtleQ=='

@@ -12,32 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'dotenv'
-Dotenv.load
+require 'integration/test_helper'
+require "azure/storage/queue/queue_service"
+require "azure/storage/core/http/http_error"
 
-require 'minitest/autorun'
-require 'mocha/mini_test'
-require 'minitest/reporters'
-Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
-require 'timecop'
-require 'logger'
-require 'stringio'
+describe Azure::Storage::Queue::QueueService do
+  subject { Azure::Storage::Queue::QueueService.new }
+  
+  describe '#informative_errors_queue' do
+    let(:queue_name){ QueueNameHelper.name }
+    after { QueueNameHelper.clean }
 
-# add to the MiniTest DSL
-module Kernel
-  def need_tests_for(name)
-    describe "##{name}" do
-      it 'needs unit tests' do
-        skip ''
+    it "exception message should be valid" do
+      # getting metadata from a non existent should throw
+      begin 
+        subject.get_queue_metadata queue_name
+        flunk "No exception"
+      rescue Azure::Core::Http::HTTPError => error
+        error.status_code.must_equal 404
+        error.type.must_equal "QueueNotFound"
+        error.description.start_with?("The specified queue does not exist.").must_equal true
       end
     end
   end
 end
-
-Dir['./test/support/**/*.rb'].each { |dep| require dep }
-
-# mock configuration setup
-require 'azure/storage'
-
-Azure::Storage.config.storage_account_name = 'mockaccount'
-Azure::Storage.config.storage_access_key = 'YWNjZXNzLWtleQ=='

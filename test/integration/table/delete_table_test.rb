@@ -12,32 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'dotenv'
-Dotenv.load
+require 'integration/test_helper'
+require "azure/storage/table/table_service"
+require "azure/storage/core/http/http_error"
 
-require 'minitest/autorun'
-require 'mocha/mini_test'
-require 'minitest/reporters'
-Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
-require 'timecop'
-require 'logger'
-require 'stringio'
+describe Azure::Storage::Table::TableService do
+  describe "#delete_table" do
+    subject { Azure::Storage::Table::TableService.new }
+    let(:table_name){ TableNameHelper.name }
+    before { subject.create_table table_name }
+    after { TableNameHelper.clean }
 
-# add to the MiniTest DSL
-module Kernel
-  def need_tests_for(name)
-    describe "##{name}" do
-      it 'needs unit tests' do
-        skip ''
+    it "deletes a table and returns nil on success" do
+      result = subject.delete_table(table_name)
+      result.must_be_nil
+      
+      tables = subject.query_tables
+      tables.wont_include table_name
+    end
+
+    it "errors on an invalid table" do
+      assert_raises(Azure::Core::Http::HTTPError) do
+        subject.delete_table "this_table.cannot-exist!"
       end
     end
   end
 end
-
-Dir['./test/support/**/*.rb'].each { |dep| require dep }
-
-# mock configuration setup
-require 'azure/storage'
-
-Azure::Storage.config.storage_account_name = 'mockaccount'
-Azure::Storage.config.storage_access_key = 'YWNjZXNzLWtleQ=='

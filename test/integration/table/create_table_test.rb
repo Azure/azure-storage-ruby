@@ -12,32 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'dotenv'
-Dotenv.load
+require 'integration/test_helper'
+require "azure/storage/table/table_service"
+require "azure/storage/core/http/http_error"
 
-require 'minitest/autorun'
-require 'mocha/mini_test'
-require 'minitest/reporters'
-Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
-require 'timecop'
-require 'logger'
-require 'stringio'
+describe Azure::Storage::Table::TableService do
+  describe "#create_table" do
+    subject { Azure::Storage::Table::TableService.new }
+    let(:table_name){ TableNameHelper.name }
+    after { TableNameHelper.clean }
 
-# add to the MiniTest DSL
-module Kernel
-  def need_tests_for(name)
-    describe "##{name}" do
-      it 'needs unit tests' do
-        skip ''
+    it "creates a table with a valid name" do
+      result = subject.create_table(table_name)
+      result.must_be_nil
+    end
+
+    it "errors on an invalid table name" do
+      assert_raises(Azure::Core::Http::HTTPError) do
+        subject.create_table "this_table.cannot-exist!"
       end
     end
   end
 end
-
-Dir['./test/support/**/*.rb'].each { |dep| require dep }
-
-# mock configuration setup
-require 'azure/storage'
-
-Azure::Storage.config.storage_account_name = 'mockaccount'
-Azure::Storage.config.storage_access_key = 'YWNjZXNzLWtleQ=='
