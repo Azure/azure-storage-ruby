@@ -225,7 +225,7 @@ credentials (you will be charged for usage, so verify the clean up scripts did t
 The root of the project contains a .env_sample file. This dot file is a sample of the actual environment vars needed to
 run the integration tests.
 
-Unit tests doesn't require real credentials and doesn't require to provide the .env file.
+Unit tests don't require real credentials and don't require to provide the .env file.
 
 Do the following to prepare your environment for integration tests:
 
@@ -237,16 +237,12 @@ Do the following to prepare your environment for integration tests:
 You can use the following commands to run:
 
 * All the tests: ``rake test``. **This will run integration tests if you have .env file or env vars setup**
-* Run storage suite of tests: ``rake test:unit:storage``, ``rake test:integration:storage``
+* Run storage suite of tests: ``rake test:unit``, ``rake test:integration``
 * One particular test file: ``ruby -I"lib:test" "<path of the test file>"``
 
 # Provide Feedback
 
-If you encounter any bugs with the library please file an issue in the [Issues](https://github.com/Azure/azure-storage-ruby/issues) section of the project and mark the issue with tag **storage**.
-
-# Maintainers
-
-* [Yang Xia](https://github.com/yaxia)
+If you encounter any bugs with the library please file an issue in the [Issues](https://github.com/Azure/azure-storage-ruby/issues) section of the project.
 
 # Azure Storage SDKs and Tooling
 

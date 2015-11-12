@@ -272,7 +272,6 @@ module Azure::Storage
         :use_development_storage => is_true,
         :development_storage_proxy_uri => is_url,
         :storage_account_name => lambda { |i| i.is_a?(String) },
-        :storage_account_name => lambda { |i| i.is_a?(String) },
         :storage_access_key => is_base64_encoded,
         :storage_sas_token => lambda { |i| i.is_a?(String) },
         :storage_blob_host => is_url,
