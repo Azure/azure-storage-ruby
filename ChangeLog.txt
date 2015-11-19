@@ -1,0 +1,4 @@
+2015.11 - version 0.1.0
+* First release
+* Ruby 1.9.3, 2.0, 2.1 and 2.2 support
+* Storage support: Blob, Table and Queue
