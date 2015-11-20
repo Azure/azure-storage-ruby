@@ -27,7 +27,7 @@ module Azure
     class Version
       # Fields represent the parts defined in http://semver.org/
       MAJOR = 0 unless defined? MAJOR
-      MINOR = 1 unless defined? MINOR
+      MINOR = 10 unless defined? MINOR
       UPDATE = 0 unless defined? UPDATE
       PRE = 'preview' unless defined? PRE
 
