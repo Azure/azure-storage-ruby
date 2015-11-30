@@ -24,6 +24,7 @@
 require 'rake/testtask'
 require 'rubygems/package_task'
 require 'dotenv/tasks'
+require 'yard'
 
 namespace :storage do
   gem_spec = eval(File.read('./azure-storage.gemspec'))
@@ -32,6 +33,12 @@ namespace :storage do
     pkg.need_tar = false
     pkg.package_dir = 'pkg_azure_storage'
   end
+end
+
+YARD::Rake::YardocTask.new do |t|
+  t.files   = ['lib/**/*.rb']
+  t.options = ['']
+  t.stats_options = ['--list-undoc']
 end
 
 namespace :test do
