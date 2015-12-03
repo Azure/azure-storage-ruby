@@ -22,7 +22,6 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require 'rake/testtask'
-require 'rubygems'
 require 'rubygems/package_task'
 require 'dotenv/tasks'
 require 'yard'
