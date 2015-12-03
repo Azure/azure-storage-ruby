@@ -22,8 +22,10 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require 'rake/testtask'
+require 'rubygems'
 require 'rubygems/package_task'
 require 'dotenv/tasks'
+require 'yard'
 
 namespace :storage do
   gem_spec = eval(File.read('./azure-storage.gemspec'))
@@ -32,6 +34,36 @@ namespace :storage do
     pkg.need_tar = false
     pkg.package_dir = 'pkg_azure_storage'
   end
+end
+
+YARD::Rake::YardocTask.new do |t|
+  t.files   = ['lib/**/*.rb']
+  t.options = ['']
+  t.stats_options = ['--list-undoc']
+end
+
+task :publishDoc do
+  desc 'Generate documents and publish to GitHub Pages'
+  repo = %x(git config remote.origin.url).gsub(/^git:/, 'https:')
+  deploy_branch = 'gh-pages'
+  if repo.match(/github\.com\.git$/)
+    deploy_branch = 'master'
+  end
+  system "git remote set-url --push origin #{repo}"
+  system "git remote set-branches --add origin #{deploy_branch}"
+  system 'git fetch -q'
+  system "git config user.name '#{ENV['GIT_NAME']}'"
+  system "git config user.email '#{ENV['GIT_EMAIL']}'"
+  system 'git config credential.helper "store --file=.git/credentials"'
+  File.open('.git/credentials', 'w') do |f|
+    f.write("https://#{ENV['GH_TOKEN']}:x-oauth-basic@github.com")
+  end
+  system "git branch #{deploy_branch} origin/#{deploy_branch}"
+  system "rake yard"
+  system "git checkout gh-pages"
+  system "mv doc/* ./"
+  system "rm doc -rf"
+  File.delete '.git/credentials'
 end
 
 namespace :test do
