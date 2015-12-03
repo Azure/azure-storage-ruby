@@ -63,6 +63,10 @@ task :publishDoc do
   system "git checkout gh-pages"
   system "mv doc/* ./"
   system "rm doc -rf"
+  system "git add *"
+  system "git commit -m \"update document\""
+  system "git push"
+  system "git checkout master"
   File.delete '.git/credentials'
 end
 
