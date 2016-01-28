@@ -1146,8 +1146,86 @@ module Azure::Storage
       #
       # * +source_container+      - String. The destination container name to copy to.
       # * +source_blob+           - String. The destination blob name to copy to.
-      # * +destination_container+ - String. The source container name to copy from.
-      # * +destination_blob+      - String. The source blob name to copy from.
+      # * +source_blob_uri+       - String. The source blob URI to copy from.
+      # * +options+               - Hash. Optional parameters.
+      #
+      # ==== Options
+      #
+      # Accepted key/value pairs in options parameter are:
+      # * +:source_snapshot+            - String. A snapshot id for the source blob
+      # * +:metadata+                   - Hash. Custom metadata values to store with the copy. If this parameter is not
+      #   specified, the operation will copy the source blob metadata to the destination
+      #   blob. If this parameter is specified, the destination blob is created with the
+      #   specified metadata, and metadata is not copied from the source blob.
+      # * +:source_if_modified_since+   - A DateTime value. Specify this option to write the page only if the source blob
+      #   has been modified since the specified date/time. If the blob has not been
+      #   modified, the Blob service returns status code 412 (Precondition Failed).
+      # * +:source_if_unmodified_since+ - A DateTime value. Specify this option to write the page only if the source blob
+      #   has not been modified since the specified date/time. If the blob has been
+      #   modified, the Blob service returns status code 412 (Precondition Failed).
+      # * +:source_if_match+            - An ETag value. Specify an ETag value to write the page only if the source blob's
+      #   ETag value matches the value specified. If the values do not match, the Blob
+      #   service returns status code 412 (Precondition Failed).
+      # * +:source_if_none_match+       - An ETag value. Specify an ETag value to write the page only if the source blob's
+      #   ETag value does not match the value specified. If the values are identical, the
+      #   Blob service returns status code 412 (Precondition Failed).
+      # * +:dest_if_modified_since+     - A DateTime value. Specify this option to write the page only if the destination
+      #   blob has been modified since the specified date/time. If the blob has not been
+      #   modified, the Blob service returns status code 412 (Precondition Failed).
+      # * +:dest_if_unmodified_since+   - A DateTime value. Specify this option to write the page only if the destination
+      #   blob has not been modified since the specified date/time. If the blob has been
+      #   modified, the Blob service returns status code 412 (Precondition Failed).
+      # * +:dest_if_match+              - An ETag value. Specify an ETag value to write the page only if the destination
+      #   blob's ETag value matches the value specified. If the values do not match, the
+      #   Blob service returns status code 412 (Precondition Failed).
+      # * +:dest_if_none_match+         - An ETag value. Specify an ETag value to write the page only if the destination
+      #   blob's ETag value does not match the value specified. If the values are
+      #   identical, the Blob service returns status code 412 (Precondition Failed).
+      # * +:timeout+                    - Integer. A timeout in seconds.
+      #
+      # See http://msdn.microsoft.com/en-us/library/azure/dd894037.aspx
+      #
+      # Returns a tuple of (copy_id, copy_status).
+      #
+      # * +copy_id+     - String identifier for this copy operation. Use with get_blob or get_blob_properties to check
+      #   the status of this copy operation, or pass to abort_copy_blob to abort a pending copy.
+      # * +copy_status+ - String. The state of the copy operation, with these values:
+      #   "success" - The copy completed successfully.
+      #   "pending" - The copy is in progress.
+      #
+      def copy_blob_from_uri(destination_container, destination_blob, source_blob_uri, options={})
+        query = { }
+        query['timeout'] = options[:timeout].to_s if options[:timeout]
+
+        uri = blob_uri(destination_container, destination_blob, query)
+        headers = service_properties_headers
+        headers['x-ms-copy-source'] = source_blob_uri
+
+        unless options.empty?
+          headers['If-Modified-Since'] = options[:dest_if_modified_since] if options[:dest_if_modified_since]
+          headers['If-Unmodified-Since'] = options[:dest_if_unmodified_since] if options[:dest_if_unmodified_since]
+          headers['If-Match'] = options[:dest_if_match] if options[:dest_if_match]
+          headers['If-None-Match'] = options[:dest_if_none_match] if options[:dest_if_none_match]
+          headers['x-ms-source-if-modified-since'] = options[:source_if_modified_since] if options[:source_if_modified_since]
+          headers['x-ms-source-if-unmodified-since'] = options[:source_if_unmodified_since] if options[:source_if_unmodified_since]
+          headers['x-ms-source-if-match'] = options[:source_if_match] if options[:source_if_match]
+          headers['x-ms-source-if-none-match'] = options[:source_if_none_match] if options[:source_if_none_match]
+
+          add_metadata_to_headers(options[:metadata], headers) if options[:metadata]
+        end
+
+        response = call(:put, uri, nil, headers)
+        return response.headers['x-ms-copy-id'], response.headers['x-ms-copy-status']
+      end
+      
+      # Public: Copies a source blob to a destination blob within the same storage account.
+      #
+      # ==== Attributes
+      #
+      # * +source_container+      - String. The destination container name to copy to.
+      # * +source_blob+           - String. The destination blob name to copy to.
+      # * +source_container+      - String. The source container name to copy from.
+      # * +source_blob+           - String. The source blob name to copy from.
       # * +options+               - Hash. Optional parameters.
       #
       # ==== Options
@@ -1195,28 +1273,9 @@ module Azure::Storage
       #   "pending" - The copy is in progress.
       #
       def copy_blob(destination_container, destination_blob, source_container, source_blob, options={})
-        query = { }
-        query['timeout'] = options[:timeout].to_s if options[:timeout]
+        source_blob_uri = blob_uri(source_container, source_blob, options[:source_snapshot] ? { 'snapshot' => options[:source_snapshot] } : {}).to_s
 
-        uri = blob_uri(destination_container, destination_blob, query)
-        headers = service_properties_headers
-        headers['x-ms-copy-source'] = blob_uri(source_container, source_blob, options[:source_snapshot] ? { 'snapshot' => options[:source_snapshot] } : {}).to_s
-
-        unless options.empty?
-          headers['If-Modified-Since'] = options[:dest_if_modified_since] if options[:dest_if_modified_since]
-          headers['If-Unmodified-Since'] = options[:dest_if_unmodified_since] if options[:dest_if_unmodified_since]
-          headers['If-Match'] = options[:dest_if_match] if options[:dest_if_match]
-          headers['If-None-Match'] = options[:dest_if_none_match] if options[:dest_if_none_match]
-          headers['x-ms-source-if-modified-since'] = options[:source_if_modified_since] if options[:source_if_modified_since]
-          headers['x-ms-source-if-unmodified-since'] = options[:source_if_unmodified_since] if options[:source_if_unmodified_since]
-          headers['x-ms-source-if-match'] = options[:source_if_match] if options[:source_if_match]
-          headers['x-ms-source-if-none-match'] = options[:source_if_none_match] if options[:source_if_none_match]
-
-          add_metadata_to_headers(options[:metadata], headers) if options[:metadata]
-        end
-
-        response = call(:put, uri, nil, headers)
-        return response.headers['x-ms-copy-id'], response.headers['x-ms-copy-status']
+        return copy_blob_from_uri(destination_container, destination_blob, source_blob_uri, options)
       end
 
       # Public: Establishes an exclusive one-minute write lock on a blob. To write to a locked

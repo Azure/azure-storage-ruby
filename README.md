@@ -1,6 +1,6 @@
 # Microsoft Azure Storage Client Library for Ruby
 
-[![Build Status](https://travis-ci.org/yaxia/azure-storage-ruby.svg)](https://travis-ci.org/yaxia/azure-storage-ruby)
+[![Build Status](https://travis-ci.org/azure/azure-storage-ruby.svg)](https://travis-ci.org/azure/azure-storage-ruby)
 
 This project provides a Ruby package that makes it easy to access and manage Microsoft Azure Storage Services.
 

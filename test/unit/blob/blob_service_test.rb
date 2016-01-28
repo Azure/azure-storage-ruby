@@ -1685,6 +1685,12 @@ describe Azure::Storage::Blob::BlobService do
           subject.expects(:blob_uri).with(source_container_name, source_blob_name, query).returns(source_uri)
           subject.copy_blob container_name, blob_name, source_container_name, source_blob_name
         end
+        
+        it 'calls with source URI' do
+          subject.expects(:blob_uri).with(container_name, blob_name, {}).returns(uri)
+          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.copy_blob_from_uri container_name, blob_name, source_uri.to_s
+        end
 
         it 'calls StorageService#call with the prepared request' do
           subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
