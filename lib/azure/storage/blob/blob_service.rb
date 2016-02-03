@@ -1140,7 +1140,7 @@ module Azure::Storage
         response.headers['x-ms-snapshot']
       end
 
-      # Public: Copies a source blob to a destination blob within the same storage account.
+      # Public: Copies a source blob to a destination blob.
       #
       # ==== Attributes
       #
@@ -1276,6 +1276,41 @@ module Azure::Storage
         source_blob_uri = blob_uri(source_container, source_blob, options[:source_snapshot] ? { 'snapshot' => options[:source_snapshot] } : {}).to_s
 
         return copy_blob_from_uri(destination_container, destination_blob, source_blob_uri, options)
+      end
+      
+      # Public: Aborts a pending Copy Blob operation and leaves a destination blob with zero length and full metadata. 
+      #
+      # ==== Attributes
+      #
+      # * +container+             - String. The destination container name.
+      # * +blob+                  - String. The destination blob name.
+      # * +copy_id+               - String. The copy identifier returned in the copy blob operation.
+      # * +options+               - Hash. Optional parameters.
+      #
+      # ==== Options
+      #
+      # Accepted key/value pairs in options parameter are:
+      # * +:lease_id+             - String. The lease id if the destination blob has an active infinite lease
+      # * +:timeout+              - Integer. A timeout in seconds.
+      #
+      # See https://msdn.microsoft.com/en-us/library/azure/jj159098.aspx
+      #
+      # Returns nil on success
+      def abort_copy_blob(container, blob, copy_id, options={})
+        query = { 'comp' => 'copy'}
+        query['timeout'] = options[:timeout].to_s if options[:timeout]
+        query['copyid'] = copy_id
+
+        uri = blob_uri(container, blob, query);
+        headers = service_properties_headers
+        headers['x-ms-copy-action'] = 'abort';
+        
+        unless options.empty?
+          headers['x-ms-lease-id'] = options[:lease_id] if options[:lease_id]
+        end
+
+        response = call(:put, uri, nil, headers)
+        nil
       end
 
       # Public: Establishes an exclusive one-minute write lock on a blob. To write to a locked

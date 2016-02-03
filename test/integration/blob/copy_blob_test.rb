@@ -73,6 +73,27 @@ describe Azure::Storage::Blob::BlobService do
       blob.name.must_equal dest_blob_name
       returned_content.must_equal content
     end
+    
+    it 'returns a copyid which can be used to abort copy operation' do
+      copy_id, copy_status = subject.copy_blob dest_container_name, dest_blob_name, source_container_name, source_blob_name
+      copy_id.wont_be_nil
+
+      counter = 0
+      finished = false
+      while(counter < 10 and not finished)
+        sleep(1)
+        blob = subject.get_blob_properties dest_container_name, dest_blob_name
+        blob.properties[:copy_id].must_equal copy_id
+        finished = blob.properties[:copy_status] == "success"
+        counter +=1
+      end
+      finished.must_equal true
+      
+      exception = assert_raises(Azure::Core::Http::HTTPError) do
+        subject.abort_copy_blob dest_container_name, dest_blob_name, copy_id
+      end
+      refute_nil(exception.message.index "NoPendingCopyOperation (409): There is currently no pending copy operation")
+    end
 
     describe 'when a snapshot is specified' do
       it 'creates a copy of the snapshot' do

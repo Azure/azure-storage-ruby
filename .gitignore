@@ -1,4 +1,5 @@
 .rvmrc
+debug.rb
 *.gem
 *.rbc
 *.swp

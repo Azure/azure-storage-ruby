@@ -172,7 +172,8 @@ describe Azure::Storage::Blob::BlobService do
         let(:container_metadata) {
           {
             'MetadataKey' => 'MetaDataValue',
-          'MetadataKey1' => 'MetaDataValue1'}
+            'MetadataKey1' => 'MetaDataValue1'
+          }
         }
 
         before do
@@ -1770,6 +1771,31 @@ describe Azure::Storage::Blob::BlobService do
           it 'does not modify the request headers when provided an unknown value' do
             subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, {:unknown_key => 'some_value'}
           end
+        end
+      end
+      
+      describe '#abort_copy_blob' do
+        let(:verb) { :put }
+        let(:lease_id) { 'lease-id' }
+        let(:copy_id) { 'copy-id' }
+        
+        before {
+          request_headers['x-ms-copy-action'] = 'abort'
+          
+          query.update({'comp' => 'copy', 'copyid' => copy_id})
+          subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+        }
+        
+        it 'abort copy a blob' do
+          subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          subject.abort_copy_blob container_name, blob_name, copy_id
+        end
+        
+        it 'abort copy a blob with an active lease' do
+          request_headers['x-ms-lease-id'] = lease_id
+          subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          subject.abort_copy_blob container_name, blob_name, copy_id, {:lease_id => lease_id}
         end
       end
 

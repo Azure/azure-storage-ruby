@@ -1,8 +1,9 @@
 2016.02 - version 0.10.0
 ALL
-* Released storage bits only based on the Azure SDK 0.7.0.
+* Separated out parts of Azure Storage previously found in the Azure SDK 0.7.0 to establish an independent release cycle.
 * Supported Ruby 1.9.3, 2.0, 2.1 and 2.2.
 * Updated to storage service version 2015-02-21.
 
 BLOB
-* Supported copying from source blob URI.
+* Added support for copying from source blob URI.
+* Added support for aborting copying a blob.
