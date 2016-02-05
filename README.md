@@ -201,6 +201,8 @@ queues.delete_queue("test-queue")
 
 # Getting Started for Contributors
 
+If you would like to become an active contributor to this project please follow the instructions provided in [Azure Projects Contribution Guidelines](http://azure.github.io/guidelines/).
+
 ## Development Environment Setup
 
 To get the source code of the SDK via **git** just type:
