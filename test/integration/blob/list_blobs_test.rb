@@ -33,7 +33,7 @@ describe Azure::Storage::Blob::BlobService do
     let(:blob_names) { ["blobname0","blobname1","blobname2","blobname3"] }
     let(:content) { content = ""; 1024.times.each{|i| content << "@" }; content }
     let(:metadata) { { "CustomMetadataProperty"=>"CustomMetadataValue" } }
-    let(:options) { { :blob_content_type=>"application/foo", :metadata => metadata } }
+    let(:options) { { :content_type=>"application/foo", :metadata => metadata } }
 
     before { 
       subject.create_container container_name
@@ -103,7 +103,7 @@ describe Azure::Storage::Blob::BlobService do
 
       it 'if :uncommittedblobs is set true, also returns blobs with uploaded, uncommitted blocks' do
         # uncommited blob/block
-        subject.create_blob_block container_name, "blockblobname", "blockid", content
+        subject.put_blob_block container_name, "blockblobname", "blockid", content
 
         # verify uncommitted blobs aren't returned on a normal call
         result = subject.list_blobs container_name

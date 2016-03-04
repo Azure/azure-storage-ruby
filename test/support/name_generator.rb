@@ -58,6 +58,9 @@ ContainerNameHelper = NameGenerator.new do |name|
   end
 end
 
+BlobNameHelper = NameGenerator.new do
+end
+
 QueueNameHelper = NameGenerator.new do |name|
   svc = Azure::Storage::Queue::QueueService.new
   begin

@@ -26,7 +26,7 @@ require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
-  after { TableNameHelper.clean }
+  after { ContainerNameHelper.clean }
   describe '#copy_blob' do
     let(:source_container_name) { ContainerNameHelper.name }
     let(:source_blob_name) { "audio+video%25.mp4" }

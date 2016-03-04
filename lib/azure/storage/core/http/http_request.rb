@@ -166,10 +166,10 @@ module Azure
           if body
             if IO === body
               headers['Content-Length'] = body.size.to_s
-              headers['Content-MD5'] = Digest::MD5.file(body.path).base64digest
+              headers['Content-MD5'] = Digest::MD5.file(body.path).base64digest unless headers['Content-MD5']
             else
               headers['Content-Length'] = body.bytesize.to_s
-              headers['Content-MD5'] = Base64.strict_encode64(Digest::MD5.digest(body))
+              headers['Content-MD5'] = Base64.strict_encode64(Digest::MD5.digest(body)) unless headers['Content-MD5']
             end
           else
             headers['Content-Length'] = '0'

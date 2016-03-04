@@ -41,9 +41,8 @@ module Azure::Storage
       end
 
       def call(method, uri, body=nil, headers={})
-        super(method, uri, body, service_properties_headers.merge(headers))
+        super(method, uri, body, StorageService.service_properties_headers.merge(headers))
       end
-
 
       # Public: Get Storage Service properties
       #
@@ -82,22 +81,52 @@ module Azure::Storage
         query.update(restype: 'service', comp: 'properties')
         generate_uri('', query)
       end
-
-      # Adds metadata properties to header hash with required prefix
-      #
-      # metadata  - A Hash of metadata name/value pairs
-      # headers   - A Hash of HTTP headers
-      def add_metadata_to_headers(metadata, headers)
-        metadata.each do |key, value|
-          headers["x-ms-meta-#{key}"] = value
+        
+      class << self
+        # Adds metadata properties to header hash with required prefix
+        #
+        # metadata  - A Hash of metadata name/value pairs
+        # headers   - A Hash of HTTP headers
+        def add_metadata_to_headers(metadata, headers)
+          if metadata
+            metadata.each do |key, value|
+              headers["x-ms-meta-#{key}"] = value
+            end
+           end
         end
-      end
+        
+        # Adds a value to the Hash object
+        #
+        # object     - A Hash object
+        # key        - The key name
+        # value      - The value
+        def with_value(object, key, value)
+          object[key] = value if value
+        end
 
-      def service_properties_headers
-        {
-          'x-ms-version' => Azure::Storage::Default::STG_VERSION,
-          'User-Agent' => Azure::Storage::Default::USER_AGENT
-        }
+        # Adds a header with the value
+        #
+        # headers    - A Hash of HTTP headers
+        # name       - The header name
+        # value      - The value
+        alias with_header with_value
+        
+        # Adds a query parameter
+        #
+        # query      - A Hash of HTTP query
+        # name       - The parameter name
+        # value      - The value
+        alias with_query with_value
+        
+        
+        
+        # Declares a default hash object for request headers
+        def service_properties_headers
+          {
+            'x-ms-version' => Azure::Storage::Default::STG_VERSION,
+            'User-Agent' => Azure::Storage::Default::USER_AGENT
+          }
+        end
       end
 
     end

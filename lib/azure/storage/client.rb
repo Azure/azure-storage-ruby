@@ -80,22 +80,22 @@ module Azure::Storage
       reset!(options)
     end
 
-    # Azure Blob service configured from this Azure Storage client instance
+    # Azure Blob service client configured from this Azure Storage client instance
     # @return [Azure::Storage::Blob::BlobService]
-    def blobs(options = {})
-      @blobs ||= Azure::Storage::Blob::BlobService.new(default_client(options))
+    def blobClient(options = {})
+      @blobClient ||= Azure::Storage::Blob::BlobService.new(default_client(options))
     end
 
-    # Azure Queue service configured from this Azure Storage client instance
+    # Azure Queue service client configured from this Azure Storage client instance
     # @return [Azure::Storage::Queue::QueueService]
-    def queues(options = {})
-      @queues ||= Azure::Storage::Queue::QueueService.new(default_client(options))
+    def queueClient(options = {})
+      @queueClient ||= Azure::Storage::Queue::QueueService.new(default_client(options))
     end
 
-    # Azure Table service configured from this Azure Storage client instance
+    # Azure Table service client configured from this Azure Storage client instance
     # @return [Azure::Storage::Table::TableService]
-    def tables(options = {})
-      @tables ||= Azure::Storage::Table::TableService.new(default_client(options))
+    def tableClient(options = {})
+      @tableClient ||= Azure::Storage::Table::TableService.new(default_client(options))
     end
 
     class << self

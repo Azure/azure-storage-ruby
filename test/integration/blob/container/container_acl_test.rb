@@ -27,7 +27,7 @@ require "azure/storage/service/signed_identifier"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
-  after { TableNameHelper.clean }
+  after { ContainerNameHelper.clean }
   
   describe '#set/get_container_acl' do
     let(:container_name) { ContainerNameHelper.name }

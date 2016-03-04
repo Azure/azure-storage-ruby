@@ -45,7 +45,7 @@ module Azure::Core
 
     def build_http(uri)
       ssl_options = {}
-      if uri.scheme.downcase == 'https'
+      if uri.is_a?(URI) && uri.scheme.downcase == 'https'
         ssl_options[:ca_file] = self.ca_file if self.ca_file
         ssl_options[:verify] = true
       end

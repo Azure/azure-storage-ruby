@@ -135,7 +135,7 @@ describe Azure::Storage::Blob::BlobService do
 
   describe 'container functions' do
     let(:container_name) { 'container-name' }
-    let(:container) { Azure::Storage::Blob::Container.new }
+    let(:container) { Azure::Storage::Blob::Container::Container.new }
 
     describe '#create_container' do
 
@@ -164,7 +164,7 @@ describe Azure::Storage::Blob::BlobService do
       it 'returns a new container' do
         result = subject.create_container container_name
 
-        result.must_be_kind_of Azure::Storage::Blob::Container
+        result.must_be_kind_of Azure::Storage::Blob::Container::Container
         result.name.must_equal container_name
       end
 
@@ -263,7 +263,7 @@ describe Azure::Storage::Blob::BlobService do
 
       it "returns a container, with it's properties attribute populated" do
         result = subject.get_container_properties container_name
-        result.must_be_kind_of Azure::Storage::Blob::Container
+        result.must_be_kind_of Azure::Storage::Blob::Container::Container
         result.name.must_equal container_name
         result.properties.must_equal container_properties
       end
@@ -301,7 +301,7 @@ describe Azure::Storage::Blob::BlobService do
 
       it "returns a container, with it's metadata attribute populated" do
         result = subject.get_container_metadata container_name
-        result.must_be_kind_of Azure::Storage::Blob::Container
+        result.must_be_kind_of Azure::Storage::Blob::Container::Container
         result.name.must_equal container_name
         result.metadata.must_equal container_metadata
       end
@@ -342,7 +342,7 @@ describe Azure::Storage::Blob::BlobService do
       it 'returns a container and an ACL' do
         returned_container, returned_acl = subject.get_container_acl container_name
 
-        returned_container.must_be_kind_of Azure::Storage::Blob::Container
+        returned_container.must_be_kind_of Azure::Storage::Blob::Container::Container
         returned_container.name.must_equal container_name
 
         returned_acl.must_be_kind_of Array
@@ -383,7 +383,7 @@ describe Azure::Storage::Blob::BlobService do
       it 'returns a container and an ACL' do
         returned_container, returned_acl = subject.set_container_acl container_name, public_access_level
 
-        returned_container.must_be_kind_of Azure::Storage::Blob::Container
+        returned_container.must_be_kind_of Azure::Storage::Blob::Container::Container
         returned_container.name.must_equal container_name
         returned_container.public_access_level.must_equal public_access_level
 
@@ -417,7 +417,7 @@ describe Azure::Storage::Blob::BlobService do
           it 'returns a container and an ACL' do
             returned_container, returned_acl = subject.set_container_acl container_name, public_access_level, {:signed_identifiers => signed_identifiers}
 
-            returned_container.must_be_kind_of Azure::Storage::Blob::Container
+            returned_container.must_be_kind_of Azure::Storage::Blob::Container::Container
             returned_container.name.must_equal container_name
             returned_container.public_access_level.must_equal public_access_level
 
@@ -645,54 +645,39 @@ describe Azure::Storage::Blob::BlobService do
             subject.create_page_blob container_name, blob_name, blob_length, {:sequence_number => 37.to_s}
           end
 
-          it 'modifies the request headers when provided a :blob_content_type value' do
-            request_headers['x-ms-blob-content-type'] = 'bct-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:blob_content_type => 'bct-value'}
-          end
-
-          it 'modifies the request headers when provided a :blob_content_encoding value' do
-            request_headers['x-ms-blob-content-encoding'] = 'bce-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:blob_content_encoding => 'bce-value'}
-          end
-
-          it 'modifies the request headers when provided a :blob_content_language value' do
-            request_headers['x-ms-blob-content-language'] = 'bcl-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:blob_content_language => 'bcl-value'}
-          end
-
-          it 'modifies the request headers when provided a :blob_content_md5 value' do
-            request_headers['x-ms-blob-content-md5'] = 'bcm-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:blob_content_md5 => 'bcm-value'}
-          end
-
-          it 'modifies the request headers when provided a :blob_cache_control value' do
-            request_headers['x-ms-blob-cache-control'] = 'bcc-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:blob_cache_control => 'bcc-value'}
-          end
-
           it 'modifies the request headers when provided a :content_type value' do
-            request_headers['Content-Type'] = 'ct-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:content_type => 'ct-value'}
+            request_headers['x-ms-blob-content-type'] = 'bct-value'
+            subject.create_page_blob container_name, blob_name, blob_length, {:content_type => 'bct-value'}
           end
 
           it 'modifies the request headers when provided a :content_encoding value' do
-            request_headers['Content-Encoding'] = 'ce-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:content_encoding => 'ce-value'}
+            request_headers['x-ms-blob-content-encoding'] = 'bce-value'
+            subject.create_page_blob container_name, blob_name, blob_length, {:content_encoding => 'bce-value'}
           end
 
           it 'modifies the request headers when provided a :content_language value' do
-            request_headers['Content-Language'] = 'cl-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:content_language => 'cl-value'}
+            request_headers['x-ms-blob-content-language'] = 'bcl-value'
+            subject.create_page_blob container_name, blob_name, blob_length, {:content_language => 'bcl-value'}
           end
 
           it 'modifies the request headers when provided a :content_md5 value' do
-            request_headers['Content-MD5'] = 'cm-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:content_md5 => 'cm-value'}
+            request_headers['x-ms-blob-content-md5'] = 'bcm-value'
+            subject.create_page_blob container_name, blob_name, blob_length, {:content_md5 => 'bcm-value'}
           end
 
           it 'modifies the request headers when provided a :cache_control value' do
-            request_headers['Cache-Control'] = 'cc-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:cache_control => 'cc-value'}
+            request_headers['x-ms-blob-cache-control'] = 'bcc-value'
+            subject.create_page_blob container_name, blob_name, blob_length, {:cache_control => 'bcc-value'}
+          end
+          
+          it 'modifies the request headers when provided a :content_disposition value' do
+            request_headers['x-ms-blob-content-disposition'] = 'bcd-value'
+            subject.create_page_blob container_name, blob_name, blob_length, {:content_disposition => 'bcd-value'}
+          end
+
+          it 'modifies the request headers when provided a :transactional_md5 value' do
+            request_headers['Content-MD5'] = 'tm-value'
+            subject.create_page_blob container_name, blob_name, blob_length, {:transactional_md5 => 'tm-value'}
           end
 
           it 'modifies the request headers when provided a :metadata value' do
@@ -708,7 +693,7 @@ describe Azure::Storage::Blob::BlobService do
         end
       end
 
-      describe '#create_blob_pages' do
+      describe '#put_blob_pages' do
         let(:verb) { :put }
         let(:start_range) { 255 }
         let(:end_range) { 512 }
@@ -732,16 +717,16 @@ describe Azure::Storage::Blob::BlobService do
 
         it 'assembles a URI for the request' do
           subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.create_blob_pages container_name, blob_name, start_range, end_range, content
+          subject.put_blob_pages container_name, blob_name, start_range, end_range, content
         end
 
         it 'calls StorageService#call with the prepared request' do
           subject.expects(:call).with(verb, uri, content, request_headers).returns(response)
-          subject.create_blob_pages container_name, blob_name, start_range, end_range, content
+          subject.put_blob_pages container_name, blob_name, start_range, end_range, content
         end
 
         it 'returns a Blob on success' do
-          result = subject.create_blob_pages container_name, blob_name, start_range, end_range, content
+          result = subject.put_blob_pages container_name, blob_name, start_range, end_range, content
           result.must_be_kind_of Azure::Storage::Blob::Blob
           result.must_equal blob
           result.name.must_equal blob_name
@@ -750,42 +735,42 @@ describe Azure::Storage::Blob::BlobService do
         describe 'when the options Hash is used' do
           it 'modifies the request headers when provided a :if_sequence_number_eq value' do
             request_headers['x-ms-if-sequence-number-eq'] = 'isne-value'
-            subject.create_blob_pages container_name, blob_name, start_range, end_range, content, {:if_sequence_number_eq => 'isne-value'}
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:if_sequence_number_eq => 'isne-value'}
           end
 
           it 'modifies the request headers when provided a :if_sequence_number_lt value' do
             request_headers['x-ms-if-sequence-number-lt'] = 'isnlt-value'
-            subject.create_blob_pages container_name, blob_name, start_range, end_range, content, {:if_sequence_number_lt => 'isnlt-value'}
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:if_sequence_number_lt => 'isnlt-value'}
           end
 
           it 'modifies the request headers when provided a :if_sequence_number_le value' do
             request_headers['x-ms-if-sequence-number-le'] = 'isnle-value'
-            subject.create_blob_pages container_name, blob_name, start_range, end_range, content, {:if_sequence_number_le => 'isnle-value'}
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:if_sequence_number_le => 'isnle-value'}
           end
 
           it 'modifies the request headers when provided a :if_modified_since value' do
             request_headers['If-Modified-Since'] = 'ims-value'
-            subject.create_blob_pages container_name, blob_name, start_range, end_range, content, {:if_modified_since => 'ims-value'}
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:if_modified_since => 'ims-value'}
           end
 
           it 'modifies the request headers when provided a :if_unmodified_since value' do
             request_headers['If-Unmodified-Since'] = 'iums-value'
-            subject.create_blob_pages container_name, blob_name, start_range, end_range, content, {:if_unmodified_since => 'iums-value'}
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:if_unmodified_since => 'iums-value'}
           end
 
           it 'modifies the request headers when provided a :if_match value' do
             request_headers['If-Match'] = 'im-value'
-            subject.create_blob_pages container_name, blob_name, start_range, end_range, content, {:if_match => 'im-value'}
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:if_match => 'im-value'}
           end
 
           it 'modifies the request headers when provided a :if_none_match value' do
             request_headers['If-None-Match'] = 'inm-value'
-            subject.create_blob_pages container_name, blob_name, start_range, end_range, content, {:if_none_match => 'inm-value'}
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:if_none_match => 'inm-value'}
           end
 
 
           it 'does not modify the request headers when provided an unknown value' do
-            subject.create_blob_pages container_name, blob_name, start_range, end_range, content, {:unknown_key => 'some_value'}
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:unknown_key => 'some_value'}
           end
         end
       end
@@ -858,7 +843,7 @@ describe Azure::Storage::Blob::BlobService do
         # end
       end
 
-      describe '#create_blob_block' do
+      describe '#put_blob_block' do
         require 'base64'
 
         let(:verb) { :put }
@@ -876,27 +861,27 @@ describe Azure::Storage::Blob::BlobService do
 
         it 'assembles a URI for the request' do
           subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.create_blob_block container_name, blob_name, block_id, content
+          subject.put_blob_block container_name, blob_name, block_id, content
         end
 
         it 'calls StorageService#call with the prepared request' do
           subject.expects(:call).with(verb, uri, content, request_headers).returns(response)
-          subject.create_blob_block container_name, blob_name, block_id, content
+          subject.put_blob_block container_name, blob_name, block_id, content
         end
 
         it 'returns content MD5 on success' do
-          result = subject.create_blob_block container_name, blob_name, block_id, content
+          result = subject.put_blob_block container_name, blob_name, block_id, content
           result.must_equal server_generated_content_md5
         end
 
         describe 'when the options Hash is used' do
           it 'modifies the request headers when provided a :content_md5 value' do
             request_headers['Content-MD5'] = 'content-md5'
-            subject.create_blob_block container_name, blob_name, block_id, content, {:content_md5 => 'content-md5'}
+            subject.put_blob_block container_name, blob_name, block_id, content, {:content_md5 => 'content-md5'}
           end
 
           it 'does not modify the request headers when provided an unknown value' do
-            subject.create_blob_block container_name, blob_name, block_id, content, {:unknown_key => 'some_value'}
+            subject.put_blob_block container_name, blob_name, block_id, content, {:unknown_key => 'some_value'}
           end
         end
       end
@@ -907,7 +892,6 @@ describe Azure::Storage::Blob::BlobService do
         let(:request_headers) {
           {
             'x-ms-blob-type' => 'BlockBlob',
-            'Content-Type' => 'application/octet-stream',
             'x-ms-version' => x_ms_version,
             'User-Agent' => user_agent
           }
@@ -937,59 +921,39 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         describe 'when the options Hash is used' do
-          it 'modifies the request headers when provided a :blob_content_type value' do
-            request_headers['x-ms-blob-content-type'] = 'bct-value'
-            subject.create_block_blob container_name, blob_name, content, {:blob_content_type => 'bct-value'}
-          end
-
-          it 'modifies the request headers when provided a :blob_content_encoding value' do
-            request_headers['x-ms-blob-content-encoding'] = 'bce-value'
-            subject.create_block_blob container_name, blob_name, content, {:blob_content_encoding => 'bce-value'}
-          end
-
-          it 'modifies the request headers when provided a :blob_content_language value' do
-            request_headers['x-ms-blob-content-language'] = 'bcl-value'
-            subject.create_block_blob container_name, blob_name, content, {:blob_content_language => 'bcl-value'}
-          end
-
-          it 'modifies the request headers when provided a :blob_content_md5 value' do
-            request_headers['x-ms-blob-content-md5'] = 'bcm-value'
-            subject.create_block_blob container_name, blob_name, content, {:blob_content_md5 => 'bcm-value'}
-          end
-
-          it 'modifies the request headers when provided a :blob_cache_control value' do
-            request_headers['x-ms-blob-cache-control'] = 'bcc-value'
-            subject.create_block_blob container_name, blob_name, content, {:blob_cache_control => 'bcc-value'}
-          end
-
-          it 'modifies the request headers when provided a :blob_content_disposition value' do
-            request_headers['x-ms-blob-content-disposition'] = 'bcd-value'
-            subject.create_block_blob container_name, blob_name, content, {:blob_content_disposition => 'bcd-value'}
-          end
-
           it 'modifies the request headers when provided a :content_type value' do
-            request_headers['Content-Type'] = 'ct-value'
-            subject.create_block_blob container_name, blob_name, content, {:content_type => 'ct-value'}
+            request_headers['x-ms-blob-content-type'] = 'bct-value'
+            subject.create_block_blob container_name, blob_name, content, {:content_type => 'bct-value'}
           end
 
           it 'modifies the request headers when provided a :content_encoding value' do
-            request_headers['Content-Encoding'] = 'ce-value'
-            subject.create_block_blob container_name, blob_name, content, {:content_encoding => 'ce-value'}
+            request_headers['x-ms-blob-content-encoding'] = 'bce-value'
+            subject.create_block_blob container_name, blob_name, content, {:content_encoding => 'bce-value'}
           end
 
           it 'modifies the request headers when provided a :content_language value' do
-            request_headers['Content-Language'] = 'cl-value'
-            subject.create_block_blob container_name, blob_name, content, {:content_language => 'cl-value'}
+            request_headers['x-ms-blob-content-language'] = 'bcl-value'
+            subject.create_block_blob container_name, blob_name, content, {:content_language => 'bcl-value'}
           end
 
           it 'modifies the request headers when provided a :content_md5 value' do
-            request_headers['Content-MD5'] = 'cm-value'
-            subject.create_block_blob container_name, blob_name, content, {:content_md5 => 'cm-value'}
+            request_headers['x-ms-blob-content-md5'] = 'bcm-value'
+            subject.create_block_blob container_name, blob_name, content, {:content_md5 => 'bcm-value'}
           end
 
           it 'modifies the request headers when provided a :cache_control value' do
-            request_headers['Cache-Control'] = 'cc-value'
-            subject.create_block_blob container_name, blob_name, content, {:cache_control => 'cc-value'}
+            request_headers['x-ms-blob-cache-control'] = 'bcc-value'
+            subject.create_block_blob container_name, blob_name, content, {:cache_control => 'bcc-value'}
+          end
+
+          it 'modifies the request headers when provided a :content_disposition value' do
+            request_headers['x-ms-blob-content-disposition'] = 'bcd-value'
+            subject.create_block_blob container_name, blob_name, content, {:content_disposition => 'bcd-value'}
+          end
+
+          it 'modifies the request headers when provided a :transactional_md5 value' do
+            request_headers['Content-MD5'] = 'tm-value'
+            subject.create_block_blob container_name, blob_name, content, {:transactional_md5 => 'tm-value'}
           end
 
           it 'modifies the request headers when provided a :metadata value' do
@@ -1040,41 +1004,61 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         describe 'when the options Hash is used' do
-          it 'modifies the request headers when provided a :content_md5 value' do
-            request_headers['Content-MD5'] = 'cm-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:content_md5 => 'cm-value'}
+          it 'modifies the request headers when provided a :transactional_md5 value' do
+            request_headers['Content-MD5'] = 'tm-value'
+            subject.commit_blob_blocks container_name, blob_name, block_list, {:transactional_md5 => 'tm-value'}
           end
 
-          it 'modifies the request headers when provided a :blob_content_type value' do
+          it 'modifies the request headers when provided a :content_type value' do
             request_headers['x-ms-blob-content-type'] = 'bct-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:blob_content_type => 'bct-value'}
+            subject.commit_blob_blocks container_name, blob_name, block_list, {:content_type => 'bct-value'}
           end
 
-          it 'modifies the request headers when provided a :blob_content_encoding value' do
+          it 'modifies the request headers when provided a :content_encoding value' do
             request_headers['x-ms-blob-content-encoding'] = 'bce-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:blob_content_encoding => 'bce-value'}
+            subject.commit_blob_blocks container_name, blob_name, block_list, {:content_encoding => 'bce-value'}
           end
 
-          it 'modifies the request headers when provided a :blob_content_language value' do
+          it 'modifies the request headers when provided a :content_language value' do
             request_headers['x-ms-blob-content-language'] = 'bcl-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:blob_content_language => 'bcl-value'}
+            subject.commit_blob_blocks container_name, blob_name, block_list, {:content_language => 'bcl-value'}
           end
 
-          it 'modifies the request headers when provided a :blob_content_md5 value' do
+          it 'modifies the request headers when provided a :content_md5 value' do
             request_headers['x-ms-blob-content-md5'] = 'bcm-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:blob_content_md5 => 'bcm-value'}
+            subject.commit_blob_blocks container_name, blob_name, block_list, {:content_md5 => 'bcm-value'}
           end
 
-          it 'modifies the request headers when provided a :blob_cache_control value' do
+          it 'modifies the request headers when provided a :cache_control value' do
             request_headers['x-ms-blob-cache-control'] = 'bcc-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:blob_cache_control => 'bcc-value'}
+            subject.commit_blob_blocks container_name, blob_name, block_list, {:cache_control => 'bcc-value'}
           end
 
-          it 'modifies the request headers when provided a :blob_content_disposition value' do
+          it 'modifies the request headers when provided a :content_disposition value' do
             request_headers['x-ms-blob-content-disposition'] = 'bcd-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:blob_content_disposition => 'bcd-value'}
+            subject.commit_blob_blocks container_name, blob_name, block_list, {:content_disposition => 'bcd-value'}
           end
 
+          it 'modifies the request headers when provided a :if_modified_since value' do
+            request_headers['If-Modified-Since'] = 'ims-value'
+            subject.commit_blob_blocks container_name, blob_name, block_list, {:if_modified_since => 'ims-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_unmodified_since value' do
+            request_headers['If-Unmodified-Since'] = 'iums-value'
+            subject.commit_blob_blocks container_name, blob_name, block_list, {:if_unmodified_since => 'iums-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_match value' do
+            request_headers['If-Match'] = 'im-value'
+            subject.commit_blob_blocks container_name, blob_name, block_list, {:if_match => 'im-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_none_match value' do
+            request_headers['If-None-Match'] = 'inm-value'
+            subject.commit_blob_blocks container_name, blob_name, block_list, {:if_none_match => 'inm-value'}
+          end
+          
           it 'modifies the request headers when provided a :metadata value' do
             request_headers['x-ms-meta-MetadataKey'] = 'MetaDataValue'
             request_headers['x-ms-meta-MetadataKey1'] = 'MetaDataValue1'
@@ -1202,10 +1186,11 @@ describe Azure::Storage::Blob::BlobService do
         describe 'when both start_range and end_range are provided' do
           let(:start_range) { 255 }
           let(:end_range) { 512 }
-          let(:request_headers) { {'x-ms-range' => "bytes=#{start_range}-#{end_range}"} }
+          let(:request_headers) { {'x-ms-version' => x_ms_version, 'User-Agent' => user_agent} }
 
           it 'modifies the request headers with the desired range' do
             subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+            request_headers['x-ms-range'] = "bytes=#{start_range}-#{end_range}"
             subject.list_page_blob_ranges container_name, blob_name, {:start_range => start_range, :end_range => end_range}
           end
         end
@@ -1214,6 +1199,312 @@ describe Azure::Storage::Blob::BlobService do
           it 'modifies the request query with the provided value' do
             query['snapshot'] = 'snapshot-id'
             subject.list_page_blob_ranges container_name, blob_name, {:snapshot => 'snapshot-id'}
+          end
+        end
+        
+        describe 'when the option hash is used' do
+          it 'modifies the request headers when provided a :if_modified_since value' do
+            request_headers['If-Modified-Since'] = 'ims-value'
+            subject.list_page_blob_ranges container_name, blob_name, {:if_modified_since => 'ims-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_unmodified_since value' do
+            request_headers['If-Unmodified-Since'] = 'iums-value'
+            subject.list_page_blob_ranges container_name, blob_name, {:if_unmodified_since => 'iums-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_match value' do
+            request_headers['If-Match'] = 'im-value'
+            subject.list_page_blob_ranges container_name, blob_name, {:if_match => 'im-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_none_match value' do
+            request_headers['If-None-Match'] = 'inm-value'
+            subject.list_page_blob_ranges container_name, blob_name, {:if_none_match => 'inm-value'}
+          end
+        end
+      end
+      
+      describe '#resize_page_blob' do
+        let(:verb) { :put }
+        let(:query) { {'comp' => 'properties'} }
+        let(:size) { 2048 }
+        let(:request_headers) { {'x-ms-version' => x_ms_version, 'User-Agent' => user_agent, 'x-ms-blob-content-length' => size.to_s} }
+
+        before {
+          subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+        }
+
+        it 'resizes the page blob' do
+          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.resize_page_blob container_name, blob_name, size
+        end
+        
+        describe 'when the option hash is used' do
+          it 'modifies the request headers when provided a :if_modified_since value' do
+            request_headers['If-Modified-Since'] = 'ims-value'
+            subject.resize_page_blob container_name, blob_name, size, {:if_modified_since => 'ims-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_unmodified_since value' do
+            request_headers['If-Unmodified-Since'] = 'iums-value'
+            subject.resize_page_blob container_name, blob_name, size, {:if_unmodified_since => 'iums-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_match value' do
+            request_headers['If-Match'] = 'im-value'
+            subject.resize_page_blob container_name, blob_name, size, {:if_match => 'im-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_none_match value' do
+            request_headers['If-None-Match'] = 'inm-value'
+            subject.resize_page_blob container_name, blob_name, size, {:if_none_match => 'inm-value'}
+          end
+        end
+      end
+      
+      describe '#set_sequence_number' do
+        let(:verb) { :put }
+        let(:query) { {'comp' => 'properties'} }
+        let(:action) { :update }
+        let(:number) { 1024 }
+        let(:request_headers) { {'x-ms-version' => x_ms_version, 'User-Agent' => user_agent} }
+
+        before {
+          subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+        }
+
+        it 'set the page blob\'s sequence number' do
+          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          request_headers['x-ms-blob-sequence-number-action'] = action.to_s
+          request_headers['x-ms-blob-sequence-number'] = number.to_s
+          subject.set_sequence_number container_name, blob_name, action, number
+        end
+        
+        it 'set the page blob\'s sequence number to the higher of current or the value in the request' do
+          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          action = :max
+          request_headers['x-ms-blob-sequence-number-action'] = action.to_s
+          request_headers['x-ms-blob-sequence-number'] = number.to_s
+          subject.set_sequence_number container_name, blob_name, action, number
+        end
+        
+        it 'increase the page blob\'s sequence number by 1' do
+          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          action = :increment
+          request_headers['x-ms-blob-sequence-number-action'] = action.to_s
+          subject.set_sequence_number container_name, blob_name, action, nil
+        end
+        
+        it 'increase the page blob\'s sequence number should ignore the number' do
+          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          action = :increment
+          request_headers['x-ms-blob-sequence-number-action'] = action.to_s
+          subject.set_sequence_number container_name, blob_name, action, number
+        end
+
+        describe 'when the option hash is used' do
+          before {
+            request_headers['x-ms-blob-sequence-number-action'] = action.to_s
+            request_headers['x-ms-blob-sequence-number'] = number.to_s
+          }
+          
+          it 'modifies the request headers when provided a :if_modified_since value' do
+            request_headers['If-Modified-Since'] = 'ims-value'
+            subject.set_sequence_number container_name, blob_name, action, number, {:if_modified_since => 'ims-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_unmodified_since value' do
+            request_headers['If-Unmodified-Since'] = 'iums-value'
+            subject.set_sequence_number container_name, blob_name, action, number, {:if_unmodified_since => 'iums-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_match value' do
+            request_headers['If-Match'] = 'im-value'
+            subject.set_sequence_number container_name, blob_name, action, number, {:if_match => 'im-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_none_match value' do
+            request_headers['If-None-Match'] = 'inm-value'
+            subject.set_sequence_number container_name, blob_name, action, number, {:if_none_match => 'inm-value'}
+          end
+        end
+      end
+      
+      describe '#create_append_blob' do
+        let(:verb) { :put }
+        let(:request_headers) {
+          {
+            'x-ms-blob-type' => 'AppendBlob',
+            'Content-Length' => 0.to_s,
+            'x-ms-version' => x_ms_version,
+            'User-Agent' => user_agent
+          }
+        }
+
+        before {
+          subject.stubs(:blob_uri).with(container_name, blob_name, {}).returns(uri)
+          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          serialization.stubs(:blob_from_headers).with(response_headers).returns(blob)
+        }
+
+        it 'assembles a URI for the request' do
+          subject.expects(:blob_uri).with(container_name, blob_name, {}).returns(uri)
+          subject.create_append_blob container_name, blob_name
+        end
+
+        it 'calls StorageService#call with the prepared request' do
+          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.create_append_blob container_name, blob_name
+        end
+
+        it 'returns a Blob on success' do
+          result = subject.create_append_blob container_name, blob_name
+          result.must_be_kind_of Azure::Storage::Blob::Blob
+          result.must_equal blob
+          result.name.must_equal blob_name
+        end
+
+        describe 'when the options Hash is used' do
+          it 'modifies the request headers when provided a :content_type value' do
+            request_headers['x-ms-blob-content-type'] = 'bct-value'
+            subject.create_append_blob container_name, blob_name, {:content_type => 'bct-value'}
+          end
+
+          it 'modifies the request headers when provided a :content_encoding value' do
+            request_headers['x-ms-blob-content-encoding'] = 'bce-value'
+            subject.create_append_blob container_name, blob_name, {:content_encoding => 'bce-value'}
+          end
+
+          it 'modifies the request headers when provided a :content_language value' do
+            request_headers['x-ms-blob-content-language'] = 'bcl-value'
+            subject.create_append_blob container_name, blob_name, {:content_language => 'bcl-value'}
+          end
+
+          it 'modifies the request headers when provided a :content_md5 value' do
+            request_headers['x-ms-blob-content-md5'] = 'bcm-value'
+            subject.create_append_blob container_name, blob_name, {:content_md5 => 'bcm-value'}
+          end
+
+          it 'modifies the request headers when provided a :cache_control value' do
+            request_headers['x-ms-blob-cache-control'] = 'bcc-value'
+            subject.create_append_blob container_name, blob_name, {:cache_control => 'bcc-value'}
+          end
+          
+          it 'modifies the request headers when provided a :content_disposition value' do
+            request_headers['x-ms-blob-content-disposition'] = 'bcd-value'
+            subject.create_append_blob container_name, blob_name, {:content_disposition => 'bcd-value'}
+          end
+
+          it 'modifies the request headers when provided a :transactional_md5 value' do
+            request_headers['Content-MD5'] = 'tm-value'
+            subject.create_append_blob container_name, blob_name, {:transactional_md5 => 'tm-value'}
+          end
+
+
+          it 'modifies the request headers when provided a :if_modified_since value' do
+            request_headers['If-Modified-Since'] = 'ims-value'
+            subject.create_append_blob container_name, blob_name, {:if_modified_since => 'ims-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_unmodified_since value' do
+            request_headers['If-Unmodified-Since'] = 'iums-value'
+            subject.create_append_blob container_name, blob_name, {:if_unmodified_since => 'iums-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_match value' do
+            request_headers['If-Match'] = 'im-value'
+            subject.create_append_blob container_name, blob_name, {:if_match => 'im-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_none_match value' do
+            request_headers['If-None-Match'] = 'inm-value'
+            subject.create_append_blob container_name, blob_name, {:if_none_match => 'inm-value'}
+          end
+
+          it 'modifies the request headers when provided a :metadata value' do
+            request_headers['x-ms-meta-MetadataKey'] = 'MetaDataValue'
+            request_headers['x-ms-meta-MetadataKey1'] = 'MetaDataValue1'
+            options = {:metadata => {'MetadataKey' => 'MetaDataValue', 'MetadataKey1' => 'MetaDataValue1'}}
+            subject.create_append_blob container_name, blob_name, options
+          end
+
+          it 'does not modify the request headers when provided an unknown value' do
+            subject.create_append_blob container_name, blob_name, {:unknown_key => 'some_value'}
+          end
+        end
+      end
+      
+      describe '#append_blob_block' do
+        let(:verb) { :put }
+        let(:content) { 'some content' }
+        let(:content_md5) { '123aBfE=' }
+        let(:lease_id) { 'lease_id' }
+        let(:max_size) { 123 }
+        let(:append_position) { 999 }
+        let(:request_headers) { {'x-ms-version' => x_ms_version, 'User-Agent' => user_agent} }
+
+        before {
+          query.update({'comp' => 'appendblock'})
+          subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          subject.stubs(:call).with(verb, uri, content, request_headers).returns(response)
+        }
+
+        it 'assembles a URI for the request' do
+          subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          subject.append_blob_block container_name, blob_name, content
+        end
+
+        it 'calls StorageService#call with the prepared request' do
+          subject.expects(:call).with(verb, uri, content, request_headers).returns(response)
+          subject.append_blob_block container_name, blob_name, content
+        end
+
+        describe 'when the options Hash is used' do
+          it 'modifies the request headers when provided a :content_md5 value' do
+            request_headers['Content-MD5'] = content_md5
+            subject.append_blob_block container_name, blob_name, content, {:content_md5 => content_md5}
+          end
+          
+          it 'modifies the request headers when provided a :lease_id value' do
+            request_headers['x-ms-lease-id'] = lease_id
+            subject.append_blob_block container_name, blob_name, content, {:lease_id => lease_id}
+          end
+          
+          it 'modifies the request headers when provided a :max_size value' do
+            request_headers['x-ms-blob-condition-maxsize'] = max_size
+            subject.append_blob_block container_name, blob_name, content, {:max_size => max_size}
+          end
+          
+           it 'modifies the request headers when provided a :append_position value' do
+            request_headers['x-ms-blob-condition-appendpos'] = append_position
+            subject.append_blob_block container_name, blob_name, content, {:append_position => append_position}
+          end
+          
+          it 'modifies the request headers when provided a :if_modified_since value' do
+            request_headers['If-Modified-Since'] = 'ims-value'
+            subject.append_blob_block container_name, blob_name, content, {:if_modified_since => 'ims-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_unmodified_since value' do
+            request_headers['If-Unmodified-Since'] = 'iums-value'
+            subject.append_blob_block container_name, blob_name, content, {:if_unmodified_since => 'iums-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_match value' do
+            request_headers['If-Match'] = 'im-value'
+            subject.append_blob_block container_name, blob_name, content, {:if_match => 'im-value'}
+          end
+
+          it 'modifies the request headers when provided a :if_none_match value' do
+            request_headers['If-None-Match'] = 'inm-value'
+            subject.append_blob_block container_name, blob_name, content, {:if_none_match => 'inm-value'}
+          end
+
+          it 'does not modify the request headers when provided an unknown value' do
+            subject.append_blob_block container_name, blob_name, content, {:unknown_key => 'some_value'}
           end
         end
       end
@@ -1245,39 +1536,39 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         describe 'when the options Hash is used' do
-          it 'modifies the request headers when provided a :blob_content_type value' do
+          it 'modifies the request headers when provided a :content_type value' do
             request_headers['x-ms-blob-content-type'] = 'bct-value'
-            subject.set_blob_properties container_name, blob_name, {:blob_content_type => 'bct-value'}
+            subject.set_blob_properties container_name, blob_name, {:content_type => 'bct-value'}
           end
 
-          it 'modifies the request headers when provided a :blob_content_encoding value' do
+          it 'modifies the request headers when provided a :content_encoding value' do
             request_headers['x-ms-blob-content-encoding'] = 'bce-value'
-            subject.set_blob_properties container_name, blob_name, {:blob_content_encoding => 'bce-value'}
+            subject.set_blob_properties container_name, blob_name, {:content_encoding => 'bce-value'}
           end
 
-          it 'modifies the request headers when provided a :blob_content_language value' do
+          it 'modifies the request headers when provided a :content_language value' do
             request_headers['x-ms-blob-content-language'] = 'bcl-value'
-            subject.set_blob_properties container_name, blob_name, {:blob_content_language => 'bcl-value'}
+            subject.set_blob_properties container_name, blob_name, {:content_language => 'bcl-value'}
           end
 
-          it 'modifies the request headers when provided a :blob_content_md5 value' do
+          it 'modifies the request headers when provided a :content_md5 value' do
             request_headers['x-ms-blob-content-md5'] = 'bcm-value'
-            subject.set_blob_properties container_name, blob_name, {:blob_content_md5 => 'bcm-value'}
+            subject.set_blob_properties container_name, blob_name, {:content_md5 => 'bcm-value'}
           end
 
-          it 'modifies the request headers when provided a :blob_cache_control value' do
+          it 'modifies the request headers when provided a :cache_control value' do
             request_headers['x-ms-blob-cache-control'] = 'bcc-value'
-            subject.set_blob_properties container_name, blob_name, {:blob_cache_control => 'bcc-value'}
+            subject.set_blob_properties container_name, blob_name, {:cache_control => 'bcc-value'}
           end
 
-          it 'modifies the request headers when provided a :blob_content_length value' do
+          it 'modifies the request headers when provided a :content_length value' do
             request_headers['x-ms-blob-content-length'] = '37'
-            subject.set_blob_properties container_name, blob_name, {:blob_content_length => 37.to_s}
+            subject.set_blob_properties container_name, blob_name, {:content_length => 37.to_s}
           end
 
-          it 'modifies the request headers when provided a :blob_content_disposition value' do
+          it 'modifies the request headers when provided a :content_disposition value' do
             request_headers['x-ms-blob-content-disposition'] = 'bcd-value'
-            subject.set_blob_properties container_name, blob_name, {:blob_content_disposition => 'bcd-value'}
+            subject.set_blob_properties container_name, blob_name, {:content_disposition => 'bcd-value'}
           end
 
           it 'modifies the request headers when provided a :sequence_number_action value' do
@@ -1286,8 +1577,9 @@ describe Azure::Storage::Blob::BlobService do
           end
 
           it 'modifies the request headers when provided a :sequence_number value' do
+            request_headers['x-ms-blob-sequence-number-action'] = :max.to_s
             request_headers['x-ms-blob-sequence-number'] = '37'
-            subject.set_blob_properties container_name, blob_name, {:sequence_number => 37.to_s}
+            subject.set_blob_properties container_name, blob_name, {:sequence_number_action => :max, :sequence_number => 37}
           end
 
           it 'does not modify the request headers when provided an unknown value' do
@@ -1326,10 +1618,11 @@ describe Azure::Storage::Blob::BlobService do
 
       describe '#get_blob_properties' do
         let(:verb) { :head }
+        let(:request_headers) { {'x-ms-version' => x_ms_version, 'User-Agent' => user_agent} }
 
         before {
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
           serialization.stubs(:blob_from_headers).with(response_headers).returns(blob)
         }
 
@@ -1339,7 +1632,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
           subject.get_blob_properties container_name, blob_name
         end
 
@@ -1369,12 +1662,13 @@ describe Azure::Storage::Blob::BlobService do
 
       describe '#get_blob_metadata' do
         let(:verb) { :get }
-
+        let(:request_headers) { {'x-ms-version' => x_ms_version, 'User-Agent' => user_agent} }
+        
         before {
           query['comp']='metadata'
 
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
           serialization.stubs(:blob_from_headers).with(response_headers).returns(blob)
         }
 
@@ -1384,7 +1678,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
           subject.get_blob_metadata container_name, blob_name
         end
 
@@ -1806,10 +2100,11 @@ describe Azure::Storage::Blob::BlobService do
         before {
           query.update({'comp' => 'lease'})
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          subject.stubs(:container_uri).with(container_name, query).returns(uri)
           subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
         }
 
-        describe '#acquire_lease' do
+        describe '#acquire_blob_lease' do
           before {
             request_headers['x-ms-lease-action'] = 'acquire'
             request_headers['x-ms-lease-duration'] = '-1'
@@ -1820,16 +2115,16 @@ describe Azure::Storage::Blob::BlobService do
 
           it 'assembles a URI for the request' do
             subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
-            subject.acquire_lease container_name, blob_name
+            subject.acquire_blob_lease container_name, blob_name
           end
 
           it 'calls StorageService#call with the prepared request' do
             subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-            subject.acquire_lease container_name, blob_name
+            subject.acquire_blob_lease container_name, blob_name
           end
 
           it 'returns lease id on success' do
-            result = subject.acquire_lease container_name, blob_name
+            result = subject.acquire_blob_lease container_name, blob_name
             result.must_equal lease_id
           end
 
@@ -1839,7 +2134,7 @@ describe Azure::Storage::Blob::BlobService do
 
             it 'modifies the headers to include the provided duration value' do
               subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-              subject.acquire_lease container_name, blob_name, {:duration => duration}
+              subject.acquire_blob_lease container_name, blob_name, {:duration => duration}
             end
           end
 
@@ -1850,12 +2145,12 @@ describe Azure::Storage::Blob::BlobService do
 
             it 'modifies the headers to include the proposed lease id' do
               subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-              subject.acquire_lease container_name, blob_name, {:duration => default_duration, :proposed_lease_id => proposed_lease_id}
+              subject.acquire_blob_lease container_name, blob_name, {:duration => default_duration, :proposed_lease_id => proposed_lease_id}
             end
           end
         end
 
-        describe '#renew_lease' do
+        describe '#renew_blob_lease' do
           before {
             request_headers['x-ms-lease-action'] = 'renew'
             request_headers['x-ms-lease-id'] = lease_id
@@ -1866,21 +2161,21 @@ describe Azure::Storage::Blob::BlobService do
 
           it 'assembles a URI for the request' do
             subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
-            subject.renew_lease container_name, blob_name, lease_id
+            subject.renew_blob_lease container_name, blob_name, lease_id
           end
 
           it 'calls StorageService#call with the prepared request' do
             subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-            subject.renew_lease container_name, blob_name, lease_id
+            subject.renew_blob_lease container_name, blob_name, lease_id
           end
 
           it 'returns lease id on success' do
-            result = subject.renew_lease container_name, blob_name, lease_id
+            result = subject.renew_blob_lease container_name, blob_name, lease_id
             result.must_equal lease_id
           end
         end
 
-        describe '#release_lease' do
+        describe '#release_blob_lease' do
           before {
             request_headers['x-ms-lease-action'] = 'release'
             request_headers['x-ms-lease-id'] = lease_id
@@ -1890,21 +2185,21 @@ describe Azure::Storage::Blob::BlobService do
 
           it 'assembles a URI for the request' do
             subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
-            subject.release_lease container_name, blob_name, lease_id
+            subject.release_blob_lease container_name, blob_name, lease_id
           end
 
           it 'calls StorageService#call with the prepared request' do
             subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-            subject.release_lease container_name, blob_name, lease_id
+            subject.release_blob_lease container_name, blob_name, lease_id
           end
 
           it 'returns nil on success' do
-            result = subject.release_lease container_name, blob_name, lease_id
+            result = subject.release_blob_lease container_name, blob_name, lease_id
             result.must_equal nil
           end
         end
 
-        describe '#break_lease' do
+        describe '#break_blob_lease' do
           let(:lease_time) { 38 }
           before {
             request_headers['x-ms-lease-action'] = 'break'
@@ -1915,16 +2210,16 @@ describe Azure::Storage::Blob::BlobService do
 
           it 'assembles a URI for the request' do
             subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
-            subject.break_lease container_name, blob_name
+            subject.break_blob_lease container_name, blob_name
           end
 
           it 'calls StorageService#call with the prepared request' do
             subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-            subject.break_lease container_name, blob_name
+            subject.break_blob_lease container_name, blob_name
           end
 
           it 'returns lease time on success' do
-            result = subject.break_lease container_name, blob_name
+            result = subject.break_blob_lease container_name, blob_name
             result.must_equal lease_time
           end
 
@@ -1934,7 +2229,137 @@ describe Azure::Storage::Blob::BlobService do
 
             it 'modifies the request headers to include a break period' do
               subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-              subject.break_lease container_name, blob_name, {:break_period => break_period}
+              subject.break_blob_lease container_name, blob_name, {:break_period => break_period}
+            end
+          end
+        end
+        
+        describe '#acquire_container_lease' do
+          before {
+            request_headers['x-ms-lease-action'] = 'acquire'
+            request_headers['x-ms-lease-duration'] = '-1'
+
+            response.stubs(:success?).returns(true)
+            response_headers['x-ms-lease-id'] = lease_id
+          }
+
+          it 'assembles a URI for the request' do
+            subject.expects(:container_uri).with(container_name, query).returns(uri)
+            subject.acquire_container_lease container_name
+          end
+
+          it 'calls StorageService#call with the prepared request' do
+            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+            subject.acquire_container_lease container_name
+          end
+
+          it 'returns lease id on success' do
+            result = subject.acquire_container_lease container_name
+            result.must_equal lease_id
+          end
+
+          describe 'when passed a duration' do
+            let(:duration) { 37 }
+            before { request_headers['x-ms-lease-duration'] = '37' }
+
+            it 'modifies the headers to include the provided duration value' do
+              subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+              subject.acquire_container_lease container_name, {:duration => duration}
+            end
+          end
+
+          describe 'when passed a proposed_lease_id' do
+            let(:default_duration) { -1 }
+            let(:proposed_lease_id) { 'proposed-lease-id' }
+            before { request_headers['x-ms-proposed-lease-id'] = proposed_lease_id }
+
+            it 'modifies the headers to include the proposed lease id' do
+              subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+              subject.acquire_container_lease container_name, {:duration => default_duration, :proposed_lease_id => proposed_lease_id}
+            end
+          end
+        end
+
+        describe '#renew_container_lease' do
+          before {
+            request_headers['x-ms-lease-action'] = 'renew'
+            request_headers['x-ms-lease-id'] = lease_id
+
+            response.stubs(:success?).returns(true)
+            response_headers['x-ms-lease-id'] = lease_id
+          }
+
+          it 'assembles a URI for the request' do
+            subject.expects(:container_uri).with(container_name, query).returns(uri)
+            subject.renew_container_lease container_name, lease_id
+          end
+
+          it 'calls StorageService#call with the prepared request' do
+            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+            subject.renew_container_lease container_name, lease_id
+          end
+
+          it 'returns lease id on success' do
+            result = subject.renew_container_lease container_name, lease_id
+            result.must_equal lease_id
+          end
+        end
+
+        describe '#release_container_lease' do
+          before {
+            request_headers['x-ms-lease-action'] = 'release'
+            request_headers['x-ms-lease-id'] = lease_id
+
+            response.stubs(:success?).returns(true)
+          }
+
+          it 'assembles a URI for the request' do
+            subject.expects(:container_uri).with(container_name, query).returns(uri)
+            subject.release_container_lease container_name, lease_id
+          end
+
+          it 'calls StorageService#call with the prepared request' do
+            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+            subject.release_container_lease container_name, lease_id
+          end
+
+          it 'returns nil on success' do
+            result = subject.release_container_lease container_name, lease_id
+            result.must_equal nil
+          end
+        end
+
+        describe '#break_container_lease' do
+          let(:lease_time) { 39 }
+          before {
+            request_headers['x-ms-lease-action'] = 'break'
+
+            response.stubs(:success?).returns(true)
+            response_headers['x-ms-lease-time'] = lease_time.to_s
+          }
+
+          it 'assembles a URI for the request' do
+            subject.expects(:container_uri).with(container_name, query).returns(uri)
+            subject.break_container_lease container_name
+          end
+
+          it 'calls StorageService#call with the prepared request' do
+            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+            subject.break_container_lease container_name
+          end
+
+          it 'returns lease time on success' do
+            result = subject.break_container_lease container_name
+            result.must_equal lease_time
+          end
+
+          describe 'when passed an optional break period' do
+            let(:break_period) { 35 }
+            before { request_headers['x-ms-lease-break-period'] = break_period.to_s }
+
+            it 'modifies the request headers to include a break period' do
+              subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+              subject.break_container_lease container_name, {:break_period => break_period}
             end
           end
         end

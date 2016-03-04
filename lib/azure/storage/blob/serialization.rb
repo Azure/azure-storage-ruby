@@ -57,7 +57,7 @@ module Azure::Storage
         xml = slopify(xml)
         expect_node("Container", xml)
 
-        Container.new do |container|
+        Container::Container.new do |container|
           container.name = xml.Name.text if (xml > "Name").any?
           container.properties = container_properties_from_xml(xml.Properties) if (xml > "Properties").any?
           container.metadata = metadata_from_xml(xml.Metadata) if (xml > "Metadata").any?
@@ -65,7 +65,7 @@ module Azure::Storage
       end
 
       def self.container_from_headers(headers)
-        Container.new do |container|
+        Container::Container.new do |container|
           container.properties = container_properties_from_headers(headers)
           container.public_access_level = public_access_level_from_headers(headers)
           container.metadata = metadata_from_headers(headers)
@@ -190,6 +190,7 @@ module Azure::Storage
         props[:content_type] =  headers["x-ms-blob-content-type"] || headers["Content-Type"]
         props[:content_encoding] = headers["x-ms-blob-content-encoding"] || headers["Content-Encoding"]
         props[:content_language] = headers["x-ms-blob-content-language"] || headers["Content-Language"]
+        props[:content_disposition] = headers["x-ms-blob-content-disposition"] || headers["Content-Disposition"]
         props[:content_md5] = headers["x-ms-blob-content-md5"] || headers["Content-MD5"]
 
         props[:cache_control] = headers["x-ms-blob-cache-control"] || headers["Cache-Control"]
@@ -204,6 +205,9 @@ module Azure::Storage
         props[:copy_status_description] = headers["x-ms-copy-status-description"]
 
         props[:accept_ranges] = headers["Accept-Ranges"].to_i if headers["Accept-Ranges"]
+        
+        props[:append_offset] = headers["x-ms-blob-append-offset"].to_i if headers["x-ms-blob-append-offset"]
+        props[:committed_count] = headers["x-ms-blob-committed-block-count"].to_i if headers["x-ms-blob-committed-block-count"]
 
         props
       end

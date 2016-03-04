@@ -26,7 +26,7 @@ require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
-  after { TableNameHelper.clean }
+  after { ContainerNameHelper.clean }
   
   describe '#create_page_blob' do
     let(:container_name) { ContainerNameHelper.name }
@@ -68,6 +68,7 @@ describe Azure::Storage::Blob::BlobService do
       blob = subject.create_page_blob container_name, blob_name, length, options
       blob = subject.get_blob_properties container_name, blob_name
       blob.name.must_equal blob_name
+      blob.properties[:blob_type].must_equal 'PageBlob'
       blob.properties[:content_type].must_equal options[:content_type]
       blob.properties[:content_encoding].must_equal options[:content_encoding]
       blob.properties[:cache_control].must_equal options[:cache_control]
