@@ -1,10 +1,11 @@
-2016.02 - version 0.10.0
+2016.03 - version 0.10.0
 ALL
 * Separated out parts of Azure Storage previously found in the Azure SDK 0.7.0 to establish an independent release cycle.
 * Supported Ruby 1.9.3, 2.0, 2.1 and 2.2.
-* Updated to storage service version 2015-02-21.
+* Updated to storage service version 2015-02-21. 
 * Fixed issue where previous query's parameters were used, causing authentication to fail (https://github.com/Azure/azure-sdk-for-ruby/issues/276).
 * Fixed the issue that the Content-MD5 is overwritten when request body exists, regardless the input value.
+* Refined the code for setting service properties to be compatible with the XML schema.
 
 BLOB
 * Added support for container lease operations.

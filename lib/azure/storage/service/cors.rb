@@ -26,6 +26,7 @@ module Azure::Storage
   module Service
     class Cors 
       def initialize
+        @cors_rules = []
         yield self if block_given?
       end
 

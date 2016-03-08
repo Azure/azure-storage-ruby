@@ -143,9 +143,13 @@ module Azure::Storage
 
         def retention_policy_to_xml(retention_policy, xml)
           xml.RetentionPolicy {
-              xml.Enabled retention_policy.enabled unless retention_policy.enabled == nil
-              xml.Days retention_policy.days if retention_policy.days
-            }
+            if retention_policy.enabled == nil
+              xml.Enabled false
+            else
+              xml.Enabled retention_policy.enabled
+            end
+            xml.Days retention_policy.days if retention_policy.enabled && retention_policy.days
+          } if retention_policy
         end
 
         def retention_policy_from_xml(xml)
@@ -159,22 +163,33 @@ module Azure::Storage
         end
 
         def metrics_to_xml_children(metrics, xml)
+          return unless metrics
           xml.Version metrics.version if metrics.version
-          xml.Enabled metrics.enabled unless metrics.enabled == nil
-          xml.IncludeAPIs metrics.include_apis unless metrics.include_apis == nil
+          if metrics.enabled == nil
+            xml.Enabled false
+          else
+            xml.Enabled metrics.enabled
+          end
+          if metrics.enabled
+            if metrics.include_apis == nil
+              xml.IncludeAPIs false
+            else
+              xml.IncludeAPIs metrics.include_apis
+            end
+          end
           retention_policy_to_xml(metrics.retention_policy, xml) if metrics.retention_policy
         end
 
         def hour_metrics_to_xml(metrics, xml)
           xml.HourMetrics { 
             metrics_to_xml_children(metrics, xml)
-          }
+          } if metrics
         end
 
         def minute_metrics_to_xml(metrics, xml)
           xml.MinuteMetrics { 
             metrics_to_xml_children(metrics, xml)
-          }
+          } if metrics
         end
 
         def metrics_from_xml(xml)
@@ -191,11 +206,23 @@ module Azure::Storage
         def logging_to_xml(logging, xml)
           xml.Logging { 
             xml.Version logging.version if logging.version
-            xml.Delete logging.delete unless logging.delete == nil
-            xml.Read logging.read unless logging.read == nil
-            xml.Write logging.write unless logging.write == nil
+            if logging.delete == nil
+              xml.Delete false
+            else
+              xml.Delete logging.delete
+            end
+            if logging.read == nil
+              xml.Read false
+            else
+              xml.Read logging.read
+            end
+            if logging.write == nil
+              xml.Write false
+            else
+              xml.Write logging.write
+            end
             retention_policy_to_xml(logging.retention_policy, xml) if logging.retention_policy
-          }
+          } if logging
         end
 
         def logging_from_xml(xml)

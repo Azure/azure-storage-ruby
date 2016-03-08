@@ -58,7 +58,7 @@ module Azure::Storage
 
       # Public: Set Storage Service properties
       #
-      # service_properties - An instance of Azure::Storage::Entity::Service::StorageServiceProperties
+      # service_properties - An instance of Azure::Storage::Service::StorageServiceProperties
       #
       # See http://msdn.microsoft.com/en-us/library/azure/hh452235
       # See http://msdn.microsoft.com/en-us/library/azure/hh452232
@@ -66,7 +66,6 @@ module Azure::Storage
       # Returns boolean indicating success.
       def set_service_properties(service_properties)
         body = Serialization.service_properties_to_xml service_properties
-
         uri = service_properties_uri
         call(:put, uri, body)
         nil
@@ -117,8 +116,6 @@ module Azure::Storage
         # name       - The parameter name
         # value      - The value
         alias with_query with_value
-        
-        
         
         # Declares a default hash object for request headers
         def service_properties_headers

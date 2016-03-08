@@ -27,6 +27,7 @@ module Azure::Storage
   module Service
     class Logging 
       def initialize
+        @version = "1.0"
         @retention_policy = RetentionPolicy.new
         yield self if block_given?
       end

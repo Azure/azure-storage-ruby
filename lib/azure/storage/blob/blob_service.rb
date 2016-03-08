@@ -124,7 +124,7 @@ module Azure::Storage
 
         Serialization.container_enumeration_results_from_xml(response.body)
       end
-      
+     
       # Protected: Establishes an exclusive one-minute write lock on a container or a blob. To write to a locked
       # blob, a client must provide a lease ID.
       #
@@ -361,7 +361,6 @@ module Azure::Storage
       # ==== Attributes
       #
       # * +query+ - A Hash of key => value query parameters.
-      # * +host+  - The host of the API.
       #
       # Returns a URI.
       #
@@ -377,7 +376,6 @@ module Azure::Storage
       #
       # * +name+  - The container name. If this is a URI, we just return this.
       # * +query+ - A Hash of key => value query parameters.
-      # * +host+  - The host of the API.
       #
       # Returns a URI.
       #
@@ -395,7 +393,6 @@ module Azure::Storage
       # * +container_name+ - String representing the name of the container.
       # * +blob_name+      - String representing the name of the blob.
       # * +query+          - A Hash of key => value query parameters.
-      # * +host+           - The host of the API.
       #
       # Returns a URI.
       #
