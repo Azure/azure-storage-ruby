@@ -45,6 +45,12 @@ describe Azure::Storage::Blob::BlobService do
       result.must_be_nil
     end
     
+     it 'sets the service properties use default values' do
+      properties = Azure::Storage::Service::StorageServiceProperties.new
+      result = subject.set_service_properties properties
+      result.must_be_nil
+    end
+    
     describe '#set_service_properties with logging' do
       it 'with retention' do
         properties = Azure::Storage::Service::StorageServiceProperties.new 
@@ -111,6 +117,17 @@ describe Azure::Storage::Blob::BlobService do
     end
 
     describe '#set_service_properties with CORS' do
+      let(:cors_properties) { Azure::Storage::Service::StorageServiceProperties.new }
+      let(:cors_rule) { Azure::Storage::Service::CorsRule.new }
+      before {
+        cors_properties.cors.cors_rules.clear
+        cors_rule.allowed_origins = ['www.ab.com', 'www.bc.com']
+        cors_rule.allowed_methods = ['GET', 'PUT']
+        cors_rule.max_age_in_seconds = 60
+        cors_rule.exposed_headers = ['x-ms-meta-data*', 'x-ms-meta-source*', 'x-ms-meta-abc', 'x-ms-meta-bcd']
+        cors_rule.allowed_headers = ['x-ms-meta-data*', 'x-ms-meta-target*', 'x-ms-meta-xyz', 'x-ms-meta-foo']
+      }
+      
       it 'nil CORS' do
         properties = Azure::Storage::Service::StorageServiceProperties.new 
         properties.cors = Azure::Storage::Service::Cors.new
@@ -120,18 +137,93 @@ describe Azure::Storage::Blob::BlobService do
       end
 
       it 'sets CORS rules' do
-        properties = Azure::Storage::Service::StorageServiceProperties.new 
-        properties.cors = Azure::Storage::Service::Cors.new
-        rule = Azure::Storage::Service::CorsRule.new
-        rule.allowed_origins = ['www.ab.com', 'www.bc.com']
-        rule.allowed_methods = ['GET', 'PUT']
-        rule.max_age_in_seconds = 60
-        rule.exposed_headers = ['x-ms-meta-data*', 'x-ms-meta-source*', 'x-ms-meta-abc', 'x-ms-meta-bcd']
-        rule.allowed_headers = ['x-ms-meta-data*', 'x-ms-meta-target*', 'x-ms-meta-xyz', 'x-ms-meta-foo']
-        properties.cors.cors_rules.push rule
-        properties.cors.cors_rules.push rule
+        cors_properties.cors.cors_rules.push cors_rule
 
-        result = subject.set_service_properties properties
+        result = subject.set_service_properties cors_properties
+        result.must_be_nil
+      end
+      
+      it 'sets CORS with duplicated rules' do
+        cors_properties.cors.cors_rules.push cors_rule
+        cors_properties.cors.cors_rules.push cors_rule
+
+        result = subject.set_service_properties cors_properties
+        result.must_be_nil
+      end
+      
+       it 'sets CORS rules without allowed_origins' do
+        cors_rule.allowed_origins = nil
+        cors_properties.cors.cors_rules.push cors_rule
+
+        exception = assert_raises (Azure::Core::Http::HTTPError) do
+          subject.set_service_properties cors_properties
+        end
+        refute_nil(exception.message.index "InvalidXmlDocument (400): XML specified is not syntactically valid")
+      end
+      
+      it 'sets CORS rules with empty allowed_origins' do
+        cors_rule.allowed_origins = []
+        cors_properties.cors.cors_rules.push cors_rule
+
+        exception = assert_raises (Azure::Core::Http::HTTPError) do
+          subject.set_service_properties cors_properties
+        end
+        refute_nil(exception.message.index "InvalidXmlNodeValue (400): The value for one of the XML nodes is not in the correct format")
+      end
+      
+      it 'sets CORS rules without allowed_methods' do
+        cors_rule.allowed_methods = nil
+        cors_properties.cors.cors_rules.push cors_rule
+
+        exception = assert_raises (Azure::Core::Http::HTTPError) do
+          subject.set_service_properties cors_properties
+        end
+        refute_nil(exception.message.index "InvalidXmlDocument (400): XML specified is not syntactically valid")
+      end
+      
+      it 'sets CORS rules with empty allowed_methods' do
+        cors_rule.allowed_methods = []
+        cors_properties.cors.cors_rules.push cors_rule
+
+        exception = assert_raises (Azure::Core::Http::HTTPError) do
+          subject.set_service_properties cors_properties
+        end
+        refute_nil(exception.message.index "InvalidXmlNodeValue (400): The value for one of the XML nodes is not in the correct format")
+      end
+      
+      it 'sets CORS rules without exposed_headers' do
+        cors_rule.exposed_headers = nil
+        cors_properties.cors.cors_rules.push cors_rule
+
+        exception = assert_raises (Azure::Core::Http::HTTPError) do
+          subject.set_service_properties cors_properties
+        end
+        refute_nil(exception.message.index "InvalidXmlDocument (400): XML specified is not syntactically valid")
+      end
+      
+      it 'sets CORS rules with empty exposed_headers' do
+        cors_rule.exposed_headers = []
+        cors_properties.cors.cors_rules.push cors_rule
+
+        result = subject.set_service_properties cors_properties
+        result.must_be_nil
+      end
+      
+      it 'sets CORS rules without allowed_headers' do
+        cors_rule.allowed_headers = nil
+        cors_properties.cors.cors_rules.push cors_rule
+
+        exception = assert_raises (Azure::Core::Http::HTTPError) do
+          subject.set_service_properties cors_properties
+        end
+        refute_nil(exception.message.index "InvalidXmlDocument (400): XML specified is not syntactically valid")
+      end
+      
+      it 'sets CORS rules with default allowed_headers' do
+        cors_rule.allowed_headers = []
+        cors_properties.cors.cors_rules.push cors_rule
+
+        result = subject.set_service_properties cors_properties
         result.must_be_nil
       end
     end

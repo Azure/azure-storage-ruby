@@ -28,6 +28,8 @@ module Azure::Storage
     class Metrics
       def initialize
         @version = "1.0"
+        @enabled = false
+        @include_apis = false
         @retention_policy = RetentionPolicy.new
         yield self if block_given?
       end

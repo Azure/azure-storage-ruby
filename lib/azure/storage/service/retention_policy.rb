@@ -25,6 +25,7 @@ module Azure::Storage
   module Service
     class RetentionPolicy
       def initialize
+        @enabled = false
         yield self if block_given?
       end
       attr_accessor :enabled

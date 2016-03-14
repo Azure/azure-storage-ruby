@@ -28,11 +28,11 @@ module Azure::Storage
       def initialize
         # All CORS rule elements are required if the CorsRule element is specified.
         # The request will fail with error code 400 (Bad Request) if any element is missing.
-        @allowed_origins = [];
-        @allowed_methods = [];
-        @exposed_headers = [];
-        @allowed_headers = [];
-        @max_age_in_seconds = 120
+        @allowed_origins = []
+        @allowed_methods = []
+        @exposed_headers = []
+        @allowed_headers = []
+        @max_age_in_seconds = 0
         yield self if block_given?
       end
 
