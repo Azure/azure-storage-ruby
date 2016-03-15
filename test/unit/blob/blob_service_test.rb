@@ -2174,6 +2174,33 @@ describe Azure::Storage::Blob::BlobService do
             result.must_equal lease_id
           end
         end
+        
+        describe '#change_blob_lease' do
+          let (:proposed_lease_id) { 'proposed-lease-id' }
+          before {
+            request_headers['x-ms-lease-action'] = 'change'
+            request_headers['x-ms-lease-id'] = lease_id
+            request_headers['x-ms-proposed-lease-id'] = proposed_lease_id
+
+            response.stubs(:success?).returns(true)
+            response_headers['x-ms-lease-id'] = proposed_lease_id
+          }
+
+          it 'assembles a URI for the request' do
+            subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
+            subject.change_blob_lease container_name, blob_name, lease_id, proposed_lease_id
+          end
+
+          it 'calls StorageService#call with the prepared request' do
+            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+            subject.change_blob_lease container_name, blob_name, lease_id, proposed_lease_id
+          end
+
+          it 'returns lease id on success' do
+            result = subject.change_blob_lease container_name, blob_name, lease_id, proposed_lease_id
+            result.must_equal proposed_lease_id
+          end
+        end
 
         describe '#release_blob_lease' do
           before {

@@ -9,6 +9,7 @@ ALL
 
 BLOB
 * Added support for container lease operations.
+* Added support for changing the ID of an existing lease.
 * Added support for copying from source blob URI.
 * Added support for aborting copying a blob.
 * Added support for creating an append blob.

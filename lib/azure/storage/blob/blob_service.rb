@@ -125,8 +125,8 @@ module Azure::Storage
         Serialization.container_enumeration_results_from_xml(response.body)
       end
      
-      # Protected: Establishes an exclusive one-minute write lock on a container or a blob. To write to a locked
-      # blob, a client must provide a lease ID.
+      # Protected: Establishes an exclusive write lock on a container or a blob. The lock duration can be 15 to 60 seconds, or can be infinite.
+      # To write to a locked container or blob, a client must provide a lease ID.
       #
       # ==== Attributes
       #
@@ -158,8 +158,7 @@ module Azure::Storage
       # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
       #
       # Returns a String of the new unique lease id. While the lease is active, you must include the lease ID with any request
-      # to write, or to renew, change, or release the lease. A successful renew operation also returns the lease id
-      # for the active lease.
+      # to write, or to renew, change, or release the lease.
       #
       protected
       def acquire_lease(container, blob, options={})
@@ -232,6 +231,60 @@ module Azure::Storage
         headers = Service::StorageService.service_properties_headers
         Service::StorageService.with_header headers, 'x-ms-lease-action', 'renew'
         Service::StorageService.with_header headers, 'x-ms-lease-id', lease
+        add_blob_conditional_headers options, headers
+
+        response = call(:put, uri, nil, headers)
+        response.headers['x-ms-lease-id']
+      end
+      
+      # Protected: Change the ID of an existing lease.
+      #
+      # ==== Attributes
+      #
+      # * +container+                - String. The container name.
+      # * +blob+                     - String. The blob name.
+      # * +lease+                    - String. The existing lease id.
+      # * +proposed_lease+           - String. Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request)
+      #                                if the proposed lease ID is not in the correct format. (optional).
+      # * +options+                  - Hash. Optional parameters.
+      #
+      # ==== Options
+      #
+      # Accepted key/value pairs in options parameter are:
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:if_modified_since+       - String. A DateTime value. Specify this conditional header to change the lease
+      #                                only if the blob has been modified since the specified date/time. If the blob has not been modified, 
+      #                                the Blob service returns status code 412 (Precondition Failed).
+      # * +:if_unmodified_since+     - String. A DateTime value. Specify this conditional header to change the lease
+      #                                only if the blob has not been modified since the specified date/time. If the blob has been modified, 
+      #                                the Blob service returns status code 412 (Precondition Failed).
+      # * +:if_match+                - String. An ETag value. Specify an ETag value for this conditional header to change the lease
+      #                                only if the blob's ETag value matches the value specified. If the values do not match, 
+      #                                the Blob service returns status code 412 (Precondition Failed).
+      # * +:if_none_match+           - String. An ETag value. Specify an ETag value for this conditional header to change the lease
+      #                                only if the blob's ETag value does not match the value specified. If the values are identical, 
+      #                                the Blob service returns status code 412 (Precondition Failed).
+      #
+      # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
+      #
+      # Returns a String of the new unique lease id. While the lease is active, you must include the lease ID with any request
+      # to write, or to renew, change, or release the lease.
+      #
+      protected
+      def change_lease(container, blob, lease, proposed_lease, options={})
+        query = { 'comp' => 'lease' }
+        Service::StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+
+        if blob
+          uri = blob_uri(container, blob, query)
+        else
+          uri = container_uri(container, query)
+        end
+
+        headers = Service::StorageService.service_properties_headers
+        Service::StorageService.with_header headers, 'x-ms-lease-action', 'change'
+        Service::StorageService.with_header headers, 'x-ms-lease-id', lease
+        Service::StorageService.with_header headers, 'x-ms-proposed-lease-id', proposed_lease
         add_blob_conditional_headers options, headers
 
         response = call(:put, uri, nil, headers)
