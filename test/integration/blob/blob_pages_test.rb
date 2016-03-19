@@ -26,7 +26,7 @@ require 'azure/storage/blob/blob_service'
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
-  after { TableNameHelper.clean }
+  after { ContainerNameHelper.clean }
   
   let(:container_name) { ContainerNameHelper.name }
   let(:blob_name) { 'blobname' }
@@ -38,13 +38,13 @@ describe Azure::Storage::Blob::BlobService do
     subject.create_page_blob container_name, blob_name2, length
   }
   
-  describe '#create_blob_pages' do
+  describe '#put_blob_pages' do
     it 'creates pages in a page blob' do
       content = ''
       512.times.each{|i| content << '@' }
 
-      subject.create_blob_pages container_name, blob_name, 0, 511, content
-      subject.create_blob_pages container_name, blob_name, 1024, 1535, content
+      subject.put_blob_pages container_name, blob_name, 0, 511, content
+      subject.put_blob_pages container_name, blob_name, 1024, 1535, content
 
       ranges = subject.list_page_blob_ranges container_name, blob_name, { :start_range => 0, :end_range => 1536 }
       ranges[0][0].must_equal 0
@@ -59,10 +59,10 @@ describe Azure::Storage::Blob::BlobService do
       content = ''
       512.times.each{|i| content << '@' }
 
-      blob = subject.create_blob_pages container_name, blob_name2, 0, 511, content
+      blob = subject.put_blob_pages container_name, blob_name2, 0, 511, content
 
       assert_raises(Azure::Core::Http::HTTPError) do
-        subject.create_blob_pages container_name, blob_name2, 1024, 1535, content, { :if_none_match => blob.properties[:etag] }
+        subject.put_blob_pages container_name, blob_name2, 1024, 1535, content, { :if_none_match => blob.properties[:etag] }
       end
     end
 
@@ -70,8 +70,8 @@ describe Azure::Storage::Blob::BlobService do
       content = ''
       512.times.each{|i| content << '@' }
 
-      blob = subject.create_blob_pages container_name, blob_name, 0, 511, content
-      subject.create_blob_pages container_name, blob_name, 1024, 1535, content, { :if_match => blob.properties[:etag] }
+      blob = subject.put_blob_pages container_name, blob_name, 0, 511, content
+      subject.put_blob_pages container_name, blob_name, 1024, 1535, content, { :if_match => blob.properties[:etag] }
     end
   end
 
@@ -80,9 +80,9 @@ describe Azure::Storage::Blob::BlobService do
       content = ''
       512.times.each{|i| content << '@' }
 
-      subject.create_blob_pages container_name, blob_name, 0, 511, content
-      subject.create_blob_pages container_name, blob_name, 1024, 1535, content
-      subject.create_blob_pages container_name, blob_name, 2048, 2559, content
+      subject.put_blob_pages container_name, blob_name, 0, 511, content
+      subject.put_blob_pages container_name, blob_name, 1024, 1535, content
+      subject.put_blob_pages container_name, blob_name, 2048, 2559, content
 
       ranges = subject.list_page_blob_ranges container_name, blob_name, { :start_range => 0, :end_range => 2560 }
       ranges.length.must_equal 3
@@ -113,8 +113,8 @@ describe Azure::Storage::Blob::BlobService do
       content = ''
       512.times.each{|i| content << '@' }
 
-      subject.create_blob_pages container_name, blob_name, 0, 511, content
-      subject.create_blob_pages container_name, blob_name, 1024, 1535, content
+      subject.put_blob_pages container_name, blob_name, 0, 511, content
+      subject.put_blob_pages container_name, blob_name, 1024, 1535, content
     }
 
     it 'lists the active blob pages' do

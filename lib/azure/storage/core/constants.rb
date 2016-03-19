@@ -693,9 +693,6 @@ module Azure::Storage
     # The header for storage version.
     STORAGE_VERSION = 'x-ms-version'
 
-    # The current storage version header value.
-    TARGET_STORAGE_VERSION = '2015-02-21'
-
     # The UserAgent header.
     USER_AGENT = 'user-agent'
 

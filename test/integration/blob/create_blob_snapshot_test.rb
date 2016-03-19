@@ -26,14 +26,14 @@ require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
-  after { TableNameHelper.clean }
+  after { ContainerNameHelper.clean }
   
   describe '#create_blob_snapshot' do
     let(:container_name) { ContainerNameHelper.name }
     let(:blob_name) { "blobname" }
     let(:content) { content = ""; 1024.times.each{|i| content << "@" }; content }
     let(:metadata) { { "CustomMetadataProperty"=>"CustomMetadataValue" } }
-    let(:options) { { :blob_content_type=>"application/foo", :metadata => metadata } }
+    let(:options) { { :content_type=>"application/foo", :metadata => metadata } }
 
     before { 
       subject.create_container container_name
@@ -59,7 +59,7 @@ describe Azure::Storage::Blob::BlobService do
       1024.times.each{|i| content2 << "!" }
       options2 = options.dup
       options2[:metadata] = options[:metadata].dup
-      options2[:blob_content_type] = "application/bar"
+      options2[:content_type] = "application/bar"
       options2[:metadata]["CustomMetadataValue1"] = "NewMetadata"
       subject.create_block_blob container_name, blob_name, content2, options2
 
@@ -67,7 +67,7 @@ describe Azure::Storage::Blob::BlobService do
       blob, returned_content = subject.get_blob container_name, blob_name, { :start_range => 0, :end_range => 511 }
       returned_content.length.must_equal 512
       returned_content.must_equal content2[0..511]
-      blob.properties[:content_type].must_equal options2[:blob_content_type]
+      blob.properties[:content_type].must_equal options2[:content_type]
       options2[:metadata].each { |k,v|
         blob.metadata.must_include k.downcase
         blob.metadata[k.downcase].must_equal v
@@ -78,7 +78,7 @@ describe Azure::Storage::Blob::BlobService do
 
       returned_content.length.must_equal 512
       returned_content.must_equal content[0..511]
-      blob.properties[:content_type].must_equal options[:blob_content_type]
+      blob.properties[:content_type].must_equal options[:content_type]
       options[:metadata].each { |k,v|
         blob.metadata.must_include k.downcase
         blob.metadata[k.downcase].must_equal v

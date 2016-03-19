@@ -28,7 +28,7 @@ require "azure/storage/core/http/http_error"
 describe Azure::Storage::Blob::BlobService do
   describe "#informative_errors_blob" do
     subject { Azure::Storage::Blob::BlobService.new }
-    after { TableNameHelper.clean }
+    after { ContainerNameHelper.clean }
     let(:container_name) { ContainerNameHelper.name }
 
     it "exception message should be valid" do

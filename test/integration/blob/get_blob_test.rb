@@ -26,14 +26,14 @@ require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
-  after { TableNameHelper.clean }
+  after { ContainerNameHelper.clean }
 
   describe '#get_blob' do
     let(:container_name) { ContainerNameHelper.name }
     let(:blob_name) { "blobname" }
     let(:content) { content = ""; 1024.times.each{|i| content << "@" }; content }
     let(:metadata) { { "CustomMetadataProperty"=>"CustomMetadataValue" } }
-    let(:options) { { :blob_content_type=>"application/foo", :metadata => metadata } }
+    let(:options) { { :content_type=>"application/foo", :metadata => metadata } }
 
     before { 
       subject.create_container container_name

@@ -241,14 +241,14 @@ describe Azure::Storage::Service::StorageService do
   describe '#add_metadata_to_headers' do
     it 'prefixes header names with x-ms-meta- but does not modify the values' do
       headers = {}
-      subject.add_metadata_to_headers({'Foo' => 'Bar'}, headers)
+      Azure::Storage::Service::StorageService.add_metadata_to_headers({'Foo' => 'Bar'}, headers)
       headers.keys.must_include 'x-ms-meta-Foo'
       headers['x-ms-meta-Foo'].must_equal 'Bar'
     end
 
     it 'updates any existing x-ms-meta-* headers with the new values' do
       headers = {'x-ms-meta-Foo' => 'Foo'}
-      subject.add_metadata_to_headers({'Foo' => 'Bar'}, headers)
+      Azure::Storage::Service::StorageService.add_metadata_to_headers({'Foo' => 'Bar'}, headers)
       headers['x-ms-meta-Foo'].must_equal 'Bar'
     end
   end

@@ -164,7 +164,7 @@ tables.delete_table("testtable")
 ```
 
 <a name="queues"></a>
-### Queues
+## Queues
 
 ```ruby
 
@@ -200,6 +200,8 @@ queues.delete_queue("test-queue")
 ```
 
 # Getting Started for Contributors
+
+If you would like to become an active contributor to this project please follow the instructions provided in [Azure Projects Contribution Guidelines](http://azure.github.io/guidelines/).
 
 ## Development Environment Setup
 

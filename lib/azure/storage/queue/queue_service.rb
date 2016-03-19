@@ -26,7 +26,8 @@ require 'azure/storage/queue/serialization'
 
 module Azure::Storage
   module Queue
-    class QueueService < Service::StorageService
+    include Azure::Storage::Service
+    class QueueService < StorageService
 
       def initialize(options = {})
         super(nil, nil, options)
@@ -138,7 +139,7 @@ module Azure::Storage
         uri = queue_uri(queue_name, query)
 
         headers = { }
-        add_metadata_to_headers(options[:metadata] || {}, headers) if options[:metadata]
+        Service::StorageService.add_metadata_to_headers(options[:metadata] || {}, headers) if options[:metadata]
 
         call(:put, uri, nil, headers)
         nil
@@ -226,7 +227,7 @@ module Azure::Storage
         uri = queue_uri(queue_name, query)
 
         headers ={}
-        add_metadata_to_headers(metadata || {}, headers)
+        Service::StorageService.add_metadata_to_headers(metadata || {}, headers)
 
         call(:put, uri, nil, headers)
         nil

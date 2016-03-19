@@ -27,7 +27,7 @@ require 'base64'
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
-  after { TableNameHelper.clean }
+  after { ContainerNameHelper.clean }
 
   let(:container_name) { ContainerNameHelper.name }
   let(:blob_name) { "blobname" }
@@ -37,7 +37,7 @@ describe Azure::Storage::Blob::BlobService do
   }
   
   describe '#create_block_blob' do
-    it 'creates a page blob' do
+    it 'creates a block blob' do
       blob = subject.create_block_blob container_name, blob_name, content
       blob.name.must_equal blob_name
     end
@@ -54,6 +54,7 @@ describe Azure::Storage::Blob::BlobService do
       blob = subject.create_block_blob container_name, blob_name, content, options
       blob = subject.get_blob_properties container_name, blob_name
       blob.name.must_equal blob_name
+      blob.properties[:blob_type].must_equal 'BlockBlob'
       blob.properties[:content_type].must_equal options[:content_type]
       blob.properties[:content_encoding].must_equal options[:content_encoding]
       blob.properties[:cache_control].must_equal options[:cache_control]
@@ -70,11 +71,11 @@ describe Azure::Storage::Blob::BlobService do
     end
   end
 
-  describe '#create_blob_block' do
+  describe '#put_blob_block' do
     let(:blockid) {"anyblockid1" }
 
     it 'creates a block as part of a block blob' do
-      subject.create_blob_block container_name, blob_name, blockid, content
+      subject.put_blob_block container_name, blob_name, blockid, content
 
       # verify
       block_list = subject.list_blob_blocks container_name, blob_name
@@ -89,7 +90,7 @@ describe Azure::Storage::Blob::BlobService do
     let(:blocklist) { [["anyblockid0"], ["anyblockid1"]] }
     before { 
       blocklist.each { |block_entry|
-        subject.create_blob_block container_name, blob_name, block_entry[0], content
+        subject.put_blob_block container_name, blob_name, block_entry[0], content
       }
     }
 
@@ -122,15 +123,15 @@ describe Azure::Storage::Blob::BlobService do
     let(:blocklist) { [["anyblockid0"], ["anyblockid1"], ["anyblockid2"], ["anyblockid3"]] }
     before { 
       
-      subject.create_blob_block container_name, blob_name, blocklist[0][0], content
-      subject.create_blob_block container_name, blob_name, blocklist[1][0], content
+      subject.put_blob_block container_name, blob_name, blocklist[0][0], content
+      subject.put_blob_block container_name, blob_name, blocklist[1][0], content
 
       # two committed blocks, two uncommitted blocks
       result = subject.commit_blob_blocks container_name, blob_name, blocklist.slice(0..1)
       result.must_be_nil
 
-      subject.create_blob_block container_name, blob_name, blocklist[2][0], content
-      subject.create_blob_block container_name, blob_name, blocklist[3][0], content
+      subject.put_blob_block container_name, blob_name, blocklist[2][0], content
+      subject.put_blob_block container_name, blob_name, blocklist[3][0], content
     }
 
     it 'lists blocks in a blob, including their status' do

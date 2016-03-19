@@ -28,8 +28,7 @@ module Azure::Core
     # @param uri  [URI|String] the base uri (scheme, host, port) of the http endpoint
     # @return [Net::HTTP] http agent for a given uri
     def agents(uri)
-      uri = URI.parse(uri) if uri.is_a?(String)
-      key = uri.scheme.to_s + uri.host.to_s + uri.port.to_s
+      key = uri.to_s
       @agents ||= {}
       unless @agents.key?(key)
         @agents[key] = build_http(uri)
@@ -46,7 +45,7 @@ module Azure::Core
 
     def build_http(uri)
       ssl_options = {}
-      if uri.scheme.downcase == 'https'
+      if uri.is_a?(URI) && uri.scheme.downcase == 'https'
         ssl_options[:ca_file] = self.ca_file if self.ca_file
         ssl_options[:verify] = true
       end

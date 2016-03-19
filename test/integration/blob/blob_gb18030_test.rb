@@ -183,7 +183,7 @@ describe 'Blob GB-18030' do
         content << 'X'
       end
       subject.create_page_blob container_name, blob_name, 512, options
-      subject.create_blob_pages container_name, blob_name, 0, 511, content
+      subject.put_blob_pages container_name, blob_name, 0, 511, content
       blob, returned_content = subject.get_blob container_name, blob_name
       returned_content.force_encoding(blob.properties[:content_encoding])
       returned_content.must_equal content
@@ -199,7 +199,7 @@ describe 'Blob GB-18030' do
         content << 'X'
       end
       subject.create_page_blob container_name, blob_name, 512, options
-      subject.create_blob_pages container_name, blob_name, 0, 511, content
+      subject.put_blob_pages container_name, blob_name, 0, 511, content
       blob, returned_content = subject.get_blob container_name, blob_name
       returned_content.force_encoding(blob.properties[:content_encoding])
       returned_content.must_equal content

@@ -26,7 +26,7 @@ require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
-  after { TableNameHelper.clean }
+  after { ContainerNameHelper.clean }
 
   describe '#set/get_blob_properties' do
     let(:container_name) { ContainerNameHelper.name }
@@ -37,19 +37,19 @@ describe Azure::Storage::Blob::BlobService do
       subject.create_page_blob container_name, blob_name, length
     }
     let(:options){{
-        :blob_content_type=>"application/my-special-format",
-        :blob_content_encoding=>"utf-16",
-        :blob_content_language=>"klingon",
-        :blob_cache_control=>"max-age=1296000",
+        :content_type=>"application/my-special-format",
+        :content_encoding=>"utf-16",
+        :content_language=>"klingon",
+        :cache_control=>"max-age=1296000",
       }}
 
     it 'sets and gets properties for a blob' do
       result = subject.set_blob_properties container_name, blob_name, options
       result.must_be_nil
       blob = subject.get_blob_properties container_name, blob_name
-      blob.properties[:content_type].must_equal options[:blob_content_type]
-      blob.properties[:content_encoding].must_equal options[:blob_content_encoding]
-      blob.properties[:cache_control].must_equal options[:blob_cache_control]
+      blob.properties[:content_type].must_equal options[:content_type]
+      blob.properties[:content_encoding].must_equal options[:content_encoding]
+      blob.properties[:cache_control].must_equal options[:cache_control]
     end
 
     describe 'when a blob has a snapshot' do
@@ -62,9 +62,9 @@ describe Azure::Storage::Blob::BlobService do
         blob = subject.get_blob_properties container_name, blob_name, { :snapshot => snapshot }
 
         blob.snapshot.must_equal snapshot
-        blob.properties[:content_type].must_equal options[:blob_content_type]
-        blob.properties[:content_encoding].must_equal options[:blob_content_encoding]
-        blob.properties[:cache_control].must_equal options[:blob_cache_control]
+        blob.properties[:content_type].must_equal options[:content_type]
+        blob.properties[:content_encoding].must_equal options[:content_encoding]
+        blob.properties[:cache_control].must_equal options[:cache_control]
       end
 
       it 'errors if the snapshot does not exist' do

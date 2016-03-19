@@ -24,3 +24,5 @@
 source 'https://rubygems.org'
 
 gemspec :name => 'azure-storage'
+
+gem 'coveralls', require: false
