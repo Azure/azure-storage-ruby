@@ -1,0 +1,1748 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: Azure::Storage::Blob::Container
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../../';
+  framesUrl = "../../../frames.html#!Azure/Storage/Blob/Container.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Blob.html" title="Azure::Storage::Blob (module)">Blob</a></span></span>
+     &raquo; 
+    <span class="title">Container</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: Azure::Storage::Blob::Container
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+      <dt class="r1">Includes:</dt>
+      <dd class="r1"><span class='object_link'><a href="../Service.html" title="Azure::Storage::Service (module)">Service</a></span></dd>
+      
+    
+  
+  
+    <dt class="r2">Included in:</dt>
+    <dd class="r2"><span class='object_link'><a href="BlobService.html" title="Azure::Storage::Blob::BlobService (class)">BlobService</a></span></dd>
+    
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/azure/storage/blob/container.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Container/Container.html" title="Azure::Storage::Blob::Container::Container (class)">Container</a></span>
+    
+  
+</p>
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#acquire_container_lease-instance_method" title="#acquire_container_lease (instance method)">- (Object) <strong>acquire_container_lease</strong>(container, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Establishes an exclusive write lock on a container.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#break_container_lease-instance_method" title="#break_container_lease (instance method)">- (Object) <strong>break_container_lease</strong>(container, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Breaks the lease, if the container has an active lease.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#change_container_lease-instance_method" title="#change_container_lease (instance method)">- (Object) <strong>change_container_lease</strong>(container, lease, proposed_lease, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Change the lease ID.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_container-instance_method" title="#create_container (instance method)">- (Object) <strong>create_container</strong>(name, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Create a new container.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete_container-instance_method" title="#delete_container (instance method)">- (Object) <strong>delete_container</strong>(name, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Deletes a container.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_container_acl-instance_method" title="#get_container_acl (instance method)">- (Object) <strong>get_container_acl</strong>(name, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Gets the access control list (ACL) and any container-level access
+policies for the container.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_container_metadata-instance_method" title="#get_container_metadata (instance method)">- (Object) <strong>get_container_metadata</strong>(name, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Returns only user-defined metadata for the specified container.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_container_properties-instance_method" title="#get_container_properties (instance method)">- (Object) <strong>get_container_properties</strong>(name, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Returns all properties and metadata on the container.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#list_blobs-instance_method" title="#list_blobs (instance method)">- (Object) <strong>list_blobs</strong>(name, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Get a list of Blobs from the server.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#release_container_lease-instance_method" title="#release_container_lease (instance method)">- (Object) <strong>release_container_lease</strong>(container, lease, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Releases the lease.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#renew_container_lease-instance_method" title="#renew_container_lease (instance method)">- (Object) <strong>renew_container_lease</strong>(container, lease, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Renews the lease.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_container_acl-instance_method" title="#set_container_acl (instance method)">- (Object) <strong>set_container_acl</strong>(name, public_access_level, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Sets the ACL and any container-level access policies for the
+container.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_container_metadata-instance_method" title="#set_container_metadata (instance method)">- (Object) <strong>set_container_metadata</strong>(name, metadata, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Sets custom metadata for the container.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="acquire_container_lease-instance_method">
+  
+    - (<tt>Object</tt>) <strong>acquire_container_lease</strong>(container, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Establishes an exclusive write lock on a container. The lock
+duration can be 15 to 60 seconds, or can be infinite. To write to a locked
+container, a client must provide a lease ID.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>container</code>                  - String. The container name.</p>
+</li><li>
+<p><code>options</code>                    - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:duration</code>                  - Integer. Default -1. Specifies
+the duration of the lease, in seconds, or negative one (-1)</p>
+
+<pre class="code ruby"><code class="ruby">for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. (optional)</code></pre>
+</li><li>
+<p><code>:proposed_lease_id</code>         - String. Proposed lease ID, in a
+GUID string format. The Blob service returns 400 (Invalid request)</p>
+
+<pre class="code ruby"><code class="ruby">if the proposed lease ID is not in the correct format. (optional)</code></pre>
+</li><li>
+<p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:if_modified_since</code>         - String. A DateTime value. Specify
+this conditional header to acquire the lease</p>
+
+<pre class="code ruby"><code class="ruby">only if the container has been modified since the specified date/time. If the container has not been modified, 
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
+</li><li>
+<p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
+this conditional header to acquire the lease</p>
+
+<pre class="code ruby"><code class="ruby">only if the container has not been modified since the specified date/time. If the container has been modified, 
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
+</li><li>
+<p><code>:if_match</code>                  - String. An ETag value. Specify an
+ETag value for this conditional header to acquire the lease</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_only'>only</span> <span class='kw'>if</span> <span class='id identifier rubyid_the'>the</span> <span class='id identifier rubyid_container'>container</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>s ETag value matches the value specified. If the values do not match, 
+</span></span></code></pre>
+</li><li>
+<p><code>:if_none_match</code>             - String. An ETag value. Specify an
+ETag value for this conditional header to acquire the lease</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_only'>only</span> <span class='kw'>if</span> <span class='id identifier rubyid_the'>the</span> <span class='id identifier rubyid_container'>container</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>s ETag value does not match the value specified. If the values are identical, 
+</span></span></code></pre>
+</li></ul>
+
+<p>See <a
+href="http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx">msdn.microsoft.com/en-us/library/azure/ee691972.aspx</a></p>
+
+<p>Returns a String of the new unique lease id. While the lease is active, you
+must include the lease ID with any request to write, or to renew, change,
+or release the lease.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+320
+321
+322</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 320</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_acquire_container_lease'>acquire_container_lease</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_acquire_lease'>acquire_lease</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="break_container_lease-instance_method">
+  
+    - (<tt>Object</tt>) <strong>break_container_lease</strong>(container, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Breaks the lease, if the container has an active lease. Once a
+lease is broken, it cannot be renewed. Any authorized request can break the
+lease; the request is not required to specify a matching lease ID. When a
+lease is broken, the lease break period is allowed to elapse, during which
+time no lease operation except break and release can be performed on the
+container. When a lease is successfully broken, the response indicates the
+interval in seconds until a new lease can be acquired.</p>
+
+<p>A lease that has been broken can also be released, in which case another
+client may immediately acquire the lease on the container.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>container</code>                  - String. The container name.</p>
+</li><li>
+<p><code>options</code>                    - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:break_period</code>              - Integer. The proposed duration of
+seconds that the lease should continue before it is</p>
+
+<pre class="code ruby"><code class="ruby">broken, between 0 and 60 seconds. This break period is only used if it is shorter than
+the time remaining on the lease. If longer, the time remaining on the lease is used. A
+new lease will not be available before the break period has expired, but the lease may
+be held for longer than the break period.
+
+If this option is not used, a fixed-duration lease breaks after the remaining lease
+period elapses, and an infinite lease breaks immediately.</code></pre>
+</li><li>
+<p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:if_modified_since</code>         - String. A DateTime value. Specify
+this conditional header to break the lease</p>
+
+<pre class="code ruby"><code class="ruby">only if the container has been modified since the specified date/time. If the container has not been modified, 
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
+</li><li>
+<p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
+this conditional header to break the lease</p>
+
+<pre class="code ruby"><code class="ruby">only if the container has not been modified since the specified date/time. If the container has been modified, 
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
+</li><li>
+<p><code>:if_match</code>                  - String. An ETag value. Specify an
+ETag value for this conditional header to break the lease</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_only'>only</span> <span class='kw'>if</span> <span class='id identifier rubyid_the'>the</span> <span class='id identifier rubyid_container'>container</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>s ETag value matches the value specified. If the values do not match, 
+</span></span></code></pre>
+</li><li>
+<p><code>:if_none_match</code>             - String. An ETag value. Specify an
+ETag value for this conditional header to break the lease</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_only'>only</span> <span class='kw'>if</span> <span class='id identifier rubyid_the'>the</span> <span class='id identifier rubyid_container'>container</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>s ETag value does not match the value specified. If the values are identical, 
+</span></span></code></pre>
+</li></ul>
+
+<p>See <a
+href="http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx">msdn.microsoft.com/en-us/library/azure/ee691972.aspx</a></p>
+
+<p>Returns an Integer of the remaining lease time. This value is the
+approximate time remaining in the lease period, in seconds. This header is
+returned only for a successful request to break the lease. If the break is
+immediate, 0 is returned.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+467
+468
+469</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 467</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_break_container_lease'>break_container_lease</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_break_lease'>break_lease</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="change_container_lease-instance_method">
+  
+    - (<tt>Object</tt>) <strong>change_container_lease</strong>(container, lease, proposed_lease, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Change the lease ID.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>container</code>                  - String. The container name.</p>
+</li><li>
+<p><code>lease</code>                      - String. The existing lease id.</p>
+</li><li>
+<p><code>proposed_lease</code>             - String. Proposed lease ID, in a
+GUID string format. The Blob service returns 400 (Invalid request)</p>
+
+<pre class="code ruby"><code class="ruby">if the proposed lease ID is not in the correct format. (optional).</code></pre>
+</li><li>
+<p><code>options</code>                    - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:if_modified_since</code>         - String. A DateTime value. Specify
+this conditional header to change the lease</p>
+
+<pre class="code ruby"><code class="ruby">only if the container has been modified since the specified date/time. If the container has not been modified, 
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
+</li><li>
+<p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
+this conditional header to change the lease</p>
+
+<pre class="code ruby"><code class="ruby">only if the container has not been modified since the specified date/time. If the container has been modified, 
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
+</li><li>
+<p><code>:if_match</code>                  - String. An ETag value. Specify an
+ETag value for this conditional header to change the lease</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_only'>only</span> <span class='kw'>if</span> <span class='id identifier rubyid_the'>the</span> <span class='id identifier rubyid_container'>container</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>s ETag value matches the value specified. If the values do not match, 
+</span></span></code></pre>
+</li><li>
+<p><code>:if_none_match</code>             - String. An ETag value. Specify an
+ETag value for this conditional header to change the lease</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_only'>only</span> <span class='kw'>if</span> <span class='id identifier rubyid_the'>the</span> <span class='id identifier rubyid_container'>container</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>s ETag value does not match the value specified. If the values are identical, 
+</span></span></code></pre>
+</li></ul>
+
+<p>See <a
+href="http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx">msdn.microsoft.com/en-us/library/azure/ee691972.aspx</a></p>
+
+<p>Returns the changed lease id</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+387
+388
+389</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 387</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_change_container_lease'>change_container_lease</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_proposed_lease'>proposed_lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_change_lease'>change_lease</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_proposed_lease'>proposed_lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create_container-instance_method">
+  
+    - (<tt>Object</tt>) <strong>create_container</strong>(name, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Create a new container</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>name</code>          - String. The name of the container.</p>
+</li><li>
+<p><code>options</code>       - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:metadata</code>            - Hash. User defined metadata for the
+container (optional).</p>
+</li><li>
+<p><code>:public_access_level</code> - String. One of “container” or “blob”
+(optional).</p>
+</li><li>
+<p><code>:timeout</code>             - Integer. A timeout in seconds.</p>
+</li></ul>
+
+<p>See <a
+href="http://msdn.microsoft.com/en-us/library/azure/dd179468.aspx">msdn.microsoft.com/en-us/library/azure/dd179468.aspx</a></p>
+
+<p>Returns a Container</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_create_container'>create_container</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Scheme + path
+</span>  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+
+  <span class='comment'># Headers
+</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_service_properties_headers'>service_properties_headers</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'>add_metadata_to_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-blob-public-access</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:public_access_level</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:public_access_level</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+
+  <span class='comment'># result
+</span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'>container_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
+  <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_container'>container</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delete_container-instance_method">
+  
+    - (<tt>Object</tt>) <strong>delete_container</strong>(name, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Deletes a container.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>name</code>          - String. The name of the container.</p>
+</li><li>
+<p><code>options</code>       - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>      - Integer. A timeout in seconds.</p>
+</li></ul>
+
+<p>See <a
+href="http://msdn.microsoft.com/en-us/library/azure/dd179408.aspx">msdn.microsoft.com/en-us/library/azure/dd179408.aspx</a></p>
+
+<p>Returns nil on success</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 274</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_delete_container'>delete_container</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:delete</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  
+  <span class='comment'># result
+</span>  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_container_acl-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_container_acl</strong>(name, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Gets the access control list (ACL) and any container-level access
+policies for the container.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>name</code>          - String. The name of the container</p>
+</li><li>
+<p><code>options</code>       - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>      - Integer. A timeout in seconds.</p>
+</li></ul>
+
+<p>See <a
+href="http://msdn.microsoft.com/en-us/library/azure/dd179469.aspx">msdn.microsoft.com/en-us/library/azure/dd179469.aspx</a></p>
+
+<p>Returns a tuple of (container, signed_identifiers)</p>
+
+<pre class="code ruby"><code class="ruby">container           - A Azure::Storage::Entity::Blob::Container instance
+signed_identifiers  - A list of Azure::Storage::Entity::SignedIdentifier instances</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 192</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_container_acl'>get_container_acl</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>acl</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+  
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+  <span class='comment'># Result
+</span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'>container_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
+
+  <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_from_xml'>signed_identifiers_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>!=</span> <span class='kw'>nil</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+
+  <span class='kw'>return</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_container_metadata-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_container_metadata</strong>(name, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Returns only user-defined metadata for the specified container.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>name</code>          - String. The name of the container</p>
+</li><li>
+<p><code>options</code>       - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>      - Integer. A timeout in seconds.</p>
+</li></ul>
+
+<p>See <a
+href="http://msdn.microsoft.com/en-us/library/azure/ee691976.aspx">msdn.microsoft.com/en-us/library/azure/ee691976.aspx</a></p>
+
+<p>Returns a Container</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 127</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_container_metadata'>get_container_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>metadata</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+  <span class='comment'># result
+</span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'>container_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
+  <span class='id identifier rubyid_container'>container</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_container_properties-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_container_properties</strong>(name, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Returns all properties and metadata on the container.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>name</code>          - String. The name of the container</p>
+</li><li>
+<p><code>options</code>       - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>      - Integer. A timeout in seconds.</p>
+</li></ul>
+
+<p>See <a
+href="http://msdn.microsoft.com/en-us/library/azure/dd179370.aspx">msdn.microsoft.com/en-us/library/azure/dd179370.aspx</a></p>
+
+<p>Returns a Container</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 98</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_container_properties'>get_container_properties</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+  <span class='comment'># result
+</span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'>container_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
+  <span class='id identifier rubyid_container'>container</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="list_blobs-instance_method">
+  
+    - (<tt>Object</tt>) <strong>list_blobs</strong>(name, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Get a list of Blobs from the server</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>name</code>              - String. The name of the container to list
+blobs for.</p>
+</li><li>
+<p><code>options</code>           - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:prefix</code>           - String. Filters the results to return only
+blobs</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_whose'>whose</span> <span class='id identifier rubyid_name'>name</span> <span class='id identifier rubyid_begins'>begins</span> <span class='id identifier rubyid_with'>with</span> <span class='id identifier rubyid_the'>the</span> <span class='id identifier rubyid_specified'>specified</span> <span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span> <span class='lparen'>(</span><span class='id identifier rubyid_optional'>optional</span><span class='rparen'>)</span></code></pre>
+</li><li>
+<p><code>:delimiter</code>        - String. When the request includes this
+parameter, the operation</p>
+
+<pre class="code ruby"><code class="ruby">returns a BlobPrefix element in the response body that acts as a
+placeholder for all blobs whose names begin with the same substring
+up to the appearance of the delimiter character. The delimiter may
+be a single character or a string.</code></pre>
+</li><li>
+<p><code>:marker</code>           - String. An identifier that specifies the
+portion of the</p>
+
+<pre class="code ruby"><code class="ruby">list to be returned. This value comes from the property
+Azure::Service::EnumerationResults.continuation_token when
+there are more blobs available than were returned. The
+marker value may then be used here to request the next set
+of list items. (optional)</code></pre>
+</li><li>
+<p><code>:max_results</code>      - Integer. Specifies the maximum number of
+blobs to return.</p>
+
+<pre class="code ruby"><code class="ruby">If max_results is not specified, or is a value greater than
+5,000, the server will return up to 5,000 items. If it is set
+to a value less than or equal to zero, the server will return
+status code 400 (Bad Request). (optional)</code></pre>
+</li><li>
+<p><code>:metadata</code>         - Boolean. Specifies whether or not to
+return the blob metadata.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='lparen'>(</span><span class='id identifier rubyid_optional'>optional</span><span class='comma'>,</span> <span class='const'>Default</span><span class='op'>=</span><span class='kw'>false</span><span class='rparen'>)</span></code></pre>
+</li><li>
+<p><code>:snapshots</code>        - Boolean. Specifies that snapshots should
+be included in the</p>
+
+<pre class="code ruby"><code class="ruby">enumeration. Snapshots are listed from oldest to newest in the
+response. (optional, Default=false)</code></pre>
+</li><li>
+<p><code>:uncomittedblobs</code>  - Boolean. Specifies that blobs for which
+blocks have been uploaded,</p>
+
+<pre class="code ruby"><code class="ruby">but which have not been committed using put_block_list, be included
+in the response. (optional, Default=false)</code></pre>
+</li><li>
+<p><code>:copy</code>             - Boolean. Specifies that metadata related
+to any current or previous</p>
+
+<pre class="code ruby"><code class="ruby">copy_blob operation should be included in the response.
+(optional, Default=false)</code></pre>
+</li><li>
+<p><code>:timeout</code>          - Integer. A timeout in seconds.</p>
+</li></ul>
+
+<p>NOTE: Metadata requested with the :metadata parameter must have been stored
+in accordance with the naming restrictions imposed by the 2009-09-19
+version of the Blob service. Beginning with that version, all metadata
+names must adhere to the naming conventions for C# identifiers.</p>
+
+<p>See: <a
+href="http://msdn.microsoft.com/en-us/library/azure/dd135734.aspx">msdn.microsoft.com/en-us/library/azure/dd135734.aspx</a></p>
+
+<p>Any metadata with invalid names which were previously stored, will be
+returned with the key “x-ms-invalid-name” in the metadata hash. This may
+contain multiple values and be an Array (vs a String if it only contains a
+single value).</p>
+
+<p>Returns an Azure::Service::EnumerationResults</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 524</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_list_blobs'>list_blobs</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>list</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>prefix</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:prefix</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\\</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:prefix</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>delimiter</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:delimiter</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:delimiter</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>marker</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:marker</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:marker</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>maxresults</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:max_results</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:max_results</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_included_datasets'>included_datasets</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_included_datasets'>included_datasets</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>metadata</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>true</span>
+  <span class='id identifier rubyid_included_datasets'>included_datasets</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>snapshots</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:snapshots</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>true</span>
+  <span class='id identifier rubyid_included_datasets'>included_datasets</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>uncommittedblobs</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:uncommittedblobs</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>true</span>
+  <span class='id identifier rubyid_included_datasets'>included_datasets</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>copy</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:copy</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>true</span>
+
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>include</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_included_datasets'>included_datasets</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>,</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_included_datasets'>included_datasets</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+
+  <span class='comment'># Scheme + path
+</span>  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+  
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span>
+  
+  <span class='comment'># Result
+</span>  <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_blob_enumeration_results_from_xml'>blob_enumeration_results_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="release_container_lease-instance_method">
+  
+    - (<tt>Object</tt>) <strong>release_container_lease</strong>(container, lease, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Releases the lease. The lease may be released if the lease ID
+specified on the request matches that associated with the container.
+Releasing the lease allows another client to immediately acquire the lease
+for the container as soon as the release is complete.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>container</code>                  - String. The container name.</p>
+</li><li>
+<p><code>lease</code>                      - String. The lease id.</p>
+</li><li>
+<p><code>options</code>                    - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:if_modified_since</code>         - String. A DateTime value. Specify
+this conditional header to release the lease</p>
+
+<pre class="code ruby"><code class="ruby">only if the container has been modified since the specified date/time. If the container has not been modified, 
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
+</li><li>
+<p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
+this conditional header to release the lease</p>
+
+<pre class="code ruby"><code class="ruby">only if the container has not been modified since the specified date/time. If the container has been modified, 
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
+</li><li>
+<p><code>:if_match</code>                  - String. An ETag value. Specify an
+ETag value for this conditional header to release the lease</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_only'>only</span> <span class='kw'>if</span> <span class='id identifier rubyid_the'>the</span> <span class='id identifier rubyid_container'>container</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>s ETag value matches the value specified. If the values do not match, 
+</span></span></code></pre>
+</li><li>
+<p><code>:if_none_match</code>             - String. An ETag value. Specify an
+ETag value for this conditional header to release the lease</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_only'>only</span> <span class='kw'>if</span> <span class='id identifier rubyid_the'>the</span> <span class='id identifier rubyid_container'>container</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>s ETag value does not match the value specified. If the values are identical, 
+</span></span></code></pre>
+</li></ul>
+
+<p>See <a
+href="http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx">msdn.microsoft.com/en-us/library/azure/ee691972.aspx</a></p>
+
+<p>Returns nil on success</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+420
+421
+422</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 420</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_release_container_lease'>release_container_lease</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_release_lease'>release_lease</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="renew_container_lease-instance_method">
+  
+    - (<tt>Object</tt>) <strong>renew_container_lease</strong>(container, lease, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Renews the lease. The lease can be renewed if the lease ID
+specified on the request matches that associated with the container. Note
+that the lease may be renewed even if it has expired as long as the
+container has not been modified or leased again since the expiration of
+that lease. When you renew a lease, the lease duration clock resets.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>container</code>                  - String. The container name.</p>
+</li><li>
+<p><code>lease</code>                      - String. The lease id</p>
+</li><li>
+<p><code>options</code>                    - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:if_modified_since</code>         - String. A DateTime value. Specify
+this conditional header to renew the lease</p>
+
+<pre class="code ruby"><code class="ruby">only if the container has been modified since the specified date/time. If the container has not been modified, 
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
+</li><li>
+<p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
+this conditional header to renew the lease</p>
+
+<pre class="code ruby"><code class="ruby">only if the container has not been modified since the specified date/time. If the container has been modified, 
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
+</li><li>
+<p><code>:if_match</code>                  - String. An ETag value. Specify an
+ETag value for this conditional header to renew the lease</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_only'>only</span> <span class='kw'>if</span> <span class='id identifier rubyid_the'>the</span> <span class='id identifier rubyid_container'>container</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>s ETag value matches the value specified. If the values do not match, 
+</span></span></code></pre>
+</li><li>
+<p><code>:if_none_match</code>             - String. An ETag value. Specify an
+ETag value for this conditional header to renew the lease</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_only'>only</span> <span class='kw'>if</span> <span class='id identifier rubyid_the'>the</span> <span class='id identifier rubyid_container'>container</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>s ETag value does not match the value specified. If the values are identical, 
+</span></span></code></pre>
+</li></ul>
+
+<p>See <a
+href="http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx">msdn.microsoft.com/en-us/library/azure/ee691972.aspx</a></p>
+
+<p>Returns the renewed lease id</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+354
+355
+356</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 354</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_renew_container_lease'>renew_container_lease</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_renew_lease'>renew_lease</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_container_acl-instance_method">
+  
+    - (<tt>Object</tt>) <strong>set_container_acl</strong>(name, public_access_level, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Sets the ACL and any container-level access policies for the
+container.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>name</code>                         - String. The name of the
+container</p>
+</li><li>
+<p><code>public_access_level</code>          - String. The container public
+access level</p>
+</li><li>
+<p><code>options</code>                      - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:signed_identifiers</code>          - Array. A list of
+Azure::Storage::Entity::SignedIdentifier instances (optional)</p>
+</li><li>
+<p><code>:timeout</code>                     - Integer. A timeout in seconds.</p>
+</li></ul>
+
+<p>See <a
+href="http://msdn.microsoft.com/en-us/library/azure/dd179391.aspx">msdn.microsoft.com/en-us/library/azure/dd179391.aspx</a></p>
+
+<p>Returns a tuple of (container, signed_identifiers)</p>
+<ul><li>
+<p><code>container</code>                    - A
+Azure::Storage::Entity::Blob::Container instance</p>
+</li><li>
+<p><code>signed_identifiers</code>           - A list of
+Azure::Storage::Entity::SignedIdentifier instances</p>
+</li></ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 230</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_container_acl'>set_container_acl</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_public_access_level'>public_access_level</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>acl</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Scheme + path
+</span>  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+
+  <span class='comment'># Headers + body
+</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_service_properties_headers'>service_properties_headers</span>
+  <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-blob-public-access</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_public_access_level'>public_access_level</span> <span class='kw'>if</span> <span class='id identifier rubyid_public_access_level'>public_access_level</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_public_access_level'>public_access_level</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+
+  <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_to_xml'>signed_identifiers_to_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span>
+
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+
+  <span class='comment'># Result
+</span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'>container_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
+  <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_public_access_level'>public_access_level</span> <span class='op'>=</span> <span class='id identifier rubyid_public_access_level'>public_access_level</span>
+
+  <span class='kw'>return</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_container_metadata-instance_method">
+  
+    - (<tt>Object</tt>) <strong>set_container_metadata</strong>(name, metadata, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Sets custom metadata for the container.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>name</code>          - String. The name of the container</p>
+</li><li>
+<p><code>metadata</code>      - Hash. A Hash of the metadata values</p>
+</li><li>
+<p><code>options</code>       - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>      - Integer. A timeout in seconds.</p>
+</li></ul>
+
+<p>See <a
+href="http://msdn.microsoft.com/en-us/library/azure/dd179362.aspx">msdn.microsoft.com/en-us/library/azure/dd179362.aspx</a></p>
+
+<p>Returns nil on success</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 157</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_container_metadata'>set_container_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>metadata</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Headers
+</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_service_properties_headers'>service_properties_headers</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'>add_metadata_to_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_metadata'>metadata</span>
+
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  
+  <span class='comment'># Result
+</span>  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sat Mar 19 11:46:00 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.1.7).
+</div>
+
+  </body>
+</html>
