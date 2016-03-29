@@ -65,7 +65,7 @@ There are two ways you can set up the connections:
 
 ```ruby
 
-  require "azure_storage"
+  require "azure-storage"
   client = Azure::Storage.create_develpoment
 
   # Or create by options and provide your own proxy_uri
@@ -102,8 +102,11 @@ There are two ways you can set up the connections:
 
 ```ruby
 
+# Require the azure storage rubygem
+require "azure-storage"
+
 # Create an azure storage blob service object after you set up the credentials
-blobs = Azure::Storage.blobs
+blobs = Azure::Storage::Blob::BlobService.new
 
 # Create a container
 container = blobs.create_container("test-container")
@@ -131,11 +134,11 @@ blobs.delete_blob(container.name, "image-blob")
 
 ```ruby
 
-# Require the azure rubygem
-require "azure_storage"
+# Require the azure storage rubygem
+require "azure-storage"
 
 # Create an azure storage table service object after you set up the credentials
-tables = Azure::Storage.tables
+tables = Azure::Storage::Table::TableService.new
 
 # Create a table
 tables.create_table("testtable")
@@ -168,11 +171,11 @@ tables.delete_table("testtable")
 
 ```ruby
 
-# Require the azure rubygem
-require "azure_storage"
+# Require the azure storage rubygem
+require "azure-storage"
 
 # Create an azure storage queue service object after you set up the credentials
-queues = Azure::Storage.queues
+queues = Azure::Storage::Queue::QueueService.new
 
 # Create a queue
 queues.create_queue("test-queue")
@@ -202,45 +205,7 @@ queues.delete_queue("test-queue")
 # Getting Started for Contributors
 
 If you would like to become an active contributor to this project please follow the instructions provided in [Azure Projects Contribution Guidelines](http://azure.github.io/guidelines/).
-
-## Development Environment Setup
-
-To get the source code of the SDK via **git** just type:
-
-```bash
-git clone https://github.com/Azure/azure-storage-ruby.git
-cd ./azure-storage-ruby
-```
-
-Then, run bundler to install all the gem dependencies:
-
-```bash
-bundle install
-```
-
-## Setup the Environment for Integration Tests
-
-If you would like to run the integration test suite, you will need to setup environment variables which will be used
-during the integration tests. These tests will use these credentials to run live tests against Azure with the provided
-credentials (you will be charged for usage, so verify the clean up scripts did their job at the end of a test run).
-
-The root of the project contains a .env_sample file. This dot file is a sample of the actual environment vars needed to
-run the integration tests.
-
-Unit tests don't require real credentials and don't require to provide the .env file.
-
-Do the following to prepare your environment for integration tests:
-
-* Copy .env_sample to .env **relative to root of the project dir**
-* Update .env with your credentials **.env is in the .gitignore, so should only reside locally**
-
-## Run Tests
-
-You can use the following commands to run:
-
-* All the tests: ``rake test``. **This will run integration tests if you have .env file or env vars setup**
-* Run storage suite of tests: ``rake test:unit``, ``rake test:integration``
-* One particular test file: ``ruby -I"lib:test" "<path of the test file>"``
+You can find more details for contributing in the [CONTRIBUTING.md](CONTRIBUTING.md).
 
 # Provide Feedback
 
@@ -250,5 +215,10 @@ If you encounter any bugs with the library please file an issue in the [Issues](
 
 * [Azure Storage Client Library for .Net](http://github.com/azure/azure-storage-net)
 * [Azure Storage Client Library for Java](http://github.com/azure/azure-storage-java)
-* [Azure Storage Client Library for node.js](http://github.com/azure/azure-storage-node)
+* [Azure Storage Client Library for Node.js](http://github.com/azure/azure-storage-node)
+* [Azure Storage Client Library for Python](http://github.com/azure/azure-storage-python)
+* [Azure Storage Client Library for Ruby](http://github.com/azure/azure-storage-ruby)
 * [Azure Storage Client Library for C++](http://github.com/azure/azure-storage-cpp)
+* [Azure Storage Client Library for iOS](http://github.com/azure/azure-storage-ios)
+* [Azure Storage Client Library for Android](http://github.com/azure/azure-storage-android)
+* [Azure Storage Data Movement Library](https://github.com/Azure/azure-storage-net-data-movement)
