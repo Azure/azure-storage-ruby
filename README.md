@@ -1,6 +1,7 @@
 # Microsoft Azure Storage Client Library for Ruby
 
-[![Build Status](https://travis-ci.org/azure/azure-storage-ruby.svg)](https://travis-ci.org/azure/azure-storage-ruby)
+* Master: [![Master Build Status](https://travis-ci.org/Azure/azure-storage-ruby.svg?branch=master)](https://travis-ci.org/Azure/azure-storage-ruby/branches) [![Coverage Status](https://coveralls.io/repos/github/Azure/azure-storage-ruby/badge.svg?branch=master)](https://coveralls.io/github/Azure/azure-storage-ruby?branch=master)
+* Dev: [![Dev Build Status](https://travis-ci.org/Azure/azure-storage-ruby.svg?branch=dev)](https://travis-ci.org/Azure/azure-storage-ruby/branches) [![Coverage Status](https://coveralls.io/repos/github/Azure/azure-storage-ruby/badge.svg?branch=dev)](https://coveralls.io/github/Azure/azure-storage-ruby?branch=dev)
 
 This project provides a Ruby package that makes it easy to access and manage Microsoft Azure Storage Services.
 
