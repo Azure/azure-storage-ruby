@@ -51,16 +51,19 @@ task :publishDoc do
   system "git remote set-url --push origin #{repo}"
   system "git remote set-branches --add origin #{deploy_branch}"
   system 'git fetch -q'
-  system "git config user.name '#{ENV['GIT_NAME']}'"
-  system "git config user.email '#{ENV['GIT_EMAIL']}'"
+  if ("#{ENV['GIT_NAME']}" != "")
+    system "git config user.name '#{ENV['GIT_NAME']}'"
+  end
+  if ("#{ENV['GIT_EMAIL']}" != "")
+    system "git config user.email '#{ENV['GIT_EMAIL']}'"
+  end
   system 'git config credential.helper "store --file=.git/credentials"'
   File.open('.git/credentials', 'w') do |f|
     f.write("https://#{ENV['GH_TOKEN']}:x-oauth-basic@github.com")
   end
-  system "git branch #{deploy_branch} origin/#{deploy_branch}"
   system "rake yard"
   system "git checkout gh-pages"
-  system "mv doc/* ./"
+  system "mv doc/* ./ -f"
   system "rm doc -rf"
   system "git add *"
   system "git commit -m \"update document\""
