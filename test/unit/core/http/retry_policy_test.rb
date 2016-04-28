@@ -22,7 +22,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require 'test_helper'
-require 'azure/storage/core/http/retry_policy'
+require 'azure/core/http/retry_policy'
 
 describe Azure::Core::Http::RetryPolicy do
   it 'uses blocks as retry logic' do

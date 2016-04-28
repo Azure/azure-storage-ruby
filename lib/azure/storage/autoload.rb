@@ -29,15 +29,13 @@ module Azure
   autoload :Storage,                      'azure/storage/core'
 
   module Storage
-    autoload :Default,                    'azure/storage/core/constants'
+    autoload :Default,                    'azure/storage/default'
     autoload :Configurable,               'azure/storage/configurable'
     autoload :Client,                     'azure/storage/client'
-    autoload :ClientOptions,              'azure/storage/core/client_options'
+    autoload :ClientOptions,              'azure/storage/client_options'
     
     module Auth
       autoload :SharedAccessSignature,    'azure/storage/core/auth/shared_access_signature'
-      autoload :SharedKey,                'azure/storage/core/auth/shared_key'
-      autoload :SharedKeyLite,            'azure/storage/core/auth/shared_key_lite'
     end
 
     module Service

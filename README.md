@@ -14,7 +14,6 @@ This project provides a Ruby package that makes it easy to access and manage Mic
 
 # Supported Ruby Versions
 
-* Ruby 1.9.3
 * Ruby 2.0
 * Ruby 2.1
 * Ruby 2.2
@@ -31,7 +30,7 @@ Note:
 You can install the azure rubygem package directly.
 
 ```bash
-gem install azure-storage
+gem install azure-storage --pre
 ```
 
 ## Setup Connection
@@ -49,7 +48,7 @@ There are two ways you can set up the connections:
 
 ```ruby
 
-  require "azure-storage"
+  require "azure/storage"
 
   # Setup a specific instance of an Azure::Storage::Client
   client = Azure::Storage.create(:storage_account_name => "your account name", storage_access_key => "your access key")
@@ -67,7 +66,7 @@ There are two ways you can set up the connections:
 
 ```ruby
 
-  require "azure-storage"
+  require "azure/storage"
   client = Azure::Storage.create_develpoment
 
   # Or create by options and provide your own proxy_uri
@@ -105,7 +104,7 @@ There are two ways you can set up the connections:
 ```ruby
 
 # Require the azure storage rubygem
-require "azure-storage"
+require "azure/storage"
 
 # Create an azure storage blob service object after you set up the credentials
 blobs = Azure::Storage::Blob::BlobService.new
@@ -137,7 +136,7 @@ blobs.delete_blob(container.name, "image-blob")
 ```ruby
 
 # Require the azure storage rubygem
-require "azure-storage"
+require "azure/storage"
 
 # Create an azure storage table service object after you set up the credentials
 tables = Azure::Storage::Table::TableService.new
@@ -174,7 +173,7 @@ tables.delete_table("testtable")
 ```ruby
 
 # Require the azure storage rubygem
-require "azure-storage"
+require "azure/storage"
 
 # Create an azure storage queue service object after you set up the credentials
 queues = Azure::Storage::Queue::QueueService.new

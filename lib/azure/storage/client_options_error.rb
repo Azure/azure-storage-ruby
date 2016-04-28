@@ -21,35 +21,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require "azure/storage/core/auth/shared_key"
 
 module Azure::Storage
-  module Auth
-    class SharedKeyLite < SharedKey
-      # The name of the strategy.
-      #
-      # @return [String]
-      def name
-        'SharedKeyLite'
-      end
 
-      # Generate the string to sign.
-      #
-      # @param method     [Symbol] The HTTP request method.
-      # @param uri        [URI] The URI of the request we're signing.
-      # @param headers    [Hash] A Hash of HTTP request headers.
-      #
-      # Returns a plain text string.
-      def signable_string(method, uri, headers)
-        [
-          method.to_s.upcase,
-          headers.fetch('Content-MD5', ''),
-          headers.fetch('Content-Type', ''),
-          headers.fetch('Date') { raise IndexError, 'Headers must include Date' },
-          canonicalized_headers(headers),
-          canonicalized_resource(uri)
-        ].join("\n")
-      end
+  class InvalidConnectionStringError < Core::StorageError
+    def initialize(message = SR::INVALID_CONNECTION_STRING)
+    	super(message)
     end
   end
+
+  class InvalidOptionsError < Core::StorageError
+    def initialize(message = SR::INVALID_CLIENT_OPTIONS)
+      super(message)
+    end
+  end
+
 end

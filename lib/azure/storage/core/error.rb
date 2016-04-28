@@ -21,15 +21,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-module Azure
-  module Core
-    # Superclass for errors generated from this library, so people can
-    # just rescue this for generic error handling
-    class Error < StandardError;end
-  end
-end
+require 'azure/core'
 
-module Azure::Storage
+module Azure::Storage::Core
   # Superclass for errors generated from this library, so people can
   # just rescue this for generic error handling
   class StorageError < StandardError

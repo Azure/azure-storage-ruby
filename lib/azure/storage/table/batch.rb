@@ -23,10 +23,10 @@
 #--------------------------------------------------------------------------
 require 'uuid'
 
+require 'azure/core/http/http_error'
 require 'azure/storage/table/serialization'
 require 'azure/storage/table/table_service'
 require 'azure/storage/table/batch_response'
-require 'azure/storage/core/http/http_error'
 
 module Azure::Storage
   module Table

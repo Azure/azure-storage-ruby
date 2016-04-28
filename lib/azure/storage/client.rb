@@ -22,10 +22,10 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
+require 'azure/storage/core'
 require 'azure/storage/core/http_client'
 
-require 'azure/storage/core'
-require 'azure/storage/core/client_options'
+require 'azure/storage/client_options'
 
 require 'azure/storage/blob/blob_service'
 require 'azure/storage/table/table_service'
@@ -35,7 +35,7 @@ module Azure::Storage
   class Client
     include Azure::Storage::Configurable
     include Azure::Storage::ClientOptions
-    include Azure::Core::HttpClient
+    include Azure::Storage::Core::HttpClient
 
     # Public: Creates an instance of [Azure::Storage::Client]
     #
@@ -178,7 +178,7 @@ module Azure::Storage
     private
 
     def default_client(opts)
-      {client: self}.merge(opts || {})
+      !opts.empty? ? {client: Azure::Storage.client(opts)} : {client: self} 
     end
 
   end

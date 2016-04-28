@@ -22,12 +22,12 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require 'cgi'
-require 'azure/storage/core/auth/signer'
+require 'azure/storage/core/auth/shared_key'
 
 module Azure::Storage
   module Table
     module Auth
-      class SharedKey < Azure::Storage::Auth::SharedKey
+      class SharedKey < Core::Auth::SharedKey
         # The account name
         attr :account_name
 

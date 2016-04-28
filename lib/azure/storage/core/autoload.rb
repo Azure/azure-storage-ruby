@@ -23,13 +23,12 @@
 #--------------------------------------------------------------------------
 
 module Azure
-  module Core
-    autoload :HttpClient,                     'azure/storage/core/http_client'
-    autoload :Utility,                        'azure/storage/core/utility'
-    autoload :Logger,                         'azure/storage/core/utility'
-    autoload :Error,                          'azure/storage/core/error'
-    autoload :Service,                        'azure/storage/core/service'
-    autoload :FilteredService,                'azure/storage/core/filtered_service'
-    autoload :SignedService,                  'azure/storage/core/signed_service'
+  module Storage
+    module Core
+      autoload :HttpClient,                     'azure/storage/core/http_client'
+      autoload :Utility,                        'azure/storage/core/utility'
+      autoload :Logger,                         'azure/storage/core/utility'
+      autoload :Error,                          'azure/storage/core/error'
+    end
   end
 end

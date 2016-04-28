@@ -22,7 +22,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-require 'azure/storage/core/signed_service'
+require 'azure/core/signed_service'
 require 'azure/storage/core'
 require 'azure/storage/service/storage_service_properties'
 
@@ -36,7 +36,12 @@ module Azure::Storage
       # (optional, Default=Azure::Storage::Auth::SharedKey.new)
       # @param account_name   [String] The account name (optional, Default=Azure.config.storage_account_name)
       # @param options        [Azure::Storage::Configurable] the client configuration context
-      def initialize(signer=Auth::SharedKey.new, account_name=nil, options = {})
+      def initialize(signer=nil, account_name=nil, options = {})
+        options[:client] = Azure::Storage if options[:client] == nil
+        client_config = options[:client]
+        signer = signer || Azure::Storage::Core::Auth::SharedKey.new(
+          client_config.storage_account_name,
+          client_config.storage_access_key)
         super(signer, account_name, options)
       end
 
