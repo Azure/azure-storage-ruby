@@ -1,8 +1,9 @@
-2016.04 - version 0.10.1
+2016.05 - version 0.10.1
 
 ALL
 * Replaced the core module by the 'azure-core' gem.
 * Stopped maintaining the support for Ruby 1.9.
+* Added support for retry filters.
 
 2016.03 - version 0.10.0
 

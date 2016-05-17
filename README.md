@@ -109,6 +109,9 @@ require "azure/storage"
 # Create an azure storage blob service object after you set up the credentials
 blobs = Azure::Storage::Blob::BlobService.new
 
+# Add retry filter to the service object
+blobs.with_filter(Azure::Storage::Core::Filter::ExponentialRetryPolicyFilter.new)
+
 # Create a container
 container = blobs.create_container("test-container")
 
@@ -140,6 +143,9 @@ require "azure/storage"
 
 # Create an azure storage table service object after you set up the credentials
 tables = Azure::Storage::Table::TableService.new
+
+# Add retry filter to the service object
+tables.with_filter(Azure::Storage::Core::Filter::ExponentialRetryPolicyFilter.new)
 
 # Create a table
 tables.create_table("testtable")
@@ -177,6 +183,9 @@ require "azure/storage"
 
 # Create an azure storage queue service object after you set up the credentials
 queues = Azure::Storage::Queue::QueueService.new
+
+# Add retry filter to the service object
+queues.with_filter(Azure::Storage::Core::Filter::ExponentialRetryPolicyFilter.new)
 
 # Create a queue
 queues.create_queue("test-queue")
