@@ -22,7 +22,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require 'azure/core'
-require 'azure/core/Http/retry_policy'
+require 'azure/core/http/retry_policy'
 
 module Azure::Storage::Core::Filter
   class ExponentialRetryPolicyFilter < RetryPolicyFilter
