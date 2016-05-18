@@ -21,35 +21,28 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require "azure/storage/core/auth/shared_key"
+require 'test_helper'
 
-module Azure::Storage
-  module Auth
-    class SharedKeyLite < SharedKey
-      # The name of the strategy.
-      #
-      # @return [String]
-      def name
-        'SharedKeyLite'
-      end
+describe Azure::Storage::Client do
 
-      # Generate the string to sign.
-      #
-      # @param method     [Symbol] The HTTP request method.
-      # @param uri        [URI] The URI of the request we're signing.
-      # @param headers    [Hash] A Hash of HTTP request headers.
-      #
-      # Returns a plain text string.
-      def signable_string(method, uri, headers)
-        [
-          method.to_s.upcase,
-          headers.fetch('Content-MD5', ''),
-          headers.fetch('Content-Type', ''),
-          headers.fetch('Date') { raise IndexError, 'Headers must include Date' },
-          canonicalized_headers(headers),
-          canonicalized_resource(uri)
-        ].join("\n")
-      end
+  describe 'create client with options' do
+    let(:azure_storage_account) {"testStorageAccount"}
+    let(:azure_storage_access_key) {"testKey1"}
+    subject {Azure::Storage.client(storage_account_name: azure_storage_account, storage_access_key: azure_storage_access_key)}
+
+    it 'should create a blob client' do
+      subject.storage_account_name.must_equal azure_storage_account
+      subject.blobClient.host.must_equal "https://#{azure_storage_account}.blob.core.windows.net"
+    end
+
+    it 'should create a table client' do
+      subject.storage_account_name.must_equal azure_storage_account
+      subject.tableClient.host.must_equal "https://#{azure_storage_account}.table.core.windows.net"
+    end
+    
+    it 'should create a queue client' do
+      subject.storage_account_name.must_equal azure_storage_account
+      subject.queueClient.host.must_equal "https://#{azure_storage_account}.queue.core.windows.net"
     end
   end
 end

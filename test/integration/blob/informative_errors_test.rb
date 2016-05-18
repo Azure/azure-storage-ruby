@@ -23,7 +23,7 @@
 #--------------------------------------------------------------------------
 require 'integration/test_helper'
 require "azure/storage/blob/blob_service"
-require "azure/storage/core/http/http_error"
+require "azure/core/http/http_error"
 
 describe Azure::Storage::Blob::BlobService do
   describe "#informative_errors_blob" do

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-describe Azure::Core::HttpClient do
+describe Azure::Storage::Core::HttpClient do
   subject { Azure::Storage }
 
   let :uri do

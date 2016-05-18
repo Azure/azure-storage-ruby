@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.name        = 'azure-storage'
   s.version     = Azure::Storage::Version
   s.authors     = ['Microsoft Corporation']
-  s.email       = 'dmsh@microsoft.com'
+  s.email       = 'ascl@microsoft.com'
   s.description = 'Microsoft Azure Storage Client Library for Ruby'
   s.summary     = 'Official Ruby client library to consume Azure Storage services'
   s.homepage    = 'http://github.com/azure/azure-storage-ruby'
@@ -39,6 +39,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 1.9.3'
 
   s.add_runtime_dependency('addressable',             '~> 2.3')
+  s.add_runtime_dependency('azure-core',              '~> 0.1')
   s.add_runtime_dependency('faraday',                 '~> 0.9')
   s.add_runtime_dependency('faraday_middleware',      '~> 0.10')
   s.add_runtime_dependency('json',                    '~> 1.8')

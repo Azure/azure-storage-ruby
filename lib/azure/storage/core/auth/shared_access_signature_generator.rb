@@ -23,8 +23,8 @@
 #--------------------------------------------------------------------------
 
 require 'azure/storage/core'
-require 'azure/storage/core/client_options_error'
-require 'azure/storage/core/auth/signer'
+require 'azure/storage/client_options_error'
+require 'azure/core/auth/signer'
 require 'time'
 require 'uri'
 
@@ -104,47 +104,60 @@ module Azure::Storage
         service_type = options[:service_type] || Azure::Storage::ServiceType::BLOB
         options.delete(:service_type) if options.key?(:service_type)
 
+        options[:start] = Time.parse(options[:start]).utc.iso8601 if options[:start] 
+        options[:expiry] = Time.parse(options[:expiry]).utc.iso8601 if options[:expiry] 
         options[:expiry] ||= (Time.now + 60*30).utc.iso8601
 
         raise InvalidOptionsError,"SAS version cannot be set" if options[:version]
 
-        defs = DEFAULTS
+        options = DEFAULTS.merge(options)
         valid_mappings = KEY_MAPPINGS
         if service_type == Azure::Storage::ServiceType::BLOB
-          defs.merge!(resource: 'b')
+          options.merge!(resource: 'b')
           valid_mappings.merge!(BLOB_KEY_MAPPINGS)
         elsif service_type == Azure::Storage::ServiceType::TABLE
-          defs.merge!(tablename: path)
+          options.merge!(tablename: path)
           valid_mappings.merge!(TABLE_KEY_MAPPINGS)
         end
 
         invalid_options = options.reject { |k,v| valid_mappings.key?(k) }
         raise InvalidOptionsError,"invalid options #{invalid_options} provided for SAS token generate" if invalid_options.length > 0
 
-        options.merge!(defs)
-
+        query_hash = Hash[options.map { |k, v| [KEY_MAPPINGS[k], v] }]
+        .reject { |k, v| OPTIONAL_QUERY_PARAMS.include?(k) && v.to_s == '' }
+        .merge( sig: @signer.sign(signable_string(service_type, path, options)) )
+        
+        sas_params = URI.encode_www_form(query_hash)
+      end
+      
+      # Construct the plaintext to the spec required for signatures
+      # @return [String]
+      def signable_string(service_type, path, options)
         # Order is significant
         # The newlines from empty strings here are required
+        options[:start] = Time.parse(options[:start]).utc.iso8601 if options[:start]
+        options[:expiry] = Time.parse(options[:expiry]).utc.iso8601 if options[:expiry]
+        
         signable_string =
         [
           options[:permissions],
           options[:start],
           options[:expiry],
-          "/#{service_type}/#{account_name}#{path.start_with?('/') ? '' : '/'}#{path}",
+          canonicalized_resource(service_type, path),
           options[:identifier],
-          options[:version],
+          Azure::Storage::Default::STG_VERSION,
           options[:cache_control],
           options[:content_disposition],
           options[:content_encoding],
           options[:content_language],
           options[:content_type]
         ].join("\n")
-
-        query_hash = Hash[options.map { |k, v| [KEY_MAPPINGS[k], v] }]
-        .reject { |k, v| OPTIONAL_QUERY_PARAMS.include?(k) && v.to_s == '' }
-        .merge( sig: @signer.sign(signable_string) )
-
-        sas_params = URI.encode_www_form(query_hash)
+      end
+      
+      # Return the cononicalized resource representation of the blob resource
+      # @return [String]
+      def canonicalized_resource(service_type, path)
+        "/#{service_type}/#{account_name}#{path.start_with?('/') ? '' : '/'}#{path}"
       end
 
       # A customised URI reflecting options for the resource signed with Shared Access Signature
@@ -172,14 +185,14 @@ module Azure::Storage
       # * +:endpk+               - String. The end partition key of a specified partition key range. Optional but endpk must accompany endrk.
       # * +:startrk+             - String. The start row key of a specified row key range. Optional.
       # * +:endrk+               - String. The end row key of a specified row key range. Optional.
-      def sign_uri(uri, options)
+      def signed_uri(uri, options)
         parsed_query = CGI::parse(uri.query || '').inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
-
+        
         if parsed_query.has_key?(:restype)
           options[:resource] = parsed_query[:restype].first == 'container' ? 'c' : 'b'
         end
 
-        if options[:service_type] == nil
+        if options[:service_type] == nil and uri.host != nil
           host_splits = uri.host.split('.')
           options[:service_type] = host_splits[1] if host_splits.length > 1 && host_splits[0] == account_name
         end

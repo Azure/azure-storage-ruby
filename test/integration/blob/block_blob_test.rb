@@ -41,6 +41,18 @@ describe Azure::Storage::Blob::BlobService do
       blob = subject.create_block_blob container_name, blob_name, content
       blob.name.must_equal blob_name
     end
+    
+    it 'should create a block blob with spaces in name' do  
+      blob_name = 'blob with spaces'  
+      blob = subject.create_block_blob container_name, blob_name, 'content'  
+      blob.name.must_equal blob_name  
+    end
+    
+    it 'should create block blob with complex in name' do
+      blob_name = 'with фбаф.txt'
+      blob = subject.create_block_blob container_name, blob_name, 'content'
+      blob.name.must_equal blob_name
+    end
 
     it 'sets additional properties when the options hash is used' do
       options = {

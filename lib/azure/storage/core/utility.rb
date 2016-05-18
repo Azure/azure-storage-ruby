@@ -34,7 +34,7 @@ if RUBY_VERSION.to_f < 2.0
   end
 end
 
-module Azure
+module Azure::Storage
   module Error
     # Azure Error
     class Error <  Azure::Core::Error
@@ -204,12 +204,6 @@ end
 
 # Code validate private/public IP acceptable ranges.
 class IPAddr
-  PRIVATE_RANGES = [
-    IPAddr.new('10.0.0.0/8'),
-    IPAddr.new('172.16.0.0/12'),
-    IPAddr.new('192.168.0.0/16')
-  ]
-
   def private?
     return false unless self.ipv4?
     PRIVATE_RANGES.each do |ipr|
@@ -250,5 +244,3 @@ class IPAddr
     end
   end
 end
-
-Azure::Loggerx = Azure::Core::Logger

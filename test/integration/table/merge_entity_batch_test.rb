@@ -25,7 +25,7 @@
 require 'integration/test_helper'
 require "azure/storage/table/batch"
 require "azure/storage/table/table_service"
-require "azure/storage/core/http/http_error"
+require "azure/core/http/http_error"
 
 describe Azure::Storage::Table::TableService do
   describe "#merge_entity_batch" do

@@ -22,7 +22,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require 'test_helper'
-require 'azure/storage/core/http/http_error'
+require 'azure/core/http/http_error'
 
 describe Azure::Core::Http::HTTPError do
   let :http_response do

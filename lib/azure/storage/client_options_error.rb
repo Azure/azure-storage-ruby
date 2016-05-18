@@ -21,34 +21,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/storage/core/service'
 
-module Azure
-  module Core
-    # A base class for Service implementations
-    class FilteredService < Service
+module Azure::Storage
 
-      # Create a new instance of the FilteredService
-      # 
-      # @param host     [String] The hostname. (optional, Default empty)
-      # @param options  [Hash] options including {:client} (optional, Default {})
-      def initialize(host='', options={})
-        super
-        @filters = []
-      end
-
-      attr_accessor :filters
-
-      def call(method, uri, body=nil, headers=nil)
-        super(method, uri, body, headers) do |request|
-          filters.each { |filter| request.with_filter filter } if filters
-        end
-      end
-
-      def with_filter(filter=nil, &block)
-        filter = filter || block
-        filters.push filter if filter
-      end
+  class InvalidConnectionStringError < Core::StorageError
+    def initialize(message = SR::INVALID_CONNECTION_STRING)
+    	super(message)
     end
   end
+
+  class InvalidOptionsError < Core::StorageError
+    def initialize(message = SR::INVALID_CLIENT_OPTIONS)
+      super(message)
+    end
+  end
+
 end

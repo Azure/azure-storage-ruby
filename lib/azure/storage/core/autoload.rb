@@ -23,13 +23,22 @@
 #--------------------------------------------------------------------------
 
 module Azure
-  module Core
-    autoload :HttpClient,                     'azure/storage/core/http_client'
-    autoload :Utility,                        'azure/storage/core/utility'
-    autoload :Logger,                         'azure/storage/core/utility'
-    autoload :Error,                          'azure/storage/core/error'
-    autoload :Service,                        'azure/storage/core/service'
-    autoload :FilteredService,                'azure/storage/core/filtered_service'
-    autoload :SignedService,                  'azure/storage/core/signed_service'
+  module Storage
+    module Core
+      autoload :HttpClient,                     'azure/storage/core/http_client'
+      autoload :Utility,                        'azure/storage/core/utility'
+      autoload :Logger,                         'azure/storage/core/utility'
+      autoload :Error,                          'azure/storage/core/error'
+      
+      module Auth
+        autoload :SharedKey,                    'azure/storage/core/auth/shared_key.rb'
+      end
+      
+      module Filter
+        autoload :RetryPolicyFilter,            'azure/storage/core/filter/retry_filter'
+        autoload :LinearRetryPolicyFilter,      'azure/storage/core/filter/linear_retry_filter'
+        autoload :ExponentialRetryPolicyFilter, 'azure/storage/core/filter/exponential_retry_filter'
+      end
+    end
   end
 end

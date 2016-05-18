@@ -22,7 +22,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-module Azure::Core
+module Azure::Storage::Core
   module HttpClient
     # Returns the http agent based on uri
     # @param uri  [URI|String] the base uri (scheme, host, port) of the http endpoint

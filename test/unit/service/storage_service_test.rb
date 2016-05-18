@@ -23,8 +23,8 @@
 #--------------------------------------------------------------------------
 require 'unit/test_helper'
 require 'azure/storage/service/storage_service'
-require 'azure/storage/core/http/http_request'
-require 'azure/storage/core/http/signer_filter'
+require 'azure/core/http/http_request'
+require 'azure/core/http/signer_filter'
 require 'azure/storage/service/storage_service_properties'
 
 describe Azure::Storage::Service::StorageService do

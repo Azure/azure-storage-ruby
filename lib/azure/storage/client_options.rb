@@ -23,8 +23,7 @@
 #--------------------------------------------------------------------------
 
 require 'uri'
-require 'azure/storage/core'
-require 'azure/storage/core/client_options_error'
+require 'azure/storage/client_options_error'
 
 module Azure::Storage
   module ClientOptions

@@ -545,7 +545,11 @@ module Azure::Storage::Blob
       response = call(:get, uri)
       
       # Result
-      Serialization.blob_enumeration_results_from_xml(response.body)
+      if response.success?
+        Serialization.blob_enumeration_results_from_xml(response.body)
+      else
+        response.exception
+      end
     end
 
   end

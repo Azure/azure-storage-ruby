@@ -30,17 +30,14 @@ require 'azure/storage/blob/append'
 
 module Azure::Storage
   include Service
+  
   module Blob
     class BlobService < StorageService
       include Azure::Storage::Blob
       include Azure::Storage::Blob::Container
       
       def initialize(options = {})
-        client_config = options[:client] || Azure::Storage
-        signer = options[:signer] || Auth::SharedKey.new(
-          client_config.storage_account_name,
-          client_config.storage_access_key)
-        super(signer, client_config.storage_account_name, options)
+        super(nil, nil, options)
         @host = client.storage_blob_host
       end
       

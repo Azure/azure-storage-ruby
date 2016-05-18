@@ -28,6 +28,6 @@ module Azure
 end
 
 require 'azure/storage/core/error'
-require 'azure/storage/core/constants'
+require 'azure/storage/default'
 require 'azure/storage/core/sr'
 require 'azure/storage/core/utility'

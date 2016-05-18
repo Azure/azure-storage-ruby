@@ -41,6 +41,11 @@ describe Azure::Storage::Blob::BlobService do
       blob = subject.create_page_blob container_name, blob_name, length
       blob.name.must_equal blob_name
     end
+    
+    it 'creates page blob with non uri encoded path' do  
+      blob = subject.create_page_blob container_name, 'фбаф.jpg', length
+      blob.name.must_equal 'фбаф.jpg'
+    end
 
     it 'creates a page blob with complex name' do
       blob = subject.create_page_blob container_name, complex_blob_name, length

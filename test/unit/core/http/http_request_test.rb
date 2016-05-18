@@ -22,7 +22,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require 'test_helper'
-require 'azure/storage/core/http/http_request'
+require 'azure/core/http/http_request'
 
 describe Azure::Core::Http::HttpRequest do
   let(:uri) { URI('http://example.com') }

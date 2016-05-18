@@ -22,7 +22,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "test_helper"
-require "azure/storage/core/auth/signer"
+require "azure/core/auth/signer"
 
 describe Azure::Core::Auth::Signer do
   subject { Azure::Core::Auth::Signer.new "YWNjZXNzLWtleQ==" }

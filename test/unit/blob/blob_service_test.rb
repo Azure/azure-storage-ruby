@@ -494,6 +494,7 @@ describe Azure::Storage::Blob::BlobService do
       before {
         subject.stubs(:container_uri).with(container_name, query).returns(uri)
         subject.stubs(:call).with(verb, uri).returns(response)
+        response.stubs(:success?).returns(true)
         serialization.stubs(:blob_enumeration_results_from_xml).with(response_body).returns(blob_enumeration_results)
       }
 
@@ -520,6 +521,7 @@ describe Azure::Storage::Blob::BlobService do
       describe 'when the options Hash is used' do
         before {
           subject.expects(:call).with(:get, uri).returns(response)
+          response.expects(:success?).returns(true)
           serialization.expects(:blob_enumeration_results_from_xml).with(response_body).returns(blob_enumeration_results)
           subject.expects(:container_uri).with(container_name, query).returns(uri)
         }

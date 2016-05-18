@@ -1,4 +1,12 @@
+2016.05 - version 0.10.1
+
+ALL
+* Replaced the core module by the 'azure-core' gem.
+* Stopped maintaining the support for Ruby 1.9.
+* Added support for retry filters.
+
 2016.03 - version 0.10.0
+
 ALL
 * Separated out parts of Azure Storage previously found in the Azure SDK 0.7.0 to establish an independent release cycle.
 * Supported Ruby 1.9.3, 2.0, 2.1 and 2.2.

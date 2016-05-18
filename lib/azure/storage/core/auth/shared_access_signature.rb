@@ -22,6 +22,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-
 require 'azure/storage/core/auth/shared_access_signature_generator'
 require 'azure/storage/core/auth/shared_access_signature_signer'
+
+include Azure::Storage::Auth

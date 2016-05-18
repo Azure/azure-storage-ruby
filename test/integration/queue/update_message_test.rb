@@ -23,7 +23,7 @@
 #--------------------------------------------------------------------------
 require 'integration/test_helper'
 require "azure/storage/queue/queue_service"
-require 'azure/storage/core/http/http_error'
+require 'azure/core/http/http_error'
 
 describe Azure::Storage::Queue::QueueService do
   subject { Azure::Storage::Queue::QueueService.new }

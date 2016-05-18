@@ -22,7 +22,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-require 'azure/storage/core/auth/signer'
+require 'azure/core/auth/signer'
 
 module Azure::Storage
   module Auth

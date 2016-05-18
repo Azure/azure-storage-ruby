@@ -22,10 +22,10 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require 'test_helper'
-require 'azure/storage/core/auth/shared_key_lite'
+require 'azure/core/auth/shared_key_lite'
 
-describe Azure::Storage::Auth::SharedKeyLite do
-  subject { Azure::Storage::Auth::SharedKeyLite.new 'account-name', 'YWNjZXNzLWtleQ==' }
+describe Azure::Core::Auth::SharedKeyLite do
+  subject { Azure::Core::Auth::SharedKeyLite.new 'account-name', 'YWNjZXNzLWtleQ==' }
   
   let(:verb) { 'POST' }
   let(:uri) { URI.parse 'http://dummy.uri/resource' }
