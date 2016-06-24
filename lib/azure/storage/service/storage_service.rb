@@ -85,6 +85,20 @@ module Azure::Storage
         query.update(restype: 'service', comp: 'properties')
         generate_uri('', query)
       end
+
+      # Overrides the base class implementation to determine the request uri
+      #
+      # path    - String. the request path
+      # query   - Hash. the query parameters
+      #
+      # Returns the uri hash
+      def generate_uri(path='', query={})
+        if self.client.is_a?(Azure::Storage::Client) && self.client.options[:use_path_style_uri]
+          path += self.client.options[:storage_account_name]
+        end
+
+        super path, query
+      end
         
       class << self
         # Adds metadata properties to header hash with required prefix

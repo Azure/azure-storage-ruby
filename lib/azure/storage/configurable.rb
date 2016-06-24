@@ -126,11 +126,15 @@ module Azure::Storage
     private
 
     def default_host(service)
-      "https://#{storage_account_name}.#{service}.core.windows.net"
+      "https://#{storage_account_name}.#{service}.core.windows.net" if storage_account_name
     end
 
-    def options
-      Hash[Azure::Storage::Configurable.keys.map { |key| [key, instance_variable_get(:"@#{key}")] }]
+    def setup_options
+      opts = {}
+      Azure::Storage::Configurable.keys.map do |key|
+        opts[key] = Azure::Storage.send(key) if Azure::Storage.send(key)
+      end
+      opts
     end
 
   end

@@ -22,6 +22,8 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
+require 'azure/storage/core'
+
 module Azure::Storage
 
   class InvalidConnectionStringError < Core::StorageError
