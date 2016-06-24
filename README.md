@@ -51,10 +51,10 @@ There are two ways you can set up the connections:
   require "azure/storage"
 
   # Setup a specific instance of an Azure::Storage::Client
-  client = Azure::Storage.create(:storage_account_name => "your account name", storage_access_key => "your access key")
+  client = Azure::Storage.create(:storage_account_name => "your account name", :storage_access_key => "your access key")
 
   # Or create a client and store as a singleton
-  Azure::Storage.setup(:storage_account_name => "your account name", storage_access_key => "your access key")
+  Azure::Storage.setup(:storage_account_name => "your account name", :storage_access_key => "your access key")
   # Then you can either call client.some_method or Azure::Storage.some_method to invoke a method on the Storage Client
 
   # Configure a ca_cert.pem file if you are having issues with ssl peer verification
@@ -232,3 +232,6 @@ If you encounter any bugs with the library please file an issue in the [Issues](
 * [Azure Storage Client Library for iOS](http://github.com/azure/azure-storage-ios)
 * [Azure Storage Client Library for Android](http://github.com/azure/azure-storage-android)
 * [Azure Storage Data Movement Library](https://github.com/Azure/azure-storage-net-data-movement)
+
+# Code of Conduct 
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
