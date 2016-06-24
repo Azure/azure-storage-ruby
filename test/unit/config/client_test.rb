@@ -61,18 +61,24 @@ describe Azure::Storage::Client do
   describe 'when create with empty options' do
 
     it 'should fail with nil params or call create_from_env directly' do
+      removed = clear_storage_instance_variables
       lambda { Azure::Storage::Client.create }.must_raise(Azure::Storage::InvalidOptionsError)
       lambda { Azure::Storage::Client.new }.must_raise(Azure::Storage::InvalidOptionsError)
       lambda { Azure::Storage::Client.create_from_env }.must_raise(Azure::Storage::InvalidOptionsError)
+      restore_storage_instance_variables removed
     end
 
     it 'should fail with empty Hash' do
+      removed = clear_storage_instance_variables
       lambda { Azure::Storage::Client.create({}) }.must_raise(Azure::Storage::InvalidOptionsError)
       lambda { Azure::Storage::Client.new({}) }.must_raise(Azure::Storage::InvalidOptionsError)
+      restore_storage_instance_variables removed
     end
 
     it 'should fail with empty connection string' do
+      removed = clear_storage_instance_variables
       lambda { Azure::Storage::Client.create_from_connection_string("") }.must_raise(Azure::Storage::InvalidConnectionStringError)
+      restore_storage_instance_variables removed
     end
 
   end
@@ -98,7 +104,9 @@ describe Azure::Storage::Client do
       client1 = Azure::Storage::Client.new(:use_development_storage => true)
       client2 = Azure::Storage::Client.new(get_connection_string(:use_development_storage => true))
       client3 = Azure::Storage::Client.create_development
+      removed = clear_storage_instance_variables
       client4 = Azure::Storage::Client.new
+      restore_storage_instance_variables removed
       
       [client1,client2,client3,client4].each do |c|
         c.wont_be_nil
@@ -189,7 +197,9 @@ describe Azure::Storage::Client do
   describe 'when create from env' do
 
     it 'should fail if no environment variables are set' do
+      removed = clear_storage_instance_variables
       lambda { Azure::Storage::Client.create }.must_raise(Azure::Storage::InvalidOptionsError)
+      restore_storage_instance_variables removed
     end
 
     it 'should succeed if env vars are set and match the settings' do

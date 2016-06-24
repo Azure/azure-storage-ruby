@@ -47,7 +47,7 @@ module Azure::Storage
     #
     # Accepted key/value pairs in options parameter are:
     #
-    # * +:use_development_storage+        - TrueClass. Whether to use storage emulator.
+    # * +:use_development_storage+        - True. Whether to use storage emulator.
     # * +:development_storage_proxy_uri+  - String. Used with +:use_development_storage+ if emulator is hosted other than localhost.
     # * +:storage_account_name+           - String. The name of the storage account.
     # * +:storage_access_key+             - Base64 String. The access key of the storage account.
@@ -77,6 +77,7 @@ module Azure::Storage
     #
     # @return [Azure::Storage::Client]
     def initialize(options = {})
+      options = setup_options if options.is_a?(Hash) && options.length == 0
       reset!(options)
     end
 

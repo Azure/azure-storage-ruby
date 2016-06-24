@@ -40,7 +40,7 @@ module Azure
       include Azure::Storage::Configurable
 
       def client(options={})
-        @client = Azure::Storage::Client.new(options)
+        @client = Azure::Storage::Client.new(options) unless defined?(@client) && @client.same_options?(options)
         @client
       end
 
@@ -53,6 +53,6 @@ module Azure
 
     end
   end
-  
+
   Azure::Storage.setup
 end

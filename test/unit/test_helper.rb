@@ -37,9 +37,26 @@ module Kernel
     removed
   end
 
+  def clear_storage_instance_variables
+    removed = {}
+    Azure::Storage::Configurable.keys.each do |key|
+      if Azure::Storage.instance_variables.include? :"@#{key}"
+        removed[key] = Azure::Storage.send(key)
+        Azure::Storage.instance_variable_set(:"@#{key}", nil)
+      end
+    end
+    removed
+  end
+
   def restore_storage_envs(removed)
     removed.each do |k,v|
       ENV[k] = v
+    end
+  end
+
+  def restore_storage_instance_variables(removed)
+    removed.each do |k,v|
+      Azure::Storage.instance_variable_set(:"@#{k}", v) 
     end
   end
 

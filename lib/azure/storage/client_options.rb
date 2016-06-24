@@ -80,6 +80,12 @@ module Azure::Storage
       self
     end
 
+    # Check if this client is configured with the same options
+    def same_options?(opts)
+      opts = load_env if opts.length == 0
+      opts.length == 0 || opts.hash == options.hash 
+    end
+
     # The options after validated and normalized
     #
     # @return [Hash]
@@ -146,11 +152,6 @@ module Azure::Storage
     end
 
     private
-
-    # Check if this client is configured with the same options
-    def same_options?(opts)
-      opts.hash == input.hash
-    end
 
     def method_missing(method_name)
       return super unless options.key? method_name
@@ -230,7 +231,7 @@ module Azure::Storage
       rescue InvalidOptionsError => e
       end
 
-      raise InvalidOptionsError,"options provided are not valid set: #{options}" # wrong opts if move to this line
+      raise InvalidOptionsError,"options provided are not valid set: #{opts}" # wrong opts if move to this line
     end
 
     def normalize_hosts(options)
@@ -293,6 +294,7 @@ module Azure::Storage
 
       valid_options = required + at_least_one + only_one + optional
       results = {}
+
       opts.each do |k,v|
         raise InvalidOptionsError,"#{k} is not included in valid options" unless valid_options.length == 0 || valid_options.include?(k)
         unless @@option_validators.key?(k) && @@option_validators[k].call(v)
