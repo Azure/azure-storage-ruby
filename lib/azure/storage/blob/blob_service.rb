@@ -417,7 +417,7 @@ module Azure::Storage
       protected
       def containers_uri(query={})
         query = { 'comp' => 'list' }.merge(query)
-        generate_uri('/', query)
+        generate_uri('', query)
       end
       
       # Protected: Generate the URI for a specific container.

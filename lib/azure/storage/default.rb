@@ -28,7 +28,7 @@ require 'azure/storage/version'
 module Azure::Storage
   module Default
     # Default REST service (STG) version number
-    STG_VERSION = '2015-02-21'
+    STG_VERSION = '2015-04-05'
 
     # The number of default concurrent requests for parallel operation.
     DEFAULT_PARALLEL_OPERATION_THREAD_COUNT = 1
