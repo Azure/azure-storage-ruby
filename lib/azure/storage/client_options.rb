@@ -82,7 +82,6 @@ module Azure::Storage
 
     # Check if this client is configured with the same options
     def same_options?(opts)
-      opts = load_env if opts.length == 0
       opts.length == 0 || opts.hash == options.hash 
     end
 

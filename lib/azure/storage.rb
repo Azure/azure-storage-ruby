@@ -53,6 +53,4 @@ module Azure
 
     end
   end
-
-  Azure::Storage.setup
 end
