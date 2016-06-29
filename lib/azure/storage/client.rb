@@ -77,7 +77,11 @@ module Azure::Storage
     #
     # @return [Azure::Storage::Client]
     def initialize(options = {})
-      options = setup_options if options.is_a?(Hash) && options.length == 0
+      if options.is_a?(Hash)
+        options = setup_options if options.length == 0
+        options = parse_connection_string(options[:storage_connection_string]) if options[:storage_connection_string]
+      end
+
       reset!(options)
     end
 

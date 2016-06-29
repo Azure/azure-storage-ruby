@@ -28,7 +28,7 @@ describe Azure::Storage::Client do
   describe 'create client with options' do
     let(:azure_storage_account) {"testStorageAccount"}
     let(:azure_storage_access_key) {"testKey1"}
-    subject {Azure::Storage.client(storage_account_name: azure_storage_account, storage_access_key: azure_storage_access_key)}
+    subject {Azure::Storage::Client.create(storage_account_name: azure_storage_account, storage_access_key: azure_storage_access_key)}
 
     it 'should create a blob client' do
       subject.storage_account_name.must_equal azure_storage_account
