@@ -31,7 +31,7 @@ describe Azure::Storage::Core::HttpClient do
       end
 
       it 'should set the proxy configuration information on the http connection' do
-        Azure::Storage.client.agents(uri).proxy.uri.must_equal http_proxy_uri
+        Azure::Storage::Client.create().agents(uri).proxy.uri.must_equal http_proxy_uri
       end
     end
 
@@ -47,7 +47,7 @@ describe Azure::Storage::Core::HttpClient do
       end
 
       it 'should set the proxy configuration information on the https connection' do
-        Azure::Storage.client.agents(uri).proxy.uri.must_equal https_proxy_uri
+        Azure::Storage::Client.create().agents(uri).proxy.uri.must_equal https_proxy_uri
       end
     end
   end
