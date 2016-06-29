@@ -1,8 +1,9 @@
-2016.07 - version 0.10.2
+2016.06 - version 0.10.2
 
 ALL
 * Fixed the issue that cannot run against storage emulator on Windows.
 * Fixed the issue that it doesn't run as a singleton when it calls Azure::Storage.setup.
+* Updated to storage service version 2015-04-05.
 
 2016.05 - version 0.10.1
 

@@ -94,7 +94,11 @@ module Azure::Storage
       # Returns the uri hash
       def generate_uri(path='', query={})
         if self.client.is_a?(Azure::Storage::Client) && self.client.options[:use_path_style_uri]
-          path += self.client.options[:storage_account_name]
+          if path.length > 0
+            path = self.client.options[:storage_account_name] + '/' + path
+          else
+            path = self.client.options[:storage_account_name]
+          end
         end
 
         super path, query
