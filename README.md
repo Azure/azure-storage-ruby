@@ -106,6 +106,9 @@ There are two ways you can set up the connections:
 # Require the azure storage rubygem
 require "azure/storage"
 
+# Get an azure storage blob service object from a specific instance of an Azure::Storage::Client
+blobs = client.blob_client
+
 # Create an azure storage blob service object after you set up the credentials
 blobs = Azure::Storage::Blob::BlobService.new
 
@@ -140,6 +143,9 @@ blobs.delete_blob(container.name, "image-blob")
 
 # Require the azure storage rubygem
 require "azure/storage"
+
+# Get an azure storage table service object from a specific instance of an Azure::Storage::Client
+tables = client.table_client
 
 # Create an azure storage table service object after you set up the credentials
 tables = Azure::Storage::Table::TableService.new
@@ -180,6 +186,9 @@ tables.delete_table("testtable")
 
 # Require the azure storage rubygem
 require "azure/storage"
+
+# Get an azure storage queue service object from a specific instance of an Azure::Storage::Client
+queues = client.queue_client
 
 # Create an azure storage queue service object after you set up the credentials
 queues = Azure::Storage::Queue::QueueService.new
