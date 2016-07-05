@@ -32,17 +32,17 @@ describe Azure::Storage::Client do
 
     it 'should create a blob client' do
       subject.storage_account_name.must_equal azure_storage_account
-      subject.blobClient.host.must_equal "https://#{azure_storage_account}.blob.core.windows.net"
+      subject.blob_client.host.must_equal "https://#{azure_storage_account}.blob.core.windows.net"
     end
 
     it 'should create a table client' do
       subject.storage_account_name.must_equal azure_storage_account
-      subject.tableClient.host.must_equal "https://#{azure_storage_account}.table.core.windows.net"
+      subject.table_client.host.must_equal "https://#{azure_storage_account}.table.core.windows.net"
     end
     
     it 'should create a queue client' do
       subject.storage_account_name.must_equal azure_storage_account
-      subject.queueClient.host.must_equal "https://#{azure_storage_account}.queue.core.windows.net"
+      subject.queue_client.host.must_equal "https://#{azure_storage_account}.queue.core.windows.net"
     end
   end
 end
