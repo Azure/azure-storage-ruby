@@ -61,9 +61,9 @@ describe Azure::Storage::Table::TableService do
 
     it "updates an existing entity, removing any properties not included in the update operation" do 
       etag = subject.update_entity table_name, { 
-        "PartitionKey" => entity_properties["PartitionKey"],
-        "RowKey" => entity_properties["RowKey"],
-        "NewCustomProperty" => "NewCustomValue"
+        PartitionKey: entity_properties["PartitionKey"],
+        RowKey: entity_properties["RowKey"],
+        NewCustomProperty: "NewCustomValue"
       }
 
       etag.must_be_kind_of String
@@ -85,9 +85,9 @@ describe Azure::Storage::Table::TableService do
 
     it "updates an existing entity, removing any properties not included in the update operation and adding nil one" do 
       etag = subject.update_entity table_name, { 
-        "PartitionKey" => entity_properties["PartitionKey"],
-        "RowKey" => entity_properties["RowKey"],
-        "NewCustomProperty" => nil
+        PartitionKey: entity_properties["PartitionKey"],
+        RowKey: entity_properties["RowKey"],
+        NewCustomProperty: nil
       }
 
       etag.must_be_kind_of String

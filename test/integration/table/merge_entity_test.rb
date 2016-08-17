@@ -61,10 +61,10 @@ describe Azure::Storage::Table::TableService do
     after { TableNameHelper.clean }
 
     it "updates an existing entity, merging the properties" do
-      etag = subject.merge_entity table_name, { 
-        "PartitionKey" => entity_properties["PartitionKey"],
-        "RowKey" => entity_properties["RowKey"],
-        "NewCustomProperty" => "NewCustomValue"
+      etag = subject.merge_entity table_name, {
+        PartitionKey: entity_properties["PartitionKey"],
+        RowKey: entity_properties["RowKey"],
+        NewCustomProperty: "NewCustomValue"
       }
       etag.must_be_kind_of String
       etag.wont_equal @existing_etag

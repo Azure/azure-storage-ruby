@@ -26,46 +26,90 @@ require 'azure/storage/core/auth/shared_access_signature'
 require 'base64'
 require 'uri'
 
-describe Azure::Storage::Auth::SharedAccessSignature do
+describe Azure::Storage::Core::Auth::SharedAccessSignature do
   let(:path) { 'example/path' }
-  let(:service_type) { 'servicetype' }
-  let(:options) {
+  let(:service_type) { 'blob' }
+  let(:service_options) {
     {
+      service:              'b',
+      permissions:          'rwd',
+      start:                '2020-12-10T00:00:00Z',
+      expiry:               '2020-12-11T00:00:00Z',
+      resource:             'b',
+      protocol:             'https,http',
+      ip_range:             '168.1.5.60-168.1.5.70',
+      cache_control:        'public',
+      content_disposition:  'inline, filename=nyan.cat',
+      content_encoding:     'utf-8',
+      content_language:     'English',
+      content_type:         'binary'
+    }
+  }
+  let(:account_options) {
+    {
+      service:             'b',
       permissions:         'rwd',
-      expiry:              '2020-12-11',
+      start:               '2020-12-10T00:00:00Z',
+      expiry:              '2020-12-11T00:00:00Z',
       resource:            'b',
-      content_disposition: 'inline, filename=nyan.cat'
+      protocol:            'https,http',
+      ip_range:            '168.1.5.60-168.1.5.70'
     }
   }
   let(:access_account_name) { 'account-name' }
   let(:access_key_base64) { Base64.strict_encode64('access-key') }
 
-  subject { Azure::Storage::Auth::SharedAccessSignature.new(access_account_name, access_key_base64) }
+  subject { Azure::Storage::Core::Auth::SharedAccessSignature.new(access_account_name, access_key_base64) }
 
   describe '#signable_string' do
-    it 'constructs a string in the required format' do
-      subject.signable_string(service_type, path, options).must_equal(
-        "rwd\n\n#{Time.parse("2020-12-11").utc.iso8601}\n/servicetype/account-name/example/path\n\n#{Azure::Storage::Default::STG_VERSION}\n\ninline, filename=nyan.cat\n\n\n"
+    it 'constructs a string for service in the required format' do
+      subject.signable_string_for_service(service_type, path, service_options).must_equal(
+        "rwd\n#{Time.parse('2020-12-10T00:00:00Z').utc.iso8601}\n#{Time.parse('2020-12-11T00:00:00Z').utc.iso8601}\n" + 
+        "/blob/account-name/example/path\n\n168.1.5.60-168.1.5.70\nhttps,http\n#{Azure::Storage::Default::STG_VERSION}\n" +
+        "public\ninline, filename=nyan.cat\nutf-8\nEnglish\nbinary"
+      )
+    end
+
+    it 'constructs a string for account in the required format' do
+      subject.signable_string_for_account(account_options).must_equal(
+        "account-name\nrwd\nb\nb\n#{Time.parse('2020-12-10T00:00:00Z').utc.iso8601}\n#{Time.parse('2020-12-11T00:00:00Z').utc.iso8601}\n168.1.5.60-168.1.5.70\nhttps,http\n#{Azure::Storage::Default::STG_VERSION}\n"
       )
     end
   end
 
   describe '#canonicalized_resource' do
     it 'prefixes and concatenates account name and resource path with forward slashes' do
-      subject.canonicalized_resource(service_type, path).must_equal '/servicetype/account-name/example/path'
+      subject.canonicalized_resource(service_type, path).must_equal '/blob/account-name/example/path'
     end
   end
 
   describe '#signed_uri' do
-    let(:uri) { URI(subject.signed_uri(URI(path), options)) }
-    let(:query_hash) { Hash[URI.decode_www_form(uri.query)] }
-
-    it 'maps options to the abbreviated API versions' do
+    it 'maps options to the abbreviated API versions for service' do
+      uri = URI(subject.signed_uri(URI(path), false, service_options))
+      query_hash = Hash[URI.decode_www_form(uri.query)]
       query_hash['sp'].must_equal 'rwd'
-      query_hash['se'].must_equal Time.parse("2020-12-11").utc.iso8601
+      query_hash['st'].must_equal Time.parse("2020-12-10T00:00:00Z").utc.iso8601
+      query_hash['se'].must_equal Time.parse("2020-12-11T00:00:00Z").utc.iso8601
       query_hash['sr'].must_equal 'b'
+      query_hash['sip'].must_equal '168.1.5.60-168.1.5.70'
+      query_hash['spr'].must_equal 'https,http'
+      query_hash['rscc'].must_equal 'public'
       query_hash['rscd'].must_equal 'inline, filename=nyan.cat'
+      query_hash['rsce'].must_equal 'utf-8'
+      query_hash['rscl'].must_equal 'English'
+      query_hash['rsct'].must_equal 'binary'
     end
 
+    it 'maps options to the abbreviated API versions for account' do
+      uri = URI(subject.signed_uri(URI(path), true, account_options))
+      query_hash = Hash[URI.decode_www_form(uri.query)]
+      query_hash['ss'].must_equal 'b'
+      query_hash['srt'].must_equal 'b'
+      query_hash['sp'].must_equal 'rwd'
+      query_hash['st'].must_equal Time.parse("2020-12-10T00:00:00Z").utc.iso8601
+      query_hash['se'].must_equal Time.parse("2020-12-11T00:00:00Z").utc.iso8601
+      query_hash['sip'].must_equal '168.1.5.60-168.1.5.70'
+      query_hash['spr'].must_equal 'https,http'
+    end
   end
 end

@@ -157,7 +157,7 @@ tables.with_filter(Azure::Storage::Core::Filter::ExponentialRetryPolicyFilter.ne
 tables.create_table("testtable")
 
 # Insert an entity
-entity = { "content" => "test entity", :partition_key => "test-partition-key", :row_key => "1" }
+entity = { content: "test entity", PartitionKey: "test-partition-key", RowKey: "1" }
 tables.insert_entity("testtable", entity)
 
 # Get an entity
@@ -203,18 +203,18 @@ queues.create_queue("test-queue")
 queues.create_message("test-queue", "test message")
 
 # Get one or more messages with setting the visibility timeout
-result = queues.list_messages("test-queue", 30, {:number_of_messages => 10})
+result = queues.list_messages("test-queue", 30, { number_of_messages: 10 })
 
 # Get one or more messages without setting the visibility timeout
-result = queues.peek_messages("test-queue", {:number_of_messages => 10})
+result = queues.peek_messages("test-queue", { number_of_messages: 10 })
 
 # Update a message
 message = queues.list_messages("test-queue", 30)
-pop_receipt, time_next_visible = queues.update_message("test-queue", message.id, message.pop_receipt, "updated test message", 30)
+pop_receipt, time_next_visible = queues.update_message("test-queue", message[0].id, message[0].pop_receipt, "updated test message", 30)
 
 # Delete a message
 message = queues.list_messages("test-queue", 30)
-queues.delete_message("test-queue", message.id, message.pop_receipt)
+queues.delete_message("test-queue", message[0].id, message[0].pop_receipt)
 
 # Delete a queue
 queues.delete_queue("test-queue")

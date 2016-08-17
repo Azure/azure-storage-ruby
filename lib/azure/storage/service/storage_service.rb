@@ -34,14 +34,17 @@ module Azure::Storage
       #
       # @param signer         [Azure::Core::Auth::Signer] An implementation of Signer used for signing requests.
       # (optional, Default=Azure::Storage::Auth::SharedKey.new)
-      # @param account_name   [String] The account name (optional, Default=Azure.config.storage_account_name)
+      # @param account_name   [String] The account name (optional, Default=Azure::Storage.storage_account_name)
       # @param options        [Azure::Storage::Configurable] the client configuration context
       def initialize(signer=nil, account_name=nil, options = {})
         options[:client] = Azure::Storage if options[:client] == nil
         client_config = options[:client]
         signer = signer || Azure::Storage::Core::Auth::SharedKey.new(
           client_config.storage_account_name,
-          client_config.storage_access_key)
+          client_config.storage_access_key) if client_config.storage_access_key
+        signer = signer || Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new(
+          client_config.storage_account_name,
+          client_config.storage_sas_token)
         super(signer, account_name, options)
       end
 
