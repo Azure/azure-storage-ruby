@@ -21,7 +21,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'uuid'
+require 'securerandom'
 
 require 'azure/core/http/http_error'
 require 'azure/storage/table/serialization'
@@ -63,9 +63,8 @@ module Azure::Storage
         @operations = []
         @entity_keys = []
         @table_service = Azure::Storage::Table::TableService.new
-        uuid = UUID.new
-        @batch_id = "batch_" + uuid.generate
-        @changeset_id = "changeset_" + uuid.generate
+        @batch_id = "batch_" + SecureRandom.uuid
+        @changeset_id = "changeset_" + SecureRandom.uuid
 
         self.instance_eval(&block) if block_given?
       end
