@@ -122,17 +122,25 @@ module Azure::Storage
           end
         end
 
-        if (((xml > "Blobs") > "BlobPrefix") > "Name").any?
-          if xml.Blobs.BlobPrefix.Name.count == 0
-            results.push(xml.Blobs.BlobPrefix.Name.text)
+        if ((xml > "Blobs") > "BlobPrefix").any?
+          if xml.Blobs.BlobPrefix.count == 0
+            results.push(blob_prefix_from_xml(xml.Blobs.BlobPrefix))
           else
             xml.Blobs.BlobPrefix.each { |blob_prefix|
-              results.push(blob_prefix.text)
+              results.push(blob_prefix_from_xml(blob_prefix))
             }
           end
         end
 
         results
+      end
+
+      def self.blob_prefix_from_xml(xml)
+        xml = slopify(xml)
+        expect_node("BlobPrefix", xml)
+
+        name = xml.Name.text if (xml > "Name").any?
+        name
       end
       
       def self.blob_from_xml(xml)
