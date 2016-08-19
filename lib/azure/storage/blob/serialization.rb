@@ -122,6 +122,16 @@ module Azure::Storage
           end
         end
 
+        if (((xml > "Blobs") > "BlobPrefix") > "Name").any?
+          if xml.Blobs.BlobPrefix.Name.count == 0
+            results.push(xml.Blobs.BlobPrefix.Name.text)
+          else
+            xml.Blobs.BlobPrefix.each { |blob_prefix|
+              results.push(blob_prefix.text)
+            }
+          end
+        end
+
         results
       end
       

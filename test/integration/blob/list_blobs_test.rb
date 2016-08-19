@@ -30,7 +30,7 @@ describe Azure::Storage::Blob::BlobService do
 
   describe '#list_blobs' do
     let(:container_name) { ContainerNameHelper.name }
-    let(:blob_names) { ["blobname0","blobname1","blobname2","blobname3"] }
+    let(:blob_names) { ["blobname0","blobname1","blobname2","blobname3","prefix0/blobname4","prefix0/blobname5", "prefix0/child_prefix0/blobname6"] }
     let(:content) { content = ""; 1024.times.each{|i| content << "@" }; content }
     let(:metadata) { { "CustomMetadataProperty"=>"CustomMetadataValue" } }
     let(:options) { { :content_type=>"application/foo", :metadata => metadata } }
@@ -55,7 +55,18 @@ describe Azure::Storage::Blob::BlobService do
     it 'lists the available blobs with prefix' do
       result = subject.list_blobs container_name, { :prefix => "blobname0" }
       result.length.must_equal 1
+      result = subject.list_blobs container_name, { :prefix => "prefix0/" }
+      result.length.must_equal 3
     end
+
+    it 'lists the available blobs and prefixes with delimiter and prefix' do
+      result = subject.list_blobs container_name, { :delimiter => "/" }
+      result.length.must_equal 5
+      result = subject.list_blobs container_name, { :delimiter => "/", :prefix => "prefix0/" }
+      result.length.must_equal 3
+      result = subject.list_blobs container_name, { :delimiter => "/", :prefix => "prefix0/child_prefix0/" }
+      result.length.must_equal 1
+    end    
 
     it 'lists the available blobs with max results and marker ' do
       result = subject.list_blobs container_name, { :max_results => 2 }
