@@ -32,6 +32,8 @@ module Azure
       
       module Auth
         autoload :SharedKey,                    'azure/storage/core/auth/shared_key.rb'
+        autoload :SharedAccessSignature,        'azure/storage/core/auth/shared_access_signature_generator.rb'
+        autoload :SharedAccessSignatureSigner,  'azure/storage/core/auth/shared_access_signature_signer.rb'
       end
       
       module Filter

@@ -24,7 +24,7 @@
 
 require 'azure/core/auth/signer'
 
-module Azure::Storage
+module Azure::Storage::Core
   module Auth
     class SharedAccessSignatureSigner < Azure::Core::Auth::Signer
 
@@ -40,8 +40,7 @@ module Azure::Storage
       end
 
       def sign_request(req)
-        ori_uri = req.uri
-        URI.parse(ori_uri.to_s + (ori_uri.query.nil? ? '?' : '&') + sas_token.sub(/^\?/,'') + '&api-version=' + Azure::Storage::Default::STG_VERSION)
+        req.uri = URI.parse(req.uri.to_s + (req.uri.query.nil? ? '?' : '&') + sas_token.sub(/^\?/,'') + '&api-version=' + Azure::Storage::Default::STG_VERSION)
       end
 
     end

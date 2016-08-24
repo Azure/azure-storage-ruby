@@ -98,6 +98,12 @@ module Azure::Storage
         ENV['AZURE_STORAGE_CONNECTION_STRING']
       end
 
+      # Default storage shared access signature token
+      # @return [String]
+      def storage_sas_token
+        ENV['AZURE_STORAGE_SAS_TOKEN']
+      end
+
       # Default storage table host
       # @return [String]
       def storage_table_host
@@ -124,7 +130,7 @@ module Azure::Storage
     end
   end
 
-  # ServiceType prefix to suffix
+  # Service Types
   module ServiceType
     BLOB = 'blob'
     QUEUE = 'queue'

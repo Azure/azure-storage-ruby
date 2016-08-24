@@ -1,18 +1,30 @@
-2016.06 - version 0.10.2
+2016.08 - version 0.11.0-preview
+
+ALL
+* Added the support for the account shared access signature.
+* Removed the support for the Shared Key Lite.
+
+BLOB
+* Added the support for the "add"  and "create" permissions in the blob service shared access signature.
+
+FILE
+* Added the support for the "create" permission in the file service shared access signature.
+
+2016.06 - version 0.10.2-preview
 
 ALL
 * Fixed the issue that cannot run against storage emulator on Windows.
 * Fixed the issue that it doesn't run as a singleton when it calls Azure::Storage.setup.
 * Updated to storage service version 2015-04-05.
 
-2016.05 - version 0.10.1
+2016.05 - version 0.10.1-preview
 
 ALL
 * Replaced the core module by the 'azure-core' gem.
 * Stopped maintaining the support for Ruby 1.9.
 * Added support for retry filters.
 
-2016.03 - version 0.10.0
+2016.03 - version 0.10.0-preview
 
 ALL
 * Separated out parts of Azure Storage previously found in the Azure SDK 0.7.0 to establish an independent release cycle.

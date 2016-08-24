@@ -53,7 +53,8 @@ module Azure::Storage
 
     attr_accessor :storage_access_key,
                   :storage_account_name,
-                  :storage_connection_string
+                  :storage_connection_string,
+                  :storage_sas_token
 
     attr_writer :storage_table_host,
                 :storage_blob_host,
@@ -67,6 +68,7 @@ module Azure::Storage
           :storage_access_key,
           :storage_account_name,
           :storage_connection_string,
+          :storage_sas_token,
           :storage_table_host,
           :storage_blob_host,
           :storage_queue_host

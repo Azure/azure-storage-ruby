@@ -310,7 +310,9 @@ module Azure::Storage
         query = { }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-        uri = entities_uri(table_name, entity_values["PartitionKey"], entity_values["RowKey"], query)
+        uri = entities_uri(table_name, 
+          entity_values[:PartitionKey] || entity_values['PartitionKey'],
+          entity_values[:RowKey] || entity_values["RowKey"], query)
 
         headers = {}
         headers["If-Match"] = if_match || "*" unless options[:create_if_not_exists]
@@ -348,7 +350,9 @@ module Azure::Storage
         query = { }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-        uri = entities_uri(table_name, entity_values["PartitionKey"], entity_values["RowKey"], query)
+        uri = entities_uri(table_name, 
+          entity_values[:PartitionKey] || entity_values['PartitionKey'],
+          entity_values[:RowKey] || entity_values['RowKey'], query)
 
         headers = { "X-HTTP-Method"=> "MERGE" }
         headers["If-Match"] = if_match || "*" unless options[:create_if_not_exists]

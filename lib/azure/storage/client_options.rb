@@ -230,6 +230,18 @@ module Azure::Storage
       rescue InvalidOptionsError => e
       end
 
+      # P6 - account name and key or sas with explicit hosts
+      begin
+        results = validated_options(opts,
+                                    :required => [:storage_account_name],
+                                    :only_one => [:storage_access_key, :storage_sas_token],
+                                    :at_least_one => [:storage_blob_host, :storage_table_host, :storage_file_host, :storage_queue_host])
+        results[:use_path_style_uri] = results.key?(:use_path_style_uri)
+        normalize_hosts(results)
+        return results
+      rescue InvalidOptionsError => e
+      end
+
       raise InvalidOptionsError,"options provided are not valid set: #{opts}" # wrong opts if move to this line
     end
 

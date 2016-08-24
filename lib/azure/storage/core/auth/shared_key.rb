@@ -23,6 +23,7 @@
 #--------------------------------------------------------------------------
 require 'cgi'
 require 'azure/core/auth/signer'
+require 'azure/core/auth/shared_key'
 
 module Azure::Storage::Core
   module Auth
