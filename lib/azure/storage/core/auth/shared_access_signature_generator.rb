@@ -313,9 +313,9 @@ module Azure::Storage::Core
       def signed_uri(uri, use_account_sas, options)
         parsed_query = CGI::parse(uri.query || '').inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
 
-        if options[:service_type] == nil and uri.host != nil
+        if options[:service] == nil and uri.host != nil
           host_splits = uri.host.split('.')
-          options[:service_type] = host_splits[1] if host_splits.length > 1 && host_splits[0] == @account_name
+          options[:service] = host_splits[1].chr if host_splits.length > 1 && host_splits[0] == @account_name
         end
 
         sas_params = if use_account_sas

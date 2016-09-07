@@ -111,5 +111,13 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
       query_hash['sip'].must_equal '168.1.5.60-168.1.5.70'
       query_hash['spr'].must_equal 'https,http'
     end
+
+    it 'correctly maps service type when given full blob url and no service' do
+      blob_url = File.join("https://#{access_account_name}.blob.core.windows.net", path)
+      uri = URI(subject.signed_uri(URI(blob_url), true, account_options.merge(service: nil)))
+      query_hash = Hash[URI.decode_www_form(uri.query)]
+      query_hash['ss'].must_equal 'b'
+      query_hash['srt'].must_equal 'b'
+    end
   end
 end
