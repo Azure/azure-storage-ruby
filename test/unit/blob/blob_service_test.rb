@@ -532,7 +532,7 @@ describe Azure::Storage::Blob::BlobService do
           subject.list_blobs container_name, options
         end
 
-        it 'modifies the URI query parameters when provided a :prefix value' do
+        it 'modifies the URI query parameters when provided a :delimiter value' do
           query['delimiter'] = 'delim'
           options = {:delimiter => 'delim'}
           subject.list_blobs container_name, options
