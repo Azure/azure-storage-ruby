@@ -106,6 +106,8 @@ module Azure::Storage
         response = call(:get, table_uri(table_name, query))
         results = Table::Serialization.hash_from_entry_xml(response.body)
         results[:updated]
+      rescue => e
+        raise_with_response(e, response)
       end
 
       # Public: Gets a list of all tables on the account.
@@ -136,6 +138,8 @@ module Azure::Storage
         values = Azure::Service::EnumerationResults.new(entries)
         values.continuation_token = response.headers["x-ms-continuation-NextTableName"]
         values
+      rescue => e
+        raise_with_response(e, response)
       end
 
       # Public: Gets the access control list (ACL) for the table.
@@ -162,6 +166,8 @@ module Azure::Storage
         signed_identifiers = []
         signed_identifiers = Table::Serialization.signed_identifiers_from_xml response.body unless response.body == nil or response.body.length < 1
         signed_identifiers
+      rescue => e
+        raise_with_response(e, response)
       end
 
       # Public: Sets the access control list (ACL) for the table.
@@ -225,6 +231,8 @@ module Azure::Storage
           entity.etag = response.headers['etag'] || result[:etag]
           entity.properties = result[:properties]
         end
+      rescue => e
+        raise_with_response(e, response)
       end
 
       # Public: Queries entities for the given table name
@@ -281,6 +289,8 @@ module Azure::Storage
           } if response.headers["x-ms-continuation-NextPartitionKey"]
 
         entities
+      rescue => e
+        raise_with_response(e, response)
       end
 
       # Public: Updates an existing entity in a table. The Update Entity operation replaces 
@@ -321,6 +331,8 @@ module Azure::Storage
 
         response = call(:put, uri, body, headers)
         response.headers["etag"]
+      rescue => e
+        raise_with_response(e, response)
       end
 
       # Public: Updates an existing entity by updating the entity's properties. This operation
@@ -361,6 +373,8 @@ module Azure::Storage
 
         response = call(:post, uri, body, headers)
         response.headers["etag"]
+      rescue => e
+        raise_with_response(e, response)
       end
 
       # Public: Inserts or updates an existing entity within a table by merging new property values into the entity.
@@ -462,6 +476,8 @@ module Azure::Storage
         body = batch.to_body
         response = call(:post, generate_uri('/$batch', query), body, headers)
         batch.parse_response(response)
+      rescue => e
+        raise_with_response(e, response)
       end
 
       # Public: Gets an existing entity in the table.
@@ -567,6 +583,12 @@ module Azure::Storage
         value = URI.escape(value)
 
         value
+      end
+
+      protected
+      def raise_with_response(e, response)
+        raise e if response.nil?
+        raise "Response header: #{response.headers.inspect}\nResponse body: #{response.body.inspect}\n#{e.inspect}\n#{e.backtrace.join("\n")}"
       end
     end
   end
