@@ -45,25 +45,7 @@ module Azure::Storage
       end
       
       def call(method, uri, body=nil, headers={})
-        # Force the request.body to the content encoding of specified in the header
-        # (content encoding probably shouldn't be used this way)
-        if headers && !body.nil?
-          if headers['Content-Encoding'].nil?
-            Service::StorageService.with_header headers, 'Content-Encoding', body.encoding.to_s
-          else
-            body.force_encoding(headers['Content-Encoding'])
-          end
-        end
-
-        response = super
-
-        # Force the response.body to the content encoding of specified in the header.
-        # content-encoding is echo'd back for the blob and is used to store the encoding of the octet stream
-        if !response.nil? && !response.body.nil? && response.headers['content-encoding']
-          response.body.force_encoding(response.headers['content-encoding'])
-        end
-
-        response
+        super
       end
 
       # Public: Get a list of Containers from the server.
