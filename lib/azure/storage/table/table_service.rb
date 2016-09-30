@@ -42,14 +42,16 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +table_name+ - String. The table name
-      # * +options+    - Hash. Optional parameters. 
+      # * +table_name+               - String. The table name
+      # * +options+                  - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       #
-      # * +:timeout+   - Integer. A timeout in seconds.
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd135729
       #
@@ -59,7 +61,7 @@ module Azure::Storage
         query['timeout'] = options[:timeout].to_s if options[:timeout]
 
         body = Table::Serialization.hash_to_entry_xml({"TableName" => table_name}).to_xml
-        call(:post, collection_uri(query), body)
+        call(:post, collection_uri(query), body, {}, options)
         nil
       end
 
@@ -67,13 +69,15 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +table_name+ - String. The table name
-      # * +options+    - Hash. Optional parameters. 
+      # * +table_name+               - String. The table name
+      # * +options+                  - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:timeout+   - Integer. A timeout in seconds.
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179387
       #
@@ -82,7 +86,7 @@ module Azure::Storage
         query = { }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-        call(:delete, table_uri(table_name, query))
+        call(:delete, table_uri(table_name, query), nil, {}, options)
         nil
       end
 
@@ -90,20 +94,22 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +table_name+ - String. The table name
-      # * +options+    - Hash. Optional parameters. 
+      # * +table_name+               - String. The table name
+      # * +options+                  - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:timeout+   - Integer. A timeout in seconds.
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       #
       # Returns the last updated time for the table
       def get_table(table_name, options={})
         query = { }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-        response = call(:get, table_uri(table_name, query))
+        response = call(:get, table_uri(table_name, query), nil, {}, options)
         results = Table::Serialization.hash_from_entry_xml(response.body)
         results[:updated]
       rescue => e
@@ -114,14 +120,16 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +options+    - Hash. Optional parameters. 
+      # * +options+                  - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:next_table_token+   - String. A token used to enumerate the next page of results, when the list of tables is
-      #   larger than a single operation can return at once. (optional)
-      # * +:timeout+            - Integer. A timeout in seconds.
+      # * +:next_table_token+        - String. A token used to enumerate the next page of results, when the list of tables is
+      #                                larger than a single operation can return at once. (optional)
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179405
       #
@@ -132,7 +140,7 @@ module Azure::Storage
         query["timeout"] = options[:timeout].to_s if options[:timeout]
         uri = collection_uri(query)
 
-        response = call(:get, uri)
+        response = call(:get, uri, nil, {}, options)
         entries = Table::Serialization.entries_from_feed_xml(response.body) || []
 
         values = Azure::Service::EnumerationResults.new(entries)
@@ -146,13 +154,15 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +table_name+ - String. The table name
-      # * +options+    - Hash. Optional parameters. 
+      # * +table_name+               - String. The table name
+      # * +options+                  - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:timeout+   - Integer. A timeout in seconds.
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/jj159100
       #
@@ -161,7 +171,7 @@ module Azure::Storage
         query = { 'comp' => 'acl'}
         query['timeout'] = options[:timeout].to_s if options[:timeout]
 
-        response = call(:get, generate_uri(table_name, query), nil, {'x-ms-version' => '2012-02-12'})
+        response = call(:get, generate_uri(table_name, query), nil, {'x-ms-version' => '2012-02-12'}, options)
 
         signed_identifiers = []
         signed_identifiers = Table::Serialization.signed_identifiers_from_xml response.body unless response.body == nil or response.body.length < 1
@@ -174,14 +184,16 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +table_name+ - String. The table name
-      # * +options+    - Hash. Optional parameters. 
+      # * +table_name+               - String. The table name
+      # * +options+                  - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:signed_identifiers+  - Array. A list of Azure::Storage::Entity::SignedIdentifier instances
-      # * +:timeout+             - Integer. A timeout in seconds.
+      # * +:signed_identifiers+      - Array. A list of Azure::Storage::Entity::SignedIdentifier instances
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       # 
       # See http://msdn.microsoft.com/en-us/library/azure/jj159102
       #
@@ -194,7 +206,7 @@ module Azure::Storage
         body = nil
         body = Table::Serialization.signed_identifiers_to_xml options[:signed_identifiers] if options[:signed_identifiers] && options[:signed_identifiers].length > 0
 
-        call(:put, uri, body, {'x-ms-version' => '2012-02-12'})
+        call(:put, uri, body, {'x-ms-version' => '2012-02-12'}, options)
         nil
       end
 
@@ -203,14 +215,16 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +table_name+    - String. The table name
-      # * +entity_values+ - Hash. A hash of the name/value pairs for the entity. 
-      # * +options+       - Hash. Optional parameters. 
+      # * +table_name+               - String. The table name
+      # * +entity_values+            - Hash. A hash of the name/value pairs for the entity. 
+      # * +options+                  - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:timeout+      - Integer. A timeout in seconds.
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179433
       #
@@ -221,7 +235,7 @@ module Azure::Storage
         query = { }
         query['timeout'] = options[:timeout].to_s if options[:timeout]
 
-        response = call(:post, entities_uri(table_name, nil, nil, query), body)
+        response = call(:post, entities_uri(table_name, nil, nil, query), body, {}, options)
         
         result = Table::Serialization.hash_from_entry_xml(response.body)
 
@@ -239,19 +253,21 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +table_name+    - String. The table name
-      # * +options+       - Hash. Optional parameters. 
+      # * +table_name+               - String. The table name
+      # * +options+                  - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:partition_key+      - String. The partition key (optional)
-      # * +:row_key+            - String. The row key (optional)
-      # * +:select+             - Array. An array of property names to return (optional)
-      # * +:filter+             - String. A filter expression (optional)
-      # * +:top+                - Integer. A limit for the number of results returned (optional)
-      # * +:continuation_token+ - Hash. The continuation token.
-      # * +:timeout+            - Integer. A timeout in seconds.
+      # * +:partition_key+           - String. The partition key (optional)
+      # * +:row_key+                 - String. The row key (optional)
+      # * +:select+                  - Array. An array of property names to return (optional)
+      # * +:filter+                  - String. A filter expression (optional)
+      # * +:top+                     - Integer. A limit for the number of results returned (optional)
+      # * +:continuation_token+      - Hash. The continuation token.
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179421
       #
@@ -266,7 +282,7 @@ module Azure::Storage
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         uri = entities_uri(table_name, options[:partition_key], options[:row_key], query)
-        response = call(:get, uri, nil, { "DataServiceVersion" => "2.0;NetFx"})
+        response = call(:get, uri, nil, {"DataServiceVersion" => "2.0;NetFx"}, options)
 
         entities = Azure::Service::EnumerationResults.new
 
@@ -298,17 +314,19 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +table_name+    - String. The table name
-      # * +entity_values+ - Hash. A hash of the name/value pairs for the entity.
-      # * +options+       - Hash. Optional parameters. 
+      # * +table_name+               - String. The table name
+      # * +entity_values+            - Hash. A hash of the name/value pairs for the entity.
+      # * +options+                  - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:if_match+              - String. A matching condition which is required for update (optional, Default="*")
-      # * +:create_if_not_exists+  - Boolean. If true, and partition_key and row_key do not reference and existing entity, 
-      #   that entity will be inserted. If false, the operation will fail. (optional, Default=false)
-      # * +:timeout+               - Integer. A timeout in seconds.
+      # * +:if_match+                - String. A matching condition which is required for update (optional, Default="*")
+      # * +:create_if_not_exists+    - Boolean. If true, and partition_key and row_key do not reference and existing entity, 
+      #                                that entity will be inserted. If false, the operation will fail. (optional, Default=false)
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179427
       #
@@ -329,7 +347,7 @@ module Azure::Storage
 
         body = Table::Serialization.hash_to_entry_xml(entity_values).to_xml
 
-        response = call(:put, uri, body, headers)
+        response = call(:put, uri, body, headers, options)
         response.headers["etag"]
       rescue => e
         raise_with_response(e, response)
@@ -340,17 +358,19 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +table_name+    - String. The table name
-      # * +entity_values+ - Hash. A hash of the name/value pairs for the entity.
-      # * +options+       - Hash. Optional parameters. 
+      # * +table_name+               - String. The table name
+      # * +entity_values+            - Hash. A hash of the name/value pairs for the entity.
+      # * +options+                  - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:if_match+              - String. A matching condition which is required for update (optional, Default="*")
-      # * +:create_if_not_exists+  - Boolean. If true, and partition_key and row_key do not reference and existing entity, 
-      #   that entity will be inserted. If false, the operation will fail. (optional, Default=false)
-      # * +:timeout+               - Integer. A timeout in seconds.
+      # * +:if_match+                - String. A matching condition which is required for update (optional, Default="*")
+      # * +:create_if_not_exists+    - Boolean. If true, and partition_key and row_key do not reference and existing entity, 
+      #                                that entity will be inserted. If false, the operation will fail. (optional, Default=false)
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       # 
       # See http://msdn.microsoft.com/en-us/library/azure/dd179392
       # 
@@ -371,7 +391,7 @@ module Azure::Storage
 
         body = Table::Serialization.hash_to_entry_xml(entity_values).to_xml
 
-        response = call(:post, uri, body, headers)
+        response = call(:post, uri, body, headers, options)
         response.headers["etag"]
       rescue => e
         raise_with_response(e, response)
@@ -381,14 +401,16 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +table_name+    - String. The table name
-      # * +entity_values+ - Hash. A hash of the name/value pairs for the entity.
-      # * +options+       - Hash. Optional parameters. 
+      # * +table_name+               - String. The table name
+      # * +entity_values+            - Hash. A hash of the name/value pairs for the entity.
+      # * +options+                  - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:timeout+      - Integer. A timeout in seconds.
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       # 
       # See http://msdn.microsoft.com/en-us/library/azure/hh452241
       # 
@@ -402,14 +424,16 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +table_name+    - String. The table name
-      # * +entity_values+ - Hash. A hash of the name/value pairs for the entity.
-      # * +options+       - Hash. Optional parameters. 
+      # * +table_name+               - String. The table name
+      # * +entity_values+            - Hash. A hash of the name/value pairs for the entity.
+      # * +options+                  - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:timeout+      - Integer. A timeout in seconds.
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       # 
       # See http://msdn.microsoft.com/en-us/library/azure/hh452242
       #
@@ -423,16 +447,18 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +table_name+    - String. The table name
-      # * +partition_key+ - String. The partition key
-      # * +row_key+       - String. The row key
-      # * +options+       - Hash. Optional parameters.
+      # * +table_name+               - String. The table name
+      # * +partition_key+            - String. The partition key
+      # * +row_key+                  - String. The row key
+      # * +options+                  - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:if_match+     - String. A matching condition which is required for update (optional, Default="*")
-      # * +:timeout+      - Integer. A timeout in seconds.
+      # * +:if_match+                - String. A matching condition which is required for update (optional, Default="*")
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd135727
       #
@@ -444,7 +470,7 @@ module Azure::Storage
         query = { }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-        call(:delete, entities_uri(table_name, partition_key, row_key, query), nil, { "If-Match"=> if_match })
+        call(:delete, entities_uri(table_name, partition_key, row_key, query), nil, { "If-Match"=> if_match }, options)
         nil
       end
 
@@ -452,13 +478,15 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +batch+         - The Azure::Storage::Table::Batch instance to execute.
-      # * +options+       - Hash. Optional parameters.
+      # * +batch+                    - The Azure::Storage::Table::Batch instance to execute.
+      # * +options+                  - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:timeout+      - Integer. A timeout in seconds.
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd894038
       #
@@ -474,7 +502,7 @@ module Azure::Storage
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         body = batch.to_body
-        response = call(:post, generate_uri('/$batch', query), body, headers)
+        response = call(:post, generate_uri('/$batch', query), body, headers, options)
         batch.parse_response(response)
       rescue => e
         raise_with_response(e, response)
@@ -484,15 +512,17 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +table_name+    - String. The table name
-      # * +partition_key+ - String. The partition key
-      # * +row_key+       - String. The row key
-      # * +options+       - Hash. Optional parameters.
+      # * +table_name+               - String. The table name
+      # * +partition_key+            - String. The partition key
+      # * +row_key+                  - String. The row key
+      # * +options+                  - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:timeout+      - Integer. A timeout in seconds.
+      # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       #
       # Returns an Azure::Storage::Table::Entity instance on success
       def get_entity(table_name, partition_key, row_key, options={})

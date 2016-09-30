@@ -79,20 +79,26 @@ module Azure::Storage::Core::Filter
         retry_data[:retryable] = true;
         return true
       end
+
+      error_message = retry_data[:error].inspect
       
-      if retry_data[:error].inspect.include?('SocketError: Hostname not known')
+      if error_message.include?('SocketError: Hostname not known')
         # Retry on local DNS resolving
         # When uses resolv-replace.rb to replace the libc resolver 
         # Reference: 
         #  https://makandracards.com/ninjaconcept/30815-fixing-socketerror-getaddrinfo-name-or-service-not-known-with-ruby-s-resolv-replace-rb 
         #  http://www.subelsky.com/2014/05/fixing-socketerror-getaddrinfo-name-or.html 
         retry_data[:retryable] = true;
-      elsif retry_data[:error].inspect.include?('getaddrinfo: Name or service not known')
+      elsif error_message.include?('getaddrinfo: Name or service not known')
         # When uses the default resolver 
         retry_data[:retryable] = true;
-      elsif retry_data[:error].inspect.include?('Errno::EACCES')
+      elsif error_message.downcase.include?('timeout')
+        retry_data[:retryable] = true;
+      elsif error_message.include?('Errno::ECONNRESET')
+        retry_data[:retryable] = true;
+      elsif error_message.include?('Errno::EACCES')
         retry_data[:retryable] = false;
-      elsif retry_data[:error].inspect.include?('NOSUPPORT')
+      elsif error_message.include?('NOSUPPORT')
         retry_data[:retryable] = false;
       end
       

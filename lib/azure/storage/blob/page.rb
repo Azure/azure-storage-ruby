@@ -53,6 +53,8 @@ module Azure::Storage
     # * +:sequence_number+           - Integer. The sequence number is a user-controlled value that you can use to track requests. 
     #                                  The value of the sequence number must be between 0 and 2^63 - 1.The default value is 0.
     # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to create a new blob 
     #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
     #                                  the Blob service returns status code 412 (Precondition Failed).
@@ -75,7 +77,7 @@ module Azure::Storage
 
       uri = blob_uri(container, blob, query)
 
-      headers = StorageService.service_properties_headers
+      headers = StorageService.common_headers
 
       # set x-ms-blob-type to PageBlob
       StorageService.with_header headers, 'x-ms-blob-type', 'PageBlob'
@@ -100,7 +102,7 @@ module Azure::Storage
       add_blob_conditional_headers options, headers
 
       # call PutBlob with empty body
-      response = call(:put, uri, nil, headers)
+      response = call(:put, uri, nil, headers, options)
 
       result = Serialization.blob_from_headers(response.headers)
       result.name = blob
@@ -141,6 +143,8 @@ module Azure::Storage
     #                                  the blob's ETag value does not match the value specified. If the values are identical, 
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                  in the analytics logs when storage analytics logging is enabled.
     # 
     # See http://msdn.microsoft.com/en-us/library/azure/ee691975.aspx
     #
@@ -150,7 +154,7 @@ module Azure::Storage
       StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
-      headers = StorageService.service_properties_headers
+      headers = StorageService.common_headers
       StorageService.with_header headers, 'x-ms-range', "bytes=#{start_range}-#{end_range}"
       StorageService.with_header headers, 'x-ms-page-write', 'update'
 
@@ -162,7 +166,7 @@ module Azure::Storage
         add_blob_conditional_headers options, headers
       end
 
-      response = call(:put, uri, content, headers)
+      response = call(:put, uri, content, headers, options)
 
       result = Serialization.blob_from_headers(response.headers)
       result.name = blob
@@ -184,6 +188,8 @@ module Azure::Storage
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to clear the page only if 
     #                                  the blob has been modified since the specified date/time. If the blob has not been modified, 
     #                                  the Blob service returns status code 412 (Precondition Failed).
@@ -206,7 +212,7 @@ module Azure::Storage
 
       uri = blob_uri(container, blob, query)
 
-      headers = StorageService.service_properties_headers
+      headers = StorageService.common_headers
       StorageService.with_header headers, 'x-ms-range', "bytes=#{start_range}-#{end_range}"
       StorageService.with_header headers, 'x-ms-page-write', 'clear'
 
@@ -218,7 +224,7 @@ module Azure::Storage
         add_blob_conditional_headers options, headers
       end
 
-      response = call(:put, uri, nil, headers)
+      response = call(:put, uri, nil, headers, options)
 
       result = Serialization.blob_from_headers(response.headers)
       result.name = blob
@@ -243,6 +249,8 @@ module Azure::Storage
     # * +:snapshot+                  - String. An opaque DateTime value that specifies the blob snapshot to
     #                                  retrieve information from. (optional)
     # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                  in the analytics logs when storage analytics logging is enabled.
      # * +:if_modified_since+        - String. A DateTime value. Specify this conditional header to list the pages only if 
     #                                  the blob has been modified since the specified date/time. If the blob has not been modified, 
     #                                  the Blob service returns status code 412 (Precondition Failed).
@@ -271,11 +279,11 @@ module Azure::Storage
 
       options[:start_range] = 0 if options[:end_range] and not options[:start_range]
 
-      headers = StorageService.service_properties_headers
+      headers = StorageService.common_headers
       StorageService.with_header headers, 'x-ms-range', "bytes=#{options[:start_range]}-#{options[:end_range]}" if options[:start_range]
       add_blob_conditional_headers options, headers
       
-      response = call(:get, uri, nil, headers)
+      response = call(:get, uri, nil, headers, options)
 
       pagelist = Serialization.page_list_from_xml(response.body)
       pagelist
@@ -296,6 +304,8 @@ module Azure::Storage
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to set the blob properties
     #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
     #                                  the Blob service returns status code 412 (Precondition Failed).
@@ -356,6 +366,8 @@ module Azure::Storage
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to set the blob properties
     #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
     #                                  the Blob service returns status code 412 (Precondition Failed).

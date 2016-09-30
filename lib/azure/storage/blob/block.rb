@@ -69,6 +69,8 @@ module Azure::Storage
     #                                  and also can be used to attach additional metadata
     # * +:metadata+                  - Hash. Custom metadata values to store with the blob.
     # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to create a new blob 
     #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
     #                                  the Blob service returns status code 412 (Precondition Failed).
@@ -91,7 +93,7 @@ module Azure::Storage
 
       uri = blob_uri(container, blob, query)
 
-      headers = StorageService.service_properties_headers
+      headers = StorageService.common_headers
 
       # set x-ms-blob-type to BlockBlob
       StorageService.with_header headers, 'x-ms-blob-type', 'BlockBlob'
@@ -109,7 +111,7 @@ module Azure::Storage
       add_blob_conditional_headers options, headers
 
       # call PutBlob with empty body
-      response = call(:put, uri, content, headers)
+      response = call(:put, uri, content, headers, options)
 
       result = Serialization.blob_from_headers(response.headers)
       result.name = blob
@@ -132,6 +134,8 @@ module Azure::Storage
     # Accepted key/value pairs in options parameter are:
     # * +:content_md5+           - String. Content MD5 for the request contents.
     # * +:timeout+               - Integer. A timeout in seconds.
+    # * +:request_id+            - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                              in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd135726.aspx
     #
@@ -143,10 +147,10 @@ module Azure::Storage
 
       uri = blob_uri(container, blob, query)
 
-      headers = StorageService.service_properties_headers
+      headers = StorageService.common_headers
       StorageService.with_header headers, 'Content-MD5', options[:content_md5]
 
-      response = call(:put, uri, content, headers)
+      response = call(:put, uri, content, headers, options)
       response.headers['Content-MD5']
     end
 
@@ -186,6 +190,8 @@ module Azure::Storage
     #                                  and also can be used to attach additional metadata
     # * +:metadata+                  - Hash. Custom metadata values to store with the blob.
     # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                  in the analytics logs when storage analytics logging is enabled.
     #
     # This operation also supports the use of conditional headers to commit the block list if a specified condition is met.
     # For more information, see https://msdn.microsoft.com/en-us/library/azure/dd179371.aspx
@@ -199,7 +205,7 @@ module Azure::Storage
 
       uri = blob_uri(container, blob, query)
 
-      headers = StorageService.service_properties_headers
+      headers = StorageService.common_headers
       unless options.empty?
         StorageService.with_header headers, 'Content-MD5', options[:transactional_md5]
         StorageService.with_header headers, 'x-ms-blob-content-type', options[:content_type]
@@ -214,7 +220,7 @@ module Azure::Storage
       end
 
       body = Serialization.block_list_to_xml(block_list)
-      call(:put, uri, body, headers)
+      call(:put, uri, body, headers, options)
       nil
     end
 
@@ -230,17 +236,19 @@ module Azure::Storage
     #
     # ==== Attributes
     #
-    # * +container+       - String. The container name.
-    # * +blob+            - String. The blob name.
-    # * +options+         - Hash. Optional parameters.
+    # * +container+                 - String. The container name.
+    # * +blob+                      - String. The blob name.
+    # * +options+                   - Hash. Optional parameters.
     #
     # ==== Options
     #
     # Accepted key/value pairs in options parameter are:
-    # * +:blocklist_type+ - Symbol. One of :all, :committed, :uncommitted. Defaults to :all (optional)
-    # * +:snapshot+       - String. An opaque DateTime value that specifies the blob snapshot to
-    #   retrieve information from. (optional)
-    # * +:timeout+        - Integer. A timeout in seconds.
+    # * +:blocklist_type+           - Symbol. One of :all, :committed, :uncommitted. Defaults to :all (optional)
+    # * +:snapshot+                 - String. An opaque DateTime value that specifies the blob snapshot to
+    #                                 retrieve information from. (optional)
+    # * +:timeout+                  - Integer. A timeout in seconds.
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179400.aspx
     #
@@ -256,7 +264,7 @@ module Azure::Storage
 
       uri = blob_uri(container, blob, query)
 
-      response = call(:get, uri)
+      response = call(:get, uri, nil, {}, options)
 
       Serialization.block_list_from_xml(response.body)
     end
