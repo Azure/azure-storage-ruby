@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
   Class: Azure::Storage::Table::TableService
   
-    &mdash; Documentation by YARD 0.8.7.6
+    &mdash; Documentation by YARD 0.9.5
   
 </title>
 
@@ -15,9 +15,8 @@
   <link rel="stylesheet" href="../../../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  hasFrames = window.top.frames.main ? true : false;
+  pathId = "Azure::Storage::Table::TableService";
   relpath = '../../../';
-  framesUrl = "../../../frames.html#!Azure/Storage/Table/TableService.html";
 </script>
 
 
@@ -28,61 +27,56 @@
 
   </head>
   <body>
-    <div id="header">
-      <div id="menu">
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../../class_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
   
     <a href="../../../_index.html">Index (T)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Table.html" title="Azure::Storage::Table (module)">Table</a></span></span>
      &raquo; 
     <span class="title">TableService</span>
   
-
-  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
-      <div id="search">
+        <div id="search">
   
     <a class="full_list_link" id="class_list_link"
         href="../../../class_list.html">
-      Class List
-    </a>
-  
-    <a class="full_list_link" id="method_list_link"
-        href="../../../method_list.html">
-      Method List
-    </a>
-  
-    <a class="full_list_link" id="file_list_link"
-        href="../../../file_list.html">
-      File List
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
     </a>
   
 </div>
-      <div class="clear"></div>
-    </div>
+        <div class="clear"></div>
+      </div>
 
-    <iframe id="search_frame"></iframe>
+      <iframe id="search_frame" src="../../../class_list.html"></iframe>
 
-    <div id="content"><h1>Class: Azure::Storage::Table::TableService
+      <div id="content"><h1>Class: Azure::Storage::Table::TableService
   
   
   
 </h1>
-
-<dl class="box">
+<div class="box_info">
   
-    <dt class="r1">Inherits:</dt>
-    <dd class="r1">
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
       <span class="inheritName"><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">Service::StorageService</a></span></span>
       
         <ul class="fullTree">
           <li>Object</li>
           
-            <li class="next"><span class='object_link'><a href="../../Core/Service.html" title="Azure::Core::Service (class)">Core::Service</a></span></li>
-          
-            <li class="next"><span class='object_link'><a href="../../Core/FilteredService.html" title="Azure::Core::FilteredService (class)">Core::FilteredService</a></span></li>
-          
-            <li class="next"><span class='object_link'><a href="../../Core/SignedService.html" title="Azure::Core::SignedService (class)">Core::SignedService</a></span></li>
+            <li class="next">Core::SignedService</li>
           
             <li class="next"><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">Service::StorageService</a></span></li>
           
@@ -91,48 +85,37 @@
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
       
-      </dd>
-    
+    </dd>
+  </dl>
   
-  
-    
-  
-    
+
   
   
   
-    <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/azure/storage/table/table_service.rb</dd>
   
-</dl>
-<div class="clear"></div>
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/azure/storage/table/table_service.rb</dd>
+  </dl>
+  
+</div>
 
 
 
 
 
 
-
-  <h2>Instance Attribute Summary</h2>
-  
-  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="../../Core/SignedService.html" title="Azure::Core::SignedService (class)">Core::SignedService</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../../Core/SignedService.html#account_name-instance_method" title="Azure::Core::SignedService#account_name (method)">#account_name</a></span>, <span class='object_link'><a href="../../Core/SignedService.html#signer-instance_method" title="Azure::Core::SignedService#signer (method)">#signer</a></span></p>
-
-  
-  
-  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="../../Core/FilteredService.html" title="Azure::Core::FilteredService (class)">Core::FilteredService</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../../Core/FilteredService.html#filters-instance_method" title="Azure::Core::FilteredService#filters (method)">#filters</a></span></p>
-
-  
-  
-  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="../../Core/Service.html" title="Azure::Core::Service (class)">Core::Service</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../../Core/Service.html#client-instance_method" title="Azure::Core::Service#client (method)">#client</a></span>, <span class='object_link'><a href="../../Core/Service.html#host-instance_method" title="Azure::Core::Service#host (method)">#host</a></span></p>
 
 
   
     <h2>
       Instance Method Summary
-      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+      <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
     <ul class="summary">
@@ -140,7 +123,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#create_table-instance_method" title="#create_table (instance method)">- (nil) <strong>create_table</strong>(table_name, options = {}) </a>
+      <a href="#create_table-instance_method" title="#create_table (instance method)">#<strong>create_table</strong>(table_name, options = {})  &#x21d2; nil </a>
     
 
     
@@ -164,7 +147,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#delete_entity-instance_method" title="#delete_entity (instance method)">- (Object) <strong>delete_entity</strong>(table_name, partition_key, row_key, options = {}) </a>
+      <a href="#delete_entity-instance_method" title="#delete_entity (instance method)">#<strong>delete_entity</strong>(table_name, partition_key, row_key, options = {})  &#x21d2; Object </a>
     
 
     
@@ -188,7 +171,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#delete_table-instance_method" title="#delete_table (instance method)">- (Object) <strong>delete_table</strong>(table_name, options = {}) </a>
+      <a href="#delete_table-instance_method" title="#delete_table (instance method)">#<strong>delete_table</strong>(table_name, options = {})  &#x21d2; Object </a>
     
 
     
@@ -212,7 +195,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#entities_uri-instance_method" title="#entities_uri (instance method)">- (Object) <strong>entities_uri</strong>(table_name, partition_key = nil, row_key = nil, query = {}) </a>
+      <a href="#entities_uri-instance_method" title="#entities_uri (instance method)">#<strong>entities_uri</strong>(table_name, partition_key = nil, row_key = nil, query = {})  &#x21d2; Object </a>
     
 
     
@@ -234,7 +217,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#execute_batch-instance_method" title="#execute_batch (instance method)">- (Object) <strong>execute_batch</strong>(batch, options = {}) </a>
+      <a href="#execute_batch-instance_method" title="#execute_batch (instance method)">#<strong>execute_batch</strong>(batch, options = {})  &#x21d2; Object </a>
     
 
     
@@ -258,7 +241,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#get_entity-instance_method" title="#get_entity (instance method)">- (Object) <strong>get_entity</strong>(table_name, partition_key, row_key, options = {}) </a>
+      <a href="#get_entity-instance_method" title="#get_entity (instance method)">#<strong>get_entity</strong>(table_name, partition_key, row_key, options = {})  &#x21d2; Object </a>
     
 
     
@@ -282,7 +265,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#get_table-instance_method" title="#get_table (instance method)">- (Object) <strong>get_table</strong>(table_name, options = {}) </a>
+      <a href="#get_table-instance_method" title="#get_table (instance method)">#<strong>get_table</strong>(table_name, options = {})  &#x21d2; Object </a>
     
 
     
@@ -306,7 +289,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#get_table_acl-instance_method" title="#get_table_acl (instance method)">- (Object) <strong>get_table_acl</strong>(table_name, options = {}) </a>
+      <a href="#get_table_acl-instance_method" title="#get_table_acl (instance method)">#<strong>get_table_acl</strong>(table_name, options = {})  &#x21d2; Object </a>
     
 
     
@@ -330,7 +313,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (TableService) <strong>initialize</strong>(options = {}) </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(options = {})  &#x21d2; TableService </a>
     
 
     
@@ -356,7 +339,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#insert_entity-instance_method" title="#insert_entity (instance method)">- (Object) <strong>insert_entity</strong>(table_name, entity_values, options = {}) </a>
+      <a href="#insert_entity-instance_method" title="#insert_entity (instance method)">#<strong>insert_entity</strong>(table_name, entity_values, options = {})  &#x21d2; Object </a>
     
 
     
@@ -380,7 +363,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#insert_or_merge_entity-instance_method" title="#insert_or_merge_entity (instance method)">- (Object) <strong>insert_or_merge_entity</strong>(table_name, entity_values, options = {}) </a>
+      <a href="#insert_or_merge_entity-instance_method" title="#insert_or_merge_entity (instance method)">#<strong>insert_or_merge_entity</strong>(table_name, entity_values, options = {})  &#x21d2; Object </a>
     
 
     
@@ -405,7 +388,7 @@ property values into the entity.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#insert_or_replace_entity-instance_method" title="#insert_or_replace_entity (instance method)">- (Object) <strong>insert_or_replace_entity</strong>(table_name, entity_values, options = {}) </a>
+      <a href="#insert_or_replace_entity-instance_method" title="#insert_or_replace_entity (instance method)">#<strong>insert_or_replace_entity</strong>(table_name, entity_values, options = {})  &#x21d2; Object </a>
     
 
     
@@ -429,7 +412,7 @@ property values into the entity.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#merge_entity-instance_method" title="#merge_entity (instance method)">- (Object) <strong>merge_entity</strong>(table_name, entity_values, options = {}) </a>
+      <a href="#merge_entity-instance_method" title="#merge_entity (instance method)">#<strong>merge_entity</strong>(table_name, entity_values, options = {})  &#x21d2; Object </a>
     
 
     
@@ -453,7 +436,7 @@ property values into the entity.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#query_entities-instance_method" title="#query_entities (instance method)">- (Object) <strong>query_entities</strong>(table_name, options = {}) </a>
+      <a href="#query_entities-instance_method" title="#query_entities (instance method)">#<strong>query_entities</strong>(table_name, options = {})  &#x21d2; Object </a>
     
 
     
@@ -477,7 +460,7 @@ property values into the entity.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#query_tables-instance_method" title="#query_tables (instance method)">- (Object) <strong>query_tables</strong>(options = {}) </a>
+      <a href="#query_tables-instance_method" title="#query_tables (instance method)">#<strong>query_tables</strong>(options = {})  &#x21d2; Object </a>
     
 
     
@@ -501,7 +484,7 @@ property values into the entity.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#set_table_acl-instance_method" title="#set_table_acl (instance method)">- (Object) <strong>set_table_acl</strong>(table_name, options = {}) </a>
+      <a href="#set_table_acl-instance_method" title="#set_table_acl (instance method)">#<strong>set_table_acl</strong>(table_name, options = {})  &#x21d2; Object </a>
     
 
     
@@ -525,7 +508,7 @@ property values into the entity.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#table_uri-instance_method" title="#table_uri (instance method)">- (Object) <strong>table_uri</strong>(name, query = {}) </a>
+      <a href="#table_uri-instance_method" title="#table_uri (instance method)">#<strong>table_uri</strong>(name, query = {})  &#x21d2; Object </a>
     
 
     
@@ -547,7 +530,7 @@ property values into the entity.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#update_entity-instance_method" title="#update_entity (instance method)">- (Object) <strong>update_entity</strong>(table_name, entity_values, options = {}) </a>
+      <a href="#update_entity-instance_method" title="#update_entity (instance method)">#<strong>update_entity</strong>(table_name, entity_values, options = {})  &#x21d2; Object </a>
     
 
     
@@ -581,47 +564,15 @@ property values into the entity.</p>
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">Service::StorageService</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Service/StorageService.html#add_metadata_to_headers-class_method" title="Azure::Storage::Service::StorageService.add_metadata_to_headers (method)">add_metadata_to_headers</a></span>, <span class='object_link'><a href="../Service/StorageService.html#call-instance_method" title="Azure::Storage::Service::StorageService#call (method)">#call</a></span>, <span class='object_link'><a href="../Service/StorageService.html#get_service_properties-instance_method" title="Azure::Storage::Service::StorageService#get_service_properties (method)">#get_service_properties</a></span>, <span class='object_link'><a href="../Service/StorageService.html#service_properties_headers-class_method" title="Azure::Storage::Service::StorageService.service_properties_headers (method)">service_properties_headers</a></span>, <span class='object_link'><a href="../Service/StorageService.html#service_properties_uri-instance_method" title="Azure::Storage::Service::StorageService#service_properties_uri (method)">#service_properties_uri</a></span>, <span class='object_link'><a href="../Service/StorageService.html#set_service_properties-instance_method" title="Azure::Storage::Service::StorageService#set_service_properties (method)">#set_service_properties</a></span>, <span class='object_link'><a href="../Service/StorageService.html#with_value-class_method" title="Azure::Storage::Service::StorageService.with_value (method)">with_value</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="../Service/StorageService.html#add_metadata_to_headers-class_method" title="Azure::Storage::Service::StorageService.add_metadata_to_headers (method)">add_metadata_to_headers</a></span>, <span class='object_link'><a href="../Service/StorageService.html#call-instance_method" title="Azure::Storage::Service::StorageService#call (method)">#call</a></span>, <span class='object_link'><a href="../Service/StorageService.html#common_headers-class_method" title="Azure::Storage::Service::StorageService.common_headers (method)">common_headers</a></span>, <span class='object_link'><a href="../Service/StorageService.html#generate_uri-instance_method" title="Azure::Storage::Service::StorageService#generate_uri (method)">#generate_uri</a></span>, <span class='object_link'><a href="../Service/StorageService.html#get_service_properties-instance_method" title="Azure::Storage::Service::StorageService#get_service_properties (method)">#get_service_properties</a></span>, <span class='object_link'><a href="../Service/StorageService.html#service_properties_uri-instance_method" title="Azure::Storage::Service::StorageService#service_properties_uri (method)">#service_properties_uri</a></span>, <span class='object_link'><a href="../Service/StorageService.html#set_service_properties-instance_method" title="Azure::Storage::Service::StorageService#set_service_properties (method)">#set_service_properties</a></span>, <span class='object_link'><a href="../Service/StorageService.html#with_value-class_method" title="Azure::Storage::Service::StorageService.with_value (method)">with_value</a></span></p>
 
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../../Core/SignedService.html" title="Azure::Core::SignedService (class)">Core::SignedService</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../../Core/SignedService.html#call-instance_method" title="Azure::Core::SignedService#call (method)">#call</a></span></p>
-
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../../Core/FilteredService.html" title="Azure::Core::FilteredService (class)">Core::FilteredService</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../../Core/FilteredService.html#call-instance_method" title="Azure::Core::FilteredService#call (method)">#call</a></span>, <span class='object_link'><a href="../../Core/FilteredService.html#with_filter-instance_method" title="Azure::Core::FilteredService#with_filter (method)">#with_filter</a></span></p>
-
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../../Core/Service.html" title="Azure::Core::Service (class)">Core::Service</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../../Core/Service.html#call-instance_method" title="Azure::Core::Service#call (method)">#call</a></span>, <span class='object_link'><a href="../../Core/Service.html#generate_uri-instance_method" title="Azure::Core::Service#generate_uri (method)">#generate_uri</a></span></p>
-<div id="constructor_details" class="method_details_list">
+  <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Azure::Storage::Table::TableService (class)">TableService</a></span></tt>) <strong>initialize</strong>(options = {}) 
+    #<strong>initialize</strong>(options = {})  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Table::TableService (class)">TableService</a></span></tt> 
   
 
   
@@ -675,7 +626,7 @@ property values into the entity.</p>
       <div class="method_details first">
   <h3 class="signature first" id="create_table-instance_method">
   
-    - (<tt>nil</tt>) <strong>create_table</strong>(table_name, options = {}) 
+    #<strong>create_table</strong>(table_name, options = {})  &#x21d2; <tt>nil</tt> 
   
 
   
@@ -688,16 +639,21 @@ property values into the entity.</p>
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>table_name</code> - String. The table name</p>
+<p><code>table_name</code>               - String. The table name</p>
 </li><li>
-<p><code>options</code>    - Hash. Optional parameters.</p>
+<p><code>options</code>                  - Hash. Optional parameters.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:timeout</code>   - Integer. A timeout in seconds.</p>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -733,24 +689,24 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd135729">msdn.microsoft.com
       <pre class="lines">
 
 
-57
-58
 59
 60
 61
 62
 63
-64</pre>
+64
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_table'>create_table</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_to_entry_xml'>hash_to_entry_xml</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>TableName</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_table_name'>table_name</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_xml'>to_xml</span>
-  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:post</span><span class='comma'>,</span> <span class='id identifier rubyid_collection_uri'>collection_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_to_entry_xml'>hash_to_entry_xml</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>TableName</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_table_name'>table_name</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_xml'>to_xml</span>
+  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:post</span><span class='comma'>,</span> <span class='id identifier rubyid_collection_uri'>collection_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -761,7 +717,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd135729">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="delete_entity-instance_method">
   
-    - (<tt>Object</tt>) <strong>delete_entity</strong>(table_name, partition_key, row_key, options = {}) 
+    #<strong>delete_entity</strong>(table_name, partition_key, row_key, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -774,23 +730,28 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd135729">msdn.microsoft.com
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>table_name</code>    - String. The table name</p>
+<p><code>table_name</code>               - String. The table name</p>
 </li><li>
-<p><code>partition_key</code> - String. The partition key</p>
+<p><code>partition_key</code>            - String. The partition key</p>
 </li><li>
-<p><code>row_key</code>       - String. The row key</p>
+<p><code>row_key</code>                  - String. The row key</p>
 </li><li>
-<p><code>options</code>       - Hash. Optional parameters.</p>
+<p><code>options</code>                  - Hash. Optional parameters.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:if_match</code>     - String. A matching condition which is required
-for update (optional, Default=“*”)</p>
+<p><code>:if_match</code>                - String. A matching condition which
+is required for update (optional, Default=“*”)</p>
 </li><li>
-<p><code>:timeout</code>      - Integer. A timeout in seconds.</p>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -810,19 +771,19 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd135727">msdn.microsoft.com
       <pre class="lines">
 
 
-422
-423
-424
-425
-426
-427
-428
-429
-430
-431</pre>
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 422</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 466</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_entity'>delete_entity</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_partition_key'>partition_key</span><span class='comma'>,</span> <span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_if_match'>if_match</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span>
@@ -831,7 +792,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd135727">msdn.microsoft.com
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:delete</span><span class='comma'>,</span> <span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_partition_key'>partition_key</span><span class='comma'>,</span> <span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If-Match</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span> <span class='id identifier rubyid_if_match'>if_match</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:delete</span><span class='comma'>,</span> <span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_partition_key'>partition_key</span><span class='comma'>,</span> <span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If-Match</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span> <span class='id identifier rubyid_if_match'>if_match</span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -842,7 +803,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd135727">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="delete_table-instance_method">
   
-    - (<tt>Object</tt>) <strong>delete_table</strong>(table_name, options = {}) 
+    #<strong>delete_table</strong>(table_name, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -855,16 +816,21 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd135727">msdn.microsoft.com
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>table_name</code> - String. The table name</p>
+<p><code>table_name</code>               - String. The table name</p>
 </li><li>
-<p><code>options</code>    - Hash. Optional parameters.</p>
+<p><code>options</code>                  - Hash. Optional parameters.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:timeout</code>   - Integer. A timeout in seconds.</p>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -884,22 +850,22 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179387">msdn.microsoft.com
       <pre class="lines">
 
 
-81
-82
-83
-84
 85
 86
-87</pre>
+87
+88
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_table'>delete_table</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:delete</span><span class='comma'>,</span> <span class='id identifier rubyid_table_uri'>table_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:delete</span><span class='comma'>,</span> <span class='id identifier rubyid_table_uri'>table_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -910,7 +876,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179387">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="entities_uri-instance_method">
   
-    - (<tt>Object</tt>) <strong>entities_uri</strong>(table_name, partition_key = nil, row_key = nil, query = {}) 
+    #<strong>entities_uri</strong>(table_name, partition_key = nil, row_key = nil, query = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -922,37 +888,37 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179387">msdn.microsoft.com
       <pre class="lines">
 
 
-518
-519
-520
-521
-522
-523
-524
-525
-526
-527
-528
-529
-530
-531
-532
-533
-534
-535
-536
-537
-538
-539
-540
-541
-542
-543
-544
-545</pre>
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 518</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 568</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_partition_key'>partition_key</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_row_key'>row_key</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_table_name'>table_name</span> <span class='kw'>if</span> <span class='id identifier rubyid_table_name'>table_name</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='op'>::</span><span class='const'>URI</span>
@@ -990,7 +956,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179387">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="execute_batch-instance_method">
   
-    - (<tt>Object</tt>) <strong>execute_batch</strong>(batch, options = {}) 
+    #<strong>execute_batch</strong>(batch, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1003,17 +969,22 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179387">msdn.microsoft.com
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>batch</code>         - The Azure::Storage::Table::Batch instance to
-execute.</p>
+<p><code>batch</code>                    - The Azure::Storage::Table::Batch
+instance to execute.</p>
 </li><li>
-<p><code>options</code>       - Hash. Optional parameters.</p>
+<p><code>options</code>                  - Hash. Optional parameters.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:timeout</code>      - Integer. A timeout in seconds.</p>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1033,23 +1004,25 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd894038">msdn.microsoft.com
       <pre class="lines">
 
 
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457
-458
-459
-460
-461</pre>
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 448</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 494</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_execute_batch'>execute_batch</span><span class='lparen'>(</span><span class='id identifier rubyid_batch'>batch</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span>
@@ -1062,8 +1035,10 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd894038">msdn.microsoft.com
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='id identifier rubyid_batch'>batch</span><span class='period'>.</span><span class='id identifier rubyid_to_body'>to_body</span>
-  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:post</span><span class='comma'>,</span> <span class='id identifier rubyid_generate_uri'>generate_uri</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/$batch</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:post</span><span class='comma'>,</span> <span class='id identifier rubyid_generate_uri'>generate_uri</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/$batch</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_batch'>batch</span><span class='period'>.</span><span class='id identifier rubyid_parse_response'>parse_response</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='id identifier rubyid_raise_with_response'>raise_with_response</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1073,7 +1048,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd894038">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="get_entity-instance_method">
   
-    - (<tt>Object</tt>) <strong>get_entity</strong>(table_name, partition_key, row_key, options = {}) 
+    #<strong>get_entity</strong>(table_name, partition_key, row_key, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1086,20 +1061,25 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd894038">msdn.microsoft.com
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>table_name</code>    - String. The table name</p>
+<p><code>table_name</code>               - String. The table name</p>
 </li><li>
-<p><code>partition_key</code> - String. The partition key</p>
+<p><code>partition_key</code>            - String. The partition key</p>
 </li><li>
-<p><code>row_key</code>       - String. The row key</p>
+<p><code>row_key</code>                  - String. The row key</p>
 </li><li>
-<p><code>options</code>       - Hash. Optional parameters.</p>
+<p><code>options</code>                  - Hash. Optional parameters.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:timeout</code>      - Integer. A timeout in seconds.</p>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>Returns an Azure::Storage::Table::Entity instance on success</p>
@@ -1116,15 +1096,15 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd894038">msdn.microsoft.com
       <pre class="lines">
 
 
-478
-479
-480
-481
-482
-483</pre>
+528
+529
+530
+531
+532
+533</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 478</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 528</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_entity'>get_entity</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_partition_key'>partition_key</span><span class='comma'>,</span> <span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:partition_key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_partition_key'>partition_key</span>
@@ -1140,7 +1120,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd894038">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="get_table-instance_method">
   
-    - (<tt>Object</tt>) <strong>get_table</strong>(table_name, options = {}) 
+    #<strong>get_table</strong>(table_name, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1153,16 +1133,21 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd894038">msdn.microsoft.com
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>table_name</code> - String. The table name</p>
+<p><code>table_name</code>               - String. The table name</p>
 </li><li>
-<p><code>options</code>    - Hash. Optional parameters.</p>
+<p><code>options</code>                  - Hash. Optional parameters.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:timeout</code>   - Integer. A timeout in seconds.</p>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>Returns the last updated time for the table</p>
@@ -1179,25 +1164,29 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd894038">msdn.microsoft.com
       <pre class="lines">
 
 
-102
-103
-104
-105
-106
-107
 108
-109</pre>
+109
+110
+111
+112
+113
+114
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_table'>get_table</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_table_uri'>table_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_from_entry_xml'>hash_from_entry_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_table_uri'>table_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_from_entry_xml'>hash_from_entry_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_results'>results</span><span class='lbracket'>[</span><span class='symbol'>:updated</span><span class='rbracket'>]</span>
+<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='id identifier rubyid_raise_with_response'>raise_with_response</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1207,7 +1196,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd894038">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="get_table_acl-instance_method">
   
-    - (<tt>Object</tt>) <strong>get_table_acl</strong>(table_name, options = {}) 
+    #<strong>get_table_acl</strong>(table_name, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1220,16 +1209,21 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd894038">msdn.microsoft.com
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>table_name</code> - String. The table name</p>
+<p><code>table_name</code>               - String. The table name</p>
 </li><li>
-<p><code>options</code>    - Hash. Optional parameters.</p>
+<p><code>options</code>                  - Hash. Optional parameters.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:timeout</code>   - Integer. A timeout in seconds.</p>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1249,29 +1243,33 @@ href="http://msdn.microsoft.com/en-us/library/azure/jj159100">msdn.microsoft.com
       <pre class="lines">
 
 
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165</pre>
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 170</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_table_acl'>get_table_acl</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>acl</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_generate_uri'>generate_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-version</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2012-02-12</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_generate_uri'>generate_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-version</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2012-02-12</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_from_xml'>signed_identifiers_from_xml</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='kw'>unless</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>==</span> <span class='kw'>nil</span> <span class='kw'>or</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&lt;</span> <span class='int'>1</span>
+  <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_from_xml'>signed_identifiers_from_xml</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='kw'>unless</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>==</span> <span class='kw'>nil</span> <span class='kw'>or</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&lt;</span> <span class='int'>1</span>
   <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span>
+<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='id identifier rubyid_raise_with_response'>raise_with_response</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1281,7 +1279,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/jj159100">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="insert_entity-instance_method">
   
-    - (<tt>Object</tt>) <strong>insert_entity</strong>(table_name, entity_values, options = {}) 
+    #<strong>insert_entity</strong>(table_name, entity_values, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1294,19 +1292,24 @@ href="http://msdn.microsoft.com/en-us/library/azure/jj159100">msdn.microsoft.com
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>table_name</code>    - String. The table name</p>
+<p><code>table_name</code>               - String. The table name</p>
 </li><li>
-<p><code>entity_values</code> - Hash. A hash of the name/value pairs for the
-entity.</p>
+<p><code>entity_values</code>            - Hash. A hash of the name/value
+pairs for the entity.</p>
 </li><li>
-<p><code>options</code>       - Hash. Optional parameters.</p>
+<p><code>options</code>                  - Hash. Optional parameters.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:timeout</code>      - Integer. A timeout in seconds.</p>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1326,36 +1329,38 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179433">msdn.microsoft.com
       <pre class="lines">
 
 
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228</pre>
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 212</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 232</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_insert_entity'>insert_entity</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_to_entry_xml'>hash_to_entry_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_values'>entity_values</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_xml'>to_xml</span>
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_to_entry_xml'>hash_to_entry_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_values'>entity_values</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_xml'>to_xml</span>
 
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:post</span><span class='comma'>,</span> <span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:post</span><span class='comma'>,</span> <span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   
-  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_from_entry_xml'>hash_from_entry_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_from_entry_xml'>hash_from_entry_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
 
   <span class='const'>Entity</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_entity'>entity</span><span class='op'>|</span>
     <span class='id identifier rubyid_entity'>entity</span><span class='period'>.</span><span class='id identifier rubyid_table'>table</span> <span class='op'>=</span> <span class='id identifier rubyid_table_name'>table_name</span>
@@ -1363,6 +1368,8 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179433">msdn.microsoft.com
     <span class='id identifier rubyid_entity'>entity</span><span class='period'>.</span><span class='id identifier rubyid_etag'>etag</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>etag</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_result'>result</span><span class='lbracket'>[</span><span class='symbol'>:etag</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_entity'>entity</span><span class='period'>.</span><span class='id identifier rubyid_properties'>properties</span> <span class='op'>=</span> <span class='id identifier rubyid_result'>result</span><span class='lbracket'>[</span><span class='symbol'>:properties</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
+<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='id identifier rubyid_raise_with_response'>raise_with_response</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1372,7 +1379,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179433">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="insert_or_merge_entity-instance_method">
   
-    - (<tt>Object</tt>) <strong>insert_or_merge_entity</strong>(table_name, entity_values, options = {}) 
+    #<strong>insert_or_merge_entity</strong>(table_name, entity_values, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1386,19 +1393,24 @@ property values into the entity.</p>
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>table_name</code>    - String. The table name</p>
+<p><code>table_name</code>               - String. The table name</p>
 </li><li>
-<p><code>entity_values</code> - Hash. A hash of the name/value pairs for the
-entity.</p>
+<p><code>entity_values</code>            - Hash. A hash of the name/value
+pairs for the entity.</p>
 </li><li>
-<p><code>options</code>       - Hash. Optional parameters.</p>
+<p><code>options</code>                  - Hash. Optional parameters.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:timeout</code>      - Integer. A timeout in seconds.</p>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1418,13 +1430,13 @@ href="http://msdn.microsoft.com/en-us/library/azure/hh452241">msdn.microsoft.com
       <pre class="lines">
 
 
-378
-379
-380
-381</pre>
+418
+419
+420
+421</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 378</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 418</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_insert_or_merge_entity'>insert_or_merge_entity</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:create_if_not_exists</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -1438,7 +1450,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/hh452241">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="insert_or_replace_entity-instance_method">
   
-    - (<tt>Object</tt>) <strong>insert_or_replace_entity</strong>(table_name, entity_values, options = {}) 
+    #<strong>insert_or_replace_entity</strong>(table_name, entity_values, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1451,19 +1463,24 @@ href="http://msdn.microsoft.com/en-us/library/azure/hh452241">msdn.microsoft.com
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>table_name</code>    - String. The table name</p>
+<p><code>table_name</code>               - String. The table name</p>
 </li><li>
-<p><code>entity_values</code> - Hash. A hash of the name/value pairs for the
-entity.</p>
+<p><code>entity_values</code>            - Hash. A hash of the name/value
+pairs for the entity.</p>
 </li><li>
-<p><code>options</code>       - Hash. Optional parameters.</p>
+<p><code>options</code>                  - Hash. Optional parameters.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:timeout</code>      - Integer. A timeout in seconds.</p>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1483,13 +1500,13 @@ href="http://msdn.microsoft.com/en-us/library/azure/hh452242">msdn.microsoft.com
       <pre class="lines">
 
 
-399
-400
-401
-402</pre>
+441
+442
+443
+444</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 399</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 441</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_insert_or_replace_entity'>insert_or_replace_entity</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:create_if_not_exists</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -1503,7 +1520,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/hh452242">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="merge_entity-instance_method">
   
-    - (<tt>Object</tt>) <strong>merge_entity</strong>(table_name, entity_values, options = {}) 
+    #<strong>merge_entity</strong>(table_name, entity_values, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1518,26 +1535,32 @@ operation does.</p>
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>table_name</code>    - String. The table name</p>
+<p><code>table_name</code>               - String. The table name</p>
 </li><li>
-<p><code>entity_values</code> - Hash. A hash of the name/value pairs for the
-entity.</p>
+<p><code>entity_values</code>            - Hash. A hash of the name/value
+pairs for the entity.</p>
 </li><li>
-<p><code>options</code>       - Hash. Optional parameters.</p>
+<p><code>options</code>                  - Hash. Optional parameters.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:if_match</code>              - String. A matching condition which is
-required for update (optional, Default=“*”)</p>
+<p><code>:if_match</code>                - String. A matching condition which
+is required for update (optional, Default=“*”)</p>
 </li><li>
-<p><code>:create_if_not_exists</code>  - Boolean. If true, and partition_key
-and row_key do not reference and existing entity,  that entity will be
-inserted. If false, the operation will fail. (optional, Default=false)</p>
+<p><code>:create_if_not_exists</code>    - Boolean. If true, and partition_key
+and row_key do not reference and existing entity,</p>
+
+<pre class="code ruby"><code class="ruby">that entity will be inserted. If false, the operation will fail. (optional, Default=false)</code></pre>
 </li><li>
-<p><code>:timeout</code>               - Integer. A timeout in seconds.</p>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1557,26 +1580,30 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179392">msdn.microsoft.com
       <pre class="lines">
 
 
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360</pre>
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 344</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 378</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge_entity'>merge_entity</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_if_match'>if_match</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span>
@@ -1585,15 +1612,19 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179392">msdn.microsoft.com
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PartitionKey</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>RowKey</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> 
+    <span class='id identifier rubyid_entity_values'>entity_values</span><span class='lbracket'>[</span><span class='symbol'>:PartitionKey</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PartitionKey</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_entity_values'>entity_values</span><span class='lbracket'>[</span><span class='symbol'>:RowKey</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>RowKey</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>X-HTTP-Method</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>MERGE</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If-Match</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_if_match'>if_match</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:create_if_not_exists</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_to_entry_xml'>hash_to_entry_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_values'>entity_values</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_xml'>to_xml</span>
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_to_entry_xml'>hash_to_entry_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_values'>entity_values</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_xml'>to_xml</span>
 
-  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:post</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:post</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etag</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='id identifier rubyid_raise_with_response'>raise_with_response</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1603,7 +1634,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179392">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="query_entities-instance_method">
   
-    - (<tt>Object</tt>) <strong>query_entities</strong>(table_name, options = {}) 
+    #<strong>query_entities</strong>(table_name, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1616,30 +1647,37 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179392">msdn.microsoft.com
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>table_name</code>    - String. The table name</p>
+<p><code>table_name</code>               - String. The table name</p>
 </li><li>
-<p><code>options</code>       - Hash. Optional parameters.</p>
+<p><code>options</code>                  - Hash. Optional parameters.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:partition_key</code>      - String. The partition key (optional)</p>
+<p><code>:partition_key</code>           - String. The partition key
+(optional)</p>
 </li><li>
-<p><code>:row_key</code>            - String. The row key (optional)</p>
+<p><code>:row_key</code>                 - String. The row key (optional)</p>
 </li><li>
-<p><code>:select</code>             - Array. An array of property names to
-return (optional)</p>
+<p><code>:select</code>                  - Array. An array of property names
+to return (optional)</p>
 </li><li>
-<p><code>:filter</code>             - String. A filter expression (optional)</p>
+<p><code>:filter</code>                  - String. A filter expression
+(optional)</p>
 </li><li>
-<p><code>:top</code>                - Integer. A limit for the number of
+<p><code>:top</code>                     - Integer. A limit for the number of
 results returned (optional)</p>
 </li><li>
-<p><code>:continuation_token</code> - Hash. The continuation token.</p>
+<p><code>:continuation_token</code>      - Hash. The continuation token.</p>
 </li><li>
-<p><code>:timeout</code>            - Integer. A timeout in seconds.</p>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1659,30 +1697,6 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179421">msdn.microsoft.com
       <pre class="lines">
 
 
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270
-271
-272
-273
-274
 275
 276
 277
@@ -1692,10 +1706,36 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179421">msdn.microsoft.com
 281
 282
 283
-284</pre>
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 251</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 275</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_query_entities'>query_entities</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1707,11 +1747,11 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179421">msdn.microsoft.com
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:partition_key</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:row_key</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DataServiceVersion</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2.0;NetFx</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DataServiceVersion</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2.0;NetFx</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_entities'>entities</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Service</span><span class='op'>::</span><span class='const'>EnumerationResults</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 
-  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:partition_key</span><span class='rbracket'>]</span> <span class='kw'>and</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:row_key</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_from_entry_xml'>hash_from_entry_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_entries_from_feed_xml'>entries_from_feed_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:partition_key</span><span class='rbracket'>]</span> <span class='kw'>and</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:row_key</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_from_entry_xml'>hash_from_entry_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_entries_from_feed_xml'>entries_from_feed_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
   
   <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_result'>result</span><span class='op'>|</span>
     <span class='id identifier rubyid_entity'>entity</span> <span class='op'>=</span> <span class='const'>Entity</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span>
@@ -1730,6 +1770,8 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179421">msdn.microsoft.com
     <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-continuation-NextPartitionKey</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_entities'>entities</span>
+<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='id identifier rubyid_raise_with_response'>raise_with_response</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1739,7 +1781,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179421">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="query_tables-instance_method">
   
-    - (<tt>Object</tt>) <strong>query_tables</strong>(options = {}) 
+    #<strong>query_tables</strong>(options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1752,18 +1794,24 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179421">msdn.microsoft.com
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>options</code>    - Hash. Optional parameters.</p>
+<p><code>options</code>                  - Hash. Optional parameters.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:next_table_token</code>   - String. A token used to enumerate the
-next page of results, when the list of tables is larger than a single
-operation can return at once. (optional)</p>
+<p><code>:next_table_token</code>        - String. A token used to enumerate
+the next page of results, when the list of tables is</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_larger'>larger</span> <span class='id identifier rubyid_than'>than</span> <span class='id identifier rubyid_a'>a</span> <span class='id identifier rubyid_single'>single</span> <span class='id identifier rubyid_operation'>operation</span> <span class='id identifier rubyid_can'>can</span> <span class='kw'>return</span> <span class='id identifier rubyid_at'>at</span> <span class='id identifier rubyid_once'>once</span><span class='period'>.</span> <span class='lparen'>(</span><span class='id identifier rubyid_optional'>optional</span><span class='rparen'>)</span></code></pre>
 </li><li>
-<p><code>:timeout</code>            - Integer. A timeout in seconds.</p>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1783,22 +1831,24 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179405">msdn.microsoft.com
       <pre class="lines">
 
 
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
 137
 138
-139</pre>
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 137</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_query_tables'>query_tables</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
@@ -1806,12 +1856,14 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179405">msdn.microsoft.com
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_collection_uri'>collection_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_entries'>entries</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_entries_from_feed_xml'>entries_from_feed_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_entries'>entries</span> <span class='op'>=</span> <span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_entries_from_feed_xml'>entries_from_feed_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Service</span><span class='op'>::</span><span class='const'>EnumerationResults</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_entries'>entries</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_continuation_token'>continuation_token</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-continuation-NextTableName</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_values'>values</span>
+<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='id identifier rubyid_raise_with_response'>raise_with_response</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1821,7 +1873,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179405">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="set_table_acl-instance_method">
   
-    - (<tt>Object</tt>) <strong>set_table_acl</strong>(table_name, options = {}) 
+    #<strong>set_table_acl</strong>(table_name, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1834,19 +1886,24 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179405">msdn.microsoft.com
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>table_name</code> - String. The table name</p>
+<p><code>table_name</code>               - String. The table name</p>
 </li><li>
-<p><code>options</code>    - Hash. Optional parameters.</p>
+<p><code>options</code>                  - Hash. Optional parameters.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:signed_identifiers</code>  - Array. A list of
+<p><code>:signed_identifiers</code>      - Array. A list of
 Azure::Storage::Entity::SignedIdentifier instances</p>
 </li><li>
-<p><code>:timeout</code>             - Integer. A timeout in seconds.</p>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1866,20 +1923,20 @@ href="http://msdn.microsoft.com/en-us/library/azure/jj159102">msdn.microsoft.com
       <pre class="lines">
 
 
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193</pre>
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 183</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 201</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_table_acl'>set_table_acl</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>acl</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
@@ -1887,9 +1944,9 @@ href="http://msdn.microsoft.com/en-us/library/azure/jj159102">msdn.microsoft.com
 
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_generate_uri'>generate_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='kw'>nil</span>
-  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_to_xml'>signed_identifiers_to_xml</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_to_xml'>signed_identifiers_to_xml</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
 
-  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-version</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2012-02-12</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-version</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2012-02-12</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1900,7 +1957,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/jj159102">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="table_uri-instance_method">
   
-    - (<tt>Object</tt>) <strong>table_uri</strong>(name, query = {}) 
+    #<strong>table_uri</strong>(name, query = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1912,13 +1969,13 @@ href="http://msdn.microsoft.com/en-us/library/azure/jj159102">msdn.microsoft.com
       <pre class="lines">
 
 
-501
-502
-503
-504</pre>
+551
+552
+553
+554</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 501</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 551</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_table_uri'>table_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_name'>name</span> <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='op'>::</span><span class='const'>URI</span>
@@ -1932,7 +1989,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/jj159102">msdn.microsoft.com
       <div class="method_details ">
   <h3 class="signature " id="update_entity-instance_method">
   
-    - (<tt>Object</tt>) <strong>update_entity</strong>(table_name, entity_values, options = {}) 
+    #<strong>update_entity</strong>(table_name, entity_values, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1946,26 +2003,32 @@ replaces  the entire entity and can be used to remove properties.</p>
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>table_name</code>    - String. The table name</p>
+<p><code>table_name</code>               - String. The table name</p>
 </li><li>
-<p><code>entity_values</code> - Hash. A hash of the name/value pairs for the
-entity.</p>
+<p><code>entity_values</code>            - Hash. A hash of the name/value
+pairs for the entity.</p>
 </li><li>
-<p><code>options</code>       - Hash. Optional parameters.</p>
+<p><code>options</code>                  - Hash. Optional parameters.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:if_match</code>              - String. A matching condition which is
-required for update (optional, Default=“*”)</p>
+<p><code>:if_match</code>                - String. A matching condition which
+is required for update (optional, Default=“*”)</p>
 </li><li>
-<p><code>:create_if_not_exists</code>  - Boolean. If true, and partition_key
-and row_key do not reference and existing entity,  that entity will be
-inserted. If false, the operation will fail. (optional, Default=false)</p>
+<p><code>:create_if_not_exists</code>    - Boolean. If true, and partition_key
+and row_key do not reference and existing entity,</p>
+
+<pre class="code ruby"><code class="ruby">that entity will be inserted. If false, the operation will fail. (optional, Default=false)</code></pre>
 </li><li>
-<p><code>:timeout</code>               - Integer. A timeout in seconds.</p>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1985,26 +2048,30 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179427">msdn.microsoft.com
       <pre class="lines">
 
 
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322</pre>
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 306</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/table_service.rb', line 334</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_entity'>update_entity</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_if_match'>if_match</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span>
@@ -2013,15 +2080,19 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179427">msdn.microsoft.com
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PartitionKey</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>RowKey</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='comma'>,</span> 
+    <span class='id identifier rubyid_entity_values'>entity_values</span><span class='lbracket'>[</span><span class='symbol'>:PartitionKey</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PartitionKey</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_entity_values'>entity_values</span><span class='lbracket'>[</span><span class='symbol'>:RowKey</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>RowKey</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If-Match</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_if_match'>if_match</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:create_if_not_exists</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_to_entry_xml'>hash_to_entry_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_values'>entity_values</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_xml'>to_xml</span>
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_to_entry_xml'>hash_to_entry_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_values'>entity_values</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_xml'>to_xml</span>
 
-  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etag</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='id identifier rubyid_raise_with_response'>raise_with_response</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2032,15 +2103,12 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179427">msdn.microsoft.com
 
 </div>
 
-    <div id="footer">
-<<<<<<< HEAD
-  Generated on Thu Mar 31 15:30:03 2016 by
-=======
-  Generated on Sat Mar 19 11:46:05 2016 by
->>>>>>> 4dbb43512caf149277ec7490f9911ddad8405f55
+      <div id="footer">
+  Generated on Fri Sep 30 15:51:26 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.1.7).
+  0.9.5 (ruby-2.2.4).
 </div>
 
+    </div>
   </body>
 </html>

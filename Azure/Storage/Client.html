@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
   Class: Azure::Storage::Client
   
-    &mdash; Documentation by YARD 0.8.7.6
+    &mdash; Documentation by YARD 0.9.5
   
 </title>
 
@@ -15,9 +15,8 @@
   <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  hasFrames = window.top.frames.main ? true : false;
+  pathId = "Azure::Storage::Client";
   relpath = '../../';
-  framesUrl = "../../frames.html#!Azure/Storage/Client.html";
 </script>
 
 
@@ -28,51 +27,50 @@
 
   </head>
   <body>
-    <div id="header">
-      <div id="menu">
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
   
     <a href="../../_index.html">Index (C)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span>
      &raquo; 
     <span class="title">Client</span>
   
-
-  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
-      <div id="search">
+        <div id="search">
   
     <a class="full_list_link" id="class_list_link"
         href="../../class_list.html">
-      Class List
-    </a>
-  
-    <a class="full_list_link" id="method_list_link"
-        href="../../method_list.html">
-      Method List
-    </a>
-  
-    <a class="full_list_link" id="file_list_link"
-        href="../../file_list.html">
-      File List
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
     </a>
   
 </div>
-      <div class="clear"></div>
-    </div>
+        <div class="clear"></div>
+      </div>
 
-    <iframe id="search_frame"></iframe>
+      <iframe id="search_frame" src="../../class_list.html"></iframe>
 
-    <div id="content"><h1>Class: Azure::Storage::Client
+      <div id="content"><h1>Class: Azure::Storage::Client
   
   
   
 </h1>
-
-<dl class="box">
+<div class="box_info">
   
-    <dt class="r1">Inherits:</dt>
-    <dd class="r1">
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
       <span class="inheritName">Object</span>
       
         <ul class="fullTree">
@@ -83,25 +81,30 @@
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
       
-      </dd>
-    
+    </dd>
+  </dl>
   
-  
-    
-  
-    
-      <dt class="r2">Includes:</dt>
-      <dd class="r2"><span class='object_link'><a href="../Core/HttpClient.html" title="Azure::Core::HttpClient (module)">Core::HttpClient</a></span>, <span class='object_link'><a href="ClientOptions.html" title="Azure::Storage::ClientOptions (module)">ClientOptions</a></span>, <span class='object_link'><a href="Configurable.html" title="Azure::Storage::Configurable (module)">Configurable</a></span></dd>
-      
-    
+
   
   
   
-    <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/azure/storage/client.rb</dd>
   
-</dl>
-<div class="clear"></div>
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="ClientOptions.html" title="Azure::Storage::ClientOptions (module)">ClientOptions</a></span>, <span class='object_link'><a href="Configurable.html" title="Azure::Storage::Configurable (module)">Configurable</a></span>, <span class='object_link'><a href="Core/HttpClient.html" title="Azure::Storage::Core::HttpClient (module)">Azure::Storage::Core::HttpClient</a></span></dd>
+  </dl>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/azure/storage/client.rb</dd>
+  </dl>
+  
+</div>
 
 
 
@@ -117,13 +120,13 @@
   
   
   <h3 class="inherited">Attributes included from <span class='object_link'><a href="Configurable.html" title="Azure::Storage::Configurable (module)">Configurable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Configurable.html#storage_access_key-instance_method" title="Azure::Storage::Configurable#storage_access_key (method)">#storage_access_key</a></span>, <span class='object_link'><a href="Configurable.html#storage_account_name-instance_method" title="Azure::Storage::Configurable#storage_account_name (method)">#storage_account_name</a></span>, <span class='object_link'><a href="Configurable.html#storage_blob_host-instance_method" title="Azure::Storage::Configurable#storage_blob_host (method)">#storage_blob_host</a></span>, <span class='object_link'><a href="Configurable.html#storage_connection_string-instance_method" title="Azure::Storage::Configurable#storage_connection_string (method)">#storage_connection_string</a></span>, <span class='object_link'><a href="Configurable.html#storage_queue_host-instance_method" title="Azure::Storage::Configurable#storage_queue_host (method)">#storage_queue_host</a></span>, <span class='object_link'><a href="Configurable.html#storage_table_host-instance_method" title="Azure::Storage::Configurable#storage_table_host (method)">#storage_table_host</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Configurable.html#storage_access_key-instance_method" title="Azure::Storage::Configurable#storage_access_key (method)">#storage_access_key</a></span>, <span class='object_link'><a href="Configurable.html#storage_account_name-instance_method" title="Azure::Storage::Configurable#storage_account_name (method)">#storage_account_name</a></span>, <span class='object_link'><a href="Configurable.html#storage_blob_host-instance_method" title="Azure::Storage::Configurable#storage_blob_host (method)">#storage_blob_host</a></span>, <span class='object_link'><a href="Configurable.html#storage_connection_string-instance_method" title="Azure::Storage::Configurable#storage_connection_string (method)">#storage_connection_string</a></span>, <span class='object_link'><a href="Configurable.html#storage_queue_host-instance_method" title="Azure::Storage::Configurable#storage_queue_host (method)">#storage_queue_host</a></span>, <span class='object_link'><a href="Configurable.html#storage_sas_token-instance_method" title="Azure::Storage::Configurable#storage_sas_token (method)">#storage_sas_token</a></span>, <span class='object_link'><a href="Configurable.html#storage_table_host-instance_method" title="Azure::Storage::Configurable#storage_table_host (method)">#storage_table_host</a></span></p>
 
 
   
     <h2>
       Class Method Summary
-      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+      <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
     <ul class="summary">
@@ -131,7 +134,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#create-class_method" title="create (class method)">+ (Azure::Storage::Client) <strong>create</strong>(options = {}) </a>
+      <a href="#create-class_method" title="create (class method)">.<strong>create</strong>(options = {})  &#x21d2; Azure::Storage::Client </a>
     
 
     
@@ -155,7 +158,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#create_development-class_method" title="create_development (class method)">+ (Azure::Storage::Client) <strong>create_development</strong>(proxy_uri = nil) </a>
+      <a href="#create_development-class_method" title="create_development (class method)">.<strong>create_development</strong>(proxy_uri = nil)  &#x21d2; Azure::Storage::Client </a>
     
 
     
@@ -180,7 +183,7 @@ Emulator.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#create_from_connection_string-class_method" title="create_from_connection_string (class method)">+ (Azure::Storage::Client) <strong>create_from_connection_string</strong>(connection_string) </a>
+      <a href="#create_from_connection_string-class_method" title="create_from_connection_string (class method)">.<strong>create_from_connection_string</strong>(connection_string)  &#x21d2; Azure::Storage::Client </a>
     
 
     
@@ -205,7 +208,7 @@ Variables.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#create_from_env-class_method" title="create_from_env (class method)">+ (Azure::Storage::Client) <strong>create_from_env</strong> </a>
+      <a href="#create_from_env-class_method" title="create_from_env (class method)">.<strong>create_from_env</strong>  &#x21d2; Azure::Storage::Client </a>
     
 
     
@@ -231,7 +234,7 @@ Variables.</p>
   
     <h2>
       Instance Method Summary
-      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+      <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
     <ul class="summary">
@@ -239,7 +242,7 @@ Variables.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#blobClient-instance_method" title="#blobClient (instance method)">- (Azure::Storage::Blob::BlobService) <strong>blobClient</strong>(options = {}) </a>
+      <a href="#blob_client-instance_method" title="#blob_client (instance method)">#<strong>blob_client</strong>(options = {})  &#x21d2; Azure::Storage::Blob::BlobService </a>
     
 
     
@@ -264,7 +267,7 @@ instance.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Azure::Storage::Client) <strong>initialize</strong>(options = {}) </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(options = {})  &#x21d2; Azure::Storage::Client </a>
     
 
     
@@ -290,7 +293,7 @@ instance.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#queueClient-instance_method" title="#queueClient (instance method)">- (Azure::Storage::Queue::QueueService) <strong>queueClient</strong>(options = {}) </a>
+      <a href="#queue_client-instance_method" title="#queue_client (instance method)">#<strong>queue_client</strong>(options = {})  &#x21d2; Azure::Storage::Queue::QueueService </a>
     
 
     
@@ -315,7 +318,7 @@ instance.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#tableClient-instance_method" title="#tableClient (instance method)">- (Azure::Storage::Table::TableService) <strong>tableClient</strong>(options = {}) </a>
+      <a href="#table_client-instance_method" title="#table_client (instance method)">#<strong>table_client</strong>(options = {})  &#x21d2; Azure::Storage::Table::TableService </a>
     
 
     
@@ -349,8 +352,8 @@ instance.</p>
   
   
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Core/HttpClient.html" title="Azure::Core::HttpClient (module)">Core::HttpClient</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Core/HttpClient.html#agents-instance_method" title="Azure::Core::HttpClient#agents (method)">#agents</a></span>, <span class='object_link'><a href="../Core/HttpClient.html#reset_agents%21-instance_method" title="Azure::Core::HttpClient#reset_agents! (method)">#reset_agents!</a></span></p>
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Core/HttpClient.html" title="Azure::Storage::Core::HttpClient (module)">Azure::Storage::Core::HttpClient</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Core/HttpClient.html#agents-instance_method" title="Azure::Storage::Core::HttpClient#agents (method)">#agents</a></span>, <span class='object_link'><a href="Core/HttpClient.html#reset_agents%21-instance_method" title="Azure::Storage::Core::HttpClient#reset_agents! (method)">#reset_agents!</a></span></p>
 
   
   
@@ -361,7 +364,7 @@ instance.</p>
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="ClientOptions.html" title="Azure::Storage::ClientOptions (module)">ClientOptions</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ClientOptions.html#connection_string_mapping-class_method" title="Azure::Storage::ClientOptions.connection_string_mapping (method)">connection_string_mapping</a></span>, <span class='object_link'><a href="ClientOptions.html#env_vars_mapping-class_method" title="Azure::Storage::ClientOptions.env_vars_mapping (method)">env_vars_mapping</a></span>, <span class='object_link'><a href="ClientOptions.html#options-instance_method" title="Azure::Storage::ClientOptions#options (method)">#options</a></span>, <span class='object_link'><a href="ClientOptions.html#reset%21-instance_method" title="Azure::Storage::ClientOptions#reset! (method)">#reset!</a></span>, <span class='object_link'><a href="ClientOptions.html#valid_options-class_method" title="Azure::Storage::ClientOptions.valid_options (method)">valid_options</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="ClientOptions.html#connection_string_mapping-class_method" title="Azure::Storage::ClientOptions.connection_string_mapping (method)">connection_string_mapping</a></span>, <span class='object_link'><a href="ClientOptions.html#env_vars_mapping-class_method" title="Azure::Storage::ClientOptions.env_vars_mapping (method)">env_vars_mapping</a></span>, <span class='object_link'><a href="ClientOptions.html#options-instance_method" title="Azure::Storage::ClientOptions#options (method)">#options</a></span>, <span class='object_link'><a href="ClientOptions.html#reset%21-instance_method" title="Azure::Storage::ClientOptions#reset! (method)">#reset!</a></span>, <span class='object_link'><a href="ClientOptions.html#same_options%3F-instance_method" title="Azure::Storage::ClientOptions#same_options? (method)">#same_options?</a></span>, <span class='object_link'><a href="ClientOptions.html#valid_options-class_method" title="Azure::Storage::ClientOptions.valid_options (method)">valid_options</a></span></p>
 
   
   
@@ -379,7 +382,7 @@ instance.</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt>) <strong>initialize</strong>(options = {}) 
+    #<strong>initialize</strong>(options = {})  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt> 
   
 
   
@@ -399,8 +402,8 @@ instance.</p>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
-<p><code>:use_development_storage</code>        - TrueClass. Whether to use
-storage emulator.</p>
+<p><code>:use_development_storage</code>        - True. Whether to use storage
+emulator.</p>
 </li><li>
 <p><code>:development_storage_proxy_uri</code>  - String. Used with
 <code>:use_development_storage</code> if emulator is hosted other than
@@ -488,12 +491,22 @@ the mapping relationship</p>
 
 79
 80
-81</pre>
+81
+82
+83
+84
+85
+86</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_setup_options'>setup_options</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>0</span>
+    <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_connection_string'>parse_connection_string</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:storage_connection_string</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:storage_connection_string</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+
   <span class='id identifier rubyid_reset!'>reset!</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -521,7 +534,7 @@ the mapping relationship</p>
       <div class="method_details first">
   <h3 class="signature first" id="create-class_method">
   
-    + (<tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt>) <strong>create</strong>(options = {}) 
+    .<strong>create</strong>(options = {})  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt> 
   
 
   
@@ -641,12 +654,12 @@ the mapping relationship</p>
       <pre class="lines">
 
 
-142
-143
-144</pre>
+147
+148
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -659,7 +672,7 @@ the mapping relationship</p>
       <div class="method_details ">
   <h3 class="signature " id="create_development-class_method">
   
-    + (<tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt>) <strong>create_development</strong>(proxy_uri = nil) 
+    .<strong>create_development</strong>(proxy_uri = nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt> 
   
 
   
@@ -703,13 +716,13 @@ localhost.</p>
       <pre class="lines">
 
 
-153
-154
-155
-156</pre>
+158
+159
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 158</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_development'>create_development</span><span class='lparen'>(</span><span class='id identifier rubyid_proxy_uri'>proxy_uri</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_proxy_uri'>proxy_uri</span> <span class='op'>||=</span> <span class='const'>StorageServiceClientConstants</span><span class='op'>::</span><span class='const'>DEV_STORE_URI</span>
@@ -723,7 +736,7 @@ localhost.</p>
       <div class="method_details ">
   <h3 class="signature " id="create_from_connection_string-class_method">
   
-    + (<tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt>) <strong>create_from_connection_string</strong>(connection_string) 
+    .<strong>create_from_connection_string</strong>(connection_string)  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt> 
   
 
   
@@ -766,12 +779,12 @@ href="https://azure.microsoft.com/en-us/documentation/articles/storage-configure
       <pre class="lines">
 
 
-173
-174
-175</pre>
+178
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 173</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 178</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_from_connection_string'>create_from_connection_string</span><span class='lparen'>(</span><span class='id identifier rubyid_connection_string'>connection_string</span><span class='rparen'>)</span>
   <span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_connection_string'>connection_string</span><span class='rparen'>)</span>
@@ -784,7 +797,7 @@ href="https://azure.microsoft.com/en-us/documentation/articles/storage-configure
       <div class="method_details ">
   <h3 class="signature " id="create_from_env-class_method">
   
-    + (<tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt>) <strong>create_from_env</strong> 
+    .<strong>create_from_env</strong>  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt> 
   
 
   
@@ -821,12 +834,12 @@ Variables</p>
       <pre class="lines">
 
 
-162
-163
-164</pre>
+167
+168
+169</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 167</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_from_env'>create_from_env</span>
   <span class='id identifier rubyid_create'>create</span>
@@ -843,9 +856,9 @@ Variables</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="blobClient-instance_method">
+  <h3 class="signature first" id="blob_client-instance_method">
   
-    - (<tt><span class='object_link'><a href="Blob/BlobService.html" title="Azure::Storage::Blob::BlobService (class)">Azure::Storage::Blob::BlobService</a></span></tt>) <strong>blobClient</strong>(options = {}) 
+    #<strong>blob_client</strong>(options = {})  &#x21d2; <tt><span class='object_link'><a href="Blob/BlobService.html" title="Azure::Storage::Blob::BlobService (class)">Azure::Storage::Blob::BlobService</a></span></tt> 
   
 
   
@@ -882,15 +895,15 @@ instance</p>
       <pre class="lines">
 
 
-85
-86
-87</pre>
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 90</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_blobClient'>blobClient</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='ivar'>@blobClient</span> <span class='op'>||=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Blob</span><span class='op'>::</span><span class='const'>BlobService</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_default_client'>default_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_blob_client'>blob_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='ivar'>@blob_client</span> <span class='op'>||=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Blob</span><span class='op'>::</span><span class='const'>BlobService</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_default_client'>default_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -898,9 +911,9 @@ instance</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="queueClient-instance_method">
+  <h3 class="signature " id="queue_client-instance_method">
   
-    - (<tt><span class='object_link'><a href="Queue/QueueService.html" title="Azure::Storage::Queue::QueueService (class)">Azure::Storage::Queue::QueueService</a></span></tt>) <strong>queueClient</strong>(options = {}) 
+    #<strong>queue_client</strong>(options = {})  &#x21d2; <tt><span class='object_link'><a href="Queue/QueueService.html" title="Azure::Storage::Queue::QueueService (class)">Azure::Storage::Queue::QueueService</a></span></tt> 
   
 
   
@@ -937,15 +950,15 @@ instance</p>
       <pre class="lines">
 
 
-91
-92
-93</pre>
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 96</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_queueClient'>queueClient</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='ivar'>@queueClient</span> <span class='op'>||=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Queue</span><span class='op'>::</span><span class='const'>QueueService</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_default_client'>default_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_queue_client'>queue_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='ivar'>@queue_client</span> <span class='op'>||=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Queue</span><span class='op'>::</span><span class='const'>QueueService</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_default_client'>default_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -953,9 +966,9 @@ instance</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="tableClient-instance_method">
+  <h3 class="signature " id="table_client-instance_method">
   
-    - (<tt><span class='object_link'><a href="Table/TableService.html" title="Azure::Storage::Table::TableService (class)">Azure::Storage::Table::TableService</a></span></tt>) <strong>tableClient</strong>(options = {}) 
+    #<strong>table_client</strong>(options = {})  &#x21d2; <tt><span class='object_link'><a href="Table/TableService.html" title="Azure::Storage::Table::TableService (class)">Azure::Storage::Table::TableService</a></span></tt> 
   
 
   
@@ -992,15 +1005,15 @@ instance</p>
       <pre class="lines">
 
 
-97
-98
-99</pre>
+102
+103
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 102</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_tableClient'>tableClient</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='ivar'>@tableClient</span> <span class='op'>||=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>TableService</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_default_client'>default_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_table_client'>table_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='ivar'>@table_client</span> <span class='op'>||=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>TableService</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_default_client'>default_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1011,15 +1024,12 @@ instance</p>
 
 </div>
 
-    <div id="footer">
-<<<<<<< HEAD
-  Generated on Thu Mar 31 15:30:01 2016 by
-=======
-  Generated on Sat Mar 19 11:46:03 2016 by
->>>>>>> 4dbb43512caf149277ec7490f9911ddad8405f55
+      <div id="footer">
+  Generated on Fri Sep 30 15:51:24 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.1.7).
+  0.9.5 (ruby-2.2.4).
 </div>
 
+    </div>
   </body>
 </html>
