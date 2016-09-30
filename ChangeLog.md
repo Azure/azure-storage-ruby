@@ -5,6 +5,9 @@ ALL
 * Added the retry for the timeout errors.
 * Added the retry for the connection reset error.
 
+BLOB
+* Fixed the issue where "list_blobs" doesn't work when delimiter is specified. (https://github.com/Azure/azure-storage-ruby/issues/41)
+
 2016.08 - version 0.11.0-preview
 
 ALL

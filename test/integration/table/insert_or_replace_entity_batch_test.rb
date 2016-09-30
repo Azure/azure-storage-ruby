@@ -125,7 +125,7 @@ describe Azure::Storage::Table::TableService do
     end
 
     it "errors on an invalid table name" do
-      assert_raises(Azure::Core::Http::HTTPError) do
+      assert_raises(RuntimeError) do
         entity = entity_properties.dup
         entity["RowKey"] = "row_key"
 
@@ -136,7 +136,7 @@ describe Azure::Storage::Table::TableService do
     end
 
     it "errors on an invalid partition key" do
-      assert_raises(Azure::Core::Http::HTTPError) do
+      assert_raises(RuntimeError) do
         entity = entity_properties.dup
         entity["PartitionKey"] = "this/partition_key#is?invalid"
         entity["RowKey"] = "row_key"
@@ -148,7 +148,7 @@ describe Azure::Storage::Table::TableService do
     end
 
     it "errors on an invalid row key" do
-      assert_raises(Azure::Core::Http::HTTPError) do
+      assert_raises(RuntimeError) do
         entity = entity_properties.dup
         entity["RowKey"] = "this/partition_key#is?invalid"
 

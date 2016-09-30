@@ -90,7 +90,7 @@ describe Azure::Storage::Table::TableService do
     end
 
     it "errors on an invalid table name" do
-      assert_raises(Azure::Core::Http::HTTPError) do
+      assert_raises(RuntimeError) do
         batch = Azure::Storage::Table::Batch.new "this_table.cannot-exist!", entity_properties["PartitionKey"]
         batch.delete entity_properties["RowKey"]
         subject.execute_batch batch
@@ -98,7 +98,7 @@ describe Azure::Storage::Table::TableService do
     end
 
     it "errors on an invalid partition key" do
-      assert_raises(Azure::Core::Http::HTTPError) do
+      assert_raises(RuntimeError) do
         batch = Azure::Storage::Table::Batch.new table_name, "this_partition/key#is_invalid"
         batch.delete entity_properties["RowKey"]
         subject.execute_batch batch
@@ -106,7 +106,7 @@ describe Azure::Storage::Table::TableService do
     end
 
     it "errors on an invalid row key" do
-      assert_raises(Azure::Core::Http::HTTPError) do
+      assert_raises(RuntimeError) do
         batch = Azure::Storage::Table::Batch.new table_name, entity_properties["PartitionKey"]
         batch.delete "thisrow/key#is_invalid"
         subject.execute_batch batch
