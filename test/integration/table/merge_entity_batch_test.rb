@@ -94,7 +94,7 @@ describe Azure::Storage::Table::TableService do
     end
 
     it "errors on a non-existing row key" do
-      assert_raises(Azure::Core::Http::HTTPError) do
+      assert_raises(RuntimeError) do
         entity = entity_properties.dup
         entity["RowKey"] = "this-row-key-does-not-exist"
 
@@ -105,7 +105,7 @@ describe Azure::Storage::Table::TableService do
     end
 
     it "errors on an invalid table name" do
-      assert_raises(Azure::Core::Http::HTTPError) do
+      assert_raises(RuntimeError) do
         batch = Azure::Storage::Table::Batch.new "this_table.cannot-exist!", entity_properties["PartitionKey"]
         batch.merge entity_properties["RowKey"], entity_properties
         etags = subject.execute_batch batch
@@ -113,7 +113,7 @@ describe Azure::Storage::Table::TableService do
     end
 
     it "errors on an invalid partition key" do
-      assert_raises(Azure::Core::Http::HTTPError) do
+      assert_raises(RuntimeError) do
         entity = entity_properties.dup
         entity["PartitionKey"] = "this/partition_key#is?invalid"
 
@@ -124,7 +124,7 @@ describe Azure::Storage::Table::TableService do
     end
 
     it "errors on an invalid row key" do
-      assert_raises(Azure::Core::Http::HTTPError) do
+      assert_raises(RuntimeError) do
         entity = entity_properties.dup
         entity["RowKey"] = "this/row_key#is?invalid"
 

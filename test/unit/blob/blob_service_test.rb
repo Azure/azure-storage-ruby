@@ -55,7 +55,7 @@ describe Azure::Storage::Blob::BlobService do
 
     before {
       subject.stubs(:containers_uri).with({}).returns(uri)
-      subject.stubs(:call).with(verb, uri).returns(response)
+      subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
       serialization.stubs(:container_enumeration_results_from_xml).with(response_body).returns(container_enumeration_result)
     }
 
@@ -65,7 +65,6 @@ describe Azure::Storage::Blob::BlobService do
     end
 
     it 'calls StorageService#call with the prepared request' do
-      subject.expects(:call).with(verb, uri).returns(response)
       subject.list_containers
     end
 
@@ -81,7 +80,6 @@ describe Azure::Storage::Blob::BlobService do
 
     describe 'when the options Hash is used' do
       before {
-        subject.expects(:call).with(:get, uri).returns(response)
         serialization.expects(:container_enumeration_results_from_xml).with(response_body).returns(container_enumeration_result)
       }
 
@@ -90,6 +88,7 @@ describe Azure::Storage::Blob::BlobService do
         subject.expects(:containers_uri).with(query).returns(uri)
 
         options = {:prefix => 'pre'}
+        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
         subject.list_containers options
       end
 
@@ -98,6 +97,7 @@ describe Azure::Storage::Blob::BlobService do
         subject.expects(:containers_uri).with(query).returns(uri)
 
         options = {:marker => 'mark'}
+        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
         subject.list_containers options
       end
 
@@ -106,6 +106,7 @@ describe Azure::Storage::Blob::BlobService do
         subject.expects(:containers_uri).with(query).returns(uri)
 
         options = {:max_results => 5}
+        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
         subject.list_containers options
       end
 
@@ -114,6 +115,7 @@ describe Azure::Storage::Blob::BlobService do
         subject.expects(:containers_uri).with(query).returns(uri)
 
         options = {:metadata => true}
+        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
         subject.list_containers options
       end
 
@@ -122,12 +124,15 @@ describe Azure::Storage::Blob::BlobService do
         subject.expects(:containers_uri).with(query).returns(uri)
 
         options = {:timeout => 37}
+        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
         subject.list_containers options
       end
+
       it 'does not modify the URI query parameters when provided an unknown value' do
         subject.expects(:containers_uri).with({}).returns(uri)
 
         options = {:unknown_key => 'some_value'}
+        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
         subject.list_containers options
       end
     end
@@ -142,7 +147,7 @@ describe Azure::Storage::Blob::BlobService do
       let(:verb) { :put }
       before {
         subject.stubs(:container_uri).with(container_name, {}).returns(uri)
-        subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+        subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
         serialization.stubs(:container_from_headers).with(response_headers).returns(container)
       }
 
@@ -152,7 +157,7 @@ describe Azure::Storage::Blob::BlobService do
       end
 
       it 'calls StorageService#call with the prepared request' do
-        subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+        subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
         subject.create_container container_name
       end
 
@@ -185,27 +190,28 @@ describe Azure::Storage::Blob::BlobService do
           }
           subject.stubs(:container_uri).with(container_name, {}).returns(uri)
           serialization.stubs(:container_from_headers).with(response_headers).returns(container)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
         end
 
         it 'adds metadata to the request headers' do
+          subject.stubs(:call).with(verb, uri, nil, request_headers, container_metadata).returns(response)
           subject.create_container container_name, container_metadata
         end
       end
 
       describe 'when optional public_access_level parameter is used' do
         let(:public_access_level) { 'public-access-level-value' }
+        let(:options) { {:public_access_level => public_access_level} }
 
-        before {
+        before do
           request_headers = {'x-ms-blob-public-access' => public_access_level, 'x-ms-version' => x_ms_version, 'User-Agent' => user_agent}
-
           subject.stubs(:container_uri).with(container_name, {}).returns(uri)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           serialization.stubs(:container_from_headers).with(response_headers).returns(container)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
-        }
+        end
 
         it 'adds public_access_level to the request headers' do
-          subject.create_container container_name, {:public_access_level => public_access_level}
+          subject.create_container container_name, options
         end
       end
     end
@@ -215,7 +221,7 @@ describe Azure::Storage::Blob::BlobService do
       before {
         response.stubs(:success?).returns(true)
         subject.stubs(:container_uri).with(container_name, {}).returns(uri)
-        subject.stubs(:call).with(verb, uri).returns(response)
+        subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
       }
 
       it 'assembles a URI for the request' do
@@ -224,7 +230,7 @@ describe Azure::Storage::Blob::BlobService do
       end
 
       it 'calls StorageService#call with the prepared request' do
-        subject.expects(:call).with(verb, uri).returns(response)
+        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
         subject.delete_container container_name
       end
 
@@ -242,7 +248,7 @@ describe Azure::Storage::Blob::BlobService do
         container.properties = container_properties
         response_headers = {}
         subject.stubs(:container_uri).with(container_name, {}).returns(uri)
-        subject.stubs(:call).with(verb, uri).returns(response)
+        subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
         serialization.stubs(:container_from_headers).with(response_headers).returns(container)
       }
 
@@ -252,7 +258,7 @@ describe Azure::Storage::Blob::BlobService do
       end
 
       it 'calls StorageService#call with the prepared request' do
-        subject.expects(:call).with(verb, uri).returns(response)
+        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
         subject.get_container_properties container_name
       end
 
@@ -278,7 +284,7 @@ describe Azure::Storage::Blob::BlobService do
         query.update({'comp' => 'metadata'})
         response.stubs(:headers).returns(response_headers)
         subject.stubs(:container_uri).with(container_name, query).returns(uri)
-        subject.stubs(:call).with(verb, uri).returns(response)
+        subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
 
         container.metadata = container_metadata
         serialization.stubs(:container_from_headers).with(response_headers).returns(container)
@@ -290,7 +296,7 @@ describe Azure::Storage::Blob::BlobService do
       end
 
       it 'calls StorageService#call with the prepared request' do
-        subject.expects(:call).with(verb, uri).returns(response)
+        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
         subject.get_container_metadata container_name
       end
 
@@ -317,7 +323,7 @@ describe Azure::Storage::Blob::BlobService do
         response.stubs(:headers).returns({})
         response_body.stubs(:length).returns(37)
         subject.stubs(:container_uri).with(container_name, query).returns(uri)
-        subject.stubs(:call).with(verb, uri).returns(response)
+        subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
 
         serialization.stubs(:container_from_headers).with(response_headers).returns(container)
         serialization.stubs(:signed_identifiers_from_xml).with(response_body).returns(signed_identifiers)
@@ -329,7 +335,7 @@ describe Azure::Storage::Blob::BlobService do
       end
 
       it 'calls StorageService#call with the prepared request' do
-        subject.expects(:call).with(verb, uri).returns(response)
+        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
         subject.get_container_acl container_name
       end
 
@@ -360,7 +366,7 @@ describe Azure::Storage::Blob::BlobService do
 
         response.stubs(:headers).returns({})
         subject.stubs(:container_uri).with(container_name, query).returns(uri)
-        subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+        subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
         serialization.stubs(:container_from_headers).with(response_headers).returns(container)
       }
 
@@ -370,7 +376,7 @@ describe Azure::Storage::Blob::BlobService do
       end
 
       it 'calls StorageService#call with the prepared request' do
-        subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+        subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
         subject.set_container_acl container_name, public_access_level
       end
 
@@ -397,7 +403,7 @@ describe Azure::Storage::Blob::BlobService do
         }
 
         it 'sets the x-ms-blob-public-access header' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           subject.set_container_acl container_name, public_access_level
         end
 
@@ -405,17 +411,21 @@ describe Azure::Storage::Blob::BlobService do
           let(:signed_identifier) { Azure::Storage::Service::SignedIdentifier.new }
           let(:signed_identifiers) { [signed_identifier] }
           before {
-            subject.stubs(:call).with(verb, uri, request_body, request_headers).returns(response)
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, {}).returns(response)
             serialization.stubs(:signed_identifiers_to_xml).with(signed_identifiers).returns(request_body)
           }
 
           it 'serializes the request contents' do
             serialization.expects(:signed_identifiers_to_xml).with(signed_identifiers).returns(request_body)
-            subject.set_container_acl container_name, public_access_level, {:signed_identifiers => signed_identifiers}
+            options = {:signed_identifiers => signed_identifiers}
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
+            subject.set_container_acl container_name, public_access_level, options
           end
 
           it 'returns a container and an ACL' do
-            returned_container, returned_acl = subject.set_container_acl container_name, public_access_level, {:signed_identifiers => signed_identifiers}
+            options = {:signed_identifiers => signed_identifiers}
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
+            returned_container, returned_acl = subject.set_container_acl container_name, public_access_level, options
 
             returned_container.must_be_kind_of Azure::Storage::Blob::Container::Container
             returned_container.name.must_equal container_name
@@ -434,7 +444,7 @@ describe Azure::Storage::Blob::BlobService do
         }
 
         it 'sets the x-ms-blob-public-access header' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           subject.set_container_acl container_name, public_access_level
         end
       end
@@ -446,7 +456,7 @@ describe Azure::Storage::Blob::BlobService do
         }
 
         it 'sets the x-ms-blob-public-access header' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           subject.set_container_acl container_name, public_access_level
         end
       end
@@ -467,7 +477,7 @@ describe Azure::Storage::Blob::BlobService do
         query.update({'comp' => 'metadata'})
         response.stubs(:success?).returns(true)
         subject.stubs(:container_uri).with(container_name, query).returns(uri)
-        subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+        subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
       }
 
       it 'assembles a URI for the request' do
@@ -476,7 +486,7 @@ describe Azure::Storage::Blob::BlobService do
       end
 
       it 'calls StorageService#call with the prepared request' do
-        subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+        subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
         subject.set_container_metadata container_name, container_metadata
       end
 
@@ -493,7 +503,7 @@ describe Azure::Storage::Blob::BlobService do
 
       before {
         subject.stubs(:container_uri).with(container_name, query).returns(uri)
-        subject.stubs(:call).with(verb, uri).returns(response)
+        subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
         response.stubs(:success?).returns(true)
         serialization.stubs(:blob_enumeration_results_from_xml).with(response_body).returns(blob_enumeration_results)
       }
@@ -504,7 +514,7 @@ describe Azure::Storage::Blob::BlobService do
       end
 
       it 'calls StorageService#call with the prepared request' do
-        subject.expects(:call).with(verb, uri).returns(response)
+        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
         subject.list_blobs container_name
       end
 
@@ -520,7 +530,6 @@ describe Azure::Storage::Blob::BlobService do
 
       describe 'when the options Hash is used' do
         before {
-          subject.expects(:call).with(:get, uri).returns(response)
           response.expects(:success?).returns(true)
           serialization.expects(:blob_enumeration_results_from_xml).with(response_body).returns(blob_enumeration_results)
           subject.expects(:container_uri).with(container_name, query).returns(uri)
@@ -529,72 +538,81 @@ describe Azure::Storage::Blob::BlobService do
         it 'modifies the URI query parameters when provided a :prefix value' do
           query['prefix']= 'pre'
           options = {:prefix => 'pre'}
+          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
           subject.list_blobs container_name, options
         end
 
         it 'modifies the URI query parameters when provided a :delimiter value' do
           query['delimiter'] = 'delim'
           options = {:delimiter => 'delim'}
+          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
           subject.list_blobs container_name, options
         end
 
         it 'modifies the URI query parameters when provided a :marker value' do
           query['marker'] = 'mark'
           options = {:marker => 'mark'}
+          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
           subject.list_blobs container_name, options
         end
 
         it 'modifies the URI query parameters when provided a :max_results value' do
           query['maxresults'] = '5'
           options = {:max_results => 5}
+          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
           subject.list_blobs container_name, options
         end
 
         it 'modifies the URI query parameters when provided a :metadata value' do
           query['include'] = 'metadata'
           options = {:metadata => true}
+          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
           subject.list_blobs container_name, options
         end
 
         it 'modifies the URI query parameters when provided a :snapshots value' do
           query['include'] = 'snapshots'
           options = {:snapshots => true}
+          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
           subject.list_blobs container_name, options
         end
 
         it 'modifies the URI query parameters when provided a :uncommittedblobs value' do
           query['include'] = 'uncommittedblobs'
           options = {:uncommittedblobs => true}
+          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
           subject.list_blobs container_name, options
         end
 
         it 'modifies the URI query parameters when provided a :copy value' do
           query['include'] = 'copy'
           options = {:copy => true}
+          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
           subject.list_blobs container_name, options
         end
 
         it 'modifies the URI query parameters when provided more than one of :metadata, :snapshots, :uncommittedblobs or :copy values' do
           query['include'] = 'metadata,snapshots,uncommittedblobs,copy'
-
           options = {
             :copy => true,
             :metadata => true,
             :snapshots => true,
             :uncommittedblobs => true
           }
-
+          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
           subject.list_blobs container_name, options
         end
 
         it 'modifies the URI query parameters when provided a :timeout value' do
           query['timeout'] = '37'
           options = {:timeout => 37}
+          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
           subject.list_blobs container_name, options
         end
 
         it 'does not modify the URI query parameters when provided an unknown value' do
           options = {:unknown_key => 'some_value'}
+          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
           subject.list_blobs container_name, options
         end
       end
@@ -620,7 +638,7 @@ describe Azure::Storage::Blob::BlobService do
 
         before {
           subject.stubs(:blob_uri).with(container_name, blob_name, {}).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           serialization.stubs(:blob_from_headers).with(response_headers).returns(blob)
         }
 
@@ -630,7 +648,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           subject.create_page_blob container_name, blob_name, blob_length
         end
 
@@ -644,53 +662,72 @@ describe Azure::Storage::Blob::BlobService do
         describe 'when the options Hash is used' do
           it 'modifies the request headers when provided a :sequence_number value' do
             request_headers['x-ms-sequence-number'] = 37.to_s
-            subject.create_page_blob container_name, blob_name, blob_length, {:sequence_number => 37.to_s}
+            options = {:sequence_number => 37.to_s}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_page_blob container_name, blob_name, blob_length, options
           end
 
           it 'modifies the request headers when provided a :content_type value' do
             request_headers['x-ms-blob-content-type'] = 'bct-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:content_type => 'bct-value'}
+            options = {:content_type => 'bct-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_page_blob container_name, blob_name, blob_length, options
           end
 
           it 'modifies the request headers when provided a :content_encoding value' do
             request_headers['x-ms-blob-content-encoding'] = 'bce-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:content_encoding => 'bce-value'}
+            options = {:content_encoding => 'bce-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_page_blob container_name, blob_name, blob_length, options
           end
 
           it 'modifies the request headers when provided a :content_language value' do
             request_headers['x-ms-blob-content-language'] = 'bcl-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:content_language => 'bcl-value'}
+            options = {:content_language => 'bcl-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_page_blob container_name, blob_name, blob_length, options
           end
 
           it 'modifies the request headers when provided a :content_md5 value' do
             request_headers['x-ms-blob-content-md5'] = 'bcm-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:content_md5 => 'bcm-value'}
+            options = {:content_md5 => 'bcm-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_page_blob container_name, blob_name, blob_length, options
           end
 
           it 'modifies the request headers when provided a :cache_control value' do
             request_headers['x-ms-blob-cache-control'] = 'bcc-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:cache_control => 'bcc-value'}
+            options = {:cache_control => 'bcc-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_page_blob container_name, blob_name, blob_length, options
           end
           
           it 'modifies the request headers when provided a :content_disposition value' do
             request_headers['x-ms-blob-content-disposition'] = 'bcd-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:content_disposition => 'bcd-value'}
+            options = {:content_disposition => 'bcd-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_page_blob container_name, blob_name, blob_length, options
           end
 
           it 'modifies the request headers when provided a :transactional_md5 value' do
             request_headers['Content-MD5'] = 'tm-value'
-            subject.create_page_blob container_name, blob_name, blob_length, {:transactional_md5 => 'tm-value'}
+            options = {:transactional_md5 => 'tm-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_page_blob container_name, blob_name, blob_length, options
           end
 
           it 'modifies the request headers when provided a :metadata value' do
             request_headers['x-ms-meta-MetadataKey'] = 'MetaDataValue'
             request_headers['x-ms-meta-MetadataKey1'] = 'MetaDataValue1'
             options = {:metadata => {'MetadataKey' => 'MetaDataValue', 'MetadataKey1' => 'MetaDataValue1'}}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
             subject.create_page_blob container_name, blob_name, blob_length, options
           end
 
           it 'does not modify the request headers when provided an unknown value' do
-            subject.create_page_blob container_name, blob_name, blob_length, {:unknown_key => 'some_value'}
+            options = {:unknown_key => 'some_value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_page_blob container_name, blob_name, blob_length, options
           end
         end
       end
@@ -713,7 +750,7 @@ describe Azure::Storage::Blob::BlobService do
 
         before {
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, content, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, content, request_headers, {}).returns(response)
           serialization.stubs(:blob_from_headers).with(response_headers).returns(blob)
         }
 
@@ -723,7 +760,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, content, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, content, request_headers, {}).returns(response)
           subject.put_blob_pages container_name, blob_name, start_range, end_range, content
         end
 
@@ -737,42 +774,58 @@ describe Azure::Storage::Blob::BlobService do
         describe 'when the options Hash is used' do
           it 'modifies the request headers when provided a :if_sequence_number_eq value' do
             request_headers['x-ms-if-sequence-number-eq'] = 'isne-value'
-            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:if_sequence_number_eq => 'isne-value'}
+            options = {:if_sequence_number_eq => 'isne-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, options
           end
 
           it 'modifies the request headers when provided a :if_sequence_number_lt value' do
             request_headers['x-ms-if-sequence-number-lt'] = 'isnlt-value'
-            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:if_sequence_number_lt => 'isnlt-value'}
+            options = {:if_sequence_number_lt => 'isnlt-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, options
           end
 
           it 'modifies the request headers when provided a :if_sequence_number_le value' do
             request_headers['x-ms-if-sequence-number-le'] = 'isnle-value'
-            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:if_sequence_number_le => 'isnle-value'}
+            options = {:if_sequence_number_le => 'isnle-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, options
           end
 
           it 'modifies the request headers when provided a :if_modified_since value' do
             request_headers['If-Modified-Since'] = 'ims-value'
-            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:if_modified_since => 'ims-value'}
+            options = {:if_modified_since => 'ims-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, options
           end
 
           it 'modifies the request headers when provided a :if_unmodified_since value' do
             request_headers['If-Unmodified-Since'] = 'iums-value'
-            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:if_unmodified_since => 'iums-value'}
+            options = {:if_unmodified_since => 'iums-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, options
           end
 
           it 'modifies the request headers when provided a :if_match value' do
             request_headers['If-Match'] = 'im-value'
-            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:if_match => 'im-value'}
+            options = {:if_match => 'im-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, options
           end
 
           it 'modifies the request headers when provided a :if_none_match value' do
             request_headers['If-None-Match'] = 'inm-value'
-            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:if_none_match => 'inm-value'}
+            options = {:if_none_match => 'inm-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, options
           end
 
 
           it 'does not modify the request headers when provided an unknown value' do
-            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, {:unknown_key => 'some_value'}
+            options = {:unknown_key => 'some_value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.put_blob_pages container_name, blob_name, start_range, end_range, content, options
           end
         end
       end
@@ -794,7 +847,7 @@ describe Azure::Storage::Blob::BlobService do
 
         before {
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           serialization.stubs(:blob_from_headers).with(response_headers).returns(blob)
         }
 
@@ -804,7 +857,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           subject.clear_blob_pages container_name, blob_name, start_range, end_range
         end
 
@@ -858,7 +911,7 @@ describe Azure::Storage::Blob::BlobService do
           query.update({'comp' => 'block', 'blockid' => Base64.strict_encode64(block_id)})
           response_headers['Content-MD5'] = server_generated_content_md5
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, content, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, content, request_headers, {}).returns(response)
         }
 
         it 'assembles a URI for the request' do
@@ -867,7 +920,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, content, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, content, request_headers, {}).returns(response)
           subject.put_blob_block container_name, blob_name, block_id, content
         end
 
@@ -879,11 +932,15 @@ describe Azure::Storage::Blob::BlobService do
         describe 'when the options Hash is used' do
           it 'modifies the request headers when provided a :content_md5 value' do
             request_headers['Content-MD5'] = 'content-md5'
-            subject.put_blob_block container_name, blob_name, block_id, content, {:content_md5 => 'content-md5'}
+            options = {:content_md5 => 'content-md5'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.put_blob_block container_name, blob_name, block_id, content, options
           end
 
           it 'does not modify the request headers when provided an unknown value' do
-            subject.put_blob_block container_name, blob_name, block_id, content, {:unknown_key => 'some_value'}
+            options = {:unknown_key => 'some_value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.put_blob_block container_name, blob_name, block_id, content, options
           end
         end
       end
@@ -901,17 +958,16 @@ describe Azure::Storage::Blob::BlobService do
 
         before {
           subject.stubs(:blob_uri).with(container_name, blob_name, {}).returns(uri)
-          subject.stubs(:call).with(verb, uri, content, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, content, request_headers, {}).returns(response)
           serialization.stubs(:blob_from_headers).with(response_headers).returns(blob)
         }
 
         it 'assembles a URI for the request' do
-          subject.expects(:blob_uri).with(container_name, blob_name, {}).returns(uri)
           subject.create_block_blob container_name, blob_name, content
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, content, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, content, request_headers, {}).returns(response)
           subject.create_block_blob container_name, blob_name, content
         end
 
@@ -925,48 +981,65 @@ describe Azure::Storage::Blob::BlobService do
         describe 'when the options Hash is used' do
           it 'modifies the request headers when provided a :content_type value' do
             request_headers['x-ms-blob-content-type'] = 'bct-value'
-            subject.create_block_blob container_name, blob_name, content, {:content_type => 'bct-value'}
+            options = {:content_type => 'bct-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.create_block_blob container_name, blob_name, content, options
           end
 
           it 'modifies the request headers when provided a :content_encoding value' do
             request_headers['x-ms-blob-content-encoding'] = 'bce-value'
-            subject.create_block_blob container_name, blob_name, content, {:content_encoding => 'bce-value'}
+            options = {:content_encoding => 'bce-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.create_block_blob container_name, blob_name, content, options
           end
 
           it 'modifies the request headers when provided a :content_language value' do
             request_headers['x-ms-blob-content-language'] = 'bcl-value'
-            subject.create_block_blob container_name, blob_name, content, {:content_language => 'bcl-value'}
+            options = {:content_language => 'bcl-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.create_block_blob container_name, blob_name, content, options
           end
 
           it 'modifies the request headers when provided a :content_md5 value' do
             request_headers['x-ms-blob-content-md5'] = 'bcm-value'
-            subject.create_block_blob container_name, blob_name, content, {:content_md5 => 'bcm-value'}
+            options = {:content_md5 => 'bcm-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.create_block_blob container_name, blob_name, content, options
           end
 
           it 'modifies the request headers when provided a :cache_control value' do
             request_headers['x-ms-blob-cache-control'] = 'bcc-value'
-            subject.create_block_blob container_name, blob_name, content, {:cache_control => 'bcc-value'}
+            options = {:cache_control => 'bcc-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.create_block_blob container_name, blob_name, content, options
           end
 
           it 'modifies the request headers when provided a :content_disposition value' do
             request_headers['x-ms-blob-content-disposition'] = 'bcd-value'
-            subject.create_block_blob container_name, blob_name, content, {:content_disposition => 'bcd-value'}
+            options = {:content_disposition => 'bcd-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.create_block_blob container_name, blob_name, content, options
           end
 
           it 'modifies the request headers when provided a :transactional_md5 value' do
             request_headers['Content-MD5'] = 'tm-value'
-            subject.create_block_blob container_name, blob_name, content, {:transactional_md5 => 'tm-value'}
+            options = {:transactional_md5 => 'tm-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.create_block_blob container_name, blob_name, content, options
           end
 
           it 'modifies the request headers when provided a :metadata value' do
             request_headers['x-ms-meta-MetadataKey'] = 'MetaDataValue'
             request_headers['x-ms-meta-MetadataKey1'] = 'MetaDataValue1'
             options = {:metadata => {'MetadataKey' => 'MetaDataValue', 'MetadataKey1' => 'MetaDataValue1'}}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
             subject.create_block_blob container_name, blob_name, content, options
           end
 
           it 'does not modify the request headers when provided an unknown value' do
-            subject.create_block_blob container_name, blob_name, content, {:unknown_key => 'some_value'}
+            options = {:unknown_key => 'some_value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.create_block_blob container_name, blob_name, content, options
           end
         end
       end
@@ -982,7 +1055,7 @@ describe Azure::Storage::Blob::BlobService do
           response.stubs(:success?).returns(true)
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
           serialization.stubs(:block_list_to_xml).with(block_list).returns(request_body)
-          subject.stubs(:call).with(verb, uri, request_body, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, request_body, request_headers, {}).returns(response)
         }
 
         it 'assembles a URI for the request' do
@@ -991,7 +1064,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, request_body, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, request_body, request_headers, {}).returns(response)
           subject.commit_blob_blocks container_name, blob_name, block_list
         end
 
@@ -1008,68 +1081,93 @@ describe Azure::Storage::Blob::BlobService do
         describe 'when the options Hash is used' do
           it 'modifies the request headers when provided a :transactional_md5 value' do
             request_headers['Content-MD5'] = 'tm-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:transactional_md5 => 'tm-value'}
+            options = {:transactional_md5 => 'tm-value'}
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
+            subject.commit_blob_blocks container_name, blob_name, block_list, options
           end
 
           it 'modifies the request headers when provided a :content_type value' do
             request_headers['x-ms-blob-content-type'] = 'bct-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:content_type => 'bct-value'}
+            options = {:content_type => 'bct-value'}
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
+            subject.commit_blob_blocks container_name, blob_name, block_list, options
           end
 
           it 'modifies the request headers when provided a :content_encoding value' do
             request_headers['x-ms-blob-content-encoding'] = 'bce-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:content_encoding => 'bce-value'}
+            options = {:content_encoding => 'bce-value'}
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
+            subject.commit_blob_blocks container_name, blob_name, block_list, options
           end
 
           it 'modifies the request headers when provided a :content_language value' do
             request_headers['x-ms-blob-content-language'] = 'bcl-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:content_language => 'bcl-value'}
+            options = {:content_language => 'bcl-value'}
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
+            subject.commit_blob_blocks container_name, blob_name, block_list, options
           end
 
           it 'modifies the request headers when provided a :content_md5 value' do
             request_headers['x-ms-blob-content-md5'] = 'bcm-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:content_md5 => 'bcm-value'}
+            options = {:content_md5 => 'bcm-value'}
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
+            subject.commit_blob_blocks container_name, blob_name, block_list, options
           end
 
           it 'modifies the request headers when provided a :cache_control value' do
             request_headers['x-ms-blob-cache-control'] = 'bcc-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:cache_control => 'bcc-value'}
+            options = {:cache_control => 'bcc-value'}
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
+            subject.commit_blob_blocks container_name, blob_name, block_list, options
           end
 
           it 'modifies the request headers when provided a :content_disposition value' do
             request_headers['x-ms-blob-content-disposition'] = 'bcd-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:content_disposition => 'bcd-value'}
+            options = {:content_disposition => 'bcd-value'}
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
+            subject.commit_blob_blocks container_name, blob_name, block_list, options
           end
 
           it 'modifies the request headers when provided a :if_modified_since value' do
             request_headers['If-Modified-Since'] = 'ims-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:if_modified_since => 'ims-value'}
+            options = {:if_modified_since => 'ims-value'}
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
+            subject.commit_blob_blocks container_name, blob_name, block_list, options
           end
 
           it 'modifies the request headers when provided a :if_unmodified_since value' do
             request_headers['If-Unmodified-Since'] = 'iums-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:if_unmodified_since => 'iums-value'}
+            options = {:if_unmodified_since => 'iums-value'}
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
+            subject.commit_blob_blocks container_name, blob_name, block_list, options
           end
 
           it 'modifies the request headers when provided a :if_match value' do
             request_headers['If-Match'] = 'im-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:if_match => 'im-value'}
+            options = {:if_match => 'im-value'}
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
+            subject.commit_blob_blocks container_name, blob_name, block_list, options
           end
 
           it 'modifies the request headers when provided a :if_none_match value' do
             request_headers['If-None-Match'] = 'inm-value'
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:if_none_match => 'inm-value'}
+            options = {:if_none_match => 'inm-value'}
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
+            subject.commit_blob_blocks container_name, blob_name, block_list, options
           end
           
           it 'modifies the request headers when provided a :metadata value' do
             request_headers['x-ms-meta-MetadataKey'] = 'MetaDataValue'
             request_headers['x-ms-meta-MetadataKey1'] = 'MetaDataValue1'
             options = {:metadata => {'MetadataKey' => 'MetaDataValue', 'MetadataKey1' => 'MetaDataValue1'}}
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
             subject.commit_blob_blocks container_name, blob_name, block_list, options
           end
 
           it 'does not modify the request headers when provided an unknown value' do
-            subject.commit_blob_blocks container_name, blob_name, block_list, {:unknown_key => 'some_value'}
+            options = {:unknown_key => 'some_value'}
+            subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
+            subject.commit_blob_blocks container_name, blob_name, block_list, options
           end
         end
       end
@@ -1081,7 +1179,7 @@ describe Azure::Storage::Blob::BlobService do
 
         before {
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, {}, {:blocklist_type => :all}).returns(response)
           serialization.stubs(:block_list_from_xml).with(response_body).returns(blob_block_list)
         }
 
@@ -1091,7 +1189,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri).returns(response)
+          subject.expects(:call).with(verb, uri, nil, {}, {:blocklist_type => :all}).returns(response)
           subject.list_blob_blocks container_name, blob_name
         end
 
@@ -1109,24 +1207,32 @@ describe Azure::Storage::Blob::BlobService do
         describe 'when blocklist_type is provided' do
           it 'modifies the request query when the value is :all' do
             query['blocklisttype'] = 'all'
-            subject.list_blob_blocks container_name, blob_name, {:blocklist_type => :all}
+            options = {:blocklist_type => :all}
+            subject.stubs(:call).with(verb, uri, nil, {}, options).returns(response)
+            subject.list_blob_blocks container_name, blob_name, options
           end
 
           it 'modifies the request query when the value is :uncommitted' do
             query['blocklisttype'] = 'uncommitted'
-            subject.list_blob_blocks container_name, blob_name, {:blocklist_type => :uncommitted}
+            options = {:blocklist_type => :uncommitted}
+            subject.stubs(:call).with(verb, uri, nil, {}, options).returns(response)
+            subject.list_blob_blocks container_name, blob_name, options
           end
 
           it 'modifies the request query when the value is :committed' do
             query['blocklisttype'] = 'committed'
-            subject.list_blob_blocks container_name, blob_name, {:blocklist_type => :committed}
+            options = {:blocklist_type => :committed}
+            subject.stubs(:call).with(verb, uri, nil, {}, options).returns(response)
+            subject.list_blob_blocks container_name, blob_name, options
           end
         end
 
         describe 'when snapshot is provided' do
           it 'modifies the request query with the provided value' do
             query['snapshot'] = 'snapshot-id'
-            subject.list_blob_blocks container_name, blob_name, {:snapshot => 'snapshot-id'}
+            options = {:snapshot => 'snapshot-id'}
+            subject.stubs(:call).with(verb, uri, nil, {}, options).returns(response)
+            subject.list_blob_blocks container_name, blob_name, options
           end
         end
       end
@@ -1138,7 +1244,7 @@ describe Azure::Storage::Blob::BlobService do
 
         before {
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           serialization.stubs(:page_list_from_xml).with(response_body).returns(page_list)
         }
 
@@ -1148,7 +1254,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           subject.list_page_blob_ranges container_name, blob_name
         end
 
@@ -1191,38 +1297,49 @@ describe Azure::Storage::Blob::BlobService do
           let(:request_headers) { {'x-ms-version' => x_ms_version, 'User-Agent' => user_agent} }
 
           it 'modifies the request headers with the desired range' do
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
             request_headers['x-ms-range'] = "bytes=#{start_range}-#{end_range}"
-            subject.list_page_blob_ranges container_name, blob_name, {:start_range => start_range, :end_range => end_range}
+            options = {:start_range => start_range, :end_range => end_range}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.list_page_blob_ranges container_name, blob_name, options
           end
         end
 
         describe 'when snapshot is provided' do
           it 'modifies the request query with the provided value' do
             query['snapshot'] = 'snapshot-id'
-            subject.list_page_blob_ranges container_name, blob_name, {:snapshot => 'snapshot-id'}
+            options = {:snapshot => 'snapshot-id'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.list_page_blob_ranges container_name, blob_name, options
           end
         end
         
         describe 'when the option hash is used' do
           it 'modifies the request headers when provided a :if_modified_since value' do
             request_headers['If-Modified-Since'] = 'ims-value'
-            subject.list_page_blob_ranges container_name, blob_name, {:if_modified_since => 'ims-value'}
+            options = {:if_modified_since => 'ims-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.list_page_blob_ranges container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :if_unmodified_since value' do
             request_headers['If-Unmodified-Since'] = 'iums-value'
-            subject.list_page_blob_ranges container_name, blob_name, {:if_unmodified_since => 'iums-value'}
+            options = {:if_unmodified_since => 'iums-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.list_page_blob_ranges container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :if_match value' do
             request_headers['If-Match'] = 'im-value'
-            subject.list_page_blob_ranges container_name, blob_name, {:if_match => 'im-value'}
+            options = {:if_match => 'im-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.list_page_blob_ranges container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :if_none_match value' do
             request_headers['If-None-Match'] = 'inm-value'
-            subject.list_page_blob_ranges container_name, blob_name, {:if_none_match => 'inm-value'}
+            options = {:if_none_match => 'inm-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.list_page_blob_ranges container_name, blob_name, options
           end
         end
       end
@@ -1235,33 +1352,41 @@ describe Azure::Storage::Blob::BlobService do
 
         before {
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
         }
 
         it 'resizes the page blob' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {:content_length => size}).returns(response)
           subject.resize_page_blob container_name, blob_name, size
         end
         
         describe 'when the option hash is used' do
           it 'modifies the request headers when provided a :if_modified_since value' do
             request_headers['If-Modified-Since'] = 'ims-value'
-            subject.resize_page_blob container_name, blob_name, size, {:if_modified_since => 'ims-value'}
+            options = {:content_length => size, :if_modified_since => 'ims-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.resize_page_blob container_name, blob_name, size, options
           end
 
           it 'modifies the request headers when provided a :if_unmodified_since value' do
             request_headers['If-Unmodified-Since'] = 'iums-value'
-            subject.resize_page_blob container_name, blob_name, size, {:if_unmodified_since => 'iums-value'}
+            options = {:content_length => size, :if_unmodified_since => 'iums-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.resize_page_blob container_name, blob_name, size, options
           end
 
           it 'modifies the request headers when provided a :if_match value' do
             request_headers['If-Match'] = 'im-value'
-            subject.resize_page_blob container_name, blob_name, size, {:if_match => 'im-value'}
+            options = {:content_length => size, :if_match => 'im-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.resize_page_blob container_name, blob_name, size, options
           end
 
           it 'modifies the request headers when provided a :if_none_match value' do
             request_headers['If-None-Match'] = 'inm-value'
-            subject.resize_page_blob container_name, blob_name, size, {:if_none_match => 'inm-value'}
+            options = {:content_length => size, :if_none_match => 'inm-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.resize_page_blob container_name, blob_name, size, options
           end
         end
       end
@@ -1275,34 +1400,38 @@ describe Azure::Storage::Blob::BlobService do
 
         before {
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
         }
 
         it 'set the page blob\'s sequence number' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          options = { :sequence_number_action => action, :sequence_number => number }
+          subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
           request_headers['x-ms-blob-sequence-number-action'] = action.to_s
           request_headers['x-ms-blob-sequence-number'] = number.to_s
           subject.set_sequence_number container_name, blob_name, action, number
         end
         
         it 'set the page blob\'s sequence number to the higher of current or the value in the request' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
           action = :max
+          options = { :sequence_number_action => action, :sequence_number => number }
+          subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
           request_headers['x-ms-blob-sequence-number-action'] = action.to_s
           request_headers['x-ms-blob-sequence-number'] = number.to_s
           subject.set_sequence_number container_name, blob_name, action, number
         end
         
         it 'increase the page blob\'s sequence number by 1' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
           action = :increment
+          options = { :sequence_number_action => action, :sequence_number => nil }
+          subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
           request_headers['x-ms-blob-sequence-number-action'] = action.to_s
           subject.set_sequence_number container_name, blob_name, action, nil
         end
         
         it 'increase the page blob\'s sequence number should ignore the number' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
           action = :increment
+          options = { :sequence_number_action => action, :sequence_number => number }
+          subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
           request_headers['x-ms-blob-sequence-number-action'] = action.to_s
           subject.set_sequence_number container_name, blob_name, action, number
         end
@@ -1315,22 +1444,30 @@ describe Azure::Storage::Blob::BlobService do
           
           it 'modifies the request headers when provided a :if_modified_since value' do
             request_headers['If-Modified-Since'] = 'ims-value'
-            subject.set_sequence_number container_name, blob_name, action, number, {:if_modified_since => 'ims-value'}
+            options = {:sequence_number_action => action, :sequence_number => number, :if_modified_since => 'ims-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.set_sequence_number container_name, blob_name, action, number, options
           end
 
           it 'modifies the request headers when provided a :if_unmodified_since value' do
             request_headers['If-Unmodified-Since'] = 'iums-value'
-            subject.set_sequence_number container_name, blob_name, action, number, {:if_unmodified_since => 'iums-value'}
+            options = {:sequence_number_action => action, :sequence_number => number, :if_unmodified_since => 'iums-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.set_sequence_number container_name, blob_name, action, number, options
           end
 
           it 'modifies the request headers when provided a :if_match value' do
             request_headers['If-Match'] = 'im-value'
-            subject.set_sequence_number container_name, blob_name, action, number, {:if_match => 'im-value'}
+            options = {:sequence_number_action => action, :sequence_number => number, :if_match => 'im-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.set_sequence_number container_name, blob_name, action, number, options
           end
 
           it 'modifies the request headers when provided a :if_none_match value' do
             request_headers['If-None-Match'] = 'inm-value'
-            subject.set_sequence_number container_name, blob_name, action, number, {:if_none_match => 'inm-value'}
+            options =  {:sequence_number_action => action, :sequence_number => number, :if_none_match => 'inm-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.set_sequence_number container_name, blob_name, action, number, options
           end
         end
       end
@@ -1348,7 +1485,7 @@ describe Azure::Storage::Blob::BlobService do
 
         before {
           subject.stubs(:blob_uri).with(container_name, blob_name, {}).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           serialization.stubs(:blob_from_headers).with(response_headers).returns(blob)
         }
 
@@ -1358,7 +1495,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           subject.create_append_blob container_name, blob_name
         end
 
@@ -1372,69 +1509,94 @@ describe Azure::Storage::Blob::BlobService do
         describe 'when the options Hash is used' do
           it 'modifies the request headers when provided a :content_type value' do
             request_headers['x-ms-blob-content-type'] = 'bct-value'
-            subject.create_append_blob container_name, blob_name, {:content_type => 'bct-value'}
+            options = {:content_type => 'bct-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_append_blob container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :content_encoding value' do
             request_headers['x-ms-blob-content-encoding'] = 'bce-value'
-            subject.create_append_blob container_name, blob_name, {:content_encoding => 'bce-value'}
+            options = {:content_encoding => 'bce-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_append_blob container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :content_language value' do
             request_headers['x-ms-blob-content-language'] = 'bcl-value'
-            subject.create_append_blob container_name, blob_name, {:content_language => 'bcl-value'}
+            options = {:content_language => 'bcl-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_append_blob container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :content_md5 value' do
             request_headers['x-ms-blob-content-md5'] = 'bcm-value'
-            subject.create_append_blob container_name, blob_name, {:content_md5 => 'bcm-value'}
+            options = {:content_md5 => 'bcm-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_append_blob container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :cache_control value' do
             request_headers['x-ms-blob-cache-control'] = 'bcc-value'
-            subject.create_append_blob container_name, blob_name, {:cache_control => 'bcc-value'}
+            options = {:cache_control => 'bcc-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_append_blob container_name, blob_name, options
           end
           
           it 'modifies the request headers when provided a :content_disposition value' do
             request_headers['x-ms-blob-content-disposition'] = 'bcd-value'
-            subject.create_append_blob container_name, blob_name, {:content_disposition => 'bcd-value'}
+            options = {:content_disposition => 'bcd-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_append_blob container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :transactional_md5 value' do
             request_headers['Content-MD5'] = 'tm-value'
-            subject.create_append_blob container_name, blob_name, {:transactional_md5 => 'tm-value'}
+            options = {:transactional_md5 => 'tm-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_append_blob container_name, blob_name, options
           end
 
 
           it 'modifies the request headers when provided a :if_modified_since value' do
             request_headers['If-Modified-Since'] = 'ims-value'
-            subject.create_append_blob container_name, blob_name, {:if_modified_since => 'ims-value'}
+            options = {:if_modified_since => 'ims-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_append_blob container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :if_unmodified_since value' do
             request_headers['If-Unmodified-Since'] = 'iums-value'
-            subject.create_append_blob container_name, blob_name, {:if_unmodified_since => 'iums-value'}
+            options = {:if_unmodified_since => 'iums-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_append_blob container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :if_match value' do
             request_headers['If-Match'] = 'im-value'
-            subject.create_append_blob container_name, blob_name, {:if_match => 'im-value'}
+            options = {:if_match => 'im-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_append_blob container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :if_none_match value' do
             request_headers['If-None-Match'] = 'inm-value'
-            subject.create_append_blob container_name, blob_name, {:if_none_match => 'inm-value'}
+            options = {:if_none_match => 'inm-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_append_blob container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :metadata value' do
             request_headers['x-ms-meta-MetadataKey'] = 'MetaDataValue'
             request_headers['x-ms-meta-MetadataKey1'] = 'MetaDataValue1'
             options = {:metadata => {'MetadataKey' => 'MetaDataValue', 'MetadataKey1' => 'MetaDataValue1'}}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
             subject.create_append_blob container_name, blob_name, options
           end
 
           it 'does not modify the request headers when provided an unknown value' do
-            subject.create_append_blob container_name, blob_name, {:unknown_key => 'some_value'}
+            options = {:unknown_key => 'some_value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_append_blob container_name, blob_name, options
           end
         end
       end
@@ -1451,7 +1613,7 @@ describe Azure::Storage::Blob::BlobService do
         before {
           query.update({'comp' => 'appendblock'})
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, content, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, content, request_headers, {}).returns(response)
         }
 
         it 'assembles a URI for the request' do
@@ -1460,53 +1622,71 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, content, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, content, request_headers, {}).returns(response)
           subject.append_blob_block container_name, blob_name, content
         end
 
         describe 'when the options Hash is used' do
           it 'modifies the request headers when provided a :content_md5 value' do
             request_headers['Content-MD5'] = content_md5
-            subject.append_blob_block container_name, blob_name, content, {:content_md5 => content_md5}
+            options = {:content_md5 => content_md5}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.append_blob_block container_name, blob_name, content, options
           end
           
           it 'modifies the request headers when provided a :lease_id value' do
             request_headers['x-ms-lease-id'] = lease_id
-            subject.append_blob_block container_name, blob_name, content, {:lease_id => lease_id}
+            options = {:lease_id => lease_id}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.append_blob_block container_name, blob_name, content, options
           end
           
           it 'modifies the request headers when provided a :max_size value' do
             request_headers['x-ms-blob-condition-maxsize'] = max_size
-            subject.append_blob_block container_name, blob_name, content, {:max_size => max_size}
+            options = {:max_size => max_size}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.append_blob_block container_name, blob_name, content, options
           end
           
            it 'modifies the request headers when provided a :append_position value' do
             request_headers['x-ms-blob-condition-appendpos'] = append_position
-            subject.append_blob_block container_name, blob_name, content, {:append_position => append_position}
+            options = {:append_position => append_position}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.append_blob_block container_name, blob_name, content, options
           end
           
           it 'modifies the request headers when provided a :if_modified_since value' do
             request_headers['If-Modified-Since'] = 'ims-value'
-            subject.append_blob_block container_name, blob_name, content, {:if_modified_since => 'ims-value'}
+            options = {:if_modified_since => 'ims-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.append_blob_block container_name, blob_name, content, options
           end
 
           it 'modifies the request headers when provided a :if_unmodified_since value' do
             request_headers['If-Unmodified-Since'] = 'iums-value'
-            subject.append_blob_block container_name, blob_name, content, {:if_unmodified_since => 'iums-value'}
+            options = {:if_unmodified_since => 'iums-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.append_blob_block container_name, blob_name, content, options
           end
 
           it 'modifies the request headers when provided a :if_match value' do
             request_headers['If-Match'] = 'im-value'
-            subject.append_blob_block container_name, blob_name, content, {:if_match => 'im-value'}
+            options = {:if_match => 'im-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.append_blob_block container_name, blob_name, content, options
           end
 
           it 'modifies the request headers when provided a :if_none_match value' do
             request_headers['If-None-Match'] = 'inm-value'
-            subject.append_blob_block container_name, blob_name, content, {:if_none_match => 'inm-value'}
+            options = {:if_none_match => 'inm-value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.append_blob_block container_name, blob_name, content, options
           end
 
           it 'does not modify the request headers when provided an unknown value' do
-            subject.append_blob_block container_name, blob_name, content, {:unknown_key => 'some_value'}
+            options = {:unknown_key => 'some_value'}
+            subject.stubs(:call).with(verb, uri, content, request_headers, options).returns(response)
+            subject.append_blob_block container_name, blob_name, content, options
           end
         end
       end
@@ -1519,7 +1699,7 @@ describe Azure::Storage::Blob::BlobService do
           query.update({'comp' => 'properties'})
           response.stubs(:success?).returns(true)
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
         }
 
         it 'assembles a URI for the request' do
@@ -1528,7 +1708,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           subject.set_blob_properties container_name, blob_name
         end
 
@@ -1540,52 +1720,72 @@ describe Azure::Storage::Blob::BlobService do
         describe 'when the options Hash is used' do
           it 'modifies the request headers when provided a :content_type value' do
             request_headers['x-ms-blob-content-type'] = 'bct-value'
-            subject.set_blob_properties container_name, blob_name, {:content_type => 'bct-value'}
+            options = {:content_type => 'bct-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.set_blob_properties container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :content_encoding value' do
             request_headers['x-ms-blob-content-encoding'] = 'bce-value'
-            subject.set_blob_properties container_name, blob_name, {:content_encoding => 'bce-value'}
+            options = {:content_encoding => 'bce-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.set_blob_properties container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :content_language value' do
             request_headers['x-ms-blob-content-language'] = 'bcl-value'
-            subject.set_blob_properties container_name, blob_name, {:content_language => 'bcl-value'}
+            options = {:content_language => 'bcl-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.set_blob_properties container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :content_md5 value' do
             request_headers['x-ms-blob-content-md5'] = 'bcm-value'
-            subject.set_blob_properties container_name, blob_name, {:content_md5 => 'bcm-value'}
+            options = {:content_md5 => 'bcm-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.set_blob_properties container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :cache_control value' do
             request_headers['x-ms-blob-cache-control'] = 'bcc-value'
-            subject.set_blob_properties container_name, blob_name, {:cache_control => 'bcc-value'}
+            options = {:cache_control => 'bcc-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.set_blob_properties container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :content_length value' do
             request_headers['x-ms-blob-content-length'] = '37'
-            subject.set_blob_properties container_name, blob_name, {:content_length => 37.to_s}
+            options = {:content_length => 37.to_s}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.set_blob_properties container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :content_disposition value' do
             request_headers['x-ms-blob-content-disposition'] = 'bcd-value'
-            subject.set_blob_properties container_name, blob_name, {:content_disposition => 'bcd-value'}
+            options = {:content_disposition => 'bcd-value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.set_blob_properties container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :sequence_number_action value' do
             request_headers['x-ms-blob-sequence-number-action'] = 'anyvalue'
-            subject.set_blob_properties container_name, blob_name, {:sequence_number_action => :anyvalue}
+            options = {:sequence_number_action => :anyvalue}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.set_blob_properties container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :sequence_number value' do
             request_headers['x-ms-blob-sequence-number-action'] = :max.to_s
             request_headers['x-ms-blob-sequence-number'] = '37'
-            subject.set_blob_properties container_name, blob_name, {:sequence_number_action => :max, :sequence_number => 37}
+            options = {:sequence_number_action => :max, :sequence_number => 37}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.set_blob_properties container_name, blob_name, options
           end
 
           it 'does not modify the request headers when provided an unknown value' do
-            subject.set_blob_properties container_name, blob_name, {:unknown_key => 'some_value'}
+            options = {:unknown_key => 'some_value'}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.set_blob_properties container_name, blob_name, options
           end
         end
       end
@@ -1599,7 +1799,7 @@ describe Azure::Storage::Blob::BlobService do
           query.update({'comp' => 'metadata'})
           response.stubs(:success?).returns(true)
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
         }
 
         it 'assembles a URI for the request' do
@@ -1608,7 +1808,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           subject.set_blob_metadata container_name, blob_name, blob_metadata
         end
 
@@ -1624,7 +1824,7 @@ describe Azure::Storage::Blob::BlobService do
 
         before {
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           serialization.stubs(:blob_from_headers).with(response_headers).returns(blob)
         }
 
@@ -1634,7 +1834,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           subject.get_blob_properties container_name, blob_name
         end
 
@@ -1651,12 +1851,16 @@ describe Azure::Storage::Blob::BlobService do
           before { query['snapshot']=snapshot }
 
           it 'modifies the blob uri query string with the snapshot' do
+            options = {:snapshot => snapshot}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
             subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
-            subject.get_blob_properties container_name, blob_name, {:snapshot => snapshot}
+            subject.get_blob_properties container_name, blob_name, options
           end
 
           it 'sets the snapshot value on the returned blob' do
-            result = subject.get_blob_properties container_name, blob_name, {:snapshot => snapshot}
+            options = {:snapshot => snapshot}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            result = subject.get_blob_properties container_name, blob_name, options
             result.snapshot.must_equal snapshot
           end
         end
@@ -1670,7 +1874,7 @@ describe Azure::Storage::Blob::BlobService do
           query['comp']='metadata'
 
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           serialization.stubs(:blob_from_headers).with(response_headers).returns(blob)
         }
 
@@ -1680,7 +1884,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           subject.get_blob_metadata container_name, blob_name
         end
 
@@ -1701,11 +1905,15 @@ describe Azure::Storage::Blob::BlobService do
 
           it 'modifies the blob uri query string with the snapshot' do
             subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
-            subject.get_blob_metadata container_name, blob_name, {:snapshot => snapshot}
+            options = {:snapshot => snapshot}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.get_blob_metadata container_name, blob_name, options
           end
 
           it 'sets the snapshot value on the returned blob' do
-            result = subject.get_blob_metadata container_name, blob_name, {:snapshot => snapshot}
+            options = {:snapshot => snapshot}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            result = subject.get_blob_metadata container_name, blob_name, options
             result.snapshot.must_equal snapshot
           end
         end
@@ -1719,7 +1927,7 @@ describe Azure::Storage::Blob::BlobService do
           response_body = 'body-contents'
 
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           serialization.stubs(:blob_from_headers).with(response_headers).returns(blob)
         }
 
@@ -1729,7 +1937,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           subject.get_blob container_name, blob_name
         end
 
@@ -1748,7 +1956,9 @@ describe Azure::Storage::Blob::BlobService do
 
           it 'modifies the blob uri query string with the snapshot' do
             subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
-            subject.get_blob container_name, blob_name, {:snapshot => source_snapshot}
+            options = {:snapshot => source_snapshot}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.get_blob container_name, blob_name, options
           end
         end
 
@@ -1780,8 +1990,9 @@ describe Azure::Storage::Blob::BlobService do
           }
 
           it 'modifies the request headers with the desired range' do
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-            subject.get_blob container_name, blob_name, {:start_range => start_range, :end_range => end_range}
+            options = {:start_range => start_range, :end_range => end_range}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.get_blob container_name, blob_name, options
           end
         end
 
@@ -1797,15 +2008,17 @@ describe Azure::Storage::Blob::BlobService do
             }
 
             it 'modifies the request headers to include the x-ms-range-get-content-md5 header' do
-              subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-              subject.get_blob container_name, blob_name, {:start_range => start_range, :end_range => end_range, :get_content_md5 => true}
+              options = {:start_range => start_range, :end_range => end_range, :get_content_md5 => true}
+              subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+              subject.get_blob container_name, blob_name, options
             end
           end
 
           describe 'and a range is NOT specified' do
             it 'does not modify the request headers' do
-              subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-              subject.get_blob container_name, blob_name, {:get_content_md5 => true}
+              options = {:get_content_md5 => true}
+              subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+              subject.get_blob container_name, blob_name, options
             end
           end
         end
@@ -1820,7 +2033,7 @@ describe Azure::Storage::Blob::BlobService do
           request_headers['x-ms-version'] = x_ms_version
 
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {:delete_snapshots => :include}).returns(response)
         }
 
         it 'assembles a URI for the request' do
@@ -1829,7 +2042,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {:delete_snapshots => :include}).returns(response)
           subject.delete_blob container_name, blob_name
         end
 
@@ -1846,13 +2059,16 @@ describe Azure::Storage::Blob::BlobService do
           }
 
           it 'modifies the blob uri query string with the snapshot' do
+            options = {:snapshot => source_snapshot}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
             subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
-            subject.delete_blob container_name, blob_name, {:snapshot => source_snapshot}
+            subject.delete_blob container_name, blob_name, options
           end
 
           it 'does not include a x-ms-delete-snapshots header' do
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-            subject.delete_blob container_name, blob_name, {:snapshot => source_snapshot}
+            options = {:snapshot => source_snapshot}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.delete_blob container_name, blob_name, options
           end
         end
 
@@ -1861,8 +2077,9 @@ describe Azure::Storage::Blob::BlobService do
           before { request_headers['x-ms-delete-snapshots']=delete_snapshots.to_s }
 
           it 'modifies the request headers with the provided value' do
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-            subject.delete_blob container_name, blob_name, {:delete_snapshots => delete_snapshots}
+            options = {:delete_snapshots => delete_snapshots}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.delete_blob container_name, blob_name, options
           end
         end
 
@@ -1875,13 +2092,17 @@ describe Azure::Storage::Blob::BlobService do
           }
 
           it 'modifies the blob uri query string with the snapshot' do
+            options = {:snapshot => source_snapshot, :delete_snapshots => delete_snapshots}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
             subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
-            subject.delete_blob container_name, blob_name, {:snapshot => source_snapshot, :delete_snapshots => delete_snapshots}
+            subject.delete_blob container_name, blob_name, options
           end
 
           it 'does not include a x-ms-delete-snapshots header' do
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-            subject.delete_blob container_name, blob_name, {:snapshot => source_snapshot, :delete_snapshots => delete_snapshots}
+            options = {:snapshot => source_snapshot, :delete_snapshots => delete_snapshots}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.delete_blob container_name, blob_name, options
           end
         end
       end
@@ -1896,7 +2117,7 @@ describe Azure::Storage::Blob::BlobService do
           response_headers['x-ms-snapshot'] = snapshot_id
 
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
         }
 
         it 'assembles a URI for the request' do
@@ -1905,7 +2126,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           subject.create_blob_snapshot container_name, blob_name
         end
 
@@ -1916,39 +2137,46 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         describe 'when the options Hash is used' do
-          before {
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-          }
-
           it 'modifies the request headers when provided a :if_modified_since value' do
             request_headers['If-Modified-Since'] = 'ims-value'
-            subject.create_blob_snapshot container_name, blob_name, {:if_modified_since => 'ims-value'}
+            options = {:if_modified_since => 'ims-value'}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_blob_snapshot container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :if_unmodified_since value' do
             request_headers['If-Unmodified-Since'] = 'iums-value'
-            subject.create_blob_snapshot container_name, blob_name, {:if_unmodified_since => 'iums-value'}
+            options = {:if_unmodified_since => 'iums-value'}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_blob_snapshot container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :if_match value' do
             request_headers['If-Match'] = 'im-value'
-            subject.create_blob_snapshot container_name, blob_name, {:if_match => 'im-value'}
+            options = {:if_match => 'im-value'}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_blob_snapshot container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :if_none_match value' do
             request_headers['If-None-Match'] = 'inm-value'
-            subject.create_blob_snapshot container_name, blob_name, {:if_none_match => 'inm-value'}
+            options = {:if_none_match => 'inm-value'}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_blob_snapshot container_name, blob_name, options
           end
 
           it 'modifies the request headers when provided a :metadata value' do
             request_headers['x-ms-meta-MetadataKey'] = 'MetaDataValue'
             request_headers['x-ms-meta-MetadataKey1'] = 'MetaDataValue1'
             options = {:metadata => {'MetadataKey' => 'MetaDataValue', 'MetadataKey1' => 'MetaDataValue1'}}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
             subject.create_blob_snapshot container_name, blob_name, options
           end
 
           it 'does not modify the request headers when provided an unknown value' do
-            subject.create_blob_snapshot container_name, blob_name, {:unknown_key => 'some_value'}
+            options = {:unknown_key => 'some_value'}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.create_blob_snapshot container_name, blob_name, options
           end
         end
       end
@@ -1970,7 +2198,7 @@ describe Azure::Storage::Blob::BlobService do
 
           subject.stubs(:blob_uri).with(container_name, blob_name, {}).returns(uri)
           subject.stubs(:blob_uri).with(source_container_name, source_blob_name, query).returns(source_uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
         }
 
         it 'assembles a URI for the request' do
@@ -1985,12 +2213,12 @@ describe Azure::Storage::Blob::BlobService do
         
         it 'calls with source URI' do
           subject.expects(:blob_uri).with(container_name, blob_name, {}).returns(uri)
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           subject.copy_blob_from_uri container_name, blob_name, source_uri.to_s
         end
 
         it 'calls StorageService#call with the prepared request' do
-          subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           subject.copy_blob container_name, blob_name, source_container_name, source_blob_name
         end
 
@@ -2008,64 +2236,81 @@ describe Azure::Storage::Blob::BlobService do
 
           it 'modifies the source blob uri query string with the snapshot' do
             subject.expects(:blob_uri).with(source_container_name, source_blob_name, query).returns(source_uri)
-            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, {:source_snapshot => source_snapshot}
+            options = {:source_snapshot => source_snapshot}
+            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, options
           end
         end
 
         describe 'when the options Hash is used' do
-          before {
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-          }
-
           it 'modifies the request headers when provided a :dest_if_modified_since value' do
             request_headers['If-Modified-Since'] = 'ims-value'
-            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, {:dest_if_modified_since => 'ims-value'}
+            options = {:dest_if_modified_since => 'ims-value'}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, options
           end
 
           it 'modifies the request headers when provided a :dest_if_unmodified_since value' do
             request_headers['If-Unmodified-Since'] = 'iums-value'
-            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, {:dest_if_unmodified_since => 'iums-value'}
+            options = {:dest_if_unmodified_since => 'iums-value'}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, options
           end
 
           it 'modifies the request headers when provided a :dest_if_match value' do
             request_headers['If-Match'] = 'im-value'
-            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, {:dest_if_match => 'im-value'}
+            options = {:dest_if_match => 'im-value'}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, options
           end
 
           it 'modifies the request headers when provided a :dest_if_none_match value' do
             request_headers['If-None-Match'] = 'inm-value'
-            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, {:dest_if_none_match => 'inm-value'}
+            options = {:dest_if_none_match => 'inm-value'}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, options
           end
 
           it 'modifies the request headers when provided a :source_if_modified_since value' do
             request_headers['x-ms-source-if-modified-since'] = 'ims-value'
-            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, {:source_if_modified_since => 'ims-value'}
+            options = {:source_if_modified_since => 'ims-value'}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, options
           end
 
           it 'modifies the request headers when provided a :source_if_unmodified_since value' do
             request_headers['x-ms-source-if-unmodified-since'] = 'iums-value'
-            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, {:source_if_unmodified_since => 'iums-value'}
+            options = {:source_if_unmodified_since => 'iums-value'}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, options
           end
 
           it 'modifies the request headers when provided a :source_if_match value' do
             request_headers['x-ms-source-if-match'] = 'im-value'
-            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, {:source_if_match => 'im-value'}
+            options = {:source_if_match => 'im-value'}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, options
           end
 
           it 'modifies the request headers when provided a :source_if_none_match value' do
             request_headers['x-ms-source-if-none-match'] = 'inm-value'
-            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, {:source_if_none_match => 'inm-value'}
+            options =  {:source_if_none_match => 'inm-value'}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, options
           end
 
           it 'modifies the request headers when provided a :metadata value' do
             request_headers['x-ms-meta-MetadataKey'] = 'MetaDataValue'
             request_headers['x-ms-meta-MetadataKey1'] = 'MetaDataValue1'
             options = {:metadata => {'MetadataKey' => 'MetaDataValue', 'MetadataKey1' => 'MetaDataValue1'}}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
             subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, options
           end
 
           it 'does not modify the request headers when provided an unknown value' do
-            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, {:unknown_key => 'some_value'}
+            options = {:unknown_key => 'some_value'}
+            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+            subject.copy_blob container_name, blob_name, source_container_name, source_blob_name, options
           end
         end
       end
@@ -2080,7 +2325,7 @@ describe Azure::Storage::Blob::BlobService do
           
           query.update({'comp' => 'copy', 'copyid' => copy_id})
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          
         }
         
         it 'abort copy a blob' do
@@ -2091,7 +2336,9 @@ describe Azure::Storage::Blob::BlobService do
         it 'abort copy a blob with an active lease' do
           request_headers['x-ms-lease-id'] = lease_id
           subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.abort_copy_blob container_name, blob_name, copy_id, {:lease_id => lease_id}
+          options = {:lease_id => lease_id}
+          subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+          subject.abort_copy_blob container_name, blob_name, copy_id, options
         end
       end
 
@@ -2103,7 +2350,7 @@ describe Azure::Storage::Blob::BlobService do
           query.update({'comp' => 'lease'})
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
           subject.stubs(:container_uri).with(container_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers).returns(response)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
         }
 
         describe '#acquire_blob_lease' do
@@ -2121,7 +2368,7 @@ describe Azure::Storage::Blob::BlobService do
           end
 
           it 'calls StorageService#call with the prepared request' do
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+            subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
             subject.acquire_blob_lease container_name, blob_name
           end
 
@@ -2135,8 +2382,9 @@ describe Azure::Storage::Blob::BlobService do
             before { request_headers['x-ms-lease-duration'] = '37' }
 
             it 'modifies the headers to include the provided duration value' do
-              subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-              subject.acquire_blob_lease container_name, blob_name, {:duration => duration}
+              options = {:duration => duration}
+              subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+              subject.acquire_blob_lease container_name, blob_name, options
             end
           end
 
@@ -2146,8 +2394,9 @@ describe Azure::Storage::Blob::BlobService do
             before { request_headers['x-ms-proposed-lease-id'] = proposed_lease_id }
 
             it 'modifies the headers to include the proposed lease id' do
-              subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-              subject.acquire_blob_lease container_name, blob_name, {:duration => default_duration, :proposed_lease_id => proposed_lease_id}
+              options = {:duration => default_duration, :proposed_lease_id => proposed_lease_id}
+              subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+              subject.acquire_blob_lease container_name, blob_name, options
             end
           end
         end
@@ -2167,7 +2416,7 @@ describe Azure::Storage::Blob::BlobService do
           end
 
           it 'calls StorageService#call with the prepared request' do
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+            subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
             subject.renew_blob_lease container_name, blob_name, lease_id
           end
 
@@ -2194,7 +2443,7 @@ describe Azure::Storage::Blob::BlobService do
           end
 
           it 'calls StorageService#call with the prepared request' do
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+            subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
             subject.change_blob_lease container_name, blob_name, lease_id, proposed_lease_id
           end
 
@@ -2218,7 +2467,7 @@ describe Azure::Storage::Blob::BlobService do
           end
 
           it 'calls StorageService#call with the prepared request' do
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+            subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
             subject.release_blob_lease container_name, blob_name, lease_id
           end
 
@@ -2243,7 +2492,7 @@ describe Azure::Storage::Blob::BlobService do
           end
 
           it 'calls StorageService#call with the prepared request' do
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+            subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
             subject.break_blob_lease container_name, blob_name
           end
 
@@ -2257,8 +2506,9 @@ describe Azure::Storage::Blob::BlobService do
             before { request_headers['x-ms-lease-break-period'] = break_period.to_s }
 
             it 'modifies the request headers to include a break period' do
-              subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-              subject.break_blob_lease container_name, blob_name, {:break_period => break_period}
+              option = {:break_period => break_period}
+              subject.expects(:call).with(verb, uri, nil, request_headers, option).returns(response)
+              subject.break_blob_lease container_name, blob_name, option
             end
           end
         end
@@ -2278,7 +2528,7 @@ describe Azure::Storage::Blob::BlobService do
           end
 
           it 'calls StorageService#call with the prepared request' do
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+            subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
             subject.acquire_container_lease container_name
           end
 
@@ -2292,8 +2542,9 @@ describe Azure::Storage::Blob::BlobService do
             before { request_headers['x-ms-lease-duration'] = '37' }
 
             it 'modifies the headers to include the provided duration value' do
-              subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-              subject.acquire_container_lease container_name, {:duration => duration}
+              options = {:duration => duration}
+              subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+              subject.acquire_container_lease container_name, options
             end
           end
 
@@ -2303,8 +2554,9 @@ describe Azure::Storage::Blob::BlobService do
             before { request_headers['x-ms-proposed-lease-id'] = proposed_lease_id }
 
             it 'modifies the headers to include the proposed lease id' do
-              subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-              subject.acquire_container_lease container_name, {:duration => default_duration, :proposed_lease_id => proposed_lease_id}
+              options = {:duration => default_duration, :proposed_lease_id => proposed_lease_id}
+              subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+              subject.acquire_container_lease container_name, options
             end
           end
         end
@@ -2324,7 +2576,7 @@ describe Azure::Storage::Blob::BlobService do
           end
 
           it 'calls StorageService#call with the prepared request' do
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+            subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
             subject.renew_container_lease container_name, lease_id
           end
 
@@ -2348,7 +2600,7 @@ describe Azure::Storage::Blob::BlobService do
           end
 
           it 'calls StorageService#call with the prepared request' do
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+            subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
             subject.release_container_lease container_name, lease_id
           end
 
@@ -2373,7 +2625,7 @@ describe Azure::Storage::Blob::BlobService do
           end
 
           it 'calls StorageService#call with the prepared request' do
-            subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
+            subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
             subject.break_container_lease container_name
           end
 
@@ -2387,8 +2639,9 @@ describe Azure::Storage::Blob::BlobService do
             before { request_headers['x-ms-lease-break-period'] = break_period.to_s }
 
             it 'modifies the request headers to include a break period' do
-              subject.expects(:call).with(verb, uri, nil, request_headers).returns(response)
-              subject.break_container_lease container_name, {:break_period => break_period}
+              options = {:break_period => break_period}
+              subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+              subject.break_container_lease container_name, options
             end
           end
         end

@@ -48,8 +48,8 @@ module Azure::Storage
         super(signer, account_name, options)
       end
 
-      def call(method, uri, body=nil, headers={})
-        super(method, uri, body, StorageService.service_properties_headers.merge(headers))
+      def call(method, uri, body=nil, headers={}, options={})
+        super(method, uri, body, StorageService.common_headers(options).merge(headers))
       end
 
       # Public: Get Storage Service properties
@@ -57,10 +57,15 @@ module Azure::Storage
       # See http://msdn.microsoft.com/en-us/library/azure/hh452239
       # See http://msdn.microsoft.com/en-us/library/azure/hh452243
       #
+      # ==== Options
+      #
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                  in the analytics logs when storage analytics logging is enabled.
+      #
       # Returns a Hash with the service properties or nil if the operation failed
-      def get_service_properties
+      def get_service_properties(options={})
         uri = service_properties_uri
-        response = call(:get, uri)
+        response = call(:get, uri, nil, {}, options)
         Serialization.service_properties_from_xml response.body
       end
 
@@ -71,11 +76,16 @@ module Azure::Storage
       # See http://msdn.microsoft.com/en-us/library/azure/hh452235
       # See http://msdn.microsoft.com/en-us/library/azure/hh452232
       #
+      # ==== Options
+      #
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                  in the analytics logs when storage analytics logging is enabled.
+      #
       # Returns boolean indicating success.
-      def set_service_properties(service_properties)
+      def set_service_properties(service_properties, options={})
         body = Serialization.service_properties_to_xml service_properties
         uri = service_properties_uri
-        call(:put, uri, body)
+        call(:put, uri, body, {}, options)
         nil
       end
 
@@ -144,11 +154,13 @@ module Azure::Storage
         alias with_query with_value
         
         # Declares a default hash object for request headers
-        def service_properties_headers
-          {
+        def common_headers(options = {})
+          headers = {
             'x-ms-version' => Azure::Storage::Default::STG_VERSION,
             'User-Agent' => Azure::Storage::Default::USER_AGENT
           }
+          headers.merge!({'x-ms-client-request-id' => options[:request_id]}) if options[:request_id]
+          headers
         end
       end
 

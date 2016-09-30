@@ -44,15 +44,17 @@ module Azure::Storage::Blob
     #
     # ==== Attributes
     #
-    # * +name+          - String. The name of the container.
-    # * +options+       - Hash. Optional parameters.
+    # * +name+                      - String. The name of the container.
+    # * +options+                   - Hash. Optional parameters.
     #
     # ==== Options
     #
     # Accepted key/value pairs in options parameter are:
-    # * +:metadata+            - Hash. User defined metadata for the container (optional).
-    # * +:public_access_level+ - String. One of "container" or "blob" (optional).
-    # * +:timeout+             - Integer. A timeout in seconds.
+    # * +:metadata+                 - Hash. User defined metadata for the container (optional).
+    # * +:public_access_level+      - String. One of "container" or "blob" (optional).
+    # * +:timeout+                  - Integer. A timeout in seconds.
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179468.aspx
     #
@@ -66,12 +68,12 @@ module Azure::Storage::Blob
       uri = container_uri(name, query)
 
       # Headers
-      headers = StorageService.service_properties_headers
+      headers = StorageService.common_headers
       StorageService.add_metadata_to_headers(options[:metadata], headers) if options[:metadata]
       headers['x-ms-blob-public-access'] = options[:public_access_level].to_s if options[:public_access_level]
 
       # Call
-      response = call(:put, uri, nil, headers)
+      response = call(:put, uri, nil, headers, options)
 
       # result
       container = Serialization.container_from_headers(response.headers)
@@ -84,13 +86,15 @@ module Azure::Storage::Blob
     #
     # ==== Attributes
     #
-    # * +name+          - String. The name of the container
-    # * +options+       - Hash. Optional parameters.
+    # * +name+                      - String. The name of the container
+    # * +options+                   - Hash. Optional parameters.
     #
     # ==== Options
     #
     # Accepted key/value pairs in options parameter are:
-    # * +:timeout+      - Integer. A timeout in seconds.
+    # * +:timeout+                  - Integer. A timeout in seconds.
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179370.aspx
     #
@@ -101,7 +105,7 @@ module Azure::Storage::Blob
       query['timeout'] = options[:timeout].to_s if options[:timeout]
 
       # Call
-      response = call(:get, container_uri(name, query))
+      response = call(:get, container_uri(name, query), nil, {}, options)
 
       # result
       container = Serialization.container_from_headers(response.headers)
@@ -113,13 +117,15 @@ module Azure::Storage::Blob
     #
     # ==== Attributes
     #
-    # * +name+          - String. The name of the container
-    # * +options+       - Hash. Optional parameters.
+    # * +name+                      - String. The name of the container
+    # * +options+                   - Hash. Optional parameters.
     #
     # ==== Options
     #
     # Accepted key/value pairs in options parameter are:
-    # * +:timeout+      - Integer. A timeout in seconds.
+    # * +:timeout+                  - Integer. A timeout in seconds.
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/ee691976.aspx
     #
@@ -130,7 +136,7 @@ module Azure::Storage::Blob
       query['timeout'] = options[:timeout].to_s if options[:timeout]
 
       # Call
-      response = call(:get, container_uri(name, query))
+      response = call(:get, container_uri(name, query), nil, {}, options)
 
       # result
       container = Serialization.container_from_headers(response.headers)
@@ -142,14 +148,16 @@ module Azure::Storage::Blob
     #
     # ==== Attributes
     #
-    # * +name+          - String. The name of the container
-    # * +metadata+      - Hash. A Hash of the metadata values
-    # * +options+       - Hash. Optional parameters.
+    # * +name+                      - String. The name of the container
+    # * +metadata+                  - Hash. A Hash of the metadata values
+    # * +options+                   - Hash. Optional parameters.
     #
     # ==== Options
     #
     # Accepted key/value pairs in options parameter are:
-    # * +:timeout+      - Integer. A timeout in seconds.
+    # * +:timeout+                  - Integer. A timeout in seconds.
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179362.aspx
     #
@@ -160,11 +168,11 @@ module Azure::Storage::Blob
       query['timeout'] = options[:timeout].to_s if options[:timeout]
 
       # Headers
-      headers = StorageService.service_properties_headers
+      headers = StorageService.common_headers
       StorageService.add_metadata_to_headers(metadata, headers) if metadata
 
       # Call
-      call(:put, container_uri(name, query), nil, headers)
+      call(:put, container_uri(name, query), nil, headers, options)
       
       # Result
       nil
@@ -175,13 +183,15 @@ module Azure::Storage::Blob
     #
     # ==== Attributes
     #
-    # * +name+          - String. The name of the container
-    # * +options+       - Hash. Optional parameters.
+    # * +name+                      - String. The name of the container
+    # * +options+                   - Hash. Optional parameters.
     #
     # ==== Options
     #
     # Accepted key/value pairs in options parameter are:
-    # * +:timeout+      - Integer. A timeout in seconds.
+    # * +:timeout+                  - Integer. A timeout in seconds.
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179469.aspx
     #
@@ -195,7 +205,7 @@ module Azure::Storage::Blob
       query['timeout'] = options[:timeout].to_s if options[:timeout]
       
       # Call
-      response = call(:get, container_uri(name, query))
+      response = call(:get, container_uri(name, query), nil, {}, options)
 
       # Result
       container = Serialization.container_from_headers(response.headers)
@@ -220,6 +230,8 @@ module Azure::Storage::Blob
     # Accepted key/value pairs in options parameter are:
     # * +:signed_identifiers+          - Array. A list of Azure::Storage::Entity::SignedIdentifier instances (optional)
     # * +:timeout+                     - Integer. A timeout in seconds.
+    # * +:request_id+                  - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                    in the analytics logs when storage analytics logging is enabled.
     # 
     # See http://msdn.microsoft.com/en-us/library/azure/dd179391.aspx
     #
@@ -236,7 +248,7 @@ module Azure::Storage::Blob
       uri = container_uri(name, query)
 
       # Headers + body
-      headers = StorageService.service_properties_headers
+      headers = StorageService.common_headers
       headers['x-ms-blob-public-access'] = public_access_level if public_access_level && public_access_level.to_s.length > 0
 
       signed_identifiers = nil
@@ -246,7 +258,7 @@ module Azure::Storage::Blob
       body = Serialization.signed_identifiers_to_xml(signed_identifiers) if signed_identifiers
 
       # Call
-      response = call(:put, uri, body, headers)
+      response = call(:put, uri, body, headers, options)
 
       # Result
       container = Serialization.container_from_headers(response.headers)
@@ -260,13 +272,15 @@ module Azure::Storage::Blob
     #
     # ==== Attributes
     #
-    # * +name+          - String. The name of the container.
-    # * +options+       - Hash. Optional parameters.
+    # * +name+                      - String. The name of the container.
+    # * +options+                   - Hash. Optional parameters.
     #
     # ==== Options
     #
     # Accepted key/value pairs in options parameter are:
-    # * +:timeout+      - Integer. A timeout in seconds.
+    # * +:timeout+                  - Integer. A timeout in seconds.
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179408.aspx
     #
@@ -277,7 +291,7 @@ module Azure::Storage::Blob
       query['timeout'] = options[:timeout].to_s if options[:timeout]
 
       # Call
-      call(:delete, container_uri(name, query))
+      call(:delete, container_uri(name, query), nil, {}, options)
       
       # result
       nil
@@ -299,6 +313,8 @@ module Azure::Storage::Blob
     # * +:proposed_lease_id+         - String. Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request)
     #                                  if the proposed lease ID is not in the correct format. (optional)
     # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to acquire the lease
     #                                  only if the container has been modified since the specified date/time. If the container has not been modified, 
     #                                  the Blob service returns status code 412 (Precondition Failed).
@@ -336,6 +352,8 @@ module Azure::Storage::Blob
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to renew the lease
     #                                  only if the container has been modified since the specified date/time. If the container has not been modified, 
     #                                  the Blob service returns status code 412 (Precondition Failed).
@@ -369,6 +387,8 @@ module Azure::Storage::Blob
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to change the lease
     #                                  only if the container has been modified since the specified date/time. If the container has not been modified, 
     #                                  the Blob service returns status code 412 (Precondition Failed).
@@ -402,6 +422,8 @@ module Azure::Storage::Blob
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to release the lease
     #                                  only if the container has been modified since the specified date/time. If the container has not been modified, 
     #                                  the Blob service returns status code 412 (Precondition Failed).
@@ -447,6 +469,8 @@ module Azure::Storage::Blob
     #                                  If this option is not used, a fixed-duration lease breaks after the remaining lease
     #                                  period elapses, and an infinite lease breaks immediately.
     # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to break the lease
     #                                  only if the container has been modified since the specified date/time. If the container has not been modified, 
     #                                  the Blob service returns status code 412 (Precondition Failed).
@@ -508,6 +532,8 @@ module Azure::Storage::Blob
     #                         copy_blob operation should be included in the response.
     #                         (optional, Default=false)
     # * +:timeout+          - Integer. A timeout in seconds.
+    # * +:request_id+       - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                         in the analytics logs when storage analytics logging is enabled.
     #
     # NOTE: Metadata requested with the :metadata parameter must have been stored in
     # accordance with the naming restrictions imposed by the 2009-09-19 version of the Blob
@@ -542,7 +568,7 @@ module Azure::Storage::Blob
       uri = container_uri(name, query)
       
       # Call
-      response = call(:get, uri)
+      response = call(:get, uri, nil, {}, options)
       
       # Result
       if response.success?

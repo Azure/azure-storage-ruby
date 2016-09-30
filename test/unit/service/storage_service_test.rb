@@ -56,6 +56,18 @@ describe Azure::Storage::Service::StorageService do
       mock_request.expects(:call)
     end
 
+    it 'adds a client request id' do
+      Azure::Core::Http::HttpRequest.stubs(:new).with(verb,
+                                                        uri,
+                                                        {
+                                                            body: nil,
+                                                            headers: {'x-ms-client-request-id' => 'client-request-id'},
+                                                            client: nil
+                                                        }).returns(mock_request)
+      mock_request.expects(:with_filter).with(mock_signer_filter)
+      subject.call(verb, uri, nil, {}, {:request_id => 'client-request-id'})
+    end
+
     it 'adds a SignerFilter to the HTTP pipeline' do
       mock_request.expects(:with_filter).with(mock_signer_filter)
       subject.call(verb, uri)
@@ -160,7 +172,7 @@ describe Azure::Storage::Service::StorageService do
     before do
       Azure::Storage::Service::Serialization.stubs(:service_properties_from_xml).with(service_properties_xml).returns(service_properties)
       subject.stubs(:service_properties_uri).returns(service_properties_uri)
-      subject.stubs(:call).with(:get, service_properties_uri).returns(response)
+      subject.stubs(:call).with(:get, service_properties_uri, nil, {}, {}).returns(response)
     end
 
     it 'calls the service_properties_uri method to determine the correct uri' do
@@ -169,7 +181,7 @@ describe Azure::Storage::Service::StorageService do
     end
 
     it 'gets the response from the HTTP API' do
-      subject.expects(:call).with(:get, service_properties_uri).returns(response)
+      subject.expects(:call).with(:get, service_properties_uri, nil, {}, {}).returns(response)
       subject.get_service_properties
     end
 
@@ -198,7 +210,7 @@ describe Azure::Storage::Service::StorageService do
     before do
       Azure::Storage::Service::Serialization.stubs(:service_properties_to_xml).with(service_properties).returns(service_properties_xml)
       subject.stubs(:service_properties_uri).returns(service_properties_uri)
-      subject.stubs(:call).with(:put, service_properties_uri, service_properties_xml).returns(response)
+      subject.stubs(:call).with(:put, service_properties_uri, service_properties_xml, {}, {}).returns(response)
     end
 
     it 'calls the service_properties_uri method to determine the correct uri' do
@@ -207,7 +219,7 @@ describe Azure::Storage::Service::StorageService do
     end
 
     it 'posts to the HTTP API' do
-      subject.expects(:call).with(:put, service_properties_uri, service_properties_xml).returns(response)
+      subject.expects(:call).with(:put, service_properties_uri, service_properties_xml, {}, {}).returns(response)
       subject.set_service_properties service_properties
     end
 

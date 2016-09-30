@@ -41,27 +41,29 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +options+    - Hash. Optional parameters.
+      # * +options+                    - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:prefix+      - String. Filters the results to return only containers 
-      #   whose name begins with the specified prefix. (optional)
-      # * +:marker+      - String. An identifier the specifies the portion of the 
-      #   list to be returned. This value comes from the property
-      #   Azure::Service::EnumerationResults.continuation_token when there 
-      #   are more containers available than were returned. The 
-      #   marker value may then be used here to request the next set
-      #   of list items. (optional)
-      # * +:max_results+ - Integer. Specifies the maximum number of containers to return. 
-      #   If max_results is not specified, or is a value greater than 
-      #   5,000, the server will return up to 5,000 items. If it is set 
-      #   to a value less than or equal to zero, the server will return 
-      #   status code 400 (Bad Request). (optional)
-      # * +:metadata+    - Boolean. Specifies whether or not to return the container metadata.
-      #   (optional, Default=false)
-      # * +:timeout+     - Integer. A timeout in seconds.
+      # * +:prefix+                    - String. Filters the results to return only containers 
+      #                                  whose name begins with the specified prefix. (optional)
+      # * +:marker+                    - String. An identifier the specifies the portion of the 
+      #                                  list to be returned. This value comes from the property
+      #                                  Azure::Service::EnumerationResults.continuation_token when there 
+      #                                  are more containers available than were returned. The 
+      #                                  marker value may then be used here to request the next set
+      #                                  of list items. (optional)
+      # * +:max_results+               - Integer. Specifies the maximum number of containers to return. 
+      #                                  If max_results is not specified, or is a value greater than 
+      #                                  5,000, the server will return up to 5,000 items. If it is set 
+      #                                  to a value less than or equal to zero, the server will return 
+      #                                  status code 400 (Bad Request). (optional)
+      # * +:metadata+                  - Boolean. Specifies whether or not to return the container metadata.
+      #                                  (optional, Default=false)
+      # * +:timeout+                   - Integer. A timeout in seconds.
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # NOTE: Metadata requested with the :metadata parameter must have been stored in
       # accordance with the naming restrictions imposed by the 2009-09-19 version of the queue 
@@ -84,7 +86,7 @@ module Azure::Storage
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         uri = collection_uri(query)
-        response = call(:get, uri)
+        response = call(:get, uri, nil, {}, options)
 
         Serialization.queue_enumeration_results_from_xml(response.body)
       end
@@ -100,13 +102,15 @@ module Azure::Storage
       # 
       # ==== Attributes
       #
-      # * +queue_name+ - String. The name of the queue.
-      # * +options+    - Hash. Optional parameters.
+      # * +queue_name+                 - String. The name of the queue.
+      # * +options+                    - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:timeout+   - Integer. A timeout in seconds.
+      # * +:timeout+                   - Integer. A timeout in seconds.
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                  in the analytics logs when storage analytics logging is enabled.
       # 
       # See http://msdn.microsoft.com/en-us/library/azure/dd179454
       # 
@@ -115,7 +119,7 @@ module Azure::Storage
         query = { }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
         uri = messages_uri(queue_name, query)
-        call(:delete, uri)
+        call(:delete, uri, nil, {}, options)
         nil
       end
     
@@ -123,14 +127,16 @@ module Azure::Storage
       # 
       # ==== Attributes
       #
-      # * +queue_name+     - String. The queue name.
-      # * +options+        - Hash. Optional parameters. 
+      # * +queue_name+                 - String. The queue name.
+      # * +options+                    - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:metadata+      - Hash. A hash of user defined metadata.
-      # * +:timeout+       - Integer. A timeout in seconds.
+      # * +:metadata+                  - Hash. A hash of user defined metadata.
+      # * +:timeout+                   - Integer. A timeout in seconds.
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179342
       #
@@ -144,7 +150,7 @@ module Azure::Storage
         headers = { }
         Service::StorageService.add_metadata_to_headers(options[:metadata] || {}, headers) if options[:metadata]
 
-        call(:put, uri, nil, headers)
+        call(:put, uri, nil, headers, options)
         nil
       end
 
@@ -152,13 +158,15 @@ module Azure::Storage
       # 
       # ==== Attributes
       #
-      # * +queue_name+     - String. The queue name.
-      # * +options+        - Hash. Optional parameters. 
+      # * +queue_name+                 - String. The queue name.
+      # * +options+                    - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:timeout+       - Integer. A timeout in seconds.
+      # * +:timeout+                   - Integer. A timeout in seconds.
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179436
       #
@@ -169,7 +177,7 @@ module Azure::Storage
 
         uri = queue_uri(queue_name, query)
 
-        call(:delete, uri)
+        call(:delete, uri, nil, {}, options)
         nil
       end
 
@@ -177,13 +185,15 @@ module Azure::Storage
       # 
       # ==== Attributes
       #
-      # * +queue_name+     - String. The queue name.
-      # * +options+        - Hash. Optional parameters. 
+      # * +queue_name+                 - String. The queue name.
+      # * +options+                    - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:timeout+       - Integer. A timeout in seconds.
+      # * +:timeout+                   - Integer. A timeout in seconds.
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179384
       #
@@ -198,7 +208,7 @@ module Azure::Storage
 
         uri = queue_uri(queue_name, query)
 
-        response = call(:get, uri)
+        response = call(:get, uri, nil, {}, options)
 
         approximate_messages_count = response.headers["x-ms-approximate-messages-count"]
         metadata = Serialization.metadata_from_headers(response.headers)
@@ -211,14 +221,16 @@ module Azure::Storage
       # 
       # ==== Attributes
       #
-      # * +queue_name+ - String. The queue name.
-      # * +metadata+   - Hash. A hash of user defined metadata
-      # * +options+    - Hash. Optional parameters. 
+      # * +queue_name+                 - String. The queue name.
+      # * +metadata+                   - Hash. A hash of user defined metadata
+      # * +options+                    - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:timeout+       - Integer. A timeout in seconds.
+      # * +:timeout+                   - Integer. A timeout in seconds.
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179348
       #
@@ -232,7 +244,7 @@ module Azure::Storage
         headers ={}
         Service::StorageService.add_metadata_to_headers(metadata || {}, headers)
 
-        call(:put, uri, nil, headers)
+        call(:put, uri, nil, headers, options)
         nil
       end
 
@@ -240,13 +252,15 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +queue_name+ - String. The queue name.
-      # * +options+    - Hash. Optional parameters. 
+      # * +queue_name+                 - String. The queue name.
+      # * +options+                    - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:timeout+       - Integer. A timeout in seconds.
+      # * +:timeout+                   - Integer. A timeout in seconds.
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/jj159101
       #
@@ -255,7 +269,7 @@ module Azure::Storage
         query = { "comp" => "acl" }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-        response = call(:get, queue_uri(queue_name, query))
+        response = call(:get, queue_uri(queue_name, query), nil, {}, options)
 
         signed_identifiers = []
         signed_identifiers = Serialization.signed_identifiers_from_xml(response.body) unless response.body == nil or response.body.length < 1
@@ -266,14 +280,16 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +queue_name+ - String. The queue name.
-      # * +options+    - Hash. Optional parameters. 
+      # * +queue_name+                 - String. The queue name.
+      # * +options+                    - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:signed_identifiers+  - Array. A list of Azure::Storage::Entity::SignedIdentifier instances 
-      # * +:timeout+             - Integer. A timeout in seconds.
+      # * +:signed_identifiers+        - Array. A list of Azure::Storage::Entity::SignedIdentifier instances 
+      # * +:timeout+                   - Integer. A timeout in seconds.
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                  in the analytics logs when storage analytics logging is enabled.
       # 
       # See http://msdn.microsoft.com/en-us/library/azure/jj159099
       #
@@ -286,7 +302,7 @@ module Azure::Storage
         body = nil
         body = Serialization.signed_identifiers_to_xml(options[:signed_identifiers]) if options[:signed_identifiers] && options[:signed_identifiers].length > 0
 
-        call(:put, uri, body, {})
+        call(:put, uri, body, {}, options)
         nil
       end
 
@@ -301,15 +317,17 @@ module Azure::Storage
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:visibility_timeout+     - Integer. Specifies the new visibility timeout value, in seconds, relative to server 
-      #   time. The new value must be larger than or equal to 0, and cannot be larger than 7 
-      #   days. The visibility timeout of a message cannot be set to a value later than the 
-      #   expiry time. :visibility_timeout should be set to a value smaller than the 
-      #   time-to-live value. If not specified, the default value is 0.
-      # * +:message_ttl+            - Integer. Specifies the time-to-live interval for the message, in seconds. The maximum 
-      #   time-to-live allowed is 7 days. If not specified, the default time-to-live is 7 days.
-      # * +:encode+                 - Boolean. If set to true, the message will be base64 encoded.
-      # * +:timeout+                - Integer. A timeout in seconds.
+      # * +:visibility_timeout+        - Integer. Specifies the new visibility timeout value, in seconds, relative to server 
+      #                                  time. The new value must be larger than or equal to 0, and cannot be larger than 7 
+      #                                  days. The visibility timeout of a message cannot be set to a value later than the 
+      #                                  expiry time. :visibility_timeout should be set to a value smaller than the 
+      #                                  time-to-live value. If not specified, the default value is 0.
+      # * +:message_ttl+               - Integer. Specifies the time-to-live interval for the message, in seconds. The maximum 
+      #                                  time-to-live allowed is 7 days. If not specified, the default time-to-live is 7 days.
+      # * +:encode+                    - Boolean. If set to true, the message will be base64 encoded.
+      # * +:timeout+                   - Integer. A timeout in seconds.
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179346
       #
@@ -326,7 +344,7 @@ module Azure::Storage
         uri = messages_uri(queue_name, query)
         body = Serialization.message_to_xml(message_text, options[:encode])
 
-        call(:post, uri, body, {})
+        call(:post, uri, body, {}, options)
         nil
       end
 
@@ -334,16 +352,18 @@ module Azure::Storage
       # 
       # ==== Attributes
       #
-      # * +queue_name+   - String. The queue name.
-      # * +message_id+   - String. The id of the message.
-      # * +pop_receipt+  - String. The valid pop receipt value returned from an earlier call to the Get Messages or 
-      #   Update Message operation.
-      # * +options+      - Hash. Optional parameters. 
+      # * +queue_name+                 - String. The queue name.
+      # * +message_id+                 - String. The id of the message.
+      # * +pop_receipt+                - String. The valid pop receipt value returned from an earlier call to the Get Messages or 
+      #                                  Update Message operation.
+      # * +options+                    - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:timeout+     - Integer. A timeout in seconds.
+      # * +:timeout+                   - Integer. A timeout in seconds.
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                  in the analytics logs when storage analytics logging is enabled.
       # 
       # See http://msdn.microsoft.com/en-us/library/azure/dd179347
       #
@@ -392,7 +412,7 @@ module Azure::Storage
 
         uri = message_uri(queue_name, message_id, query)
 
-        call(:delete, uri)
+        call(:delete, uri, nil, {}, options)
         nil
       end
 
@@ -400,15 +420,17 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +queue_name+   - String. The queue name.
-      # * +options+      - Hash. Optional parameters. 
+      # * +queue_name+                 - String. The queue name.
+      # * +options+                    - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:number_of_messages+ - Integer. How many messages to return. (optional, Default: 1)
-      # * +:decode+             - Boolean. Boolean value indicating if the message should be base64 decoded.
-      # * +:timeout+            - Integer. A timeout in seconds.
+      # * +:number_of_messages+        - Integer. How many messages to return. (optional, Default: 1)
+      # * +:decode+                    - Boolean. Boolean value indicating if the message should be base64 decoded.
+      # * +:timeout+                   - Integer. A timeout in seconds.
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179472
       #
@@ -421,7 +443,7 @@ module Azure::Storage
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         uri = messages_uri(queue_name, query)
-        response = call(:get, uri)
+        response = call(:get, uri, nil, {}, options)
 
         messages = Serialization.queue_messages_from_xml(response.body, options[:decode])
         messages
@@ -431,16 +453,18 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +queue_name+          - String. The queue name.
-      # * +visibility_timeout+  - Integer. The new visibility timeout value, in seconds, relative to server time.
-      # * +options+             - Hash. Optional parameters. 
+      # * +queue_name+                 - String. The queue name.
+      # * +visibility_timeout+         - Integer. The new visibility timeout value, in seconds, relative to server time.
+      # * +options+                    - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:number_of_messages+ - Integer. How many messages to return. (optional, Default: 1)
-      # * +:timeout+            - Integer. A timeout in seconds.
-      # * +:decode+             - Boolean. Boolean value indicating if the message should be base64 decoded.
+      # * +:number_of_messages+        - Integer. How many messages to return. (optional, Default: 1)
+      # * +:timeout+                   - Integer. A timeout in seconds.
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                  in the analytics logs when storage analytics logging is enabled.
+      # * +:decode+                    - Boolean. Boolean value indicating if the message should be base64 decoded.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179474
       #
@@ -453,7 +477,7 @@ module Azure::Storage
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         uri = messages_uri(queue_name, query)
-        response = call(:get, uri)
+        response = call(:get, uri, nil, {}, options)
 
         messages = Serialization.queue_messages_from_xml(response.body, options[:decode])
         messages
@@ -463,20 +487,22 @@ module Azure::Storage
       # 
       # ==== Attributes
       #
-      # * +queue_name+         - String. The queue name.
-      # * +message_id+         - String. The id of the message.
-      # * +pop_receipt+        - String. The valid pop receipt value returned from an earlier call to the Get Messages or 
-      #   update Message operation.
-      # * +message_text+       - String. The message contents. Note that the message content must be in a format that may 
-      #   be encoded with UTF-8.
-      # * +visibility_timeout+ - Integer. The new visibility timeout value, in seconds, relative to server time.
-      # * +options+            - Hash. Optional parameters. 
+      # * +queue_name+                 - String. The queue name.
+      # * +message_id+                 - String. The id of the message.
+      # * +pop_receipt+                - String. The valid pop receipt value returned from an earlier call to the Get Messages or 
+      #                                  update Message operation.
+      # * +message_text+               - String. The message contents. Note that the message content must be in a format that may 
+      #                                  be encoded with UTF-8.
+      # * +visibility_timeout+         - Integer. The new visibility timeout value, in seconds, relative to server time.
+      # * +options+                    - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:encode+                 - Boolean. If set to true, the message will be base64 encoded.
-      # * +:timeout+           - Integer. A timeout in seconds.
+      # * +:encode+                    - Boolean. If set to true, the message will be base64 encoded.
+      # * +:timeout+                   - Integer. A timeout in seconds.
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/hh452234
       #
@@ -517,7 +543,7 @@ module Azure::Storage
         uri = message_uri(queue_name, message_id, query)
         body = Serialization.message_to_xml(message_text, options[:encode])
 
-        response = call(:put, uri, body, {})
+        response = call(:put, uri, body, {}, options)
         new_pop_receipt = response.headers["x-ms-popreceipt"]
         time_next_visible = response.headers["x-ms-time-next-visible"]
         return new_pop_receipt, time_next_visible

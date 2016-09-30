@@ -1,3 +1,13 @@
+2016.09 - version 0.11.1-preview
+
+ALL
+* Added the support for setting the client request ID via the "request_id" parameter.
+* Added the retry for the timeout errors.
+* Added the retry for the connection reset error.
+
+BLOB
+* Fixed the issue where "list_blobs" doesn't work when delimiter is specified. (https://github.com/Azure/azure-storage-ruby/issues/41)
+
 2016.08 - version 0.11.0-preview
 
 ALL

@@ -44,7 +44,7 @@ module Azure::Storage
         @host = client.storage_blob_host
       end
       
-      def call(method, uri, body=nil, headers={})
+      def call(method, uri, body=nil, headers={}, options={})
         # Force the request.body to the content encoding of specified in the header
         # (content encoding probably shouldn't be used this way)
         if headers && !body.nil?
@@ -96,6 +96,9 @@ module Azure::Storage
       #
       # * +:timeout+                 - Integer. A timeout in seconds.
       #
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
+      #
       # NOTE: Metadata requested with the :metadata parameter must have been stored in
       # accordance with the naming restrictions imposed by the 2009-09-19 version of the Blob
       # service. Beginning with that version, all metadata names must adhere to the naming
@@ -120,7 +123,7 @@ module Azure::Storage
         end
 
         uri = containers_uri(query)
-        response = call(:get, uri)
+        response = call(:get, uri, nil, {}, options)
 
         Serialization.container_enumeration_results_from_xml(response.body)
       end
@@ -142,6 +145,8 @@ module Azure::Storage
       # * +:proposed_lease_id+       - String. Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request)
       #                                if the proposed lease ID is not in the correct format. (optional)
       # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       # * +:if_modified_since+       - String. A DateTime value. Specify this conditional header to acquire the lease
       #                                only if the blob has been modified since the specified date/time. If the blob has not been modified, 
       #                                the Blob service returns status code 412 (Precondition Failed).
@@ -174,13 +179,13 @@ module Azure::Storage
         duration = -1
         duration = options[:duration] if options[:duration]
 
-        headers = Service::StorageService.service_properties_headers
+        headers = Service::StorageService.common_headers
         Service::StorageService.with_header headers, 'x-ms-lease-action', 'acquire'
         Service::StorageService.with_header headers, 'x-ms-lease-duration', duration.to_s if duration
         Service::StorageService.with_header headers, 'x-ms-proposed-lease-id', options[:proposed_lease_id]
         add_blob_conditional_headers options, headers
 
-        response = call(:put, uri, nil, headers)
+        response = call(:put, uri, nil, headers, options)
         response.headers['x-ms-lease-id']
       end
 
@@ -200,6 +205,8 @@ module Azure::Storage
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       # * +:if_modified_since+       - String. A DateTime value. Specify this conditional header to renew the lease
       #                                only if the blob has been modified since the specified date/time. If the blob has not been modified, 
       #                                the Blob service returns status code 412 (Precondition Failed).
@@ -228,12 +235,12 @@ module Azure::Storage
           uri = container_uri(container, query)
         end
 
-        headers = Service::StorageService.service_properties_headers
+        headers = Service::StorageService.common_headers
         Service::StorageService.with_header headers, 'x-ms-lease-action', 'renew'
         Service::StorageService.with_header headers, 'x-ms-lease-id', lease
         add_blob_conditional_headers options, headers
 
-        response = call(:put, uri, nil, headers)
+        response = call(:put, uri, nil, headers, options)
         response.headers['x-ms-lease-id']
       end
       
@@ -252,6 +259,8 @@ module Azure::Storage
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       # * +:if_modified_since+       - String. A DateTime value. Specify this conditional header to change the lease
       #                                only if the blob has been modified since the specified date/time. If the blob has not been modified, 
       #                                the Blob service returns status code 412 (Precondition Failed).
@@ -281,13 +290,13 @@ module Azure::Storage
           uri = container_uri(container, query)
         end
 
-        headers = Service::StorageService.service_properties_headers
+        headers = Service::StorageService.common_headers
         Service::StorageService.with_header headers, 'x-ms-lease-action', 'change'
         Service::StorageService.with_header headers, 'x-ms-lease-id', lease
         Service::StorageService.with_header headers, 'x-ms-proposed-lease-id', proposed_lease
         add_blob_conditional_headers options, headers
 
-        response = call(:put, uri, nil, headers)
+        response = call(:put, uri, nil, headers, options)
         response.headers['x-ms-lease-id']
       end
 
@@ -306,6 +315,8 @@ module Azure::Storage
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       # * +:if_modified_since+       - String. A DateTime value. Specify this conditional header to release the lease
       #                                only if the blob has been modified since the specified date/time. If the blob has not been modified, 
       #                                the Blob service returns status code 412 (Precondition Failed).
@@ -334,12 +345,12 @@ module Azure::Storage
           uri = container_uri(container, query)
         end
 
-        headers = Service::StorageService.service_properties_headers
+        headers = Service::StorageService.common_headers
         Service::StorageService.with_header headers, 'x-ms-lease-action', 'release'
         Service::StorageService.with_header headers, 'x-ms-lease-id', lease
         add_blob_conditional_headers options, headers
 
-        call(:put, uri, nil, headers)
+        call(:put, uri, nil, headers, options)
         nil
       end
 
@@ -370,6 +381,8 @@ module Azure::Storage
       #                                If this option is not used, a fixed-duration lease breaks after the remaining lease
       #                                period elapses, and an infinite lease breaks immediately.
       # * +:timeout+                 - Integer. A timeout in seconds.
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      #                                in the analytics logs when storage analytics logging is enabled.
       # * +:if_modified_since+       - String. A DateTime value. Specify this conditional header to acquire the lease
       #                                only if the blob has been modified since the specified date/time. If the blob has not been modified, 
       #                                the Blob service returns status code 412 (Precondition Failed).
@@ -400,12 +413,12 @@ module Azure::Storage
           uri = container_uri(container, query)
         end
 
-        headers = Service::StorageService.service_properties_headers
+        headers = Service::StorageService.common_headers
         Service::StorageService.with_header headers, 'x-ms-lease-action', 'break'
         Service::StorageService.with_header headers, 'x-ms-lease-break-period', options[:break_period].to_s if options[:break_period]
         add_blob_conditional_headers options, headers
 
-        response = call(:put, uri, nil, headers)
+        response = call(:put, uri, nil, headers, options)
         response.headers['x-ms-lease-time'].to_i
       end
       

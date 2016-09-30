@@ -47,6 +47,8 @@ module Azure::Storage
     #                                  and also can be used to attach additional metadata
     # * +:metadata+                  - Hash. Custom metadata values to store with the blob.
     # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to create a new blob 
     #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
     #                                  the Blob service returns status code 412 (Precondition Failed).
@@ -69,7 +71,7 @@ module Azure::Storage
 
       uri = blob_uri(container, blob, query)
 
-      headers = StorageService.service_properties_headers
+      headers = StorageService.common_headers
 
       # set x-ms-blob-type to AppendBlob
       StorageService.with_header headers, 'x-ms-blob-type', 'AppendBlob'
@@ -90,7 +92,7 @@ module Azure::Storage
       add_blob_conditional_headers options, headers
 
       # call PutBlob with empty body
-      response = call(:put, uri, nil, headers)
+      response = call(:put, uri, nil, headers, options)
 
       result = Serialization.blob_from_headers(response.headers)
       result.name = blob
@@ -116,6 +118,8 @@ module Azure::Storage
     # * +:max_size+                  - Integer. The max length in bytes permitted for the append blob
     # * +:append_position+           - Integer. A number indicating the byte offset to compare. It will succeed only if the append position is equal to this number
     # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to append a block only if 
     #                                  the blob has been modified since the specified date/time. If the blob has not been modified, 
     #                                  the Blob service returns status code 412 (Precondition Failed).
@@ -138,13 +142,13 @@ module Azure::Storage
 
       uri = blob_uri(container, blob, query)
 
-      headers = StorageService.service_properties_headers
+      headers = StorageService.common_headers
       StorageService.with_header headers, 'Content-MD5', options[:content_md5]
       StorageService.with_header headers, 'x-ms-lease-id', options[:lease_id]
       
       add_blob_conditional_headers options, headers
 
-      response = call(:put, uri, content, headers)
+      response = call(:put, uri, content, headers, options)
       result = Serialization.blob_from_headers(response.headers)
       result.name = blob
 
