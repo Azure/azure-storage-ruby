@@ -294,7 +294,7 @@ module Azure::Storage
         end
 
         def expect_node(node_name, xml)
-          raise "Xml is not a #{node_name} node." unless xml.name == node_name
+          raise "Xml is not a #{node_name} node. xml:\n#{xml}" unless xml.name == node_name
         end
       end
 
