@@ -1,3 +1,8 @@
+2016.10 - version 0.11.2-preview
+
+ALL
+* Fixed the issue where it retries on HTTP 4xx errors.
+
 2016.09 - version 0.11.1-preview
 
 ALL
