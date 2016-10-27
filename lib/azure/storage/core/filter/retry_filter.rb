@@ -115,7 +115,7 @@ module Azure::Storage::Core::Filter
     # incrementing counter, timestamp, etc). The retry_data object
     # will be the same instance throughout the lifetime of the request.
     def should_retry_on_error?(response, retry_data)
-      response = response || retry_data[:error].http_response if retry_data[:error]
+      response = response || retry_data[:error].http_response if retry_data[:error] && retry_data[:error].respond_to?('http_response')
       unless response
         retry_data[:retryable] = false unless retry_data[:error]
         return retry_data[:retryable]

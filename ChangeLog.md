@@ -3,6 +3,9 @@
 ALL
 * Fixed the issue where it retries on HTTP 4xx errors.
 
+BLOB
+* Fixed the issue of wrong "Content-Encoding". [#49](https://github.com/Azure/azure-storage-ruby/issues/49)
+
 2016.09 - version 0.11.1-preview
 
 ALL
@@ -11,7 +14,7 @@ ALL
 * Added the retry for the connection reset error.
 
 BLOB
-* Fixed the issue where "list_blobs" doesn't work when delimiter is specified. (https://github.com/Azure/azure-storage-ruby/issues/41)
+* Fixed the issue where "list_blobs" doesn't work when delimiter is specified. [#41](https://github.com/Azure/azure-storage-ruby/issues/41)
 
 2016.08 - version 0.11.0-preview
 

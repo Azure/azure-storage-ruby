@@ -34,6 +34,7 @@ module Azure::Storage
   
   module Blob
     class BlobService < StorageService
+      include Azure::Storage::Core::Utility
       include Azure::Storage::Blob
       include Azure::Storage::Blob::Container
       
@@ -43,24 +44,25 @@ module Azure::Storage
         super(signer, client_config.storage_account_name, options)
         @host = client.storage_blob_host
       end
-      
+
       def call(method, uri, body=nil, headers={}, options={})
         # Force the request.body to the content encoding of specified in the header
-        # (content encoding probably shouldn't be used this way)
-        if headers && !body.nil?
-          if headers['Content-Encoding'].nil?
-            Service::StorageService.with_header headers, 'Content-Encoding', body.encoding.to_s
+        if headers && !body.nil? && !(body.encoding.to_s <=> 'ASCII_8BIT')
+          if headers['x-ms-blob-content-type'].nil?
+            Service::StorageService.with_header headers, 'x-ms-blob-content-type', "text/plain; charset=#{body.encoding.to_s}"
           else
-            body.force_encoding(headers['Content-Encoding'])
+            charset = parse_charset_from_content_type(headers['x-ms-blob-content-type'])
+            body.force_encoding(charset)
           end
         end
 
         response = super
 
-        # Force the response.body to the content encoding of specified in the header.
-        # content-encoding is echo'd back for the blob and is used to store the encoding of the octet stream
-        if !response.nil? && !response.body.nil? && response.headers['content-encoding']
-          response.body.force_encoding(response.headers['content-encoding'])
+        # Force the response.body to the content charset of specified in the header.
+        # Content-Type is echo'd back for the blob and is used to store the encoding of the octet stream
+        if !response.nil? && !response.body.nil? && response.headers['Content-Type']
+          charset = parse_charset_from_content_type(response.headers['Content-Type'])
+          response.body.force_encoding(charset) if charset && charset.length > 0
         end
 
         response

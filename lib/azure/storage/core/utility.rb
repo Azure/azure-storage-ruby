@@ -107,6 +107,13 @@ module Azure::Storage
       def initialize_external_logger(logger)
         Loggerx.initialize_external_logger(logger)
       end
+
+      def parse_charset_from_content_type(content_type)
+        if (content_type && content_type.length > 0)
+          charset = content_type.split(';').delete_if { |attribute| !attribute.lstrip.start_with?('charset=') }.map { |x| x.lstrip }[0]
+          charset['charset='.length...charset.length] if charset
+        end
+      end
     end
 
     # Logger

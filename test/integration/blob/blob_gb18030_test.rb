@@ -150,34 +150,33 @@ describe 'Blob GB-18030' do
     }
   end
 
-  it 'Read/Write Blob Block Content UTF-8' do
+  it 'Read/Write Blob Block Content UTF-8 with auto charset' do
     GB18030TestStrings.get.each { |k,v|
       blob_name = 'Read/Write Block Blob Content UTF-8 for ' + k
       content = v.encode('UTF-8')
-
       subject.create_block_blob container_name, blob_name, content
       blob, returned_content = subject.get_blob container_name, blob_name
-
       returned_content.must_equal content
     }
   end
 
-  it 'Read/Write Blob Block Content GB18030' do
+  it 'Read/Write Blob Block Content GB18030 with explicit charset' do
     GB18030TestStrings.get.each { |k,v|
       blob_name = 'Read/Write Block Blob Content GB18030 for ' + k
       content = v.encode('GB18030')
-      options = { :content_encoding=> 'GB18030'}
+      options = { :content_type => 'text/html; charset=GB18030' }
       subject.create_block_blob container_name, blob_name, content, options
       blob, returned_content = subject.get_blob container_name, blob_name
-      returned_content.force_encoding(blob.properties[:content_encoding])
+      charset = blob.properties[:content_type][blob.properties[:content_type].index('charset=') + 'charset='.length...blob.properties[:content_type].length]
+      returned_content.force_encoding(charset)
       returned_content.must_equal content
     }
   end
 
-  it 'Read/Write Blob Page Content UTF-8' do
+  it 'Read/Write Blob Page Content UTF-8 with explicit charset' do
     GB18030TestStrings.get.each { |k,v|
       blob_name = 'Read/Write Page Blob Content UTF-8 for ' + k
-      options = { :content_encoding=> 'UTF-8'}
+      options = { :content_type => 'text/html; charset=UTF-8' }
       content = v.encode('UTF-8')
       while content.bytesize < 512 do
         content << 'X'
@@ -185,15 +184,16 @@ describe 'Blob GB-18030' do
       subject.create_page_blob container_name, blob_name, 512, options
       subject.put_blob_pages container_name, blob_name, 0, 511, content
       blob, returned_content = subject.get_blob container_name, blob_name
-      returned_content.force_encoding(blob.properties[:content_encoding])
+      charset = blob.properties[:content_type][blob.properties[:content_type].index('charset=') + 'charset='.length...blob.properties[:content_type].length]
+      returned_content.force_encoding(charset)
       returned_content.must_equal content
     }
   end
 
-  it 'Read/Write Blob Page Content GB18030' do
+  it 'Read/Write Blob Page Content GB18030 with explicit charset' do
     GB18030TestStrings.get.each { |k,v|
       blob_name = 'Read/Write Page Blob Content GB18030 for ' + k
-      options = { :content_encoding=> 'GB18030'}
+      options = { :content_type => 'text/html; charset=GB18030' }
       content = v.encode('GB18030')
       while content.bytesize < 512 do
         content << 'X'
@@ -201,7 +201,8 @@ describe 'Blob GB-18030' do
       subject.create_page_blob container_name, blob_name, 512, options
       subject.put_blob_pages container_name, blob_name, 0, 511, content
       blob, returned_content = subject.get_blob container_name, blob_name
-      returned_content.force_encoding(blob.properties[:content_encoding])
+      charset = blob.properties[:content_type][blob.properties[:content_type].index('charset=') + 'charset='.length...blob.properties[:content_type].length]
+      returned_content.force_encoding(charset)
       returned_content.must_equal content
     }
   end
