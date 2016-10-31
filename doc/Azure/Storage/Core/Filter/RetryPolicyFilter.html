@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Azure::Storage::Core::Filter::RetryPolicyFilter
+  
+    &mdash; Documentation by YARD 0.9.5
+  
+</title>
+
+  <link rel="stylesheet" href="../../../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Azure::Storage::Core::Filter::RetryPolicyFilter";
+  relpath = '../../../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../../../class_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../../../_index.html">Index (R)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Core.html" title="Azure::Storage::Core (module)">Core</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Filter.html" title="Azure::Storage::Core::Filter (module)">Filter</a></span></span>
+     &raquo; 
+    <span class="title">RetryPolicyFilter</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <iframe id="search_frame" src="../../../../class_list.html"></iframe>
+
+      <div id="content"><h1>Class: Azure::Storage::Core::Filter::RetryPolicyFilter
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Core::Http::RetryPolicy</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Core::Http::RetryPolicy</li>
+          
+            <li class="next">Azure::Storage::Core::Filter::RetryPolicyFilter</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/azure/storage/core/filter/retry_filter.rb</dd>
+  </dl>
+  
+</div>
+
+<div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="ExponentialRetryPolicyFilter.html" title="Azure::Storage::Core::Filter::ExponentialRetryPolicyFilter (class)">ExponentialRetryPolicyFilter</a></span>, <span class='object_link'><a href="LinearRetryPolicyFilter.html" title="Azure::Storage::Core::Filter::LinearRetryPolicyFilter (class)">LinearRetryPolicyFilter</a></span></p>
+</div>
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#retry_count-instance_method" title="#retry_count (instance method)">#<strong>retry_count</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute retry_count.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#retry_interval-instance_method" title="#retry_interval (instance method)">#<strong>retry_interval</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute retry_interval.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#adjust_retry_parameter-instance_method" title="#adjust_retry_parameter (instance method)">#<strong>adjust_retry_parameter</strong>(retry_data)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Adjust the retry parameter.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#apply_retry_policy-instance_method" title="#apply_retry_policy (instance method)">#<strong>apply_retry_policy</strong>(retry_data)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Apply the retry policy to determine how the HTTP request should continue
+retrying.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(retry_count = nil, retry_interval = nil)  &#x21d2; RetryPolicyFilter </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of RetryPolicyFilter.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#should_retry%3F-instance_method" title="#should_retry? (instance method)">#<strong>should_retry?</strong>(response, retry_data)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Overrides the base class implementation of call to determine  whether to
+retry the operation.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#should_retry_on_error%3F-instance_method" title="#should_retry_on_error? (instance method)">#<strong>should_retry_on_error?</strong>(response, retry_data)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determines if the HTTP request should continue retrying.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#should_retry_on_local_error%3F-instance_method" title="#should_retry_on_local_error? (instance method)">#<strong>should_retry_on_local_error?</strong>(retry_data)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determines if the HTTP request should continue retrying.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(retry_count = nil, retry_interval = nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Core::Filter::RetryPolicyFilter (class)">RetryPolicyFilter</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of RetryPolicyFilter</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29
+30
+31
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 29</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_count'>retry_count</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_interval'>retry_interval</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@retry_count</span> <span class='op'>=</span> <span class='id identifier rubyid_retry_count'>retry_count</span>
+  <span class='ivar'>@retry_interval</span> <span class='op'>=</span> <span class='id identifier rubyid_retry_interval'>retry_interval</span>
+  
+  <span class='kw'>super</span> <span class='op'>&amp;</span><span class='symbol'>:should_retry?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="retry_count-instance_method">
+  
+    #<strong>retry_count</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute retry_count</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+36
+37
+38</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 36</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_retry_count'>retry_count</span>
+  <span class='ivar'>@retry_count</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="retry_interval-instance_method">
+  
+    #<strong>retry_interval</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute retry_interval</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+36
+37
+38</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 36</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_retry_interval'>retry_interval</span>
+  <span class='ivar'>@retry_interval</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="adjust_retry_parameter-instance_method">
+  
+    #<strong>adjust_retry_parameter</strong>(retry_data)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Adjust the retry parameter</p>
+
+<p>retry_data - Hash. Stores stateful retry data</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+172
+173
+174
+175
+176</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 172</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_adjust_retry_parameter'>adjust_retry_parameter</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
+  <span class='comment'># TODO: Adjust the retry parameter according to the location and last attempt time 
+</span>  <span class='id identifier rubyid_sleep'>sleep</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:interval</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="apply_retry_policy-instance_method">
+  
+    #<strong>apply_retry_policy</strong>(retry_data)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Apply the retry policy to determine how the HTTP request should continue
+retrying</p>
+
+<p>retry_data - Hash. Stores stateful retry data</p>
+
+<p>The retry_data is a Hash which can be used to store stateful data about the
+request execution context (such as an incrementing counter, timestamp,
+etc). The retry_data object will be the same instance throughout the
+lifetime of the request</p>
+
+<p>Alternatively, a subclass could override this method.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+66
+67</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 66</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_apply_retry_policy'>apply_retry_policy</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="should_retry?-instance_method">
+  
+    #<strong>should_retry?</strong>(response, retry_data)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Overrides the base class implementation of call to determine  whether to
+retry the operation</p>
+
+<p>response - HttpResponse. The response from the active request retry_data -
+Hash. Stores stateful retry data</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 44</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_should_retry?'>should_retry?</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_apply_retry_policy'>apply_retry_policy</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
+  <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:count</span><span class='rbracket'>]</span> <span class='op'>&lt;=</span> <span class='ivar'>@retry_count</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span>
+  
+  <span class='id identifier rubyid_should_retry_on_local_error?'>should_retry_on_local_error?</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
+  <span class='id identifier rubyid_should_retry_on_error?'>should_retry_on_error?</span> <span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span>
+  
+  <span class='id identifier rubyid_adjust_retry_parameter'>adjust_retry_parameter</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="should_retry_on_error?-instance_method">
+  
+    #<strong>should_retry_on_error?</strong>(response, retry_data)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determines if the HTTP request should continue retrying</p>
+
+<p>response - Azure::Core::Http::HttpResponse. The response from the active
+request retry_data - Hash. Stores stateful retry data</p>
+
+<p>The retry_data is a Hash which can be used to store stateful data about the
+request execution context (such as an incrementing counter, timestamp,
+etc). The retry_data object will be the same instance throughout the
+lifetime of the request.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 117</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_should_retry_on_error?'>should_retry_on_error?</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span> <span class='op'>||</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_http_response'>http_response</span> <span class='kw'>if</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>http_response</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='kw'>unless</span> <span class='id identifier rubyid_response'>response</span>
+    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># If a request sent to the secondary location fails with 404 (Not Found), it is possible
+</span>  <span class='comment'># that the resource replication is not finished yet. So, in case of 404 only in the secondary
+</span>  <span class='comment'># location, the failure should still be retryable.
+</span>  <span class='id identifier rubyid_secondary_not_found'>secondary_not_found</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:current_location</span><span class='rbracket'>]</span> <span class='op'>===</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>RequestLocationMode</span><span class='op'>::</span><span class='const'>SECONDARY_ONLY</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status_code'>status_code</span> <span class='op'>===</span> <span class='int'>404</span><span class='semicolon'>;</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_secondary_not_found'>secondary_not_found</span>
+    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>500</span>
+  <span class='kw'>else</span>
+    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status_code'>status_code</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status_code'>status_code</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># Non-timeout Cases
+</span>  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&gt;=</span> <span class='int'>300</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='int'>408</span><span class='rparen'>)</span>
+    <span class='comment'># Always no retry on &quot;not implemented&quot; and &quot;version not supported&quot;
+</span>    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>501</span> <span class='op'>||</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>505</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
+      <span class='kw'>return</span> <span class='kw'>false</span><span class='semicolon'>;</span>
+    <span class='kw'>end</span>
+
+    <span class='comment'># When absorb_conditional_errors_on_retry is set (for append blob)
+</span>    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:request_options</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:request_options</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:absorb_conditional_errors_on_retry</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>412</span><span class='rparen'>)</span>
+        <span class='comment'># When appending block with precondition failure and their was a server error before, we ignore the error.
+</span>        <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:last_server_error</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='semicolon'>;</span>
+          <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
+        <span class='kw'>end</span>
+      <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&gt;=</span> <span class='int'>500</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='int'>600</span><span class='rparen'>)</span>
+        <span class='comment'># Retry on the server error
+</span>        <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+        <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:last_server_error</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+      <span class='kw'>end</span>
+    <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='int'>500</span><span class='rparen'>)</span>
+      <span class='comment'># No retry on the client error
+</span>      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="should_retry_on_local_error?-instance_method">
+  
+    #<strong>should_retry_on_local_error?</strong>(retry_data)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determines if the HTTP request should continue retrying</p>
+
+<p>retry_data - Hash. Stores stateful retry data</p>
+
+<p>The retry_data is a Hash which can be used to store stateful data about the
+request execution context (such as an incrementing counter, timestamp,
+etc). The retry_data object will be the same instance throughout the
+lifetime of the request.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 77</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_should_retry_on_local_error?'>should_retry_on_local_error?</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
+  <span class='kw'>unless</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+    <span class='kw'>return</span> <span class='kw'>true</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_error_message'>error_message</span> <span class='op'>=</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+  
+  <span class='kw'>if</span> <span class='id identifier rubyid_error_message'>error_message</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>SocketError: Hostname not known</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+    <span class='comment'># Retry on local DNS resolving
+</span>    <span class='comment'># When uses resolv-replace.rb to replace the libc resolver 
+</span>    <span class='comment'># Reference: 
+</span>    <span class='comment'>#  https://makandracards.com/ninjaconcept/30815-fixing-socketerror-getaddrinfo-name-or-service-not-known-with-ruby-s-resolv-replace-rb 
+</span>    <span class='comment'>#  http://www.subelsky.com/2014/05/fixing-socketerror-getaddrinfo-name-or.html 
+</span>    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_error_message'>error_message</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>getaddrinfo: Name or service not known</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+    <span class='comment'># When uses the default resolver 
+</span>    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_error_message'>error_message</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_error_message'>error_message</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Errno::ECONNRESET</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_error_message'>error_message</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Errno::EACCES</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_error_message'>error_message</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>NOSUPPORT</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
+  <span class='kw'>end</span>
+  
+  <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Mon Oct 31 11:05:13 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.5 (ruby-2.2.4).
+</div>
+
+    </div>
+  </body>
+</html>
