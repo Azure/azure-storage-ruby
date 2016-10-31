@@ -34,6 +34,7 @@ module Azure::Storage
   
   module Blob
     class BlobService < StorageService
+      include Azure::Storage::Core::Utility
       include Azure::Storage::Blob
       include Azure::Storage::Blob::Container
       
@@ -43,24 +44,25 @@ module Azure::Storage
         super(signer, client_config.storage_account_name, options)
         @host = client.storage_blob_host
       end
-      
+
       def call(method, uri, body=nil, headers={}, options={})
         # Force the request.body to the content encoding of specified in the header
-        # (content encoding probably shouldn't be used this way)
-        if headers && !body.nil?
-          if headers['Content-Encoding'].nil?
-            Service::StorageService.with_header headers, 'Content-Encoding', body.encoding.to_s
+        if headers && !body.nil? && !(body.encoding.to_s <=> 'ASCII_8BIT')
+          if headers['x-ms-blob-content-type'].nil?
+            Service::StorageService.with_header headers, 'x-ms-blob-content-type', "text/plain; charset=#{body.encoding.to_s}"
           else
-            body.force_encoding(headers['Content-Encoding'])
+            charset = parse_charset_from_content_type(headers['x-ms-blob-content-type'])
+            body.force_encoding(charset)
           end
         end
 
         response = super
 
-        # Force the response.body to the content encoding of specified in the header.
-        # content-encoding is echo'd back for the blob and is used to store the encoding of the octet stream
-        if !response.nil? && !response.body.nil? && response.headers['content-encoding']
-          response.body.force_encoding(response.headers['content-encoding'])
+        # Force the response.body to the content charset of specified in the header.
+        # Content-Type is echo'd back for the blob and is used to store the encoding of the octet stream
+        if !response.nil? && !response.body.nil? && response.headers['Content-Type']
+          charset = parse_charset_from_content_type(response.headers['Content-Type'])
+          response.body.force_encoding(charset) if charset && charset.length > 0
         end
 
         response
@@ -99,12 +101,12 @@ module Azure::Storage
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
       #                                in the analytics logs when storage analytics logging is enabled.
       #
+      # See: https://msdn.microsoft.com/en-us/library/azure/dd179352.aspx
+      #
       # NOTE: Metadata requested with the :metadata parameter must have been stored in
       # accordance with the naming restrictions imposed by the 2009-09-19 version of the Blob
       # service. Beginning with that version, all metadata names must adhere to the naming
-      # conventions for C# identifiers.
-      #
-      # See: http://msdn.microsoft.com/en-us/library/aa664670(VS.71).aspx
+      # conventions for C# identifiers. See: https://msdn.microsoft.com/en-us/library/aa664670(VS.71).aspx
       #
       # Any metadata with invalid names which were previously stored, will be returned with the
       # key "x-ms-invalid-name" in the metadata hash. This may contain multiple values and be an
