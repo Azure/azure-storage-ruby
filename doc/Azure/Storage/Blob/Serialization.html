@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: Azure::Storage::Blob::Serialization
+  
+    &mdash; Documentation by YARD 0.9.5
+  
+</title>
+
+  <link rel="stylesheet" href="../../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Azure::Storage::Blob::Serialization";
+  relpath = '../../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../../class_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../../_index.html">Index (S)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Blob.html" title="Azure::Storage::Blob (module)">Blob</a></span></span>
+     &raquo; 
+    <span class="title">Serialization</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <iframe id="search_frame" src="../../../class_list.html"></iframe>
+
+      <div id="content"><h1>Module: Azure::Storage::Blob::Serialization
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Service::Serialization</a></span></dd>
+  </dl>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/azure/storage/blob/serialization.rb</dd>
+  </dl>
+  
+</div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#add_block-class_method" title="add_block (class method)">.<strong>add_block</strong>(type, block_node, block_list)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#blob_enumeration_results_from_xml-class_method" title="blob_enumeration_results_from_xml (class method)">.<strong>blob_enumeration_results_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#blob_from_headers-class_method" title="blob_from_headers (class method)">.<strong>blob_from_headers</strong>(headers)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#blob_from_xml-class_method" title="blob_from_xml (class method)">.<strong>blob_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#blob_prefix_from_xml-class_method" title="blob_prefix_from_xml (class method)">.<strong>blob_prefix_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#blob_properties_from_headers-class_method" title="blob_properties_from_headers (class method)">.<strong>blob_properties_from_headers</strong>(headers)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#blob_properties_from_xml-class_method" title="blob_properties_from_xml (class method)">.<strong>blob_properties_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#block_list_from_xml-class_method" title="block_list_from_xml (class method)">.<strong>block_list_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#block_list_to_xml-class_method" title="block_list_to_xml (class method)">.<strong>block_list_to_xml</strong>(block_list)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#container_enumeration_results_from_xml-class_method" title="container_enumeration_results_from_xml (class method)">.<strong>container_enumeration_results_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#container_from_headers-class_method" title="container_from_headers (class method)">.<strong>container_from_headers</strong>(headers)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#container_from_xml-class_method" title="container_from_xml (class method)">.<strong>container_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#container_properties_from_headers-class_method" title="container_properties_from_headers (class method)">.<strong>container_properties_from_headers</strong>(headers)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#container_properties_from_xml-class_method" title="container_properties_from_xml (class method)">.<strong>container_properties_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#page_list_from_xml-class_method" title="page_list_from_xml (class method)">.<strong>page_list_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#public_access_level_from_headers-class_method" title="public_access_level_from_headers (class method)">.<strong>public_access_level_from_headers</strong>(headers)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Service::Serialization</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Service/Serialization.html#included-class_method" title="Azure::Storage::Service::Serialization.included (method)">included</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Service/Serialization/ClassMethods.html" title="Azure::Storage::Service::Serialization::ClassMethods (module)">Service::Serialization::ClassMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Service/Serialization/ClassMethods.html#access_policy_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#access_policy_from_xml (method)">#access_policy_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#ary_from_node-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#ary_from_node (method)">#ary_from_node</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#cors_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#cors_from_xml (method)">#cors_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#cors_rule_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#cors_rule_from_xml (method)">#cors_rule_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#cors_rule_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#cors_rule_to_xml (method)">#cors_rule_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#cors_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#cors_to_xml (method)">#cors_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#enumeration_results_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#enumeration_results_from_xml (method)">#enumeration_results_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#expect_node-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#expect_node (method)">#expect_node</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#hour_metrics_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#hour_metrics_to_xml (method)">#hour_metrics_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#logging_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#logging_from_xml (method)">#logging_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#logging_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#logging_to_xml (method)">#logging_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#metadata_from_headers-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#metadata_from_headers (method)">#metadata_from_headers</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#metadata_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#metadata_from_xml (method)">#metadata_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#metrics_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#metrics_from_xml (method)">#metrics_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#metrics_to_xml_children-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#metrics_to_xml_children (method)">#metrics_to_xml_children</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#minute_metrics_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#minute_metrics_to_xml (method)">#minute_metrics_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#retention_policy_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#retention_policy_from_xml (method)">#retention_policy_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#retention_policy_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#retention_policy_to_xml (method)">#retention_policy_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#service_properties_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#service_properties_from_xml (method)">#service_properties_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#service_properties_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#service_properties_to_xml (method)">#service_properties_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#signed_identifier_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#signed_identifier_from_xml (method)">#signed_identifier_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#signed_identifiers_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#signed_identifiers_from_xml (method)">#signed_identifiers_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#signed_identifiers_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#signed_identifiers_to_xml (method)">#signed_identifiers_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#slopify-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#slopify (method)">#slopify</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#to_bool-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#to_bool (method)">#to_bool</a></span></p>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="add_block-class_method">
+  
+    .<strong>add_block</strong>(type, block_node, block_list)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+286
+287
+288
+289
+290
+291
+292
+293</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 286</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_add_block'>add_block</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_block_node'>block_node</span><span class='comma'>,</span> <span class='id identifier rubyid_block_list'>block_list</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_block'>block</span> <span class='op'>=</span> <span class='const'>Block</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_b'>b</span><span class='op'>|</span>
+    <span class='id identifier rubyid_b'>b</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='const'>Base64</span><span class='period'>.</span><span class='id identifier rubyid_strict_decode64'>strict_decode64</span><span class='lparen'>(</span><span class='id identifier rubyid_block_node'>block_node</span><span class='period'>.</span><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_block_node'>block_node</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Name</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='id identifier rubyid_b'>b</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>=</span> <span class='id identifier rubyid_block_node'>block_node</span><span class='period'>.</span><span class='const'>Size</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_block_node'>block_node</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Size</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='id identifier rubyid_b'>b</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_block_list'>block_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_type'>type</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='id identifier rubyid_block'>block</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="blob_enumeration_results_from_xml-class_method">
+  
+    .<strong>blob_enumeration_results_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 106</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_blob_enumeration_results_from_xml'>blob_enumeration_results_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>EnumerationResults</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_enumeration_results_from_xml'>enumeration_results_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='comma'>,</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Service</span><span class='op'>::</span><span class='const'>EnumerationResults</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
+
+  <span class='kw'>return</span> <span class='id identifier rubyid_results'>results</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Blobs</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Blobs</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Blob</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Blobs</span><span class='period'>.</span><span class='const'>Blob</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>0</span>
+      <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_blob_from_xml'>blob_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Blobs</span><span class='period'>.</span><span class='const'>Blob</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Blobs</span><span class='period'>.</span><span class='const'>Blob</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_blob_node'>blob_node</span><span class='op'>|</span>
+        <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_blob_from_xml'>blob_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_blob_node'>blob_node</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Blobs</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BlobPrefix</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Blobs</span><span class='period'>.</span><span class='const'>BlobPrefix</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>0</span>
+      <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_blob_prefix_from_xml'>blob_prefix_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Blobs</span><span class='period'>.</span><span class='const'>BlobPrefix</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Blobs</span><span class='period'>.</span><span class='const'>BlobPrefix</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_blob_prefix'>blob_prefix</span><span class='op'>|</span>
+        <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_blob_prefix_from_xml'>blob_prefix_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_blob_prefix'>blob_prefix</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_results'>results</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="blob_from_headers-class_method">
+  
+    .<strong>blob_from_headers</strong>(headers)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+159
+160
+161
+162
+163
+164</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 159</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_blob_from_headers'>blob_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='const'>Blob</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_blob'>blob</span><span class='op'>|</span>
+    <span class='id identifier rubyid_blob'>blob</span><span class='period'>.</span><span class='id identifier rubyid_properties'>properties</span> <span class='op'>=</span> <span class='id identifier rubyid_blob_properties_from_headers'>blob_properties_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_blob'>blob</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata_from_headers'>metadata_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="blob_from_xml-class_method">
+  
+    .<strong>blob_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 146</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_blob_from_xml'>blob_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Blob</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='const'>Blob</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_blob'>blob</span><span class='op'>|</span>
+    <span class='id identifier rubyid_blob'>blob</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Name</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='id identifier rubyid_blob'>blob</span><span class='period'>.</span><span class='id identifier rubyid_snapshot'>snapshot</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Snapshot</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Snapshot</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+
+    <span class='id identifier rubyid_blob'>blob</span><span class='period'>.</span><span class='id identifier rubyid_properties'>properties</span> <span class='op'>=</span> <span class='id identifier rubyid_blob_properties_from_xml'>blob_properties_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Properties</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Properties</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='id identifier rubyid_blob'>blob</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata_from_xml'>metadata_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Metadata</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Metadata</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="blob_prefix_from_xml-class_method">
+  
+    .<strong>blob_prefix_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+138
+139
+140
+141
+142
+143
+144</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 138</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_blob_prefix_from_xml'>blob_prefix_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BlobPrefix</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Name</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_name'>name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="blob_properties_from_headers-class_method">
+  
+    .<strong>blob_properties_from_headers</strong>(headers)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 196</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_blob_properties_from_headers'>blob_properties_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_props'>props</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:last_modified</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Last-Modified</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:etag</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Etag</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:lease_status</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-status</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:lease_state</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-state</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:lease_duration</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-duration</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_length</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-content-length</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Length</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_length</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_length</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_length</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_type</span><span class='rbracket'>]</span> <span class='op'>=</span>  <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-content-type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_encoding</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-content-encoding</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Encoding</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_language</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-content-language</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Language</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_disposition</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-content-disposition</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Disposition</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_md5</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-content-md5</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-MD5</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:cache_control</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-cache-control</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cache-Control</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:sequence_number</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-sequence-number</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-sequence-number</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:blob_type</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_id</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-copy-id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_status</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-copy-status</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_source</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-copy-source</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_progress</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-copy-progress</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_completion_time</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-copy-completion-time</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_status_description</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-copy-status-description</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:accept_ranges</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Accept-Ranges</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Accept-Ranges</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:append_offset</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-append-offset</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-append-offset</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:committed_count</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-committed-block-count</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-committed-block-count</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_props'>props</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="blob_properties_from_xml-class_method">
+  
+    .<strong>blob_properties_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 166</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_blob_properties_from_xml'>blob_properties_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Properties</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_props'>props</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:last_modified</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Last-Modified</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Last-Modified</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:etag</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Etag</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Etag</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:lease_status</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>LeaseStatus</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>LeaseStatus</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:lease_state</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>LeaseState</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>LeaseState</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:lease_duration</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>LeaseDuration</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>LeaseDuration</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_length</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Length</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Length</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_type</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_encoding</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Encoding</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Encoding</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_language</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Language</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Language</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_md5</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-MD5</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-MD5</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:cache_control</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cache-Control</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cache-Control</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:sequence_number</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-sequence-number</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-sequence-number</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:blob_type</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>BlobType</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BlobType</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_id</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>CopyId</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CopyId</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_status</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>CopyStatus</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CopyStatus</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_source</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>CopySource</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CopySource</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_progress</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>CopyProgress</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CopyProgress</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_completion_time</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>CopyCompletionTime</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CopyCompletionTime</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_status_description</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>CopyStatusDescription</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CopyStatusDescription</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+
+  <span class='id identifier rubyid_props'>props</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="block_list_from_xml-class_method">
+  
+    .<strong>block_list_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 252</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_block_list_from_xml'>block_list_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BlockList</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_block_list'>block_list</span> <span class='op'>=</span>  <span class='lbrace'>{</span>
+    <span class='symbol'>:committed</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='symbol'>:uncommitted</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='rbrace'>}</span>
+
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CommittedBlocks</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Block</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>CommittedBlocks</span><span class='period'>.</span><span class='const'>Block</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>0</span>
+      <span class='id identifier rubyid_add_block'>add_block</span><span class='lparen'>(</span><span class='symbol'>:committed</span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>CommittedBlocks</span><span class='period'>.</span><span class='const'>Block</span><span class='comma'>,</span> <span class='id identifier rubyid_block_list'>block_list</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>CommittedBlocks</span><span class='period'>.</span><span class='const'>Block</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_block_node'>block_node</span><span class='op'>|</span>
+        <span class='id identifier rubyid_add_block'>add_block</span><span class='lparen'>(</span><span class='symbol'>:committed</span><span class='comma'>,</span> <span class='id identifier rubyid_block_node'>block_node</span><span class='comma'>,</span> <span class='id identifier rubyid_block_list'>block_list</span><span class='rparen'>)</span>
+      <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>return</span> <span class='id identifier rubyid_block_list'>block_list</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>UncommittedBlocks</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>UncommittedBlocks</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Block</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>UncommittedBlocks</span><span class='period'>.</span><span class='const'>Block</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>0</span>
+      <span class='id identifier rubyid_add_block'>add_block</span><span class='lparen'>(</span><span class='symbol'>:uncommitted</span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>UncommittedBlocks</span><span class='period'>.</span><span class='const'>Block</span><span class='comma'>,</span> <span class='id identifier rubyid_block_list'>block_list</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>UncommittedBlocks</span><span class='period'>.</span><span class='const'>Block</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_block_node'>block_node</span><span class='op'>|</span>
+        <span class='id identifier rubyid_add_block'>add_block</span><span class='lparen'>(</span><span class='symbol'>:uncommitted</span><span class='comma'>,</span> <span class='id identifier rubyid_block_node'>block_node</span><span class='comma'>,</span> <span class='id identifier rubyid_block_list'>block_list</span><span class='rparen'>)</span>
+      <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_block_list'>block_list</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="block_list_to_xml-class_method">
+  
+    .<strong>block_list_to_xml</strong>(block_list)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 233</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_block_list_to_xml'>block_list_to_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_block_list'>block_list</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_builder'>builder</span> <span class='op'>=</span> <span class='const'>Nokogiri</span><span class='op'>::</span><span class='const'>XML</span><span class='op'>::</span><span class='const'>Builder</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:encoding</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>UTF-8</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_xml'>xml</span><span class='op'>|</span>
+    <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>BlockList</span> <span class='lbrace'>{</span>
+      <span class='id identifier rubyid_block_list'>block_list</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_block'>block</span><span class='op'>|</span>
+        <span class='id identifier rubyid_encoded_id'>encoded_id</span> <span class='op'>=</span> <span class='const'>Base64</span><span class='period'>.</span><span class='id identifier rubyid_strict_encode64'>strict_encode64</span><span class='lparen'>(</span><span class='id identifier rubyid_block'>block</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+        <span class='kw'>case</span> <span class='id identifier rubyid_block'>block</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span>
+        <span class='kw'>when</span> <span class='symbol'>:uncommitted</span>
+          <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Uncommitted</span> <span class='id identifier rubyid_encoded_id'>encoded_id</span>
+        <span class='kw'>when</span> <span class='symbol'>:committed</span>
+          <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Committed</span> <span class='id identifier rubyid_encoded_id'>encoded_id</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Latest</span> <span class='id identifier rubyid_encoded_id'>encoded_id</span>
+        <span class='kw'>end</span>
+      <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_to_xml'>to_xml</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="container_enumeration_results_from_xml-class_method">
+  
+    .<strong>container_enumeration_results_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_container_enumeration_results_from_xml'>container_enumeration_results_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>EnumerationResults</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_enumeration_results_from_xml'>enumeration_results_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='comma'>,</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Service</span><span class='op'>::</span><span class='const'>EnumerationResults</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
+  
+  <span class='kw'>return</span> <span class='id identifier rubyid_results'>results</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Containers</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Containers</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Containers</span><span class='period'>.</span><span class='const'>Container</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>0</span>
+    <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_container_from_xml'>container_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Containers</span><span class='period'>.</span><span class='const'>Container</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Containers</span><span class='period'>.</span><span class='const'>Container</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_container_node'>container_node</span><span class='op'>|</span>
+      <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_container_from_xml'>container_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_container_node'>container_node</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_results'>results</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="container_from_headers-class_method">
+  
+    .<strong>container_from_headers</strong>(headers)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+67
+68
+69
+70
+71
+72
+73</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 67</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'>container_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='const'>Container</span><span class='op'>::</span><span class='const'>Container</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_container'>container</span><span class='op'>|</span>
+    <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_properties'>properties</span> <span class='op'>=</span> <span class='id identifier rubyid_container_properties_from_headers'>container_properties_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_public_access_level'>public_access_level</span> <span class='op'>=</span> <span class='id identifier rubyid_public_access_level_from_headers'>public_access_level_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata_from_headers'>metadata_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="container_from_xml-class_method">
+  
+    .<strong>container_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 56</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_container_from_xml'>container_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='const'>Container</span><span class='op'>::</span><span class='const'>Container</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_container'>container</span><span class='op'>|</span>
+    <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Name</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_properties'>properties</span> <span class='op'>=</span> <span class='id identifier rubyid_container_properties_from_xml'>container_properties_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Properties</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Properties</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata_from_xml'>metadata_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Metadata</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Metadata</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="container_properties_from_headers-class_method">
+  
+    .<strong>container_properties_from_headers</strong>(headers)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 90</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_container_properties_from_headers'>container_properties_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_props'>props</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:last_modified</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Last-Modified</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> 
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:etag</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Etag</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:lease_status</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-status</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:lease_state</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-state</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:lease_duration</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-duration</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_props'>props</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="container_properties_from_xml-class_method">
+  
+    .<strong>container_properties_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 75</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_container_properties_from_xml'>container_properties_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Properties</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_props'>props</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:last_modified</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Last-Modified</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Last-Modified</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:etag</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Etag</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Etag</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:lease_status</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>LeaseStatus</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>LeaseStatus</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:lease_state</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>LeaseState</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>LeaseState</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:lease_duration</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>LeaseDuration</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>LeaseDuration</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+
+  <span class='id identifier rubyid_props'>props</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="page_list_from_xml-class_method">
+  
+    .<strong>page_list_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 295</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page_list_from_xml'>page_list_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PageList</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_page_list'>page_list</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+
+  <span class='kw'>return</span> <span class='id identifier rubyid_page_list'>page_list</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PageRange</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>PageRange</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>0</span>
+    <span class='id identifier rubyid_page_list'>page_list</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='lbracket'>[</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>PageRange</span><span class='period'>.</span><span class='const'>Start</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>PageRange</span><span class='period'>.</span><span class='const'>End</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rbracket'>]</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>PageRange</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_page_range'>page_range</span><span class='op'>|</span>
+      <span class='id identifier rubyid_page_list'>page_list</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='lbracket'>[</span><span class='id identifier rubyid_page_range'>page_range</span><span class='period'>.</span><span class='const'>Start</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='id identifier rubyid_page_range'>page_range</span><span class='period'>.</span><span class='const'>End</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rbracket'>]</span>
+    <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_page_list'>page_list</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="public_access_level_from_headers-class_method">
+  
+    .<strong>public_access_level_from_headers</strong>(headers)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+102
+103
+104</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/serialization.rb', line 102</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_public_access_level_from_headers'>public_access_level_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-public-access</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Mon Oct 31 11:05:07 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.5 (ruby-2.2.4).
+</div>
+
+    </div>
+  </body>
+</html>
