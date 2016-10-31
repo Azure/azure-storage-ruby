@@ -101,12 +101,12 @@ module Azure::Storage
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
       #                                in the analytics logs when storage analytics logging is enabled.
       #
+      # See: https://msdn.microsoft.com/en-us/library/azure/dd179352.aspx
+      #
       # NOTE: Metadata requested with the :metadata parameter must have been stored in
       # accordance with the naming restrictions imposed by the 2009-09-19 version of the Blob
       # service. Beginning with that version, all metadata names must adhere to the naming
-      # conventions for C# identifiers.
-      #
-      # See: http://msdn.microsoft.com/en-us/library/aa664670(VS.71).aspx
+      # conventions for C# identifiers. See: https://msdn.microsoft.com/en-us/library/aa664670(VS.71).aspx
       #
       # Any metadata with invalid names which were previously stored, will be returned with the
       # key "x-ms-invalid-name" in the metadata hash. This may contain multiple values and be an
