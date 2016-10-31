@@ -136,8 +136,11 @@ module Azure::Storage::Core::Filter
         end
       end
       
+      if (retry_data[:status_code] < 400)
+        retry_data[:retryable] = false;
+        return false;
       # Non-timeout Cases
-      if (retry_data[:status_code] >= 300 && retry_data[:status_code] != 408)
+      elsif (retry_data[:status_code] != 408)
         # Always no retry on "not implemented" and "version not supported"
         if (retry_data[:status_code] == 501 || retry_data[:status_code] == 505)
           retry_data[:retryable] = false;
