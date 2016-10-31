@@ -1,3 +1,8 @@
+2016.10 - version 0.11.3-preview
+
+ALL
+* Fixed an issue in retry policies.
+
 2016.10 - version 0.11.2-preview
 
 ALL
