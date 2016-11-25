@@ -38,7 +38,7 @@ describe Azure::Storage::Blob::BlobService do
     }
     let(:options){{
         :content_type=>"application/my-special-format",
-        :content_encoding=>"utf-16",
+        :content_encoding=>"gzip",
         :content_language=>"klingon",
         :cache_control=>"max-age=1296000",
       }}

@@ -1,3 +1,12 @@
+2016.11 - version 0.11.4-preview
+
+ALL
+* Removed the unnecessary dependencies. This resolves: [#55](https://github.com/Azure/azure-storage-ruby/issues/55), [#67](https://github.com/Azure/azure-storage-ruby/issues/67)
+
+BLOB
+* Fixed the issue when checking the content encoding.
+* Fixed the wrong "Content-Encoding" value in the test cases.
+
 2016.10 - version 0.11.3-preview
 
 ALL

@@ -57,7 +57,7 @@ describe Azure::Storage::Blob::BlobService do
     it 'sets additional properties when the options hash is used' do
       options = {
         :content_type=>"application/xml",
-        :content_encoding=>"utf-8",
+        :content_encoding=>"gzip",
         :content_language=>"en-US",
         :cache_control=>"max-age=1296000",
         :metadata => { "CustomMetadataProperty"=>"CustomMetadataValue"}
