@@ -41,6 +41,23 @@ describe Azure::Storage::Blob::BlobService do
       blob = subject.create_block_blob container_name, blob_name, content
       blob.name.must_equal blob_name
     end
+
+    it 'creates a block blob with IO' do
+      begin
+        file = File.open blob_name, 'w+'
+        file.write content
+        file.seek 0
+        subject.create_block_blob container_name, blob_name, file
+        blob = subject.get_blob_properties container_name, blob_name
+        blob.name.must_equal blob_name
+        blob.properties[:content_length].must_equal content.length
+      ensure
+        unless file.nil?
+          file.close
+          File.delete blob_name
+        end
+      end
+    end
     
     it 'should create a block blob with spaces in name' do  
       blob_name = 'blob with spaces'  

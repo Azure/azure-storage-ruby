@@ -1,11 +1,12 @@
 2016.11 - version 0.11.4-preview
 
 ALL
-* Removed the unnecessary dependencies. This resolves: [#55](https://github.com/Azure/azure-storage-ruby/issues/55), [#67](https://github.com/Azure/azure-storage-ruby/issues/67)
+* Removed the unnecessary dependencies. [#55](https://github.com/Azure/azure-storage-ruby/issues/55), [#67](https://github.com/Azure/azure-storage-ruby/issues/67)
 
 BLOB
 * Fixed the issue when checking the content encoding.
 * Fixed the wrong "Content-Encoding" value in the test cases.
+* Fixed the issue where it cannot use the `create_block_blob` method with an IO/File object. [#61](https://github.com/Azure/azure-storage-ruby/issues/61)
 
 2016.10 - version 0.11.3-preview
 

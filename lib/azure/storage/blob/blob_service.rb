@@ -47,7 +47,7 @@ module Azure::Storage
 
       def call(method, uri, body=nil, headers={}, options={})
         # Force the request.body to the content encoding of specified in the header
-        if headers && !body.nil? && ((body.encoding.to_s <=> 'ASCII_8BIT') != 0)
+        if headers && !body.nil? && (body.is_a? String) && ((body.encoding.to_s <=> 'ASCII_8BIT') != 0)
           if headers['x-ms-blob-content-type'].nil?
             Service::StorageService.with_header headers, 'x-ms-blob-content-type', "text/plain; charset=#{body.encoding.to_s}"
           else
