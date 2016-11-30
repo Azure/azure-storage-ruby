@@ -40,7 +40,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
       ip_range:             '168.1.5.60-168.1.5.70',
       cache_control:        'public',
       content_disposition:  'inline, filename=nyan.cat',
-      content_encoding:     'utf-8',
+      content_encoding:     'gzip',
       content_language:     'English',
       content_type:         'binary'
     }
@@ -66,7 +66,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
       subject.signable_string_for_service(service_type, path, service_options).must_equal(
         "rwd\n#{Time.parse('2020-12-10T00:00:00Z').utc.iso8601}\n#{Time.parse('2020-12-11T00:00:00Z').utc.iso8601}\n" + 
         "/blob/account-name/example/path\n\n168.1.5.60-168.1.5.70\nhttps,http\n#{Azure::Storage::Default::STG_VERSION}\n" +
-        "public\ninline, filename=nyan.cat\nutf-8\nEnglish\nbinary"
+        "public\ninline, filename=nyan.cat\ngzip\nEnglish\nbinary"
       )
     end
 
@@ -95,7 +95,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
       query_hash['spr'].must_equal 'https,http'
       query_hash['rscc'].must_equal 'public'
       query_hash['rscd'].must_equal 'inline, filename=nyan.cat'
-      query_hash['rsce'].must_equal 'utf-8'
+      query_hash['rsce'].must_equal 'gzip'
       query_hash['rscl'].must_equal 'English'
       query_hash['rsct'].must_equal 'binary'
     end
