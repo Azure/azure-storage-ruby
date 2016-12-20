@@ -787,7 +787,7 @@ module Azure::Storage
         StorageService.with_header headers, 'x-ms-lease-id', options[:lease_id]
       end
 
-      response = call(:put, uri, nil, headers, options)
+      call(:put, uri, nil, headers, options)
       nil
     end
     
