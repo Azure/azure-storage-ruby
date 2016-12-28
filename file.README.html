@@ -59,294 +59,325 @@
 
       <iframe id="search_frame" src="file_list.html"></iframe>
 
-      <div id="content"><div id='filecontents'><h1 id="microsoft-azure-storage-client-library-for-ruby">Microsoft Azure Storage Client Library for Ruby</h1>
+      <div id="content"><div id='filecontents'>
+<h1 id="label-Microsoft+Azure+Storage+Client+Library+for+Ruby">Microsoft Azure Storage Client Library for Ruby</h1>
 
-<p><a href="https://badge.fury.io/rb/azure-storage"><img src="https://badge.fury.io/rb/azure-storage.svg" alt="Gem Version" /></a>
-* Master: <a href="https://travis-ci.org/Azure/azure-storage-ruby/branches"><img src="https://travis-ci.org/Azure/azure-storage-ruby.svg?branch=master" alt="Master Build Status" /></a> <a href="https://coveralls.io/github/Azure/azure-storage-ruby?branch=master"><img src="https://coveralls.io/repos/github/Azure/azure-storage-ruby/badge.svg?branch=master" alt="Coverage Status" /></a>
-* Dev: <a href="https://travis-ci.org/Azure/azure-storage-ruby/branches"><img src="https://travis-ci.org/Azure/azure-storage-ruby.svg?branch=dev" alt="Dev Build Status" /></a> <a href="https://coveralls.io/github/Azure/azure-storage-ruby?branch=dev"><img src="https://coveralls.io/repos/github/Azure/azure-storage-ruby/badge.svg?branch=dev" alt="Coverage Status" /></a></p>
+<p><a href="https://badge.fury.io/rb/azure-storage"><img
+src="https://badge.fury.io/rb/azure-storage.svg"></a> * Master: <a
+href="https://travis-ci.org/Azure/azure-storage-ruby/branches"><img
+src="https://travis-ci.org/Azure/azure-storage-ruby.svg?branch=master"></a>
+<a
+href="https://coveralls.io/github/Azure/azure-storage-ruby?branch=master"><img
+src="https://coveralls.io/repos/github/Azure/azure-storage-ruby/badge.svg?branch=master"></a>
+* Dev: <a
+href="https://travis-ci.org/Azure/azure-storage-ruby/branches"><img
+src="https://travis-ci.org/Azure/azure-storage-ruby.svg?branch=dev"></a> <a
+href="https://coveralls.io/github/Azure/azure-storage-ruby?branch=dev"><img
+src="https://coveralls.io/repos/github/Azure/azure-storage-ruby/badge.svg?branch=dev"></a></p>
 
-<p>This project provides a Ruby package that makes it easy to access and manage Microsoft Azure Storage Services.</p>
+<p>This project provides a Ruby package that makes it easy to access and
+manage Microsoft Azure Storage Services.</p>
 
-<h1 id="library-features">Library Features</h1>
+<h1 id="label-Library+Features">Library Features</h1>
+<ul><li>
+<p><a href="#blobs">Blobs</a></p>
+</li><li>
+<p><a href="#tables">Tables</a></p>
+</li><li>
+<p><a href="#queues">Queues</a></p>
+</li></ul>
 
-<ul>
-  <li><a href="#blobs">Blobs</a></li>
-  <li><a href="#tables">Tables</a></li>
-  <li><a href="#queues">Queues</a></li>
-</ul>
-
-<h1 id="supported-ruby-versions">Supported Ruby Versions</h1>
-
-<ul>
-  <li>Ruby 2.0</li>
-  <li>Ruby 2.1</li>
-  <li>Ruby 2.2</li>
-</ul>
+<h1 id="label-Supported+Ruby+Versions">Supported Ruby Versions</h1>
+<ul><li>
+<p>Ruby 2.0</p>
+</li><li>
+<p>Ruby 2.1</p>
+</li><li>
+<p>Ruby 2.2</p>
+</li></ul>
 
 <p>Note:</p>
+<ul><li>
+<p>x64 Ruby for Windows is known to have some compatibility issues.</p>
+</li><li>
+<p>azure-storage depends on gem nokogiri, which doesn&#39;t support Ruby 2.2+
+on Windows.</p>
+</li></ul>
 
-<ul>
-  <li>x64 Ruby for Windows is known to have some compatibility issues.</li>
-  <li>azure-storage depends on gem nokogiri, which doesn’t support Ruby 2.2+ on Windows.</li>
-</ul>
+<h1 id="label-Getting+Started">Getting Started</h1>
 
-<h1 id="getting-started">Getting Started</h1>
-
-<h2 id="install-the-rubygem-package">Install the rubygem package</h2>
+<h2 id="label-Install+the+rubygem+package">Install the rubygem package</h2>
 
 <p>You can install the azure rubygem package directly.</p>
 
-<p><code>bash
-gem install azure-storage --pre
-</code></p>
+<pre class="code ruby"><code class="ruby">gem install azure-storage --pre</code></pre>
 
-<h2 id="setup-connection">Setup Connection</h2>
+<h2 id="label-Setup+Connection">Setup Connection</h2>
 
-<p>You can use this SDK against the Microsoft Azure Storage Services in the cloud, or against the local Storage Emulator if you are on Windows.</p>
+<p>You can use this SDK against the Microsoft Azure Storage Services in the
+cloud, or against the local Storage Emulator if you are on Windows.</p>
 
 <p>There are two ways you can set up the connections:</p>
+<ol><li>
+<p><a href="#via-code">via code</a></p>
+</li><li>
+<p><a href="#via-environment-variables">via environment variables</a></p>
+</li></ol>
+<a name="via-code"></a>
+<h3 id="label-Via+Code">Via Code</h3>
+<ul><li>
+<p>Against Microsoft Azure Services in the cloud</p>
+</li></ul>
 
-<ol>
-  <li><a href="#via-code">via code</a></li>
-  <li><a href="#via-environment-variables">via environment variables</a></li>
-</ol>
+<pre class="code ruby"><code class="ruby">
+  <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>azure/storage</span><span class='tstring_end'>&quot;</span></span>
 
-<p><a name="via-code"></a>
-### Via Code
-* Against Microsoft Azure Services in the cloud</p>
+  <span class='comment'># Setup a specific instance of an Azure::Storage::Client
+</span>  <span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='symbol'>:storage_account_name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your account name</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:storage_access_key</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your access key</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-<p>```ruby</p>
+  <span class='comment'># Or create a client and store as a singleton
+</span>  <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='period'>.</span><span class='id identifier rubyid_setup'>setup</span><span class='lparen'>(</span><span class='symbol'>:storage_account_name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your account name</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:storage_access_key</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your access key</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='comment'># Then you can either call Azure::Storage.client.some_method or Azure::Storage.some_method to invoke a method on the Storage Client
+</span>
+  <span class='comment'># Configure a ca_cert.pem file if you are having issues with ssl peer verification
+</span>  <span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_ca_file'>ca_file</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>./ca_file.pem</span><span class='tstring_end'>&quot;</span></span>
+</code></pre>
+<ul><li>
+<p>Against local Emulator (Windows Only)</p>
+</li></ul>
 
-<p>require “azure/storage”</p>
+<pre class="code ruby"><code class="ruby">
+  <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>azure/storage</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_create_develpoment'>create_develpoment</span>
 
-<p># Setup a specific instance of an Azure::Storage::Client
-  client = Azure::Storage::Client.create(:storage_account_name =&gt; “your account name”, :storage_access_key =&gt; “your access key”)</p>
+  <span class='comment'># Or create by options and provide your own proxy_uri
+</span>  <span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='symbol'>:use_development_storage</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:development_storage_proxy_uri</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your proxy uri</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+<a name="via-environment-variables"></a>
+<h3 id="label-Via+Environment+Variables">Via Environment Variables</h3>
+<ul><li>
+<p>Against Microsoft Azure Storage Services in the cloud</p>
 
-<p># Or create a client and store as a singleton
-  Azure::Storage.setup(:storage_account_name =&gt; “your account name”, :storage_access_key =&gt; “your access key”)
-  # Then you can either call Azure::Storage.client.some_method or Azure::Storage.some_method to invoke a method on the Storage Client</p>
+<pre class="code ruby"><code class="ruby">export AZURE_STORAGE_ACCOUNT = &lt;your azure storage account name&gt;
+export AZURE_STORAGE_ACCESS_KEY = &lt;your azure storage access key&gt;</code></pre>
+</li><li>
+<p>Against local Emulator (Windows Only)</p>
 
-<p># Configure a ca_cert.pem file if you are having issues with ssl peer verification
-  client.ca_file = “./ca_file.pem”</p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_export'>export</span> <span class='const'>EMULATED</span> <span class='op'>=</span> <span class='kw'>true</span>
+</code></pre>
+</li><li>
+<p><a href="https://gist.github.com/fnichol/867550">SSL Certificate File</a>
+if having issues with ssl peer verification</p>
 
-<p>```</p>
+<pre class="code ruby"><code class="ruby">SSL_CERT_FILE=&lt;path to *.pem&gt;</code></pre>
+</li></ul>
 
-<ul>
-  <li>Against local Emulator (Windows Only)</li>
-</ul>
+<h1 id="label-Usage">Usage</h1>
+<a name="blobs"></a>
+<h2 id="label-Blobs">Blobs</h2>
 
-<p>```ruby</p>
+<pre class="code ruby"><code class="ruby">
+<span class='comment'># Require the azure storage rubygem
+</span><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>azure/storage</span><span class='tstring_end'>&quot;</span></span>
 
-<p>require “azure/storage”
-  client = Azure::Storage::Client.create_develpoment</p>
+<span class='comment'># Setup a specific instance of an Azure::Storage::Client
+</span><span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='symbol'>:storage_account_name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your account name</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:storage_access_key</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your access key</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-<p># Or create by options and provide your own proxy_uri
-  client = Azure::Storage::Client.create(:use_development_storage =&gt; true, :development_storage_proxy_uri =&gt; “your proxy uri”)</p>
+<span class='comment'># Get an azure storage blob service object from a specific instance of an Azure::Storage::Client
+</span><span class='id identifier rubyid_blobs'>blobs</span> <span class='op'>=</span> <span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_blob_client'>blob_client</span>
 
-<p>```</p>
+<span class='comment'># Or setup the client as a singleton
+</span><span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='period'>.</span><span class='id identifier rubyid_setup'>setup</span><span class='lparen'>(</span><span class='symbol'>:storage_account_name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your account name</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:storage_access_key</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your access key</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-<p><a name="via-environment-variables"></a>
-### Via Environment Variables</p>
+<span class='comment'># Create an azure storage blob service object after you set up the credentials
+</span><span class='id identifier rubyid_blobs'>blobs</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Blob</span><span class='op'>::</span><span class='const'>BlobService</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 
-<ul>
-  <li>
-    <p>Against Microsoft Azure Storage Services in the cloud</p>
+<span class='comment'># Add retry filter to the service object
+</span><span class='id identifier rubyid_blobs'>blobs</span><span class='period'>.</span><span class='id identifier rubyid_with_filter'>with_filter</span><span class='lparen'>(</span><span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Filter</span><span class='op'>::</span><span class='const'>ExponentialRetryPolicyFilter</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
 
-    <p><code>bash
-  export AZURE_STORAGE_ACCOUNT = &lt;your azure storage account name&gt;
-  export AZURE_STORAGE_ACCESS_KEY = &lt;your azure storage access key&gt;
- </code></p>
-  </li>
-  <li>
-    <p>Against local Emulator (Windows Only)</p>
+<span class='comment'># Create a container
+</span><span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='id identifier rubyid_blobs'>blobs</span><span class='period'>.</span><span class='id identifier rubyid_create_container'>create_container</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test-container</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-    <p><code>bash
-  export EMULATED = true
- </code></p>
-  </li>
-  <li>
-    <p><a href="https://gist.github.com/fnichol/867550">SSL Certificate File</a> if having issues with ssl peer verification</p>
+<span class='comment'># Upload a Blob
+</span><span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>test.jpg</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rb</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_blobs'>blobs</span><span class='period'>.</span><span class='id identifier rubyid_create_block_blob'>create_block_blob</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>image-blob</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
 
-    <p><code>bash
-  SSL_CERT_FILE=&lt;path to *.pem&gt;
- </code></p>
-  </li>
-</ul>
+<span class='comment'># List containers
+</span><span class='id identifier rubyid_blobs'>blobs</span><span class='period'>.</span><span class='id identifier rubyid_list_containers'>list_containers</span><span class='lparen'>(</span><span class='rparen'>)</span>
 
-<h1 id="usage">Usage</h1>
+<span class='comment'># List Blobs
+</span><span class='id identifier rubyid_blobs'>blobs</span><span class='period'>.</span><span class='id identifier rubyid_list_blobs'>list_blobs</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
 
-<p><a name="blobs"></a>
-## Blobs</p>
+<span class='comment'># Download a Blob
+</span><span class='id identifier rubyid_blob'>blob</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='id identifier rubyid_blobs'>blobs</span><span class='period'>.</span><span class='id identifier rubyid_get_blob'>get_blob</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>image-blob</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>download.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>wb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span><span class='rbrace'>}</span>
 
-<p>```ruby</p>
-
-<h1 id="require-the-azure-storage-rubygem">Require the azure storage rubygem</h1>
-<p>require “azure/storage”</p>
-
-<h1 id="setup-a-specific-instance-of-an-azurestorageclient">Setup a specific instance of an Azure::Storage::Client</h1>
-<p>client = Azure::Storage::Client.create(:storage_account_name =&gt; “your account name”, :storage_access_key =&gt; “your access key”)</p>
-
-<h1 id="get-an-azure-storage-blob-service-object-from-a-specific-instance-of-an-azurestorageclient">Get an azure storage blob service object from a specific instance of an Azure::Storage::Client</h1>
-<p>blobs = client.blob_client</p>
-
-<h1 id="or-setup-the-client-as-a-singleton">Or setup the client as a singleton</h1>
-<p>Azure::Storage.setup(:storage_account_name =&gt; “your account name”, :storage_access_key =&gt; “your access key”)</p>
-
-<h1 id="create-an-azure-storage-blob-service-object-after-you-set-up-the-credentials">Create an azure storage blob service object after you set up the credentials</h1>
-<p>blobs = Azure::Storage::Blob::BlobService.new</p>
-
-<h1 id="add-retry-filter-to-the-service-object">Add retry filter to the service object</h1>
-<p>blobs.with_filter(Azure::Storage::Core::Filter::ExponentialRetryPolicyFilter.new)</p>
-
-<h1 id="create-a-container">Create a container</h1>
-<p>container = blobs.create_container(“test-container”)</p>
-
-<h1 id="upload-a-blob">Upload a Blob</h1>
-<p>content = File.open(‘test.jpg’, ‘rb’) { |file| file.read }
-blobs.create_block_blob(container.name, “image-blob”, content)</p>
-
-<h1 id="list-containers">List containers</h1>
-<p>blobs.list_containers()</p>
-
-<h1 id="list-blobs">List Blobs</h1>
-<p>blobs.list_blobs(container.name)</p>
-
-<h1 id="download-a-blob">Download a Blob</h1>
-<p>blob, content = blobs.get_blob(container.name, “image-blob”)
-File.open(“download.png”, “wb”) {|f| f.write(content)}</p>
-
-<h1 id="delete-a-blob">Delete a Blob</h1>
-<p>blobs.delete_blob(container.name, “image-blob”)</p>
-
-<p>```
+<span class='comment'># Delete a Blob
+</span><span class='id identifier rubyid_blobs'>blobs</span><span class='period'>.</span><span class='id identifier rubyid_delete_blob'>delete_blob</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>image-blob</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
 <a name="tables"></a>
-## Tables</p>
+<h2 id="label-Tables">Tables</h2>
 
-<p>```ruby</p>
+<pre class="code ruby"><code class="ruby">
+<span class='comment'># Require the azure storage rubygem
+</span><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>azure/storage</span><span class='tstring_end'>&quot;</span></span>
 
-<h1 id="require-the-azure-storage-rubygem-1">Require the azure storage rubygem</h1>
-<p>require “azure/storage”</p>
+<span class='comment'># Setup a specific instance of an Azure::Storage::Client
+</span><span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='symbol'>:storage_account_name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your account name</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:storage_access_key</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your access key</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-<h1 id="setup-a-specific-instance-of-an-azurestorageclient-1">Setup a specific instance of an Azure::Storage::Client</h1>
-<p>client = Azure::Storage::Client.create(:storage_account_name =&gt; “your account name”, :storage_access_key =&gt; “your access key”)</p>
+<span class='comment'># Get an azure storage table service object from a specific instance of an Azure::Storage::Client
+</span><span class='id identifier rubyid_tables'>tables</span> <span class='op'>=</span> <span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_table_client'>table_client</span>
 
-<h1 id="get-an-azure-storage-table-service-object-from-a-specific-instance-of-an-azurestorageclient">Get an azure storage table service object from a specific instance of an Azure::Storage::Client</h1>
-<p>tables = client.table_client</p>
+<span class='comment'># Or setup the client as a singleton
+</span><span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='period'>.</span><span class='id identifier rubyid_setup'>setup</span><span class='lparen'>(</span><span class='symbol'>:storage_account_name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your account name</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:storage_access_key</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your access key</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-<h1 id="or-setup-the-client-as-a-singleton-1">Or setup the client as a singleton</h1>
-<p>Azure::Storage.setup(:storage_account_name =&gt; “your account name”, :storage_access_key =&gt; “your access key”)</p>
+<span class='comment'># Create an azure storage table service object after you set up the credentials
+</span><span class='id identifier rubyid_tables'>tables</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>TableService</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 
-<h1 id="create-an-azure-storage-table-service-object-after-you-set-up-the-credentials">Create an azure storage table service object after you set up the credentials</h1>
-<p>tables = Azure::Storage::Table::TableService.new</p>
+<span class='comment'># Add retry filter to the service object
+</span><span class='id identifier rubyid_tables'>tables</span><span class='period'>.</span><span class='id identifier rubyid_with_filter'>with_filter</span><span class='lparen'>(</span><span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Filter</span><span class='op'>::</span><span class='const'>ExponentialRetryPolicyFilter</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
 
-<h1 id="add-retry-filter-to-the-service-object-1">Add retry filter to the service object</h1>
-<p>tables.with_filter(Azure::Storage::Core::Filter::ExponentialRetryPolicyFilter.new)</p>
+<span class='comment'># Create a table
+</span><span class='id identifier rubyid_tables'>tables</span><span class='period'>.</span><span class='id identifier rubyid_create_table'>create_table</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>testtable</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-<h1 id="create-a-table">Create a table</h1>
-<p>tables.create_table(“testtable”)</p>
+<span class='comment'># Insert an entity
+</span><span class='id identifier rubyid_entity'>entity</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>content:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test entity</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>PartitionKey:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test-partition-key</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>RowKey:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_tables'>tables</span><span class='period'>.</span><span class='id identifier rubyid_insert_entity'>insert_entity</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>testtable</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_entity'>entity</span><span class='rparen'>)</span>
 
-<h1 id="insert-an-entity">Insert an entity</h1>
-<p>entity = { content: “test entity”, PartitionKey: “test-partition-key”, RowKey: “1” }
-tables.insert_entity(“testtable”, entity)</p>
+<span class='comment'># Get an entity
+</span><span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_tables'>tables</span><span class='period'>.</span><span class='id identifier rubyid_get_entity'>get_entity</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>testtable</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test-partition-key</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-<h1 id="get-an-entity">Get an entity</h1>
-<p>result = tables.get_entity(“testtable”, “test-partition-key”, “1”)</p>
+<span class='comment'># Update an entity
+</span><span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_properties'>properties</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>content</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test entity with updated content</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_tables'>tables</span><span class='period'>.</span><span class='id identifier rubyid_update_entity'>update_entity</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_properties'>properties</span><span class='rparen'>)</span>
 
-<h1 id="update-an-entity">Update an entity</h1>
-<p>result.properties[“content”] = “test entity with updated content”
-tables.update_entity(result.table, result.properties)</p>
+<span class='comment'># Query entities
+</span><span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='symbol'>:filter</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>content eq &#39;test entity&#39;</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_result'>result</span><span class='comma'>,</span> <span class='id identifier rubyid_token'>token</span> <span class='op'>=</span> <span class='id identifier rubyid_tables'>tables</span><span class='period'>.</span><span class='id identifier rubyid_query_entities'>query_entities</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>testtable</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
 
-<h1 id="query-entities">Query entities</h1>
-<p>query = { :filter =&gt; “content eq ‘test entity’” }
-result, token = tables.query_entities(“testtable”, query)</p>
+<span class='comment'># Delete an entity
+</span><span class='id identifier rubyid_tables'>tables</span><span class='period'>.</span><span class='id identifier rubyid_delete_entity'>delete_entity</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>testtable</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test-partition-key</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-<h1 id="delete-an-entity">Delete an entity</h1>
-<p>tables.delete_entity(“testtable”, “test-partition-key”, “1”)</p>
+<span class='comment'># delete a table
+</span><span class='id identifier rubyid_tables'>tables</span><span class='period'>.</span><span class='id identifier rubyid_delete_table'>delete_table</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>testtable</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+<a name="queues"></a>
+<h2 id="label-Queues">Queues</h2>
 
-<h1 id="delete-a-table">delete a table</h1>
-<p>tables.delete_table(“testtable”)</p>
+<pre class="code ruby"><code class="ruby">
+<span class='comment'># Require the azure storage rubygem
+</span><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>azure/storage</span><span class='tstring_end'>&quot;</span></span>
 
-<p>```</p>
+<span class='comment'># Setup a specific instance of an Azure::Storage::Client
+</span><span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='symbol'>:storage_account_name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your account name</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:storage_access_key</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your access key</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-<p><a name="queues"></a>
-## Queues</p>
+<span class='comment'># Get an azure storage queue service object from a specific instance of an Azure::Storage::Client
+</span><span class='id identifier rubyid_queues'>queues</span> <span class='op'>=</span> <span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_queue_client'>queue_client</span>
 
-<p>```ruby</p>
+<span class='comment'># Or setup the client as a singleton
+</span><span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='period'>.</span><span class='id identifier rubyid_setup'>setup</span><span class='lparen'>(</span><span class='symbol'>:storage_account_name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your account name</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:storage_access_key</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your access key</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-<h1 id="require-the-azure-storage-rubygem-2">Require the azure storage rubygem</h1>
-<p>require “azure/storage”</p>
+<span class='comment'># Create an azure storage queue service object after you set up the credentials
+</span><span class='id identifier rubyid_queues'>queues</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Queue</span><span class='op'>::</span><span class='const'>QueueService</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 
-<h1 id="setup-a-specific-instance-of-an-azurestorageclient-2">Setup a specific instance of an Azure::Storage::Client</h1>
-<p>client = Azure::Storage::Client.create(:storage_account_name =&gt; “your account name”, :storage_access_key =&gt; “your access key”)</p>
+<span class='comment'># Add retry filter to the service object
+</span><span class='id identifier rubyid_queues'>queues</span><span class='period'>.</span><span class='id identifier rubyid_with_filter'>with_filter</span><span class='lparen'>(</span><span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Filter</span><span class='op'>::</span><span class='const'>ExponentialRetryPolicyFilter</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
 
-<h1 id="get-an-azure-storage-queue-service-object-from-a-specific-instance-of-an-azurestorageclient">Get an azure storage queue service object from a specific instance of an Azure::Storage::Client</h1>
-<p>queues = client.queue_client</p>
+<span class='comment'># Create a queue
+</span><span class='id identifier rubyid_queues'>queues</span><span class='period'>.</span><span class='id identifier rubyid_create_queue'>create_queue</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test-queue</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-<h1 id="or-setup-the-client-as-a-singleton-2">Or setup the client as a singleton</h1>
-<p>Azure::Storage.setup(:storage_account_name =&gt; “your account name”, :storage_access_key =&gt; “your access key”)</p>
+<span class='comment'># Create a message
+</span><span class='id identifier rubyid_queues'>queues</span><span class='period'>.</span><span class='id identifier rubyid_create_message'>create_message</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test-queue</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test message</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-<h1 id="create-an-azure-storage-queue-service-object-after-you-set-up-the-credentials">Create an azure storage queue service object after you set up the credentials</h1>
-<p>queues = Azure::Storage::Queue::QueueService.new</p>
+<span class='comment'># Get one or more messages with setting the visibility timeout
+</span><span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_queues'>queues</span><span class='period'>.</span><span class='id identifier rubyid_list_messages'>list_messages</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test-queue</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>30</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='label'>number_of_messages:</span> <span class='int'>10</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
 
-<h1 id="add-retry-filter-to-the-service-object-2">Add retry filter to the service object</h1>
-<p>queues.with_filter(Azure::Storage::Core::Filter::ExponentialRetryPolicyFilter.new)</p>
+<span class='comment'># Get one or more messages without setting the visibility timeout
+</span><span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_queues'>queues</span><span class='period'>.</span><span class='id identifier rubyid_peek_messages'>peek_messages</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test-queue</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='label'>number_of_messages:</span> <span class='int'>10</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
 
-<h1 id="create-a-queue">Create a queue</h1>
-<p>queues.create_queue(“test-queue”)</p>
+<span class='comment'># Update a message
+</span><span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_queues'>queues</span><span class='period'>.</span><span class='id identifier rubyid_list_messages'>list_messages</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test-queue</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>30</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_pop_receipt'>pop_receipt</span><span class='comma'>,</span> <span class='id identifier rubyid_time_next_visible'>time_next_visible</span> <span class='op'>=</span> <span class='id identifier rubyid_queues'>queues</span><span class='period'>.</span><span class='id identifier rubyid_update_message'>update_message</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test-queue</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_pop_receipt'>pop_receipt</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>updated test message</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>30</span><span class='rparen'>)</span>
 
-<h1 id="create-a-message">Create a message</h1>
-<p>queues.create_message(“test-queue”, “test message”)</p>
+<span class='comment'># Delete a message
+</span><span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_queues'>queues</span><span class='period'>.</span><span class='id identifier rubyid_list_messages'>list_messages</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test-queue</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>30</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_queues'>queues</span><span class='period'>.</span><span class='id identifier rubyid_delete_message'>delete_message</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test-queue</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_pop_receipt'>pop_receipt</span><span class='rparen'>)</span>
 
-<h1 id="get-one-or-more-messages-with-setting-the-visibility-timeout">Get one or more messages with setting the visibility timeout</h1>
-<p>result = queues.list_messages(“test-queue”, 30, { number_of_messages: 10 })</p>
+<span class='comment'># Delete a queue
+</span><span class='id identifier rubyid_queues'>queues</span><span class='period'>.</span><span class='id identifier rubyid_delete_queue'>delete_queue</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test-queue</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+<a name="Customize the user-agent"></a>
+<h2 id="label-Customize+the+user-agent">Customize the user-agent</h2>
 
-<h1 id="get-one-or-more-messages-without-setting-the-visibility-timeout">Get one or more messages without setting the visibility timeout</h1>
-<p>result = queues.peek_messages(“test-queue”, { number_of_messages: 10 })</p>
+<p>You can customize the user-agent string by setting your user agent prefix
+when creating the service client.</p>
 
-<h1 id="update-a-message">Update a message</h1>
-<p>message = queues.list_messages(“test-queue”, 30)
-pop_receipt, time_next_visible = queues.update_message(“test-queue”, message[0].id, message[0].pop_receipt, “updated test message”, 30)</p>
+<pre class="code ruby"><code class="ruby"><span class='comment'># Require the azure storage rubygem
+</span><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>azure/storage</span><span class='tstring_end'>&quot;</span></span>
 
-<h1 id="delete-a-message">Delete a message</h1>
-<p>message = queues.list_messages(“test-queue”, 30)
-queues.delete_message(“test-queue”, message[0].id, message[0].pop_receipt)</p>
+<span class='comment'># Setup a specific instance of an Azure::Storage::Client with :user_agent_prefix option
+</span><span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='symbol'>:storage_account_name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your account name</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:storage_access_key</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your access key</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:user_agent_prefix</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your application name</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
 
-<h1 id="delete-a-queue">Delete a queue</h1>
-<p>queues.delete_queue(“test-queue”)</p>
+<h1 id="label-Getting+Started+for+Contributors">Getting Started for Contributors</h1>
 
-<p>```</p>
+<p>If you would like to become an active contributor to this project please
+follow the instructions provided in <a
+href="http://azure.github.io/guidelines/">Azure Projects Contribution
+Guidelines</a>. You can find more details for contributing in the <a
+href="CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
 
-<h1 id="getting-started-for-contributors">Getting Started for Contributors</h1>
+<h1 id="label-Provide+Feedback">Provide Feedback</h1>
 
-<p>If you would like to become an active contributor to this project please follow the instructions provided in <a href="http://azure.github.io/guidelines/">Azure Projects Contribution Guidelines</a>.
-You can find more details for contributing in the <a href="CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+<p>If you encounter any bugs with the library please file an issue in the <a
+href="https://github.com/Azure/azure-storage-ruby/issues">Issues</a>
+section of the project.</p>
 
-<h1 id="provide-feedback">Provide Feedback</h1>
+<h1 id="label-Azure+Storage+SDKs+and+Tooling">Azure Storage SDKs and Tooling</h1>
+<ul><li>
+<p><a href="http://github.com/azure/azure-storage-net">Azure Storage Client
+Library for .Net</a></p>
+</li><li>
+<p><a href="http://github.com/azure/azure-storage-java">Azure Storage Client
+Library for Java</a></p>
+</li><li>
+<p><a href="http://github.com/azure/azure-storage-node">Azure Storage Client
+Library for Node.js</a></p>
+</li><li>
+<p><a href="http://github.com/azure/azure-storage-python">Azure Storage Client
+Library for Python</a></p>
+</li><li>
+<p><a href="http://github.com/azure/azure-storage-ruby">Azure Storage Client
+Library for Ruby</a></p>
+</li><li>
+<p><a href="http://github.com/azure/azure-storage-cpp">Azure Storage Client
+Library for C++</a></p>
+</li><li>
+<p><a href="http://github.com/azure/azure-storage-ios">Azure Storage Client
+Library for iOS</a></p>
+</li><li>
+<p><a href="http://github.com/azure/azure-storage-android">Azure Storage
+Client Library for Android</a></p>
+</li><li>
+<p><a href="https://github.com/Azure/azure-storage-net-data-movement">Azure
+Storage Data Movement Library</a></p>
+</li></ul>
 
-<p>If you encounter any bugs with the library please file an issue in the <a href="https://github.com/Azure/azure-storage-ruby/issues">Issues</a> section of the project.</p>
+<h1 id="label-Code+of+Conduct">Code of Conduct</h1>
 
-<h1 id="azure-storage-sdks-and-tooling">Azure Storage SDKs and Tooling</h1>
-
-<ul>
-  <li><a href="http://github.com/azure/azure-storage-net">Azure Storage Client Library for .Net</a></li>
-  <li><a href="http://github.com/azure/azure-storage-java">Azure Storage Client Library for Java</a></li>
-  <li><a href="http://github.com/azure/azure-storage-node">Azure Storage Client Library for Node.js</a></li>
-  <li><a href="http://github.com/azure/azure-storage-python">Azure Storage Client Library for Python</a></li>
-  <li><a href="http://github.com/azure/azure-storage-ruby">Azure Storage Client Library for Ruby</a></li>
-  <li><a href="http://github.com/azure/azure-storage-cpp">Azure Storage Client Library for C++</a></li>
-  <li><a href="http://github.com/azure/azure-storage-ios">Azure Storage Client Library for iOS</a></li>
-  <li><a href="http://github.com/azure/azure-storage-android">Azure Storage Client Library for Android</a></li>
-  <li><a href="https://github.com/Azure/azure-storage-net-data-movement">Azure Storage Data Movement Library</a></li>
-</ul>
-
-<h1 id="code-of-conduct">Code of Conduct</h1>
-<p>This project has adopted the <a href="https://opensource.microsoft.com/codeofconduct/">Microsoft Open Source Code of Conduct</a>. For more information see the <a href="https://opensource.microsoft.com/codeofconduct/faq/">Code of Conduct FAQ</a> or contact <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#111;&#112;&#101;&#110;&#099;&#111;&#100;&#101;&#064;&#109;&#105;&#099;&#114;&#111;&#115;&#111;&#102;&#116;&#046;&#099;&#111;&#109;">&#111;&#112;&#101;&#110;&#099;&#111;&#100;&#101;&#064;&#109;&#105;&#099;&#114;&#111;&#115;&#111;&#102;&#116;&#046;&#099;&#111;&#109;</a> with any additional questions or comments.</p>
+<p>This project has adopted the <a
+href="https://opensource.microsoft.com/codeofconduct/">Microsoft Open
+Source Code of Conduct</a>. For more information see the <a
+href="https://opensource.microsoft.com/codeofconduct/faq/">Code of Conduct
+FAQ</a> or contact <a
+href="mailto:opencode@microsoft.com">opencode@microsoft.com</a> with any
+additional questions or comments.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Fri Sep 30 15:51:18 2016 by
+  Generated on Wed Dec 28 15:43:37 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.5 (ruby-2.2.4).
+  0.9.5 (ruby-2.2.5).
 </div>
 
     </div>

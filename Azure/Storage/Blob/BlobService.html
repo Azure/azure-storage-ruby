@@ -93,7 +93,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="../Blob.html" title="Azure::Storage::Blob (module)">Azure::Storage::Blob</a></span>, <span class='object_link'><a href="Container.html" title="Azure::Storage::Blob::Container (module)">Container</a></span></dd>
+      <dd><span class='object_link'><a href="../Blob.html" title="Azure::Storage::Blob (module)">Azure::Storage::Blob</a></span>, <span class='object_link'><a href="Container.html" title="Azure::Storage::Blob::Container (module)">Container</a></span>, <span class='object_link'><a href="../Core/Utility.html" title="Azure::Storage::Core::Utility (module)">Core::Utility</a></span></dd>
   </dl>
   
   
@@ -148,7 +148,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(options = {})  &#x21d2; BlobService </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(options = {}, &amp;block)  &#x21d2; BlobService </a>
     
 
     
@@ -227,13 +227,24 @@
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Blob.html" title="Azure::Storage::Blob (module)">Azure::Storage::Blob</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Blob.html#abort_copy_blob-instance_method" title="Azure::Storage::Blob#abort_copy_blob (method)">#abort_copy_blob</a></span>, <span class='object_link'><a href="../Blob.html#acquire_blob_lease-instance_method" title="Azure::Storage::Blob#acquire_blob_lease (method)">#acquire_blob_lease</a></span>, <span class='object_link'><a href="../Blob.html#append_blob_block-instance_method" title="Azure::Storage::Blob#append_blob_block (method)">#append_blob_block</a></span>, <span class='object_link'><a href="../Blob.html#break_blob_lease-instance_method" title="Azure::Storage::Blob#break_blob_lease (method)">#break_blob_lease</a></span>, <span class='object_link'><a href="../Blob.html#change_blob_lease-instance_method" title="Azure::Storage::Blob#change_blob_lease (method)">#change_blob_lease</a></span>, <span class='object_link'><a href="../Blob.html#clear_blob_pages-instance_method" title="Azure::Storage::Blob#clear_blob_pages (method)">#clear_blob_pages</a></span>, <span class='object_link'><a href="../Blob.html#commit_blob_blocks-instance_method" title="Azure::Storage::Blob#commit_blob_blocks (method)">#commit_blob_blocks</a></span>, <span class='object_link'><a href="../Blob.html#copy_blob-instance_method" title="Azure::Storage::Blob#copy_blob (method)">#copy_blob</a></span>, <span class='object_link'><a href="../Blob.html#copy_blob_from_uri-instance_method" title="Azure::Storage::Blob#copy_blob_from_uri (method)">#copy_blob_from_uri</a></span>, <span class='object_link'><a href="../Blob.html#create_append_blob-instance_method" title="Azure::Storage::Blob#create_append_blob (method)">#create_append_blob</a></span>, <span class='object_link'><a href="../Blob.html#create_blob_snapshot-instance_method" title="Azure::Storage::Blob#create_blob_snapshot (method)">#create_blob_snapshot</a></span>, <span class='object_link'><a href="../Blob.html#create_block_blob-instance_method" title="Azure::Storage::Blob#create_block_blob (method)">#create_block_blob</a></span>, <span class='object_link'><a href="../Blob.html#create_page_blob-instance_method" title="Azure::Storage::Blob#create_page_blob (method)">#create_page_blob</a></span>, <span class='object_link'><a href="../Blob.html#delete_blob-instance_method" title="Azure::Storage::Blob#delete_blob (method)">#delete_blob</a></span>, <span class='object_link'><a href="../Blob.html#get_blob-instance_method" title="Azure::Storage::Blob#get_blob (method)">#get_blob</a></span>, <span class='object_link'><a href="../Blob.html#get_blob_metadata-instance_method" title="Azure::Storage::Blob#get_blob_metadata (method)">#get_blob_metadata</a></span>, <span class='object_link'><a href="../Blob.html#get_blob_properties-instance_method" title="Azure::Storage::Blob#get_blob_properties (method)">#get_blob_properties</a></span>, <span class='object_link'><a href="../Blob.html#list_blob_blocks-instance_method" title="Azure::Storage::Blob#list_blob_blocks (method)">#list_blob_blocks</a></span>, <span class='object_link'><a href="../Blob.html#list_page_blob_ranges-instance_method" title="Azure::Storage::Blob#list_page_blob_ranges (method)">#list_page_blob_ranges</a></span>, <span class='object_link'><a href="../Blob.html#put_blob_block-instance_method" title="Azure::Storage::Blob#put_blob_block (method)">#put_blob_block</a></span>, <span class='object_link'><a href="../Blob.html#put_blob_pages-instance_method" title="Azure::Storage::Blob#put_blob_pages (method)">#put_blob_pages</a></span>, <span class='object_link'><a href="../Blob.html#release_blob_lease-instance_method" title="Azure::Storage::Blob#release_blob_lease (method)">#release_blob_lease</a></span>, <span class='object_link'><a href="../Blob.html#renew_blob_lease-instance_method" title="Azure::Storage::Blob#renew_blob_lease (method)">#renew_blob_lease</a></span>, <span class='object_link'><a href="../Blob.html#resize_page_blob-instance_method" title="Azure::Storage::Blob#resize_page_blob (method)">#resize_page_blob</a></span>, <span class='object_link'><a href="../Blob.html#set_blob_metadata-instance_method" title="Azure::Storage::Blob#set_blob_metadata (method)">#set_blob_metadata</a></span>, <span class='object_link'><a href="../Blob.html#set_blob_properties-instance_method" title="Azure::Storage::Blob#set_blob_properties (method)">#set_blob_properties</a></span>, <span class='object_link'><a href="../Blob.html#set_sequence_number-instance_method" title="Azure::Storage::Blob#set_sequence_number (method)">#set_sequence_number</a></span></p>
 
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Core/Utility.html" title="Azure::Storage::Core::Utility (module)">Core::Utility</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Core/Utility.html#enable_winrm%3F-instance_method" title="Azure::Storage::Core::Utility#enable_winrm? (method)">#enable_winrm?</a></span>, <span class='object_link'><a href="../Core/Utility.html#export_der-instance_method" title="Azure::Storage::Core::Utility#export_der (method)">#export_der</a></span>, <span class='object_link'><a href="../Core/Utility.html#export_fingerprint-instance_method" title="Azure::Storage::Core::Utility#export_fingerprint (method)">#export_fingerprint</a></span>, <span class='object_link'><a href="../Core/Utility.html#get_certificate-instance_method" title="Azure::Storage::Core::Utility#get_certificate (method)">#get_certificate</a></span>, <span class='object_link'><a href="../Core/Utility.html#initialize_external_logger-instance_method" title="Azure::Storage::Core::Utility#initialize_external_logger (method)">#initialize_external_logger</a></span>, <span class='object_link'><a href="../Core/Utility.html#locate_file-instance_method" title="Azure::Storage::Core::Utility#locate_file (method)">#locate_file</a></span>, <span class='object_link'><a href="../Core/Utility.html#parse_charset_from_content_type-instance_method" title="Azure::Storage::Core::Utility#parse_charset_from_content_type (method)">#parse_charset_from_content_type</a></span>, <span class='object_link'><a href="../Core/Utility.html#random_string-instance_method" title="Azure::Storage::Core::Utility#random_string (method)">#random_string</a></span>, <span class='object_link'><a href="../Core/Utility.html#xml_content-instance_method" title="Azure::Storage::Core::Utility#xml_content (method)">#xml_content</a></span></p>
+
   <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(options = {})  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Blob::BlobService (class)">BlobService</a></span></tt> 
+    #<strong>initialize</strong>(options = {}, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Blob::BlobService (class)">BlobService</a></span></tt> 
   
 
   
@@ -256,20 +267,20 @@
       <pre class="lines">
 
 
-40
 41
 42
 43
 44
-45</pre>
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob_service.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob_service.rb', line 41</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_client_config'>client_config</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:client</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span>
   <span class='id identifier rubyid_signer'>signer</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signer</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Auth</span><span class='op'>::</span><span class='const'>SharedKey</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_client_config'>client_config</span><span class='period'>.</span><span class='id identifier rubyid_storage_account_name'>storage_account_name</span><span class='comma'>,</span> <span class='id identifier rubyid_client_config'>client_config</span><span class='period'>.</span><span class='id identifier rubyid_storage_access_key'>storage_access_key</span><span class='rparen'>)</span>
-  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_signer'>signer</span><span class='comma'>,</span> <span class='id identifier rubyid_client_config'>client_config</span><span class='period'>.</span><span class='id identifier rubyid_storage_account_name'>storage_account_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_signer'>signer</span><span class='comma'>,</span> <span class='id identifier rubyid_client_config'>client_config</span><span class='period'>.</span><span class='id identifier rubyid_storage_account_name'>storage_account_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@host</span> <span class='op'>=</span> <span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_storage_blob_host'>storage_blob_host</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -299,7 +310,6 @@
       <pre class="lines">
 
 
-47
 48
 49
 50
@@ -319,28 +329,31 @@
 64
 65
 66
-67</pre>
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob_service.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob_service.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Force the request.body to the content encoding of specified in the header
-</span>  <span class='comment'># (content encoding probably shouldn&#39;t be used this way)
-</span>  <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Content-Encoding</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-      <span class='const'>Service</span><span class='op'>::</span><span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Content-Encoding</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_encoding'>encoding</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>String</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_encoding'>encoding</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>&lt;=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ASCII_8BIT</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>!=</span> <span class='int'>0</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-blob-content-type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+      <span class='const'>Service</span><span class='op'>::</span><span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-blob-content-type</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>text/plain; charset=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_encoding'>encoding</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>else</span>
-      <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_force_encoding'>force_encoding</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Content-Encoding</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_charset'>charset</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_charset_from_content_type'>parse_charset_from_content_type</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-blob-content-type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_force_encoding'>force_encoding</span><span class='lparen'>(</span><span class='id identifier rubyid_charset'>charset</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_charset'>charset</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='kw'>super</span>
 
-  <span class='comment'># Force the response.body to the content encoding of specified in the header.
-</span>  <span class='comment'># content-encoding is echo&#39;d back for the blob and is used to store the encoding of the octet stream
-</span>  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>content-encoding</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_force_encoding'>force_encoding</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>content-encoding</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='comment'># Force the response.body to the content charset of specified in the header.
+</span>  <span class='comment'># Content-Type is echo&#39;d back for the blob and is used to store the encoding of the octet stream
+</span>  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_charset'>charset</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_charset_from_content_type'>parse_charset_from_content_type</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_force_encoding'>force_encoding</span><span class='lparen'>(</span><span class='id identifier rubyid_charset'>charset</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_charset'>charset</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_charset'>charset</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_response'>response</span>
@@ -410,13 +423,14 @@ client-generated, opaque value with a 1 KB character limit that is recorded</p>
 <pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
+<p>See: <a
+href="https://msdn.microsoft.com/en-us/library/azure/dd179352.aspx">msdn.microsoft.com/en-us/library/azure/dd179352.aspx</a></p>
+
 <p>NOTE: Metadata requested with the :metadata parameter must have been stored
 in accordance with the naming restrictions imposed by the 2009-09-19
 version of the Blob service. Beginning with that version, all metadata
-names must adhere to the naming conventions for C# identifiers.</p>
-
-<p>See: <a
-href="http://msdn.microsoft.com/en-us/library/aa664670(VS.71).aspx">msdn.microsoft.com/en-us/library/aa664670(VS.71).aspx</a></p>
+names must adhere to the naming conventions for C# identifiers. See: <a
+href="https://msdn.microsoft.com/en-us/library/aa664670(VS.71).aspx">msdn.microsoft.com/en-us/library/aa664670(VS.71).aspx</a></p>
 
 <p>Any metadata with invalid names which were previously stored, will be
 returned with the key “x-ms-invalid-name” in the metadata hash. This may
@@ -437,8 +451,6 @@ single value).</p>
       <pre class="lines">
 
 
-115
-116
 117
 118
 119
@@ -451,10 +463,12 @@ single value).</p>
 126
 127
 128
-129</pre>
+129
+130
+131</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob_service.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob_service.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list_containers'>list_containers</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
@@ -481,9 +495,9 @@ single value).</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 30 15:51:25 2016 by
+  Generated on Wed Dec 28 15:43:44 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.5 (ruby-2.2.4).
+  0.9.5 (ruby-2.2.5).
 </div>
 
     </div>

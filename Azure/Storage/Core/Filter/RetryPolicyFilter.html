@@ -513,14 +513,14 @@ retry the operation.</p>
       <pre class="lines">
 
 
-171
-172
-173
-174
-175</pre>
+175
+176
+177
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 171</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 175</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_adjust_retry_parameter'>adjust_retry_parameter</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
   <span class='comment'># TODO: Adjust the retry parameter according to the location and last attempt time 
@@ -751,17 +751,22 @@ lifetime of the request.</p>
 163
 164
 165
-166</pre>
+166
+167
+168
+169
+170</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_should_retry_on_error?'>should_retry_on_error?</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span> <span class='op'>||</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_http_response'>http_response</span> <span class='kw'>if</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>http_response</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_response'>response</span>
     <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span>
     <span class='kw'>return</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
-  
+
   <span class='comment'># If a request sent to the secondary location fails with 404 (Not Found), it is possible
 </span>  <span class='comment'># that the resource replication is not finished yet. So, in case of 404 only in the secondary
 </span>  <span class='comment'># location, the failure should still be retryable.
@@ -775,35 +780,38 @@ lifetime of the request.</p>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
     <span class='kw'>end</span>
-  <span class='kw'>end</span> 
+  <span class='kw'>end</span>
   
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='int'>400</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
+    <span class='kw'>return</span> <span class='kw'>false</span><span class='semicolon'>;</span>
   <span class='comment'># Non-timeout Cases
-</span>  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&gt;=</span> <span class='int'>300</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='int'>408</span><span class='rparen'>)</span>
+</span>  <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='int'>408</span><span class='rparen'>)</span>
     <span class='comment'># Always no retry on &quot;not implemented&quot; and &quot;version not supported&quot;
 </span>    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>501</span> <span class='op'>||</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>505</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
       <span class='kw'>return</span> <span class='kw'>false</span><span class='semicolon'>;</span>
     <span class='kw'>end</span>
-  <span class='kw'>end</span>
 
-  <span class='comment'># When absorb_conditional_errors_on_retry is set (for append blob)
-</span>  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:request_options</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:request_options</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:absorb_conditional_errors_on_retry</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>412</span><span class='rparen'>)</span>
-      <span class='comment'># When appending block with precondition failure and their was a server error before, we ignore the error.
-</span>      <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:last_server_error</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='semicolon'>;</span>
-        <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
-      <span class='kw'>else</span>
-        <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
+    <span class='comment'># When absorb_conditional_errors_on_retry is set (for append blob)
+</span>    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:request_options</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:request_options</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:absorb_conditional_errors_on_retry</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>412</span><span class='rparen'>)</span>
+        <span class='comment'># When appending block with precondition failure and their was a server error before, we ignore the error.
+</span>        <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:last_server_error</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='semicolon'>;</span>
+          <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
+        <span class='kw'>end</span>
+      <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&gt;=</span> <span class='int'>500</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='int'>600</span><span class='rparen'>)</span>
+        <span class='comment'># Retry on the server error
+</span>        <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+        <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:last_server_error</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
       <span class='kw'>end</span>
-    <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&gt;=</span> <span class='int'>500</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='int'>600</span><span class='rparen'>)</span>
-      <span class='comment'># Retry on the server error
-</span>      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
-      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:last_server_error</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+    <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='int'>500</span><span class='rparen'>)</span>
+      <span class='comment'># No retry on the client error
+</span>      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
     <span class='kw'>end</span>
-  <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='int'>500</span><span class='rparen'>)</span>
-    <span class='comment'># No retry on the client error
-</span>    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -931,9 +939,9 @@ lifetime of the request.</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 30 15:51:27 2016 by
+  Generated on Wed Dec 28 15:43:46 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.5 (ruby-2.2.4).
+  0.9.5 (ruby-2.2.5).
 </div>
 
     </div>
