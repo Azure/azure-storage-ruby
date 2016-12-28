@@ -1,3 +1,9 @@
+2016.12 - version 0.11.5-preview
+
+ALL
+* Added the support for setting customer user agent. [#71](https://github.com/Azure/azure-storage-ruby/issues/71)
+* Added the support for hooking in sending requests.
+
 2016.11 - version 0.11.4-preview
 
 ALL
