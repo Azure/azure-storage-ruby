@@ -25,7 +25,12 @@ require 'integration/test_helper'
 require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
-  subject { Azure::Storage::Blob::BlobService.new }
+  let(:user_agent_prefix) { 'azure_storage_ruby_integration_test' }
+  subject { 
+    Azure::Storage::Blob::BlobService.new { |headers|
+      headers['User-Agent'] = "#{user_agent_prefix}; #{headers['User-Agent']}"
+    }
+  }
   after { ContainerNameHelper.clean }
   
   describe '#set/get_container_metadata' do

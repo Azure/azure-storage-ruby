@@ -26,7 +26,12 @@ require "azure/storage/queue/queue_service"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Queue::QueueService do
-  subject { Azure::Storage::Queue::QueueService.new }
+  let(:user_agent_prefix) { 'azure_storage_ruby_integration_test' }
+  subject { 
+    Azure::Storage::Queue::QueueService.new { |headers|
+      headers['User-Agent'] = "#{user_agent_prefix}; #{headers['User-Agent']}"
+    }
+  }
   
   describe '#create_queue' do
     let(:queue_name){ QueueNameHelper.name }

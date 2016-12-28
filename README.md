@@ -239,6 +239,19 @@ queues.delete_queue("test-queue")
 
 ```
 
+<a name="Customize the user-agent"></a>
+## Customize the user-agent
+
+You can customize the user-agent string by setting your user agent prefix when creating the service client.
+
+```ruby
+# Require the azure storage rubygem
+require "azure/storage"
+
+# Setup a specific instance of an Azure::Storage::Client with :user_agent_prefix option
+client = Azure::Storage::Client.create(:storage_account_name => "your account name", :storage_access_key => "your access key", :user_agent_prefix => "your application name")
+```
+
 # Getting Started for Contributors
 
 If you would like to become an active contributor to this project please follow the instructions provided in [Azure Projects Contribution Guidelines](http://azure.github.io/guidelines/).

@@ -30,10 +30,10 @@ module Azure::Storage
     include Azure::Storage::Service
     class QueueService < StorageService
 
-      def initialize(options = {})
+      def initialize(options = {}, &block)
         client_config = options[:client] || Azure::Storage
         signer = options[:signer] || Azure::Storage::Core::Auth::SharedKey.new(client_config.storage_account_name, client_config.storage_access_key)
-        super(signer, client_config.storage_account_name, options)
+        super(signer, client_config.storage_account_name, options, &block)
         @host = @client.storage_queue_host
       end
 

@@ -27,7 +27,12 @@ require "azure/core/http/http_error"
 
 describe Azure::Storage::Table::TableService do
   describe "#create_table" do
-    subject { Azure::Storage::Table::TableService.new }
+    let(:user_agent_prefix) { 'azure_storage_ruby_integration_test' }
+    subject { 
+      Azure::Storage::Table::TableService.new { |headers|
+        headers['User-Agent'] = "#{user_agent_prefix}; #{headers['User-Agent']}"
+      }
+    }
     let(:table_name){ TableNameHelper.name }
     after { TableNameHelper.clean }
 
