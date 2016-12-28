@@ -134,7 +134,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#create-class_method" title="create (class method)">.<strong>create</strong>(options = {})  &#x21d2; Azure::Storage::Client </a>
+      <a href="#create-class_method" title="create (class method)">.<strong>create</strong>(options = {}, &amp;block)  &#x21d2; Azure::Storage::Client </a>
     
 
     
@@ -158,7 +158,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#create_development-class_method" title="create_development (class method)">.<strong>create_development</strong>(proxy_uri = nil)  &#x21d2; Azure::Storage::Client </a>
+      <a href="#create_development-class_method" title="create_development (class method)">.<strong>create_development</strong>(proxy_uri = nil, &amp;block)  &#x21d2; Azure::Storage::Client </a>
     
 
     
@@ -183,7 +183,7 @@ Emulator.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#create_from_connection_string-class_method" title="create_from_connection_string (class method)">.<strong>create_from_connection_string</strong>(connection_string)  &#x21d2; Azure::Storage::Client </a>
+      <a href="#create_from_connection_string-class_method" title="create_from_connection_string (class method)">.<strong>create_from_connection_string</strong>(connection_string, &amp;block)  &#x21d2; Azure::Storage::Client </a>
     
 
     
@@ -208,7 +208,7 @@ Variables.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#create_from_env-class_method" title="create_from_env (class method)">.<strong>create_from_env</strong>  &#x21d2; Azure::Storage::Client </a>
+      <a href="#create_from_env-class_method" title="create_from_env (class method)">.<strong>create_from_env</strong>(&amp;block)  &#x21d2; Azure::Storage::Client </a>
     
 
     
@@ -242,7 +242,7 @@ Variables.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#blob_client-instance_method" title="#blob_client (instance method)">#<strong>blob_client</strong>(options = {})  &#x21d2; Azure::Storage::Blob::BlobService </a>
+      <a href="#blob_client-instance_method" title="#blob_client (instance method)">#<strong>blob_client</strong>(options = {}, &amp;block)  &#x21d2; Azure::Storage::Blob::BlobService </a>
     
 
     
@@ -267,7 +267,7 @@ instance.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(options = {})  &#x21d2; Azure::Storage::Client </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(options = {}, &amp;block)  &#x21d2; Azure::Storage::Client </a>
     
 
     
@@ -382,7 +382,7 @@ instance.</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(options = {})  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt> 
+    #<strong>initialize</strong>(options = {}, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt> 
   
 
   
@@ -437,6 +437,9 @@ style URI for specified endpoints</p>
 </li><li>
 <p><code>:ca_file</code>                        - String. File path of the CA
 file if having issue with SSL</p>
+</li><li>
+<p><code>:user_agent_prefix</code>              - String. The user agent
+prefix that can identify the application calls the library</p>
 </li></ul>
 
 <p>The valid set of options inlcude:</p>
@@ -489,24 +492,34 @@ the mapping relationship</p>
       <pre class="lines">
 
 
-79
-80
 81
 82
 83
 84
 85
-86</pre>
+86
+87
+88
+89
+90
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 81</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_setup_options'>setup_options</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>0</span>
     <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_connection_string'>parse_connection_string</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:storage_connection_string</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:storage_connection_string</span><span class='rbracket'>]</span>
-  <span class='kw'>end</span>
 
+    <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='symbol'>:user_agent_prefix</span><span class='rparen'>)</span>
+      <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Service</span><span class='op'>::</span><span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_user_agent_prefix'>user_agent_prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:user_agent_prefix</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='symbol'>:user_agent_prefix</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Service</span><span class='op'>::</span><span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_register_request_callback'>register_request_callback</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
   <span class='id identifier rubyid_reset!'>reset!</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -534,7 +547,7 @@ the mapping relationship</p>
       <div class="method_details first">
   <h3 class="signature first" id="create-class_method">
   
-    .<strong>create</strong>(options = {})  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt> 
+    .<strong>create</strong>(options = {}, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt> 
   
 
   
@@ -589,6 +602,9 @@ style URI for specified endpoints</p>
 </li><li>
 <p><code>:ca_file</code>                        - String. File path of the CA
 file if having issue with SSL</p>
+</li><li>
+<p><code>:user_agent_prefix</code>              - String. The user agent
+prefix that can identify the application calls the library</p>
 </li></ul>
 
 <p>The valid set of options inlcude:</p>
@@ -654,15 +670,15 @@ the mapping relationship</p>
       <pre class="lines">
 
 
-147
-148
-149</pre>
+154
+155
+156</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 154</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -672,7 +688,7 @@ the mapping relationship</p>
       <div class="method_details ">
   <h3 class="signature " id="create_development-class_method">
   
-    .<strong>create_development</strong>(proxy_uri = nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt> 
+    .<strong>create_development</strong>(proxy_uri = nil, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt> 
   
 
   
@@ -716,17 +732,17 @@ localhost.</p>
       <pre class="lines">
 
 
-158
-159
-160
-161</pre>
+165
+166
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 158</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 165</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_create_development'>create_development</span><span class='lparen'>(</span><span class='id identifier rubyid_proxy_uri'>proxy_uri</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_create_development'>create_development</span><span class='lparen'>(</span><span class='id identifier rubyid_proxy_uri'>proxy_uri</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_proxy_uri'>proxy_uri</span> <span class='op'>||=</span> <span class='const'>StorageServiceClientConstants</span><span class='op'>::</span><span class='const'>DEV_STORE_URI</span>
-  <span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='symbol'>:use_development_storage</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:development_storage_proxy_uri</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_proxy_uri'>proxy_uri</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='symbol'>:use_development_storage</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:development_storage_proxy_uri</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_proxy_uri'>proxy_uri</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -736,7 +752,7 @@ localhost.</p>
       <div class="method_details ">
   <h3 class="signature " id="create_from_connection_string-class_method">
   
-    .<strong>create_from_connection_string</strong>(connection_string)  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt> 
+    .<strong>create_from_connection_string</strong>(connection_string, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt> 
   
 
   
@@ -779,15 +795,15 @@ href="https://azure.microsoft.com/en-us/documentation/articles/storage-configure
       <pre class="lines">
 
 
-178
-179
-180</pre>
+184
+185
+186</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 178</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 184</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_create_from_connection_string'>create_from_connection_string</span><span class='lparen'>(</span><span class='id identifier rubyid_connection_string'>connection_string</span><span class='rparen'>)</span>
-  <span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_connection_string'>connection_string</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_create_from_connection_string'>create_from_connection_string</span><span class='lparen'>(</span><span class='id identifier rubyid_connection_string'>connection_string</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_connection_string'>connection_string</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -797,7 +813,7 @@ href="https://azure.microsoft.com/en-us/documentation/articles/storage-configure
       <div class="method_details ">
   <h3 class="signature " id="create_from_env-class_method">
   
-    .<strong>create_from_env</strong>  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt> 
+    .<strong>create_from_env</strong>(&amp;block)  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Client (class)">Azure::Storage::Client</a></span></tt> 
   
 
   
@@ -834,15 +850,15 @@ Variables</p>
       <pre class="lines">
 
 
-167
-168
-169</pre>
+173
+174
+175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 167</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 173</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_create_from_env'>create_from_env</span>
-  <span class='id identifier rubyid_create'>create</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_create_from_env'>create_from_env</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_create'>create</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -858,7 +874,7 @@ Variables</p>
       <div class="method_details first">
   <h3 class="signature first" id="blob_client-instance_method">
   
-    #<strong>blob_client</strong>(options = {})  &#x21d2; <tt><span class='object_link'><a href="Blob/BlobService.html" title="Azure::Storage::Blob::BlobService (class)">Azure::Storage::Blob::BlobService</a></span></tt> 
+    #<strong>blob_client</strong>(options = {}, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Blob/BlobService.html" title="Azure::Storage::Blob::BlobService (class)">Azure::Storage::Blob::BlobService</a></span></tt> 
   
 
   
@@ -895,15 +911,15 @@ instance</p>
       <pre class="lines">
 
 
-90
-91
-92</pre>
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 97</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_blob_client'>blob_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='ivar'>@blob_client</span> <span class='op'>||=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Blob</span><span class='op'>::</span><span class='const'>BlobService</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_default_client'>default_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_blob_client'>blob_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='ivar'>@blob_client</span> <span class='op'>||=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Blob</span><span class='op'>::</span><span class='const'>BlobService</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_default_client'>default_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -950,12 +966,12 @@ instance</p>
       <pre class="lines">
 
 
-96
-97
-98</pre>
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_queue_client'>queue_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@queue_client</span> <span class='op'>||=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Queue</span><span class='op'>::</span><span class='const'>QueueService</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_default_client'>default_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1005,12 +1021,12 @@ instance</p>
       <pre class="lines">
 
 
-102
-103
-104</pre>
+109
+110
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 109</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_table_client'>table_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@table_client</span> <span class='op'>||=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>TableService</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_default_client'>default_client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1025,9 +1041,9 @@ instance</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 30 15:51:24 2016 by
+  Generated on Wed Dec 28 15:43:42 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.5 (ruby-2.2.4).
+  0.9.5 (ruby-2.2.5).
 </div>
 
     </div>

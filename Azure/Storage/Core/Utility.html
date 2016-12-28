@@ -76,6 +76,11 @@
   
 
   
+  <dl>
+    <dt>Included in:</dt>
+    <dd><span class='object_link'><a href="../Blob/BlobService.html" title="Azure::Storage::Blob::BlobService (class)">Blob::BlobService</a></span></dd>
+  </dl>
+  
 
   
   <dl>
@@ -214,6 +219,28 @@
   <span class="summary_signature">
     
       <a href="#locate_file-instance_method" title="#locate_file (instance method)">#<strong>locate_file</strong>(name)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_charset_from_content_type-instance_method" title="#parse_charset_from_content_type (instance method)">#<strong>parse_charset_from_content_type</strong>(content_type)  &#x21d2; Object </a>
     
 
     
@@ -528,6 +555,42 @@
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="parse_charset_from_content_type-instance_method">
+  
+    #<strong>parse_charset_from_content_type</strong>(content_type)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+111
+112
+113
+114
+115
+116</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/utility.rb', line 111</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_parse_charset_from_content_type'>parse_charset_from_content_type</span><span class='lparen'>(</span><span class='id identifier rubyid_content_type'>content_type</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_content_type'>content_type</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_content_type'>content_type</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_charset'>charset</span> <span class='op'>=</span> <span class='id identifier rubyid_content_type'>content_type</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_attribute'>attribute</span><span class='op'>|</span> <span class='op'>!</span><span class='id identifier rubyid_attribute'>attribute</span><span class='period'>.</span><span class='id identifier rubyid_lstrip'>lstrip</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>charset=</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_x'>x</span><span class='op'>|</span> <span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_lstrip'>lstrip</span> <span class='rbrace'>}</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_charset'>charset</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>charset=</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='op'>...</span><span class='id identifier rubyid_charset'>charset</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_charset'>charset</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="random_string-instance_method">
   
     #<strong>random_string</strong>(str = &#39;azure&#39;, no_of_char = 5)  &#x21d2; <tt>Object</tt> 
@@ -598,9 +661,9 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 30 15:51:22 2016 by
+  Generated on Wed Dec 28 15:43:40 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.5 (ruby-2.2.4).
+  0.9.5 (ruby-2.2.5).
 </div>
 
     </div>
