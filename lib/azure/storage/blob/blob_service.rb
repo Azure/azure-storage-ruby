@@ -49,7 +49,7 @@ module Azure::Storage
         # Force the request.body to the content encoding of specified in the header
         if headers && !body.nil? && (body.is_a? String) && ((body.encoding.to_s <=> 'ASCII_8BIT') != 0)
           if headers['x-ms-blob-content-type'].nil?
-            Service::StorageService.with_header headers, 'x-ms-blob-content-type', "text/plain; charset=#{body.encoding.to_s}"
+            Service::StorageService.with_header headers, 'x-ms-blob-content-type', "text/plain; charset=#{body.encoding}"
           else
             charset = parse_charset_from_content_type(headers['x-ms-blob-content-type'])
             body.force_encoding(charset) if charset
@@ -177,7 +177,7 @@ module Azure::Storage
         else
           uri = container_uri(container, query)
         end
-        
+
         duration = -1
         duration = options[:duration] if options[:duration]
 

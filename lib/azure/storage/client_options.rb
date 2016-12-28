@@ -327,7 +327,7 @@ module Azure::Storage
 
     def parse_connection_string(connection_string)
       opts = {}
-      cs_items = connection_string.split(';').each do |i|
+      connection_string.split(';').each do |i|
         e = i.index('=')
         raise InvalidConnectionStringError,SR::INVALID_CONNECTION_STRING if e < 0 || e == i.length - 1
         key,value = i[0..e-1],i[e+1..i.length-1]

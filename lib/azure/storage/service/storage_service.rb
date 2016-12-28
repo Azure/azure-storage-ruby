@@ -127,7 +127,7 @@ module Azure::Storage
             metadata.each do |key, value|
               headers["x-ms-meta-#{key}"] = value
             end
-           end
+          end
         end
         
         # Adds a value to the Hash object

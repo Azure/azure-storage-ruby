@@ -109,7 +109,7 @@ module Azure::Storage
         result = ""
         clauses = []
         filters.each { |f|
-          clauses.push "#{f[0].to_s} #{f[1].to_s} #{Azure::Storage::Table::EdmType.serialize_query_value(f[2])}"
+          clauses.push "#{f[0]} #{f[1]} #{Azure::Storage::Table::EdmType.serialize_query_value(f[2])}"
         }
         return nil if clauses.length == 0 
         

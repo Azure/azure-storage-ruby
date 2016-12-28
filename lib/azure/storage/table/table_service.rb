@@ -569,12 +569,12 @@ module Azure::Storage
         return table_name if table_name.kind_of? ::URI
 
         path = if partition_key && row_key
-          "%s(PartitionKey='%s',RowKey='%s')" % [
-            table_name.encode("UTF-8"), encodeODataUriValue(partition_key.encode("UTF-8")), encodeODataUriValue(row_key.encode("UTF-8"))
-          ]
-        else
-          "%s()" % table_name.encode("UTF-8")
-        end
+               "%s(PartitionKey='%s',RowKey='%s')" % [
+                 table_name.encode("UTF-8"), encodeODataUriValue(partition_key.encode("UTF-8")), encodeODataUriValue(row_key.encode("UTF-8"))
+               ]
+               else
+                 "%s()" % table_name.encode("UTF-8")
+               end
 
         uri = generate_uri(path)
         qs = []

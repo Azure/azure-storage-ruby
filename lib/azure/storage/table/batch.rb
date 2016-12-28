@@ -184,12 +184,12 @@ module Azure::Storage
           if op[:headers]
             op[:headers].each { |k,v|
                 body.add_line "#{k}: #{v}"
-              }
+            }
           end
           
           if op[:body]
             body.add_line "Content-Type: application/atom+xml;type=entry"
-            body.add_line "Content-Length: #{op[:body].bytesize.to_s}"
+            body.add_line "Content-Length: #{op[:body].bytesize}"
             body.add_line ""
             body.add_line op[:body]
           else
