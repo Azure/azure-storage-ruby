@@ -83,6 +83,15 @@ module Azure::Storage::Core
         endrk:                :erk
       }
 
+      FILE_KEY_MAPPINGS = {
+        resource:             :sr,
+        cache_control:        :rscc,
+        content_disposition:  :rscd,
+        content_encoding:     :rsce,
+        content_language:     :rscl,
+        content_type:         :rsct
+      }
+
       SERVICE_OPTIONAL_QUERY_PARAMS = [:sp, :si, :sip, :spr, :rscc, :rscd, :rsce, :rscl, :rsct, :spk, :srk, :epk, :erk]
 
       ACCOUNT_OPTIONAL_QUERY_PARAMS = [:st, :sip, :spr]
@@ -151,6 +160,13 @@ module Azure::Storage::Core
         elsif service_type == Azure::Storage::ServiceType::TABLE
           options.merge!(table_name: path)
           valid_mappings.merge!(TABLE_KEY_MAPPINGS)
+        elsif service_type == Azure::Storage::ServiceType::FILE
+          if options[:resource]
+            options.merge!(resource: options[:resource])
+          else
+            options.merge!(resource: 'f')
+          end
+          valid_mappings.merge!(FILE_KEY_MAPPINGS)
         end
 
         invalid_options = options.reject { |k, _| valid_mappings.key?(k) }
@@ -188,7 +204,7 @@ module Azure::Storage::Core
           options[:content_encoding],
           options[:content_language],
           options[:content_type]
-        ] if service_type == Azure::Storage::ServiceType::BLOB
+        ] if service_type == Azure::Storage::ServiceType::BLOB || service_type == Azure::Storage::ServiceType::FILE
 
         signable_fields.concat [
           options[:startpk],
