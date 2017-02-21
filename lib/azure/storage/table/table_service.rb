@@ -576,7 +576,7 @@ module Azure::Storage
                  "%s()" % table_name.encode("UTF-8")
                end
 
-        uri = generate_uri(path)
+        uri = generate_uri(path, query, false)
         qs = []
         if query
           query.each do | key, val |

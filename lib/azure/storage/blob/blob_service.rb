@@ -469,18 +469,8 @@ module Azure::Storage
         if container_name.nil? || container_name.empty?
           path = blob_name
         else
-          path = File.join(container_name, blob_name)
+          path = ::File.join(container_name, blob_name)
         end
-
-        path = CGI.escape(path.encode('UTF-8'))
-
-        # Unencode the forward slashes to match what the server expects.
-        path = path.gsub(/%2F/, '/')
-        # Unencode the backward slashes to match what the server expects.
-        path = path.gsub(/%5C/, '/')
-        # Re-encode the spaces (encoded as space) to the % encoding.
-        path = path.gsub(/\+/, '%20')
-
         generate_uri(path, query)
       end
       

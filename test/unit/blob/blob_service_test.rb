@@ -527,7 +527,7 @@ describe Azure::Storage::Blob::BlobService do
         subject.list_blobs container_name
       end
 
-      it 'returns a list of containers for the account' do
+      it 'returns a list of blobs for the container' do
         result = subject.list_blobs container_name
         result.must_be_kind_of Azure::Service::EnumerationResults
       end
@@ -1202,7 +1202,7 @@ describe Azure::Storage::Blob::BlobService do
           subject.list_blob_blocks container_name, blob_name
         end
 
-        it 'returns a list of containers for the account' do
+        it 'returns a list of blocks for the block blob' do
           result = subject.list_blob_blocks container_name, blob_name
           result.must_be_kind_of Array
           result.first.must_be_kind_of Azure::Storage::Blob::Block
@@ -1267,7 +1267,7 @@ describe Azure::Storage::Blob::BlobService do
           subject.list_page_blob_ranges container_name, blob_name
         end
 
-        it 'returns a list of containers for the account' do
+        it 'returns a list of ranges for the page blob' do
           result = subject.list_page_blob_ranges container_name, blob_name
           result.must_be_kind_of Array
           result.first.must_be_kind_of Array

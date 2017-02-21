@@ -106,13 +106,24 @@ module Azure::Storage
       # query   - Hash. the query parameters
       #
       # Returns the uri hash
-      def generate_uri(path='', query={})
+      def generate_uri(path='', query={}, encode=false)
         if self.client.is_a?(Azure::Storage::Client) && self.client.options[:use_path_style_uri]
           if path.length > 0
             path = self.client.options[:storage_account_name] + '/' + path
           else
             path = self.client.options[:storage_account_name]
           end
+        end
+
+        if encode
+          path = CGI.escape(path.encode('UTF-8'))
+
+          # decode the forward slashes to match what the server expects.
+          path = path.gsub(/%2F/, '/')
+          # decode the backward slashes to match what the server expects.
+          path = path.gsub(/%5C/, '/')
+          # Re-encode the spaces (encoded as space) to the % encoding.
+          path = path.gsub(/\+/, '%20')
         end
 
         super path, query

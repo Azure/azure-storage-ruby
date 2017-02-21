@@ -31,6 +31,7 @@ require 'azure/storage/service/storage_service'
 require 'azure/storage/blob/blob_service'
 require 'azure/storage/table/table_service'
 require 'azure/storage/queue/queue_service'
+require 'azure/storage/file/file_service'
 
 module Azure::Storage
   class Client
@@ -108,6 +109,12 @@ module Azure::Storage
     # @return [Azure::Storage::Table::TableService]
     def table_client(options = {})
       @table_client ||= Azure::Storage::Table::TableService.new(default_client(options))
+    end
+
+    # Azure File service client configured from this Azure Storage client instance
+    # @return [Azure::Storage::File::FileService]
+    def file_client(options = {})
+      @file_client ||= Azure::Storage::File::FileService.new(default_client(options))
     end
 
     class << self
