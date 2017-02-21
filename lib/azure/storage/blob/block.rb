@@ -115,6 +115,7 @@ module Azure::Storage
 
       result = Serialization.blob_from_headers(response.headers)
       result.name = blob
+      result.metadata = options[:metadata] if options[:metadata]
 
       result
     end

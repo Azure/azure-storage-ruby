@@ -236,7 +236,6 @@ module Azure::Storage
         query['timeout'] = options[:timeout].to_s if options[:timeout]
 
         response = call(:post, entities_uri(table_name, nil, nil, query), body, {}, options)
-        
         result = Table::Serialization.hash_from_entry_xml(response.body)
 
         Entity.new do |entity|
@@ -469,7 +468,6 @@ module Azure::Storage
 
         query = { }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
-
         call(:delete, entities_uri(table_name, partition_key, row_key, query), nil, { "If-Match"=> if_match }, options)
         nil
       end
@@ -576,7 +574,7 @@ module Azure::Storage
                  "%s()" % table_name.encode("UTF-8")
                end
 
-        uri = generate_uri(path, query, false)
+        uri = generate_uri(path)
         qs = []
         if query
           query.each do | key, val |

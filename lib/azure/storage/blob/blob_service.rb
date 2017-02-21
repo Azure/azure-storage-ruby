@@ -471,7 +471,7 @@ module Azure::Storage
         else
           path = ::File.join(container_name, blob_name)
         end
-        generate_uri(path, query)
+        generate_uri(path, query, true)
       end
       
       # Adds conditional header with required condition

@@ -77,6 +77,7 @@ describe Azure::Storage::Blob::BlobService do
       blob.properties[:content_type].must_equal options[:content_type]
       blob.properties[:content_encoding].must_equal options[:content_encoding]
       blob.properties[:cache_control].must_equal options[:cache_control]
+      blob.metadata["custommetadataproperty"].must_equal "CustomMetadataValue"
 
       blob = subject.get_blob_metadata container_name, blob_name
       blob.name.must_equal blob_name

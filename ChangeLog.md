@@ -1,3 +1,8 @@
+2017.02 - version 0.12.0-preview
+
+BLOB
+* Added the metadata to the returning instance when creates a blob.
+
 2016.12 - version 0.11.5-preview
 
 ALL

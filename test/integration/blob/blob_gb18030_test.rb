@@ -149,7 +149,7 @@ describe 'Blob GB-18030' do
       end
     }
   end
-
+  
   it 'Read/Write Blob Block Content UTF-8 with auto charset' do
     GB18030TestStrings.get.each { |k,v|
       blob_name = 'Read/Write Block Blob Content UTF-8 for ' + k
