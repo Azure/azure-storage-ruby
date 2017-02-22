@@ -1300,7 +1300,7 @@ describe Azure::Storage::File::FileService do
     describe '#copy_file' do
       let(:verb) { :put }
       let(:source_share_name) { 'source-share-name' }
-      let(:source_directory_path) { 'source-direcotry-path' }
+      let(:source_directory_path) { 'source-directory-path' }
       let(:source_file_name) { 'source-file-name' }
       let(:source_uri) { URI.parse('http://dummy.uri/source') }
 

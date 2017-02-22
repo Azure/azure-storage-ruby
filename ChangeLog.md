@@ -3,6 +3,9 @@
 BLOB
 * Added the metadata to the returning instance when creates a blob.
 
+FILE
+* Added File Service support, targeting storage service version 2015-04-05.
+
 2016.12 - version 0.11.5-preview
 
 ALL

@@ -125,7 +125,7 @@ module Azure::Storage
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179394.aspx
     #
-    # Returns the blob properties
+    # Returns the blob properties with a Blob instance
     def get_blob_properties(container, blob, options={})
       query = { }
       StorageService.with_query query, 'snapshot', options[:snapshot]
