@@ -2,6 +2,7 @@
 
 ALL
 * Fixed the issue where `should_retry?` in the retry_filter.rb overwrites the result from derived `apply_retry_policy`. [#76](https://github.com/Azure/azure-storage-ruby/issues/76)
+* Fixed the issue where `Azure::Storage::Client.create_from_connection_string` throws an exception. [#77](https://github.com/Azure/azure-storage-ruby/issues/77)
 
 BLOB
 * Added the metadata to the returning instance when creates a blob.
