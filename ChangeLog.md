@@ -1,7 +1,11 @@
 2017.02 - version 0.12.0-preview
 
+ALL
+* Fixed the issue where `should_retry?` in the retry_filter.rb overwrites the result from derived `apply_retry_policy`. [#76](https://github.com/Azure/azure-storage-ruby/issues/76)
+
 BLOB
 * Added the metadata to the returning instance when creates a blob.
+* Added `transactional_md5` to the options of `put_blob_pages`.
 
 FILE
 * Added File Service support, targeting storage service version 2015-04-05.

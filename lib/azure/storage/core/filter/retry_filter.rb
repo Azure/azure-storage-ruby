@@ -42,13 +42,21 @@ module Azure::Storage::Core::Filter
     # response - HttpResponse. The response from the active request
     # retry_data - Hash. Stores stateful retry data
     def should_retry?(response, retry_data)
+      # Applies the logic when there is subclass overrides it
       apply_retry_policy retry_data
-      retry_data[:retryable] = retry_data[:count] <= @retry_count
+
+      # Checks the result and count limit
+      if retry_data[:retryable].nil?
+        retry_data[:retryable] = true
+      else
+        retry_data[:retryable] &&= retry_data[:count] <= @retry_count
+      end
       return false unless retry_data[:retryable]
-      
+
+      # Checks whether there is a local error
+      # Cannot retry immediately when it returns true, as it need check other errors
       should_retry_on_local_error? retry_data
-      should_retry_on_error? response, retry_data
-      return false unless retry_data[:retryable]
+      return false unless should_retry_on_error? response, retry_data
       
       adjust_retry_parameter retry_data
     end
@@ -167,6 +175,7 @@ module Azure::Storage::Core::Filter
           retry_data[:retryable] = false;
         end
       end
+      retry_data[:retryable]
     end
     
     # Adjust the retry parameter
