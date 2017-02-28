@@ -60,13 +60,16 @@ module Azure::Storage
       #
       # ==== Options
       #
+      # * +:timeout+                   - Integer. A timeout in seconds.
       # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
       #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # Returns a Hash with the service properties or nil if the operation failed
       def get_service_properties(options={})
-        uri = service_properties_uri
-        response = call(:get, uri, nil, {}, options)
+        query = { }
+        StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+
+        response = call(:get, service_properties_uri(query), nil, {}, options)
         Serialization.service_properties_from_xml response.body
       end
 
@@ -79,14 +82,17 @@ module Azure::Storage
       #
       # ==== Options
       #
+      # * +:timeout+                   - Integer. A timeout in seconds.
       # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
       #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # Returns boolean indicating success.
       def set_service_properties(service_properties, options={})
+        query = { }
+        StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+
         body = Serialization.service_properties_to_xml service_properties
-        uri = service_properties_uri
-        call(:put, uri, body, {}, options)
+        call(:put, service_properties_uri(query), body, {}, options)
         nil
       end
 
