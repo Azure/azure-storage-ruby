@@ -91,7 +91,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/azure/storage/autoload.rb<span class="defines">,<br />
-  lib/azure/storage/blob/blob.rb,<br /> lib/azure/storage/blob/page.rb,<br /> lib/azure/storage/blob/block.rb,<br /> lib/azure/storage/blob/append.rb,<br /> lib/azure/storage/blob/container.rb,<br /> lib/azure/storage/blob/blob_service.rb,<br /> lib/azure/storage/blob/serialization.rb</span>
+  lib/azure/storage/blob/page.rb,<br /> lib/azure/storage/blob/blob.rb,<br /> lib/azure/storage/blob/block.rb,<br /> lib/azure/storage/blob/append.rb,<br /> lib/azure/storage/blob/container.rb,<br /> lib/azure/storage/blob/blob_service.rb,<br /> lib/azure/storage/blob/serialization.rb</span>
 </dd>
   </dl>
   
@@ -321,7 +321,7 @@ account.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#copy_blob_from_uri-instance_method" title="#copy_blob_from_uri (instance method)">#<strong>copy_blob_from_uri</strong>(destination_container, destination_blob, source_blob_uri, options = {})  &#x21d2; Object </a>
+      <a href="#copy_blob_from_uri-instance_method" title="#copy_blob_from_uri (instance method)">#<strong>copy_blob_from_uri</strong>(destination_container, destination_blob, source_uri, options = {})  &#x21d2; Object </a>
     
 
     
@@ -336,7 +336,7 @@ account.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Public: Copies a source blob to a destination blob.</p>
+<p>Public: Copies a source blob or file to a destination blob.</p>
 </div></span>
   
 </li>
@@ -1092,7 +1092,6 @@ href="http://msdn.microsoft.com/en-us/library/azure/mt427365.aspx">msdn.microsof
       <pre class="lines">
 
 
-139
 140
 141
 142
@@ -1109,10 +1108,11 @@ href="http://msdn.microsoft.com/en-us/library/azure/mt427365.aspx">msdn.microsof
 153
 154
 155
-156</pre>
+156
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/append.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/append.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_append_blob_block'>append_blob_block</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_blob'>blob</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>appendblock</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
@@ -1431,10 +1431,6 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691975.aspx">msdn.microsof
       <pre class="lines">
 
 
-209
-210
-211
-212
 213
 214
 215
@@ -1455,10 +1451,14 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691975.aspx">msdn.microsof
 230
 231
 232
-233</pre>
+233
+234
+235
+236
+237</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/page.rb', line 209</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/page.rb', line 213</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear_blob_pages'>clear_blob_pages</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_blob'>blob</span><span class='comma'>,</span> <span class='id identifier rubyid_start_range'>start_range</span><span class='comma'>,</span> <span class='id identifier rubyid_end_range'>end_range</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>page</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
@@ -1592,7 +1592,6 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179467.aspx">msdn.microsof
       <pre class="lines">
 
 
-202
 203
 204
 205
@@ -1615,10 +1614,11 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179467.aspx">msdn.microsof
 222
 223
 224
-225</pre>
+225
+226</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/block.rb', line 202</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/block.rb', line 203</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_commit_blob_blocks'>commit_blob_blocks</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_blob'>blob</span><span class='comma'>,</span> <span class='id identifier rubyid_block_list'>block_list</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>blocklist</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
@@ -1666,10 +1666,10 @@ account.</p>
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>source_container</code>           - String. The destination container
+<p><code>destination_container</code>      - String. The destination container
 name to copy to.</p>
 </li><li>
-<p><code>source_blob</code>                - String. The destination blob name
+<p><code>destination_blob</code>           - String. The destination blob name
 to copy to.</p>
 </li><li>
 <p><code>source_container</code>           - String. The source container name
@@ -1802,7 +1802,7 @@ operation, with these values:</p>
       <div class="method_details ">
   <h3 class="signature " id="copy_blob_from_uri-instance_method">
   
-    #<strong>copy_blob_from_uri</strong>(destination_container, destination_blob, source_blob_uri, options = {})  &#x21d2; <tt>Object</tt> 
+    #<strong>copy_blob_from_uri</strong>(destination_container, destination_blob, source_uri, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1811,18 +1811,18 @@ operation, with these values:</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Public: Copies a source blob to a destination blob.</p>
+<p>Public: Copies a source blob or file to a destination blob.</p>
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>source_container</code>           - String. The destination container
+<p><code>destination_container</code>      - String. The destination container
 name to copy to.</p>
 </li><li>
-<p><code>source_blob</code>                - String. The destination blob name
+<p><code>destination_blob</code>           - String. The destination blob name
 to copy to.</p>
 </li><li>
-<p><code>source_blob_uri</code>            - String. The source blob URI to
-copy from.</p>
+<p><code>source_uri</code>                 - String. The source blob or file
+URI to copy from.</p>
 </li><li>
 <p><code>options</code>                    - Hash. Optional parameters.</p>
 </li></ul>
@@ -1946,13 +1946,13 @@ operation, with these values:</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob.rb', line 678</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_copy_blob_from_uri'>copy_blob_from_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_destination_container'>destination_container</span><span class='comma'>,</span> <span class='id identifier rubyid_destination_blob'>destination_blob</span><span class='comma'>,</span> <span class='id identifier rubyid_source_blob_uri'>source_blob_uri</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_copy_blob_from_uri'>copy_blob_from_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_destination_container'>destination_container</span><span class='comma'>,</span> <span class='id identifier rubyid_destination_blob'>destination_blob</span><span class='comma'>,</span> <span class='id identifier rubyid_source_uri'>source_uri</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
   <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_blob_uri'>blob_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_destination_container'>destination_container</span><span class='comma'>,</span> <span class='id identifier rubyid_destination_blob'>destination_blob</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_common_headers'>common_headers</span>
-  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-copy-source</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_source_blob_uri'>source_blob_uri</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-copy-source</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_source_uri'>source_uri</span>
 
   <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
     <span class='id identifier rubyid_add_blob_conditional_headers'>add_blob_conditional_headers</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span>
@@ -2108,7 +2108,8 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx">msdn.microsof
 98
 99
 100
-101</pre>
+101
+102</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/append.rb', line 68</span>
@@ -2144,6 +2145,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx">msdn.microsof
 
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_blob_from_headers'>blob_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_blob'>blob</span>
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_result'>result</span>
 <span class='kw'>end</span></pre>
@@ -2420,7 +2422,8 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx">msdn.microsof
 117
 118
 119
-120</pre>
+120
+121</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/block.rb', line 90</span>
@@ -2453,6 +2456,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx">msdn.microsof
 
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_blob_from_headers'>blob_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_blob'>blob</span>
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_result'>result</span>
 <span class='kw'>end</span></pre>
@@ -2616,7 +2620,8 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx">msdn.microsof
 108
 109
 110
-111</pre>
+111
+112</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/page.rb', line 74</span>
@@ -2656,7 +2661,8 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx">msdn.microsof
 
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_blob_from_headers'>blob_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_blob'>blob</span>
-
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+  
   <span class='id identifier rubyid_result'>result</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3134,7 +3140,7 @@ ETag value for this conditional header to get the blob properties</p>
 <p>See <a
 href="http://msdn.microsoft.com/en-us/library/azure/dd179394.aspx">msdn.microsoft.com/en-us/library/azure/dd179394.aspx</a></p>
 
-<p>Returns the blob properties</p>
+<p>Returns the blob properties with a Blob instance</p>
 
 
   </div>
@@ -3272,7 +3278,6 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179400.aspx">msdn.microsof
       <pre class="lines">
 
 
-256
 257
 258
 259
@@ -3286,10 +3291,11 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179400.aspx">msdn.microsof
 267
 268
 269
-270</pre>
+270
+271</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/block.rb', line 256</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/block.rb', line 257</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list_blob_blocks'>list_blob_blocks</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_blob'>blob</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
 
@@ -3367,10 +3373,6 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691973.aspx">msdn.microsof
       <pre class="lines">
 
 
-273
-274
-275
-276
 277
 278
 279
@@ -3384,10 +3386,14 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691973.aspx">msdn.microsof
 287
 288
 289
-290</pre>
+290
+291
+292
+293
+294</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/page.rb', line 273</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/page.rb', line 277</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list_page_blob_ranges'>list_page_blob_ranges</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_blob'>blob</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pagelist</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
@@ -3472,7 +3478,6 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd135726.aspx">msdn.microsof
       <pre class="lines">
 
 
-143
 144
 145
 146
@@ -3484,10 +3489,11 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd135726.aspx">msdn.microsof
 152
 153
 154
-155</pre>
+155
+156</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/block.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/block.rb', line 144</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_put_blob_block'>put_blob_block</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_blob'>blob</span><span class='comma'>,</span> <span class='id identifier rubyid_block_id'>block_id</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>block</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
@@ -3534,7 +3540,7 @@ of first page</p>
 of last page</p>
 </li><li>
 <p><code>content</code>                    - IO or String. Content to write.
-Length in bytes should equal end_range - start_range</p>
+Length in bytes should equal end_range - start_range + 1</p>
 </li><li>
 <p><code>options</code>                    - Hash. A collection of options.</p>
 </li></ul>
@@ -3543,6 +3549,12 @@ Length in bytes should equal end_range - start_range</p>
 
 <p>Accepted key/value pairs in options parameter are:</p>
 <ul><li>
+<p><code>:transactional_md5</code>         - String. An MD5 hash of the page
+content. This hash is used to verify the integrity of the page during
+transport.</p>
+
+<pre class="code ruby"><code class="ruby">When this header is specified, the storage service checks the hash that has arrived with the one that was sent.</code></pre>
+</li><li>
 <p><code>:if_sequence_number_le</code>     - Integer. If the blob&#39;s
 sequence number is less than or equal to the specified value, the request
 proceeds;</p>
@@ -3608,9 +3620,6 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691975.aspx">msdn.microsof
       <pre class="lines">
 
 
-152
-153
-154
 155
 156
 157
@@ -3631,10 +3640,14 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691975.aspx">msdn.microsof
 172
 173
 174
-175</pre>
+175
+176
+177
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/page.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/page.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_put_blob_pages'>put_blob_pages</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_blob'>blob</span><span class='comma'>,</span> <span class='id identifier rubyid_start_range'>start_range</span><span class='comma'>,</span> <span class='id identifier rubyid_end_range'>end_range</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>page</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
@@ -3642,6 +3655,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691975.aspx">msdn.microsof
 
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_blob_uri'>blob_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_blob'>blob</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_common_headers'>common_headers</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Content-MD5</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:transactional_md5</span><span class='rbracket'>]</span>
   <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-range</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bytes=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_start_range'>start_range</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_end_range'>end_range</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-page-write</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>update</span><span class='tstring_end'>&#39;</span></span>
 
@@ -3940,13 +3954,13 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691966.aspx">msdn.microsof
       <pre class="lines">
 
 
-325
-326
-327
-328</pre>
+329
+330
+331
+332</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/page.rb', line 325</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/page.rb', line 329</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resize_page_blob'>resize_page_blob</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_blob'>blob</span><span class='comma'>,</span> <span class='id identifier rubyid_size'>size</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='symbol'>:content_length</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_size'>size</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -4416,13 +4430,13 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691966.aspx">msdn.microsof
       <pre class="lines">
 
 
-387
-388
-389
-390</pre>
+391
+392
+393
+394</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/page.rb', line 387</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/page.rb', line 391</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_sequence_number'>set_sequence_number</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_blob'>blob</span><span class='comma'>,</span> <span class='id identifier rubyid_action'>action</span><span class='comma'>,</span> <span class='id identifier rubyid_number'>number</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='symbol'>:sequence_number_action</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_action'>action</span><span class='comma'>,</span> <span class='symbol'>:sequence_number</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_number'>number</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -4438,7 +4452,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691966.aspx">msdn.microsof
 </div>
 
       <div id="footer">
-  Generated on Wed Dec 28 15:43:40 2016 by
+  Generated on Tue Feb 28 13:56:30 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.2.5).
 </div>

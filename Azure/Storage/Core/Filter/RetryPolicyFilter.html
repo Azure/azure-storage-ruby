@@ -513,14 +513,14 @@ retry the operation.</p>
       <pre class="lines">
 
 
-175
-176
-177
-178
-179</pre>
+184
+185
+186
+187
+188</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_adjust_retry_parameter'>adjust_retry_parameter</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
   <span class='comment'># TODO: Adjust the retry parameter according to the location and last attempt time 
@@ -568,11 +568,11 @@ lifetime of the request</p>
       <pre class="lines">
 
 
-66
-67</pre>
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_apply_retry_policy'>apply_retry_policy</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -634,19 +634,35 @@ Hash. Stores stateful retry data</p>
 51
 52
 53
-54</pre>
+54
+55
+56
+57
+58
+59
+60
+61
+62</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_should_retry?'>should_retry?</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_apply_retry_policy'>apply_retry_policy</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
-  <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:count</span><span class='rbracket'>]</span> <span class='op'>&lt;=</span> <span class='ivar'>@retry_count</span>
+  <span class='comment'># Applies the logic when there is subclass overrides it
+</span>  <span class='id identifier rubyid_apply_retry_policy'>apply_retry_policy</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
+
+  <span class='comment'># Checks the result and count limit
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:count</span><span class='rbracket'>]</span> <span class='op'>&lt;=</span> <span class='ivar'>@retry_count</span>
+  <span class='kw'>end</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span>
-  
-  <span class='id identifier rubyid_should_retry_on_local_error?'>should_retry_on_local_error?</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
-  <span class='id identifier rubyid_should_retry_on_error?'>should_retry_on_error?</span> <span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
-  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Checks whether there is a local error
+</span>  <span class='comment'># Cannot retry immediately when it returns true, as it need check other errors
+</span>  <span class='id identifier rubyid_should_retry_on_local_error?'>should_retry_on_local_error?</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_should_retry_on_error?'>should_retry_on_error?</span> <span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
   
   <span class='id identifier rubyid_adjust_retry_parameter'>adjust_retry_parameter</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
 <span class='kw'>end</span></pre>
@@ -702,14 +718,6 @@ lifetime of the request.</p>
       <pre class="lines">
 
 
-117
-118
-119
-120
-121
-122
-123
-124
 125
 126
 127
@@ -755,10 +763,19 @@ lifetime of the request.</p>
 167
 168
 169
-170</pre>
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_should_retry_on_error?'>should_retry_on_error?</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span> <span class='op'>||</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_http_response'>http_response</span> <span class='kw'>if</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>http_response</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -813,6 +830,7 @@ lifetime of the request.</p>
 </span>      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
+  <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -865,14 +883,6 @@ lifetime of the request.</p>
       <pre class="lines">
 
 
-77
-78
-79
-80
-81
-82
-83
-84
 85
 86
 87
@@ -894,10 +904,18 @@ lifetime of the request.</p>
 103
 104
 105
-106</pre>
+106
+107
+108
+109
+110
+111
+112
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_should_retry_on_local_error?'>should_retry_on_local_error?</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span>
@@ -939,7 +957,7 @@ lifetime of the request.</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Dec 28 15:43:46 2016 by
+  Generated on Tue Feb 28 13:56:33 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.2.5).
 </div>
