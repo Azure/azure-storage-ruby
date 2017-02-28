@@ -1,0 +1,2716 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: Azure::Storage::File
+  
+    &mdash; Documentation by YARD 0.9.5
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Azure::Storage::File";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (F)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span>
+     &raquo; 
+    <span class="title">File</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <iframe id="search_frame" src="../../class_list.html"></iframe>
+
+      <div id="content"><h1>Module: Azure::Storage::File
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="Service.html" title="Azure::Storage::Service (module)">Service</a></span></dd>
+  </dl>
+  
+  
+
+  
+  <dl>
+    <dt>Included in:</dt>
+    <dd><span class='object_link'><a href="File/FileService.html" title="Azure::Storage::File::FileService (class)">FileService</a></span></dd>
+  </dl>
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/azure/storage/autoload.rb<span class="defines">,<br />
+  lib/azure/storage/file/file.rb,<br /> lib/azure/storage/file/share.rb,<br /> lib/azure/storage/file/directory.rb,<br /> lib/azure/storage/file/file_service.rb,<br /> lib/azure/storage/file/serialization.rb</span>
+</dd>
+  </dl>
+  
+</div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="File/Directory.html" title="Azure::Storage::File::Directory (module)">Directory</a></span>, <span class='object_link'><a href="File/Serialization.html" title="Azure::Storage::File::Serialization (module)">Serialization</a></span>, <span class='object_link'><a href="File/Share.html" title="Azure::Storage::File::Share (module)">Share</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="File/File.html" title="Azure::Storage::File::File (class)">File</a></span>, <span class='object_link'><a href="File/FileService.html" title="Azure::Storage::File::FileService (class)">FileService</a></span>
+    
+  
+</p>
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#abort_copy_file-instance_method" title="#abort_copy_file (instance method)">#<strong>abort_copy_file</strong>(share, directory_path, file, copy_id, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Aborts a pending Copy File operation and leaves a destination file
+with zero length and full metadata.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#clear_file_range-instance_method" title="#clear_file_range (instance method)">#<strong>clear_file_range</strong>(share, directory_path, file, start_range, end_range = nil, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Clears a range of file.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#copy_file-instance_method" title="#copy_file (instance method)">#<strong>copy_file</strong>(destination_share, destination_directory_path, destination_file, source_share, source_directory_path, source_file, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Copies a source file to a destination file within the same storage
+account.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#copy_file_from_uri-instance_method" title="#copy_file_from_uri (instance method)">#<strong>copy_file_from_uri</strong>(destination_share, destination_directory_path, destination_file, source_uri, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Copies a source file or file to a destination file within the
+storage account.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_directory-instance_method" title="#create_directory (instance method)">#<strong>create_directory</strong>(share, directory_path, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Create a new directory.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_file-instance_method" title="#create_file (instance method)">#<strong>create_file</strong>(share, directory_path, file, length, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Creates a new file or replaces a file.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete_directory-instance_method" title="#delete_directory (instance method)">#<strong>delete_directory</strong>(share, directory_path, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Deletes a directory.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete_file-instance_method" title="#delete_file (instance method)">#<strong>delete_file</strong>(share, directory_path, file, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Deletes a file.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_directory_metadata-instance_method" title="#get_directory_metadata (instance method)">#<strong>get_directory_metadata</strong>(share, directory_path, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Returns only user-defined metadata for the specified directory.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_directory_properties-instance_method" title="#get_directory_properties (instance method)">#<strong>get_directory_properties</strong>(share, directory_path, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Returns all system properties for the specified directory,        
+and can also be used to check the existence of a directory.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_file-instance_method" title="#get_file (instance method)">#<strong>get_file</strong>(share, directory_path, file, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Reads or downloads a file from the system, including its metadata
+and properties.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_file_metadata-instance_method" title="#get_file_metadata (instance method)">#<strong>get_file_metadata</strong>(share, directory_path, file, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Returns only user-defined metadata for the specified file.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_file_properties-instance_method" title="#get_file_properties (instance method)">#<strong>get_file_properties</strong>(share, directory_path, file, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Returns all properties and metadata on the file.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#list_directories_and_files-instance_method" title="#list_directories_and_files (instance method)">#<strong>list_directories_and_files</strong>(share, directory_path, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Get a list of files or directories under the specified share or
+directory.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#list_file_ranges-instance_method" title="#list_file_ranges (instance method)">#<strong>list_file_ranges</strong>(share, directory_path, file, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Returns a list of valid ranges for a file.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#put_file_range-instance_method" title="#put_file_range (instance method)">#<strong>put_file_range</strong>(share, directory_path, file, start_range, end_range = nil, content = nil, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Writes a range of bytes to a file.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#resize_file-instance_method" title="#resize_file (instance method)">#<strong>resize_file</strong>(share, directory_path, file, size, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Resizes a file to the specified size.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_directory_metadata-instance_method" title="#set_directory_metadata (instance method)">#<strong>set_directory_metadata</strong>(share, directory_path, metadata, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Sets custom metadata for the directory.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_file_metadata-instance_method" title="#set_file_metadata (instance method)">#<strong>set_file_metadata</strong>(share, directory_path, file, metadata, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Sets custom metadata for the file.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_file_properties-instance_method" title="#set_file_properties (instance method)">#<strong>set_file_properties</strong>(share, directory_path, file, options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Sets system properties defined for a file.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="abort_copy_file-instance_method">
+  
+    #<strong>abort_copy_file</strong>(share, directory_path, file, copy_id, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Aborts a pending Copy File operation and leaves a destination file
+with zero length and full metadata.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                 - String. The name of the destination
+file share.</p>
+</li><li>
+<p><code>directory_path</code>        - String. The path to the destination
+directory.</p>
+</li><li>
+<p><code>file</code>                  - String. The name of the destination
+file.</p>
+</li><li>
+<p><code>copy_id</code>               - String. The copy identifier returned
+in the copy file operation.</p>
+</li><li>
+<p><code>options</code>               - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>              - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>           - String. Provides a client-generated,
+opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/abort-copy-file">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/abort-copy-file</a></p>
+
+<p>Returns nil on success</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 590</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_abort_copy_file'>abort_copy_file</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_copy_id'>copy_id</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>copy</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>copyid</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_copy_id'>copy_id</span>
+
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_common_headers'>common_headers</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-copy-action</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>abort</span><span class='tstring_end'>&#39;</span></span><span class='semicolon'>;</span>
+
+  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="clear_file_range-instance_method">
+  
+    #<strong>clear_file_range</strong>(share, directory_path, file, start_range, end_range = nil, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Clears a range of file.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                      - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>             - String. The path to the
+directory.</p>
+</li><li>
+<p><code>file</code>                       - String. The name of the file.</p>
+</li><li>
+<p><code>start_range</code>                - Integer. Position of first byte
+of the range.</p>
+</li><li>
+<p><code>end_range</code>                  - Integer. Position of last byte of
+of the range.</p>
+</li><li>
+<p><code>options</code>                    - Hash. A collection of options.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>                - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/put-range">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/put-range</a></p>
+
+<p>Returns a File</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 326</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_clear_file_range'>clear_file_range</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_start_range'>start_range</span><span class='comma'>,</span> <span class='id identifier rubyid_end_range'>end_range</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>range</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span>  <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_start_range'>start_range</span> <span class='op'>=</span> <span class='int'>0</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_end_range'>end_range</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>and</span> <span class='id identifier rubyid_start_range'>start_range</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_common_headers'>common_headers</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-range</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bytes=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_start_range'>start_range</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_end_range'>end_range</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-write</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>clear</span><span class='tstring_end'>&#39;</span></span>
+
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_file_from_headers'>file_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span>
+  <span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="copy_file-instance_method">
+  
+    #<strong>copy_file</strong>(destination_share, destination_directory_path, destination_file, source_share, source_directory_path, source_file, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Copies a source file to a destination file within the same storage
+account.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>destination_share</code>             - String. The destination share
+name to copy to.</p>
+</li><li>
+<p><code>destination_directory_path</code>    - String. The path to the
+destination directory.</p>
+</li><li>
+<p><code>source_file</code>                   - String. The destination file
+name to copy to.</p>
+</li><li>
+<p><code>source_share</code>                  - String. The source share name
+to copy from.</p>
+</li><li>
+<p><code>source_directory_path</code>         - String. The path to the source
+directory.</p>
+</li><li>
+<p><code>source_file</code>                   - String. The source file name
+to copy from.</p>
+</li><li>
+<p><code>options</code>                       - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:metadata</code>                   - Hash. Custom metadata values to
+store with the copy. If this parameter is not</p>
+
+<pre class="code ruby"><code class="ruby">specified, the operation will copy the source file metadata to the destination
+file. If this parameter is specified, the destination file is created with the
+specified metadata, and metadata is not copied from the source file.</code></pre>
+</li><li>
+<p><code>:timeout</code>                    - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>                 - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/copy-file">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/copy-file</a></p>
+
+<p>Returns a tuple of (copy_id, copy_status).</p>
+<ul><li>
+<p><code>copy_id</code>                    - String identifier for this copy
+operation. Use with get_file or get_file_properties to check</p>
+
+<pre class="code ruby"><code class="ruby">the status of this copy operation, or pass to abort_copy_file to abort a pending copy.</code></pre>
+</li><li>
+<p><code>copy_status</code>                - String. The state of the copy
+operation, with these values:</p>
+
+<pre class="code ruby"><code class="ruby">&quot;success&quot; - The copy completed successfully.
+&quot;pending&quot; - The copy is in progress.</code></pre>
+</li></ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+564
+565
+566
+567
+568</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 564</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_copy_file'>copy_file</span><span class='lparen'>(</span><span class='id identifier rubyid_destination_share'>destination_share</span><span class='comma'>,</span> <span class='id identifier rubyid_destination_directory_path'>destination_directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_destination_file'>destination_file</span><span class='comma'>,</span> <span class='id identifier rubyid_source_share'>source_share</span><span class='comma'>,</span> <span class='id identifier rubyid_source_directory_path'>source_directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_source_file'>source_file</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_source_file_uri'>source_file_uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_source_share'>source_share</span><span class='comma'>,</span> <span class='id identifier rubyid_source_directory_path'>source_directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_source_file'>source_file</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+
+  <span class='kw'>return</span> <span class='id identifier rubyid_copy_file_from_uri'>copy_file_from_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_destination_share'>destination_share</span><span class='comma'>,</span> <span class='id identifier rubyid_destination_directory_path'>destination_directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_destination_file'>destination_file</span><span class='comma'>,</span> <span class='id identifier rubyid_source_file_uri'>source_file_uri</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="copy_file_from_uri-instance_method">
+  
+    #<strong>copy_file_from_uri</strong>(destination_share, destination_directory_path, destination_file, source_uri, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Copies a source file or file to a destination file within the
+storage account.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>destination_share</code>             - String. The name of the
+destination file share.</p>
+</li><li>
+<p><code>destination_directory_path</code>    - String. The path to the
+destination directory.</p>
+</li><li>
+<p><code>destination_file</code>              - String. The name of the
+destination file.</p>
+</li><li>
+<p><code>source_uri</code>                    - String. The source file or
+file URI to copy from.</p>
+</li><li>
+<p><code>options</code>                       - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:metadata</code>                   - Hash. Custom metadata values to
+store with the copy. If this parameter is not</p>
+
+<pre class="code ruby"><code class="ruby">specified, the operation will copy the source file metadata to the destination
+file. If this parameter is specified, the destination file is created with the
+specified metadata, and metadata is not copied from the source file.</code></pre>
+</li><li>
+<p><code>:timeout</code>                    - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>                 - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/copy-file">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/copy-file</a></p>
+
+<p>Returns a tuple of (copy_id, copy_status).</p>
+<ul><li>
+<p><code>copy_id</code>                    - String identifier for this copy
+operation. Use with get_file or get_file_properties to check</p>
+
+<pre class="code ruby"><code class="ruby">the status of this copy operation, or pass to abort_copy_file to abort a pending copy.</code></pre>
+</li><li>
+<p><code>copy_status</code>                - String. The state of the copy
+operation, with these values:</p>
+
+<pre class="code ruby"><code class="ruby">&quot;success&quot; - The copy completed successfully.
+&quot;pending&quot; - The copy is in progress.</code></pre>
+</li></ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 518</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_copy_file_from_uri'>copy_file_from_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_destination_share'>destination_share</span><span class='comma'>,</span> <span class='id identifier rubyid_destination_directory_path'>destination_directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_destination_file'>destination_file</span><span class='comma'>,</span> <span class='id identifier rubyid_source_uri'>source_uri</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_destination_share'>destination_share</span><span class='comma'>,</span> <span class='id identifier rubyid_destination_directory_path'>destination_directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_destination_file'>destination_file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_common_headers'>common_headers</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-copy-source</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_source_uri'>source_uri</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'>add_metadata_to_headers</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span> <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-copy-id</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-copy-status</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create_directory-instance_method">
+  
+    #<strong>create_directory</strong>(share, directory_path, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Create a new directory</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                     - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>            - String. The path to the directory.</p>
+</li><li>
+<p><code>options</code>                   - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:metadata</code>                 - Hash. User defined metadata for
+the share (optional).</p>
+</li><li>
+<p><code>:timeout</code>                  - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>               - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/create-directory">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/create-directory</a></p>
+
+<p>Returns a Directory</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 116</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_create_directory'>create_directory</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Scheme + path
+</span>  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_directory_uri'>directory_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+
+  <span class='comment'># Headers
+</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_common_headers'>common_headers</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'>add_metadata_to_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+
+  <span class='comment'># result
+</span>  <span class='id identifier rubyid_directory'>directory</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_directory_from_headers'>directory_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_directory'>directory</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_directory_path'>directory_path</span>
+  <span class='id identifier rubyid_directory'>directory</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_directory'>directory</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create_file-instance_method">
+  
+    #<strong>create_file</strong>(share, directory_path, file, length, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Creates a new file or replaces a file. Note that it only
+initializes the file.</p>
+
+<pre class="code ruby"><code class="ruby">To add content to a file, call the put_range operation.</code></pre>
+
+<p>Updating an existing file overwrites any existing metadata on the file
+Partial updates are not supported with create_file. The content of the
+existing file is overwritten with the content of the new file. To perform a
+partial update of the content of a file, use the put_range method.</p>
+
+<p>Note that the default content type is application/octet-stream.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                      - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>             - String. The path to the
+directory.</p>
+</li><li>
+<p><code>file</code>                       - String. The name of the file.</p>
+</li><li>
+<p><code>length</code>                     - Integer. Specifies the maximum
+byte value for the file, up to 1 TB.</p>
+</li><li>
+<p><code>options</code>                    - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:content_type</code>              - String. Content type for the
+file. Will be saved with file.</p>
+</li><li>
+<p><code>:content_encoding</code>          - String. Content encoding for the
+file. Will be saved with file.</p>
+</li><li>
+<p><code>:content_language</code>          - String. Content language for the
+file. Will be saved with file.</p>
+</li><li>
+<p><code>:content_md5</code>               - String. Content MD5 for the file.
+Will be saved with file.</p>
+</li><li>
+<p><code>:cache_control</code>             - String. Cache control for the
+file. Will be saved with file.</p>
+</li><li>
+<p><code>:content_disposition</code>       - String. Conveys additional
+information about how to process the response payload,</p>
+
+<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata</code></pre>
+</li><li>
+<p><code>:metadata</code>                  - Hash. Custom metadata values to
+store with the file.</p>
+</li><li>
+<p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>                - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/create-file">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/create-file</a></p>
+
+<p>Returns a File</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 77</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_create_file'>create_file</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_length'>length</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_common_headers'>common_headers</span>
+
+  <span class='comment'># set x-ms-type to file
+</span>  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-type</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>file</span><span class='tstring_end'>&#39;</span></span>
+
+  <span class='comment'># ensure content-length is 0 and x-ms-content-length is the file length
+</span>  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Content-Length</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>0</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-content-length</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_length'>length</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+
+  <span class='comment'># set the rest of the optional headers
+</span>  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-content-type</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_type</span><span class='rbracket'>]</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-content-encoding</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_encoding</span><span class='rbracket'>]</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-content-language</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_language</span><span class='rbracket'>]</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-content-md5</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_md5</span><span class='rbracket'>]</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-cache-control</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:cache_control</span><span class='rbracket'>]</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-content-disposition</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_disposition</span><span class='rbracket'>]</span>
+
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'>add_metadata_to_headers</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span>
+
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_file_from_headers'>file_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span>
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_properties'>properties</span><span class='lbracket'>[</span><span class='symbol'>:content_length</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_length'>length</span>
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delete_directory-instance_method">
+  
+    #<strong>delete_directory</strong>(share, directory_path, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Deletes a directory.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                     - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>            - String. The path to the directory.</p>
+</li><li>
+<p><code>options</code>                   - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>                  - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>               - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/delete-directory">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/delete-directory</a></p>
+
+<p>Returns nil on success</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 190</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_delete_directory'>delete_directory</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:delete</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_uri'>directory_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  
+  <span class='comment'># result
+</span>  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delete_file-instance_method">
+  
+    #<strong>delete_file</strong>(share, directory_path, file, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Deletes a file.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                     - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>            - String. The path to the directory.</p>
+</li><li>
+<p><code>file</code>                      - String. The name of the file.</p>
+</li><li>
+<p><code>options</code>                   - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>                  - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>               - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/delete-file2">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/delete-file2</a></p>
+
+<p>Returns nil on success</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 475</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_delete_file'>delete_file</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+  
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:delete</span><span class='comma'>,</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  
+  <span class='comment'># result
+</span>  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_directory_metadata-instance_method">
+  
+    #<strong>get_directory_metadata</strong>(share, directory_path, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Returns only user-defined metadata for the specified directory.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                     - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>            - String. The path to the directory.</p>
+</li><li>
+<p><code>options</code>                   - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>                  - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>               - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-directory-metadata">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-directory-metadata</a></p>
+
+<p>Returns a Directory</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 220</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_directory_metadata'>get_directory_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>metadata</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_uri'>directory_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+
+  <span class='comment'># result
+</span>  <span class='id identifier rubyid_directory'>directory</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_directory_from_headers'>directory_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_directory'>directory</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_directory_path'>directory_path</span>
+  <span class='id identifier rubyid_directory'>directory</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_directory_properties-instance_method">
+  
+    #<strong>get_directory_properties</strong>(share, directory_path, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Returns all system properties for the specified directory,</p>
+
+<pre class="code ruby"><code class="ruby">and can also be used to check the existence of a directory.
+The data returned does not include the files in the directory or any subdirectories.</code></pre>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                     - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>            - String. The path to the directory.</p>
+</li><li>
+<p><code>options</code>                   - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>                  - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>               - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-directory-properties">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-directory-properties</a></p>
+
+<p>Returns a Directory</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 158</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_directory_properties'>get_directory_properties</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_uri'>directory_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+
+  <span class='comment'># result
+</span>  <span class='id identifier rubyid_directory'>directory</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_directory_from_headers'>directory_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_directory'>directory</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_directory_path'>directory_path</span>
+  <span class='id identifier rubyid_directory'>directory</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_file-instance_method">
+  
+    #<strong>get_file</strong>(share, directory_path, file, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Reads or downloads a file from the system, including its metadata
+and properties.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                      - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>             - String. The path to the
+directory.</p>
+</li><li>
+<p><code>file</code>                       - String. The name of the file.</p>
+</li><li>
+<p><code>options</code>                    - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:start_range</code>               - Integer. Position of the start
+range. (optional)</p>
+</li><li>
+<p><code>:end_range</code>                 - Integer. Position of the end
+range. (optional)</p>
+</li><li>
+<p><code>:get_content_md5</code>           - Boolean. Return the MD5 hash for
+the range. This option only valid if</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_start_range'>start_range</span> <span class='kw'>and</span> <span class='id identifier rubyid_end_range'>end_range</span> <span class='id identifier rubyid_are'>are</span> <span class='id identifier rubyid_specified'>specified</span><span class='period'>.</span> <span class='lparen'>(</span><span class='id identifier rubyid_optional'>optional</span><span class='rparen'>)</span>
+</code></pre>
+</li><li>
+<p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>                - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-file">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-file</a></p>
+
+<p>Returns a File and the file body</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 134</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_file'>get_file</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_common_headers'>common_headers</span>
+  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:start_range</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>0</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:end_range</span><span class='rbracket'>]</span> <span class='kw'>and</span> <span class='kw'>not</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:start_range</span><span class='rbracket'>]</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:start_range</span><span class='rbracket'>]</span>
+    <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-range</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bytes=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:start_range</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:end_range</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-range-get-content-md5</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:get_content_md5</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_file_from_headers'>file_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_result'>result</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_file_metadata-instance_method">
+  
+    #<strong>get_file_metadata</strong>(share, directory_path, file, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Returns only user-defined metadata for the specified file.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                     - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>            - String. The path to the directory.</p>
+</li><li>
+<p><code>file</code>                      - String. The name of the file.</p>
+</li><li>
+<p><code>options</code>                   - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>                  - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>               - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-file-metadata">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-file-metadata</a></p>
+
+<p>Returns a File</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 406</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_file_metadata'>get_file_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>metadata</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+
+  <span class='comment'># result
+</span>  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_file_from_headers'>file_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span>
+  <span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_file_properties-instance_method">
+  
+    #<strong>get_file_properties</strong>(share, directory_path, file, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Returns all properties and metadata on the file.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                      - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>             - String. The path to the
+directory.</p>
+</li><li>
+<p><code>file</code>                       - String. The name of the file.</p>
+</li><li>
+<p><code>options</code>                    - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>                - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-file-properties">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-file-properties</a></p>
+
+<p>Returns a File</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 171</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_file_properties'>get_file_properties</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='rbrace'>}</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_common_headers'>common_headers</span>
+    
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:head</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_file_from_headers'>file_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span>
+  <span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="list_directories_and_files-instance_method">
+  
+    #<strong>list_directories_and_files</strong>(share, directory_path, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Get a list of files or directories under the specified share or
+directory.</p>
+
+<pre class="code ruby"><code class="ruby">It lists the contents only for a single level of the directory hierarchy.</code></pre>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                     - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>            - String. The path to the directory.</p>
+</li><li>
+<p><code>options</code>                   - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:marker</code>                  - String. An identifier the specifies
+the portion of the</p>
+
+<pre class="code ruby"><code class="ruby">list to be returned. This value comes from the property
+Azure::Service::EnumerationResults.continuation_token when there
+are more shares available than were returned. The
+marker value may then be used here to request the next set
+of list items. (optional)</code></pre>
+</li><li>
+<p><code>:max_results</code>             - Integer. Specifies the maximum
+number of shares to return.</p>
+
+<pre class="code ruby"><code class="ruby">If max_results is not specified, or is a value greater than
+5,000, the server will return up to 5,000 items. If it is set
+to a value less than or equal to zero, the server will return
+status code 400 (Bad Request). (optional)</code></pre>
+</li><li>
+<p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>              - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See: <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/list-directories-and-files">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/list-directories-and-files</a></p>
+
+<p>Returns an Azure::Service::EnumerationResults</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 78</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_list_directories_and_files'>list_directories_and_files</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>list</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+  <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>marker</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:marker</span><span class='rbracket'>]</span>
+    <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>maxresults</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:max_results</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:max_results</span><span class='rbracket'>]</span>
+    <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_directory_uri'>directory_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+
+  <span class='comment'># Result
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
+    <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_directories_and_files_enumeration_results_from_xml'>directories_and_files_enumeration_results_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_exception'>exception</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="list_file_ranges-instance_method">
+  
+    #<strong>list_file_ranges</strong>(share, directory_path, file, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Returns a list of valid ranges for a file.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                      - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>             - String. The path to the
+directory.</p>
+</li><li>
+<p><code>file</code>                       - String. The name of the file.</p>
+</li><li>
+<p><code>options</code>                    - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:start_range</code>               - Integer. Position of first byte
+of the range.</p>
+</li><li>
+<p><code>:end_range</code>                 - Integer. Position of last byte of
+of the range.</p>
+</li><li>
+<p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>                - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/list-ranges">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/list-ranges</a></p>
+
+<p>Returns a tuple of a File and a list of ranges in the format [ [start,
+end], [start, end], … ]</p>
+
+<pre class="code ruby"><code class="ruby">eg. (Azure::Storage::File::File, [ [0, 511], [512, 1024], ... ])</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 368</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_list_file_ranges'>list_file_ranges</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rangelist</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:start_range</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>0</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:end_range</span><span class='rbracket'>]</span> <span class='kw'>and</span> <span class='kw'>not</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:start_range</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_common_headers'>common_headers</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-range</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bytes=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:start_range</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:end_range</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:start_range</span><span class='rbracket'>]</span>
+  
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_file_from_headers'>file_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span>
+  <span class='id identifier rubyid_rangelist'>rangelist</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_range_list_from_xml'>range_list_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_result'>result</span><span class='comma'>,</span> <span class='id identifier rubyid_rangelist'>rangelist</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="put_file_range-instance_method">
+  
+    #<strong>put_file_range</strong>(share, directory_path, file, start_range, end_range = nil, content = nil, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Writes a range of bytes to a file</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                      - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>             - String. The path to the
+directory.</p>
+</li><li>
+<p><code>file</code>                       - String. The name of the file.</p>
+</li><li>
+<p><code>start_range</code>                - Integer. Position of first byte
+of the range.</p>
+</li><li>
+<p><code>end_range</code>                  - Integer. Position of last byte of
+of the range. The range can be up to 4 MB in size.</p>
+</li><li>
+<p><code>content</code>                    - IO or String. Content to write.</p>
+</li><li>
+<p><code>options</code>                    - Hash. A collection of options.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:transactional_md5</code>         - String. An MD5 hash of the
+content. This hash is used to verify the integrity of the data during
+transport.</p>
+
+<pre class="code ruby"><code class="ruby">When this header is specified, the storage service checks the hash that has arrived with the one that was sent.</code></pre>
+</li><li>
+<p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>                - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/put-range">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/put-range</a></p>
+
+<p>Returns a File</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 288</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_put_file_range'>put_file_range</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_start_range'>start_range</span><span class='comma'>,</span> <span class='id identifier rubyid_end_range'>end_range</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>range</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_common_headers'>common_headers</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Content-MD5</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:transactional_md5</span><span class='rbracket'>]</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-range</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bytes=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_start_range'>start_range</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_end_range'>end_range</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-write</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>update</span><span class='tstring_end'>&#39;</span></span>
+  
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_file_from_headers'>file_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span>
+  <span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="resize_file-instance_method">
+  
+    #<strong>resize_file</strong>(share, directory_path, file, size, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Resizes a file to the specified size.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                      - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>             - String. The path to the
+directory.</p>
+</li><li>
+<p><code>file</code>                       - String. The name of the file.</p>
+</li><li>
+<p><code>size</code>                       - String. The file size. Resizes a
+file to the specified size.</p>
+
+<pre class="code ruby"><code class="ruby">If the specified value is less than the current size of the file, 
+then all ranges above the specified value are cleared.</code></pre>
+</li><li>
+<p><code>options</code>                    - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>                - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set-file-properties">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set-file-properties</a></p>
+
+<p>Returns nil on success.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+258
+259
+260
+261</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 258</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_resize_file'>resize_file</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_size'>size</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='symbol'>:content_length</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_size'>size</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_set_file_properties'>set_file_properties</span> <span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_directory_metadata-instance_method">
+  
+    #<strong>set_directory_metadata</strong>(share, directory_path, metadata, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Sets custom metadata for the directory.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                     - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>            - String. The path to the directory.</p>
+</li><li>
+<p><code>metadata</code>                  - Hash. A Hash of the metadata
+values.</p>
+</li><li>
+<p><code>options</code>                   - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>                  - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>               - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set-directory-metadata">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set-directory-metadata</a></p>
+
+<p>Returns nil on success</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 253</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_directory_metadata'>set_directory_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>metadata</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Headers
+</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_common_headers'>common_headers</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'>add_metadata_to_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_metadata'>metadata</span>
+
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_uri'>directory_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  
+  <span class='comment'># Result
+</span>  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_file_metadata-instance_method">
+  
+    #<strong>set_file_metadata</strong>(share, directory_path, file, metadata, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Sets custom metadata for the file.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                     - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>            - String. The path to the directory.</p>
+</li><li>
+<p><code>file</code>                      - String. The name of the file.</p>
+</li><li>
+<p><code>metadata</code>                  - Hash. A Hash of the metadata
+values.</p>
+</li><li>
+<p><code>options</code>                   - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:timeout</code>                  - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>               - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set-file-metadata">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set-file-metadata</a></p>
+
+<p>Returns nil on success</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 440</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_file_metadata'>set_file_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='comment'># Query
+</span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>metadata</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Headers
+</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_common_headers'>common_headers</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'>add_metadata_to_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_metadata'>metadata</span>
+
+  <span class='comment'># Call
+</span>  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  
+  <span class='comment'># Result
+</span>  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_file_properties-instance_method">
+  
+    #<strong>set_file_properties</strong>(share, directory_path, file, options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Sets system properties defined for a file.</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>share</code>                      - String. The name of the file
+share.</p>
+</li><li>
+<p><code>directory_path</code>             - String. The path to the
+directory.</p>
+</li><li>
+<p><code>file</code>                       - String. The name of the file.</p>
+</li><li>
+<p><code>options</code>                    - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:content_type</code>              - String. Content type for the
+file. Will be saved with file.</p>
+</li><li>
+<p><code>:content_encoding</code>          - String. Content encoding for the
+file. Will be saved with file.</p>
+</li><li>
+<p><code>:content_language</code>          - String. Content language for the
+file. Will be saved with file.</p>
+</li><li>
+<p><code>:content_md5</code>               - String. Content MD5 for the file.
+Will be saved with file.</p>
+</li><li>
+<p><code>:cache_control</code>             - String. Cache control for the
+file. Will be saved with file.</p>
+</li><li>
+<p><code>:content_disposition</code>       - String. Conveys additional
+information about how to process the response payload,</p>
+
+<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata</code></pre>
+</li><li>
+<p><code>:content_length</code>            - Integer. Resizes a file to the
+specified size. If the specified</p>
+
+<pre class="code ruby"><code class="ruby">value is less than the current size of the file, then all ranges above
+the specified value are cleared.</code></pre>
+</li><li>
+<p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
+</li><li>
+<p><code>:request_id</code>                - String. Provides a
+client-generated, opaque value with a 1 KB character limit that is recorded</p>
+
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li></ul>
+
+<p>See <a
+href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set-file-properties">docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set-file-properties</a></p>
+
+<p>Returns nil on success.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 215</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_file_properties'>set_file_properties</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>properties</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+  <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_common_headers'>common_headers</span>
+
+  <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-content-type</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_type</span><span class='rbracket'>]</span>
+    <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-content-encoding</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_encoding</span><span class='rbracket'>]</span>
+    <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-content-language</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_language</span><span class='rbracket'>]</span>
+    <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-content-md5</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_md5</span><span class='rbracket'>]</span>
+    <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-cache-control</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:cache_control</span><span class='rbracket'>]</span>
+    <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-content-length</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_length</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_length</span><span class='rbracket'>]</span>
+    <span class='const'>StorageService</span><span class='period'>.</span><span class='id identifier rubyid_with_header'>with_header</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x-ms-content-disposition</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_disposition</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Feb 28 13:56:30 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.5 (ruby-2.2.5).
+</div>
+
+    </div>
+  </body>
+</html>

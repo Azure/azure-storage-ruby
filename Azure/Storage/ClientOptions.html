@@ -315,13 +315,13 @@
       <pre class="lines">
 
 
-155
-156
-157
-158</pre>
+163
+164
+165
+166</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 163</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>super</span> <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='id identifier rubyid_method_name'>method_name</span>
@@ -426,24 +426,24 @@
       <pre class="lines">
 
 
-137
-138
-139
-140
-141
-142
-143
-144
 145
 146
 147
 148
 149
 150
-151</pre>
+151
+152
+153
+154
+155
+156
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 137</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 145</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_connection_string_mapping'>connection_string_mapping</span>
   <span class='ivar'>@connection_string_mapping</span> <span class='op'>||=</span> <span class='lbrace'>{</span>
@@ -504,23 +504,23 @@
       <pre class="lines">
 
 
-119
-120
-121
-122
-123
-124
-125
-126
 127
 128
 129
 130
 131
-132</pre>
+132
+133
+134
+135
+136
+137
+138
+139
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_env_vars_mapping'>env_vars_mapping</span>
   <span class='ivar'>@env_vars_mapping</span> <span class='op'>||=</span> <span class='lbrace'>{</span>
@@ -580,14 +580,6 @@
       <pre class="lines">
 
 
-98
-99
-100
-101
-102
-103
-104
-105
 106
 107
 108
@@ -596,10 +588,18 @@
 111
 112
 113
-114</pre>
+114
+115
+116
+117
+118
+119
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 98</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_valid_options'>valid_options</span>
   <span class='ivar'>@valid_options</span> <span class='op'>||=</span> <span class='lbracket'>[</span>
@@ -668,12 +668,12 @@
       <pre class="lines">
 
 
-91
-92
-93</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options'>options</span>
   <span class='ivar'>@options</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -699,7 +699,8 @@
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
-<p><code>options</code>    - Hash. Optional parameters.</p>
+<p><code>options</code>                         - Hash | String. Optional
+parameters or storage connection string.</p>
 </li></ul>
 
 <h4 id="label-Options">Options</h4>
@@ -712,6 +713,9 @@ storage emulator.</p>
 <p><code>:development_storage_proxy_uri</code>  - String. Used with
 <code>:use_development_storage</code> if emulator is hosted other than
 localhost.</p>
+</li><li>
+<p><code>:storage_connection_string</code>      - String. The storage
+connection string.</p>
 </li><li>
 <p><code>:storage_account_name</code>           - String. The name of the
 storage account.</p>
@@ -804,7 +808,6 @@ the mapping relationship</p>
       <pre class="lines">
 
 
-71
 72
 73
 74
@@ -814,17 +817,32 @@ the mapping relationship</p>
 78
 79
 80
-81</pre>
+81
+82
+83
+84
+85
+86
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reset!'>reset!</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>String</span>
     <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_connection_string'>parse_connection_string</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Hash</span>
+    <span class='comment'># When the options are provided via singlton setup: Azure::Storage.setup()
+</span>    <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_setup_options'>setup_options</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>0</span>
+    
+    <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_connection_string'>parse_connection_string</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:storage_connection_string</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:storage_connection_string</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
-  
-  <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_load_env'>load_env</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>0</span>
+
+  <span class='comment'># Load from environment when no valid input
+</span>  <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_load_env'>load_env</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>0</span>
+
   <span class='ivar'>@ca_file</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:ca_file</span><span class='rparen'>)</span>
   <span class='ivar'>@options</span> <span class='op'>=</span> <span class='id identifier rubyid_filter'>filter</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:reset_config!</span><span class='comma'>,</span> <span class='ivar'>@options</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:reset_config!</span><span class='rparen'>)</span>
@@ -874,12 +892,12 @@ the mapping relationship</p>
       <pre class="lines">
 
 
-84
-85
-86</pre>
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_same_options?'>same_options?</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_opts'>opts</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>0</span> <span class='op'>||</span> <span class='id identifier rubyid_opts'>opts</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span> <span class='op'>==</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span> 
@@ -894,7 +912,7 @@ the mapping relationship</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Dec 28 15:43:41 2016 by
+  Generated on Tue Feb 28 13:56:30 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.2.5).
 </div>

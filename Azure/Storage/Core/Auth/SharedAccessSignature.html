@@ -173,6 +173,18 @@
   <span class='label'>endrk:</span>                <span class='symbol'>:erk</span>
 <span class='rbrace'>}</span></pre></dd>
     
+      <dt id="FILE_KEY_MAPPINGS-constant" class="">FILE_KEY_MAPPINGS =
+        
+      </dt>
+      <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='label'>resource:</span>             <span class='symbol'>:sr</span><span class='comma'>,</span>
+  <span class='label'>cache_control:</span>        <span class='symbol'>:rscc</span><span class='comma'>,</span>
+  <span class='label'>content_disposition:</span>  <span class='symbol'>:rscd</span><span class='comma'>,</span>
+  <span class='label'>content_encoding:</span>     <span class='symbol'>:rsce</span><span class='comma'>,</span>
+  <span class='label'>content_language:</span>     <span class='symbol'>:rscl</span><span class='comma'>,</span>
+  <span class='label'>content_type:</span>         <span class='symbol'>:rsct</span>
+<span class='rbrace'>}</span></pre></dd>
+    
       <dt id="SERVICE_OPTIONAL_QUERY_PARAMS-constant" class="">SERVICE_OPTIONAL_QUERY_PARAMS =
         
       </dt>
@@ -500,13 +512,13 @@ configuration.</p>
       <pre class="lines">
 
 
-96
-97
-98
-99</pre>
+105
+106
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 105</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_account_name'>account_name</span><span class='op'>=</span><span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='period'>.</span><span class='id identifier rubyid_storage_account_name'>storage_account_name</span><span class='comma'>,</span> <span class='id identifier rubyid_access_key'>access_key</span><span class='op'>=</span><span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='period'>.</span><span class='id identifier rubyid_storage_access_key'>storage_access_key</span><span class='rparen'>)</span>
   <span class='ivar'>@account_name</span> <span class='op'>=</span> <span class='id identifier rubyid_account_name'>account_name</span>
@@ -550,12 +562,12 @@ configuration.</p>
       <pre class="lines">
 
 
-90
-91
-92</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_account_name'>account_name</span>
   <span class='ivar'>@account_name</span>
@@ -587,14 +599,14 @@ configuration.</p>
       <pre class="lines">
 
 
-262
-263
-264
-265
-266</pre>
+278
+279
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 262</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 278</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_canonicalize_time'>canonicalize_time</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:start</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:start</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span><span class='period'>.</span><span class='id identifier rubyid_iso8601'>iso8601</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:start</span><span class='rbracket'>]</span>
@@ -645,12 +657,12 @@ configuration.</p>
       <pre class="lines">
 
 
-258
-259
-260</pre>
+274
+275
+276</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 258</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 274</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_canonicalized_resource'>canonicalized_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_service_type'>service_type</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_service_type'>service_type</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_account_name'>account_name</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -763,26 +775,26 @@ range of IP addresses from which to accept requests.</p>
       <pre class="lines">
 
 
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235</pre>
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 219</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 235</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_account_sas_token'>generate_account_sas_token</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>InvalidOptionsError</span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SAS version cannot be set</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:version</span><span class='rbracket'>]</span>
@@ -947,15 +959,6 @@ specified row key range.</p>
       <pre class="lines">
 
 
-134
-135
-136
-137
-138
-139
-140
-141
-142
 143
 144
 145
@@ -979,10 +982,26 @@ specified row key range.</p>
 163
 164
 165
-166</pre>
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 143</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_service_sas_token'>generate_service_sas_token</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='symbol'>:service</span><span class='rparen'>)</span>
@@ -1004,6 +1023,13 @@ specified row key range.</p>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_service_type'>service_type</span> <span class='op'>==</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>ServiceType</span><span class='op'>::</span><span class='const'>TABLE</span>
     <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='label'>table_name:</span> <span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_valid_mappings'>valid_mappings</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='const'>TABLE_KEY_MAPPINGS</span><span class='rparen'>)</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_service_type'>service_type</span> <span class='op'>==</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>ServiceType</span><span class='op'>::</span><span class='const'>FILE</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:resource</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='label'>resource:</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:resource</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='label'>resource:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>f</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_valid_mappings'>valid_mappings</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='const'>FILE_KEY_MAPPINGS</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_invalid_options'>invalid_options</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='op'>|</span> <span class='id identifier rubyid_valid_mappings'>valid_mappings</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -1061,25 +1087,25 @@ specified row key range.</p>
       <pre class="lines">
 
 
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254</pre>
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 239</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 255</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_signable_string_for_account'>signable_string_for_account</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='comment'># Order is significant
@@ -1141,22 +1167,6 @@ specified row key range.</p>
       <pre class="lines">
 
 
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
 186
 187
 188
@@ -1172,10 +1182,26 @@ specified row key range.</p>
 198
 199
 200
-201</pre>
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 186</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_signable_string_for_service'>signable_string_for_service</span><span class='lparen'>(</span><span class='id identifier rubyid_service_type'>service_type</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='comment'># Order is significant
@@ -1198,7 +1224,7 @@ specified row key range.</p>
     <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_encoding</span><span class='rbracket'>]</span><span class='comma'>,</span>
     <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_language</span><span class='rbracket'>]</span><span class='comma'>,</span>
     <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_type</span><span class='rbracket'>]</span>
-  <span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_service_type'>service_type</span> <span class='op'>==</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>ServiceType</span><span class='op'>::</span><span class='const'>BLOB</span>
+  <span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_service_type'>service_type</span> <span class='op'>==</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>ServiceType</span><span class='op'>::</span><span class='const'>BLOB</span> <span class='op'>||</span> <span class='id identifier rubyid_service_type'>service_type</span> <span class='op'>==</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>ServiceType</span><span class='op'>::</span><span class='const'>FILE</span>
 
   <span class='id identifier rubyid_signable_fields'>signable_fields</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span> <span class='lbracket'>[</span>
     <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:startpk</span><span class='rbracket'>]</span><span class='comma'>,</span>
@@ -1381,25 +1407,25 @@ specified row key range.</p>
       <pre class="lines">
 
 
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322
-323
-324
-325
-326
-327</pre>
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 312</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/auth/shared_access_signature_generator.rb', line 328</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_signed_uri'>signed_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_use_account_sas'>use_account_sas</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='const'>CGI</span><span class='op'>::</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_memo'>memo</span><span class='comma'>,</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span><span class='op'>|</span> <span class='id identifier rubyid_memo'>memo</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span><span class='semicolon'>;</span> <span class='id identifier rubyid_memo'>memo</span><span class='rbrace'>}</span>
@@ -1427,7 +1453,7 @@ specified row key range.</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Dec 28 15:43:47 2016 by
+  Generated on Tue Feb 28 13:56:33 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.2.5).
 </div>
