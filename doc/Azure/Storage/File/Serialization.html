@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: Azure::Storage::File::Serialization
+  
+    &mdash; Documentation by YARD 0.9.5
+  
+</title>
+
+  <link rel="stylesheet" href="../../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Azure::Storage::File::Serialization";
+  relpath = '../../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../../class_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../../_index.html">Index (S)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../File.html" title="Azure::Storage::File (module)">File</a></span></span>
+     &raquo; 
+    <span class="title">Serialization</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <iframe id="search_frame" src="../../../class_list.html"></iframe>
+
+      <div id="content"><h1>Module: Azure::Storage::File::Serialization
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Service::Serialization</a></span></dd>
+  </dl>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/azure/storage/file/serialization.rb</dd>
+  </dl>
+  
+</div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#directories_and_files_enumeration_results_from_xml-class_method" title="directories_and_files_enumeration_results_from_xml (class method)">.<strong>directories_and_files_enumeration_results_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#directory_from_headers-class_method" title="directory_from_headers (class method)">.<strong>directory_from_headers</strong>(headers)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#directory_from_xml-class_method" title="directory_from_xml (class method)">.<strong>directory_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#directory_properties_from_headers-class_method" title="directory_properties_from_headers (class method)">.<strong>directory_properties_from_headers</strong>(headers)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#file_from_headers-class_method" title="file_from_headers (class method)">.<strong>file_from_headers</strong>(headers)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#file_from_xml-class_method" title="file_from_xml (class method)">.<strong>file_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#file_properties_from_headers-class_method" title="file_properties_from_headers (class method)">.<strong>file_properties_from_headers</strong>(headers)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#file_properties_from_xml-class_method" title="file_properties_from_xml (class method)">.<strong>file_properties_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#quota_from_headers-class_method" title="quota_from_headers (class method)">.<strong>quota_from_headers</strong>(headers)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#range_list_from_xml-class_method" title="range_list_from_xml (class method)">.<strong>range_list_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#share_enumeration_results_from_xml-class_method" title="share_enumeration_results_from_xml (class method)">.<strong>share_enumeration_results_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#share_from_headers-class_method" title="share_from_headers (class method)">.<strong>share_from_headers</strong>(headers)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#share_from_xml-class_method" title="share_from_xml (class method)">.<strong>share_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#share_properties_from_headers-class_method" title="share_properties_from_headers (class method)">.<strong>share_properties_from_headers</strong>(headers)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#share_properties_from_xml-class_method" title="share_properties_from_xml (class method)">.<strong>share_properties_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#share_stats_from_xml-class_method" title="share_stats_from_xml (class method)">.<strong>share_stats_from_xml</strong>(xml)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Service::Serialization</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Service/Serialization.html#included-class_method" title="Azure::Storage::Service::Serialization.included (method)">included</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Service/Serialization/ClassMethods.html" title="Azure::Storage::Service::Serialization::ClassMethods (module)">Service::Serialization::ClassMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Service/Serialization/ClassMethods.html#access_policy_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#access_policy_from_xml (method)">#access_policy_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#ary_from_node-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#ary_from_node (method)">#ary_from_node</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#cors_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#cors_from_xml (method)">#cors_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#cors_rule_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#cors_rule_from_xml (method)">#cors_rule_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#cors_rule_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#cors_rule_to_xml (method)">#cors_rule_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#cors_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#cors_to_xml (method)">#cors_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#enumeration_results_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#enumeration_results_from_xml (method)">#enumeration_results_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#expect_node-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#expect_node (method)">#expect_node</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#hour_metrics_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#hour_metrics_to_xml (method)">#hour_metrics_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#logging_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#logging_from_xml (method)">#logging_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#logging_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#logging_to_xml (method)">#logging_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#metadata_from_headers-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#metadata_from_headers (method)">#metadata_from_headers</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#metadata_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#metadata_from_xml (method)">#metadata_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#metrics_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#metrics_from_xml (method)">#metrics_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#metrics_to_xml_children-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#metrics_to_xml_children (method)">#metrics_to_xml_children</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#minute_metrics_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#minute_metrics_to_xml (method)">#minute_metrics_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#retention_policy_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#retention_policy_from_xml (method)">#retention_policy_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#retention_policy_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#retention_policy_to_xml (method)">#retention_policy_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#service_properties_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#service_properties_from_xml (method)">#service_properties_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#service_properties_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#service_properties_to_xml (method)">#service_properties_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#signed_identifier_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#signed_identifier_from_xml (method)">#signed_identifier_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#signed_identifiers_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#signed_identifiers_from_xml (method)">#signed_identifiers_from_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#signed_identifiers_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#signed_identifiers_to_xml (method)">#signed_identifiers_to_xml</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#slopify-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#slopify (method)">#slopify</a></span>, <span class='object_link'><a href="../Service/Serialization/ClassMethods.html#to_bool-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#to_bool (method)">#to_bool</a></span></p>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="directories_and_files_enumeration_results_from_xml-class_method">
+  
+    .<strong>directories_and_files_enumeration_results_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 97</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_directories_and_files_enumeration_results_from_xml'>directories_and_files_enumeration_results_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>EnumerationResults</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_enumeration_results_from_xml'>enumeration_results_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='comma'>,</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Service</span><span class='op'>::</span><span class='const'>EnumerationResults</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
+
+  <span class='kw'>return</span> <span class='id identifier rubyid_results'>results</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Entries</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Entries</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>File</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Entries</span><span class='period'>.</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>0</span>
+      <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_file_from_xml'>file_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Entries</span><span class='period'>.</span><span class='const'>File</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Entries</span><span class='period'>.</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_file_node'>file_node</span><span class='op'>|</span>
+        <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_file_from_xml'>file_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_file_node'>file_node</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Entries</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Directory</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Entries</span><span class='period'>.</span><span class='const'>Directory</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>0</span>
+      <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_directory_from_xml'>directory_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Entries</span><span class='period'>.</span><span class='const'>Directory</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Entries</span><span class='period'>.</span><span class='const'>Directory</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_directory_node'>directory_node</span><span class='op'>|</span>
+        <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_directory_from_xml'>directory_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_directory_node'>directory_node</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_results'>results</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="directory_from_headers-class_method">
+  
+    .<strong>directory_from_headers</strong>(headers)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+156
+157
+158
+159
+160
+161</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 156</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_directory_from_headers'>directory_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='const'>Directory</span><span class='op'>::</span><span class='const'>Directory</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_directory'>directory</span><span class='op'>|</span>
+    <span class='id identifier rubyid_directory'>directory</span><span class='period'>.</span><span class='id identifier rubyid_properties'>properties</span> <span class='op'>=</span> <span class='id identifier rubyid_directory_properties_from_headers'>directory_properties_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_directory'>directory</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata_from_headers'>metadata_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="directory_from_xml-class_method">
+  
+    .<strong>directory_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+147
+148
+149
+150
+151
+152
+153
+154</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 147</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_directory_from_xml'>directory_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Directory</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='const'>Directory</span><span class='op'>::</span><span class='const'>Directory</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_directory'>directory</span><span class='op'>|</span>
+    <span class='id identifier rubyid_directory'>directory</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Name</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="directory_properties_from_headers-class_method">
+  
+    .<strong>directory_properties_from_headers</strong>(headers)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+163
+164
+165
+166
+167
+168</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 163</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_directory_properties_from_headers'>directory_properties_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_props'>props</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:last_modified</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Last-Modified</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> 
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:etag</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ETag</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="file_from_headers-class_method">
+  
+    .<strong>file_from_headers</strong>(headers)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+170
+171
+172
+173
+174
+175</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 170</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_file_from_headers'>file_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+    <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_properties'>properties</span> <span class='op'>=</span> <span class='id identifier rubyid_file_properties_from_headers'>file_properties_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata_from_headers'>metadata_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="file_from_xml-class_method">
+  
+    .<strong>file_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+128
+129
+130
+131
+132
+133
+134
+135
+136</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 128</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_file_from_xml'>file_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>File</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+    <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Name</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_properties'>properties</span> <span class='op'>=</span> <span class='id identifier rubyid_file_properties_from_xml'>file_properties_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Properties</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Properties</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="file_properties_from_headers-class_method">
+  
+    .<strong>file_properties_from_headers</strong>(headers)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 177</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_file_properties_from_headers'>file_properties_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_props'>props</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:last_modified</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Last-Modified</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:etag</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ETag</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_length</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Length</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>unless</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Length</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_length</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-content-length</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>unless</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-content-length</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_type</span><span class='rbracket'>]</span> <span class='op'>=</span>  <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_encoding</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Encoding</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_language</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Language</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_disposition</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Disposition</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_md5</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-MD5</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:cache_control</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cache-Control</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_id</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-copy-id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_status</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-copy-status</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_source</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-copy-source</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_progress</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-copy-progress</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_completion_time</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-copy-completion-time</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:copy_status_description</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-copy-status-description</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:accept_ranges</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Accept-Ranges</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Accept-Ranges</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_props'>props</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="file_properties_from_xml-class_method">
+  
+    .<strong>file_properties_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+138
+139
+140
+141
+142
+143
+144
+145</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 138</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_file_properties_from_xml'>file_properties_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Properties</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_props'>props</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:content_length</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Length</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Length</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="quota_from_headers-class_method">
+  
+    .<strong>quota_from_headers</strong>(headers)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+87
+88
+89</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 87</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_quota_from_headers'>quota_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-share-quota</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-share-quota</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>:</span> <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="range_list_from_xml-class_method">
+  
+    .<strong>range_list_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 206</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_range_list_from_xml'>range_list_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ranges</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_range_list'>range_list</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_range_list'>range_list</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Range</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Range</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>0</span>
+    <span class='id identifier rubyid_range_list'>range_list</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='lbracket'>[</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Range</span><span class='period'>.</span><span class='const'>Start</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Range</span><span class='period'>.</span><span class='const'>End</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rbracket'>]</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Range</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_range'>range</span><span class='op'>|</span>
+      <span class='id identifier rubyid_range_list'>range_list</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='lbracket'>[</span><span class='id identifier rubyid_range'>range</span><span class='period'>.</span><span class='const'>Start</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='id identifier rubyid_range'>range</span><span class='period'>.</span><span class='const'>End</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rbracket'>]</span>
+    <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_range_list'>range_list</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="share_enumeration_results_from_xml-class_method">
+  
+    .<strong>share_enumeration_results_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 31</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_share_enumeration_results_from_xml'>share_enumeration_results_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>EnumerationResults</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_enumeration_results_from_xml'>enumeration_results_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='comma'>,</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Service</span><span class='op'>::</span><span class='const'>EnumerationResults</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
+  
+  <span class='kw'>return</span> <span class='id identifier rubyid_results'>results</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Shares</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Shares</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Share</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Shares</span><span class='period'>.</span><span class='const'>Share</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>0</span>
+    <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_share_from_xml'>share_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Shares</span><span class='period'>.</span><span class='const'>Share</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Shares</span><span class='period'>.</span><span class='const'>Share</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_share_node'>share_node</span><span class='op'>|</span>
+      <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_share_from_xml'>share_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_share_node'>share_node</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_results'>results</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="share_from_headers-class_method">
+  
+    .<strong>share_from_headers</strong>(headers)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+72
+73
+74
+75
+76
+77
+78</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 72</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_share_from_headers'>share_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='const'>Share</span><span class='op'>::</span><span class='const'>Share</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_share'>share</span><span class='op'>|</span>
+    <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_properties'>properties</span> <span class='op'>=</span> <span class='id identifier rubyid_share_properties_from_headers'>share_properties_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_quota'>quota</span> <span class='op'>=</span> <span class='id identifier rubyid_quota_from_headers'>quota_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata_from_headers'>metadata_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="share_from_xml-class_method">
+  
+    .<strong>share_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 50</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_share_from_xml'>share_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Share</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='const'>Share</span><span class='op'>::</span><span class='const'>Share</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_share'>share</span><span class='op'>|</span>
+    <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Name</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Name</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_properties'>properties</span> <span class='op'>=</span> <span class='id identifier rubyid_share_properties_from_xml'>share_properties_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Properties</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Properties</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata_from_xml'>metadata_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Metadata</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Metadata</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="share_properties_from_headers-class_method">
+  
+    .<strong>share_properties_from_headers</strong>(headers)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+80
+81
+82
+83
+84
+85</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 80</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_share_properties_from_headers'>share_properties_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_props'>props</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:last_modified</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Last-Modified</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> 
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:etag</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ETag</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_props'>props</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="share_properties_from_xml-class_method">
+  
+    .<strong>share_properties_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 61</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_share_properties_from_xml'>share_properties_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Properties</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_props'>props</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:last_modified</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Last-Modified</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Last-Modified</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:etag</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>ETag</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ETag</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span><span class='lbracket'>[</span><span class='symbol'>:quota</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Quota</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Quota</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_props'>props</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="share_stats_from_xml-class_method">
+  
+    .<strong>share_stats_from_xml</strong>(xml)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93
+94
+95</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/serialization.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_share_stats_from_xml'>share_stats_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ShareStats</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>ShareUsage</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Feb 28 13:56:31 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.5 (ruby-2.2.5).
+</div>
+
+    </div>
+  </body>
+</html>
