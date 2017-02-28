@@ -40,6 +40,18 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
   }
   after { TableNameHelper.clean }
 
+  it 'queries a table entity with SAS in connection string' do
+    sas_token = generator.generate_service_sas_token table_name, { service: 't', permissions: 'r', protocol: 'https,http' }
+    connection_string = "TableEndpoint=https://#{ENV['AZURE_STORAGE_ACCOUNT']}.table.core.windows.net;SharedAccessSignature=#{sas_token}"
+    sas_client = Azure::Storage::Client::create_from_connection_string connection_string
+    client = sas_client.table_client
+    query = { filter: "RowKey eq '1-1'" }
+    result = client.query_entities table_name, query
+    result.wont_be_nil
+    result[0].properties['PartitionKey'].must_equal entity1[:PartitionKey]
+    result[0].properties['Content'].must_equal entity1[:Content]
+  end
+
   it 'queries a table entity with a SAS' do
     sas_token = generator.generate_service_sas_token table_name, { service: 't', permissions: 'r', protocol: 'https,http' }
     signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token

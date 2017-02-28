@@ -106,7 +106,8 @@ module Azure::Storage
 
       result = Serialization.blob_from_headers(response.headers)
       result.name = blob
-
+      result.metadata = options[:metadata] if options[:metadata]
+      
       result
     end
     
@@ -118,12 +119,14 @@ module Azure::Storage
     # * +blob+                       - String. Name of blob
     # * +start_range+                - Integer. Position of first byte of first page
     # * +end_range+                  - Integer. Position of last byte of of last page
-    # * +content+                    - IO or String. Content to write. Length in bytes should equal end_range - start_range
+    # * +content+                    - IO or String. Content to write. Length in bytes should equal end_range - start_range + 1
     # * +options+                    - Hash. A collection of options.
     #
     # ==== Options
     #
     # Accepted key/value pairs in options parameter are:
+    # * +:transactional_md5+         - String. An MD5 hash of the page content. This hash is used to verify the integrity of the page during transport.
+    #                                  When this header is specified, the storage service checks the hash that has arrived with the one that was sent.
     # * +:if_sequence_number_le+     - Integer. If the blob's sequence number is less than or equal to the specified value, the request proceeds; 
     #                                  otherwise it fails with the SequenceNumberConditionNotMet error (HTTP status code 412 - Precondition Failed).
     # * +:if_sequence_number_lt+     - Integer. If the blob's sequence number is less than the specified value, the request proceeds; 
@@ -155,6 +158,7 @@ module Azure::Storage
 
       uri = blob_uri(container, blob, query)
       headers = StorageService.common_headers
+      StorageService.with_header headers, 'Content-MD5', options[:transactional_md5]
       StorageService.with_header headers, 'x-ms-range', "bytes=#{start_range}-#{end_range}"
       StorageService.with_header headers, 'x-ms-page-write', 'update'
 

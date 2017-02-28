@@ -21,25 +21,34 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
+require 'integration/test_helper'
 
-module Azure
-  module Storage
-    class Version
-      # Fields represent the parts defined in http://semver.org/
-      MAJOR = 0 unless defined? MAJOR
-      MINOR = 12 unless defined? MINOR
-      UPDATE = 0 unless defined? UPDATE
-      PRE = 'preview' unless defined? PRE
+describe Azure::Storage::File::FileService do
+  subject { Azure::Storage::File::FileService.new }
+  after { ShareNameHelper.clean }
 
-      class << self
-        # @return [String]
-        def to_s
-          [MAJOR, MINOR, UPDATE, PRE].compact.join('.')
-        end
+  describe '#delete_directory' do
+    let(:share_name) { ShareNameHelper.name }
+    let(:directory_name) { FileNameHelper.name }
+    before { 
+      subject.create_share share_name
+      subject.create_directory share_name, directory_name
+    }
 
-        def to_uas
-          [MAJOR, MINOR, UPDATE].join('.') + (PRE.empty? ? '' : '-preview')
-        end
+    it 'deletes the directory' do
+      directory = subject.get_directory_properties share_name, directory_name
+
+      result = subject.delete_directory share_name, directory_name
+      result.must_be_nil
+
+      assert_raises(Azure::Core::Http::HTTPError) do
+        subject.get_directory_properties share_name, directory_name
+      end
+    end
+
+    it 'errors if the directory does not exist' do
+      assert_raises(Azure::Core::Http::HTTPError) do
+        subject.delete_directory share_name, FileNameHelper.name
       end
     end
   end

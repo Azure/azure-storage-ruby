@@ -33,7 +33,7 @@ module Azure::Storage
 
       def initialize(options = {}, &block)
         client_config = options[:client] || Azure::Storage
-        signer = options[:signer] || Auth::SharedKey.new(client_config.storage_account_name, client_config.storage_access_key)
+        signer = options[:signer] || client_config.signer || Auth::SharedKey.new(client_config.storage_account_name, client_config.storage_access_key)
         super(signer, client_config.storage_account_name, options, &block)
         @host = client.storage_table_host
       end
@@ -236,7 +236,6 @@ module Azure::Storage
         query['timeout'] = options[:timeout].to_s if options[:timeout]
 
         response = call(:post, entities_uri(table_name, nil, nil, query), body, {}, options)
-        
         result = Table::Serialization.hash_from_entry_xml(response.body)
 
         Entity.new do |entity|
@@ -469,7 +468,6 @@ module Azure::Storage
 
         query = { }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
-
         call(:delete, entities_uri(table_name, partition_key, row_key, query), nil, { "If-Match"=> if_match }, options)
         nil
       end

@@ -21,25 +21,47 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
+require 'azure/core/http/http_error'
+require 'integration/test_helper'
 
-module Azure
-  module Storage
-    class Version
-      # Fields represent the parts defined in http://semver.org/
-      MAJOR = 0 unless defined? MAJOR
-      MINOR = 12 unless defined? MINOR
-      UPDATE = 0 unless defined? UPDATE
-      PRE = 'preview' unless defined? PRE
+describe Azure::Storage::File::FileService do
+  subject { Azure::Storage::File::FileService.new }
+  after { ShareNameHelper.clean }
 
-      class << self
-        # @return [String]
-        def to_s
-          [MAJOR, MINOR, UPDATE, PRE].compact.join('.')
-        end
+  describe '#create_share' do
+    let(:share_name) { ShareNameHelper.name }
 
-        def to_uas
-          [MAJOR, MINOR, UPDATE].join('.') + (PRE.empty? ? '' : '-preview')
-        end
+    it 'creates the share' do
+      share = subject.create_share share_name
+      share.name.must_equal share_name
+    end
+
+    it 'creates the share with custom metadata' do
+      metadata = { 'CustomMetadataProperty' => 'CustomMetadataValue'}
+
+      share = subject.create_share share_name, { :metadata => metadata }
+      
+      share.name.must_equal share_name
+      share.metadata.must_equal metadata
+      share = subject.get_share_metadata share_name
+
+      metadata.each { |k,v|
+        share.metadata.must_include k.downcase
+        share.metadata[k.downcase].must_equal v
+      }
+    end
+
+    it 'errors if the share already exists' do
+      subject.create_share share_name
+      
+      assert_raises(Azure::Core::Http::HTTPError) do
+        subject.create_share share_name
+      end
+    end
+    
+    it 'errors if the share name is invalid' do
+      assert_raises(Azure::Core::Http::HTTPError) do
+        subject.create_share 'this_share.cannot-exist!'
       end
     end
   end

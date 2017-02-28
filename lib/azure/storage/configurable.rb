@@ -58,7 +58,10 @@ module Azure::Storage
 
     attr_writer :storage_table_host,
                 :storage_blob_host,
-                :storage_queue_host
+                :storage_queue_host,
+                :storage_file_host
+
+    attr_reader :signer
 
     class << self
       # List of configurable keys for {Azure::Client}
@@ -71,7 +74,8 @@ module Azure::Storage
           :storage_sas_token,
           :storage_table_host,
           :storage_blob_host,
-          :storage_queue_host
+          :storage_queue_host,
+          :storage_file_host
         ]
       end
     end
@@ -79,6 +83,10 @@ module Azure::Storage
     # Set configuration options using a block
     def configure
       yield self
+    end
+
+    def config
+      self
     end
 
     # Reset configuration options to default values
@@ -92,6 +100,7 @@ module Azure::Storage
         instance_variable_set(:"@#{key}", options.fetch(key, value))
       end
       self.send(:reset_agents!) if self.respond_to?(:reset_agents!)
+      setup_signer_for_service
       self
     end
 
@@ -121,10 +130,6 @@ module Azure::Storage
       @storage_file_host || default_host(:file)
     end
 
-    def config
-      self
-    end
-
     private
 
     def default_host(service)
@@ -137,6 +142,37 @@ module Azure::Storage
         opts[key] = Azure::Storage.send(key) if Azure::Storage.send(key)
       end
       opts
+    end
+
+    def account_name_from_endpoint endpoint
+      return nil if endpoint.nil?
+      uri = URI::parse endpoint
+      fields = uri.host.split '.'
+      fields[0]
+    end
+
+    def determine_account_name
+      if instance_variable_get(:@storage_account_name).nil?
+        hosts = [@storage_blob_host, @storage_table_host, @storage_queue_host, @storage_file_host]
+        account_name = nil;
+        hosts.each do |host|
+          parsed = account_name_from_endpoint host
+          if account_name.nil?
+            account_name = parsed
+          elsif !account_name.nil? and !parsed.nil? and (account_name <=> parsed) != 0
+            raise InvalidOptionsError, "Ambiguous account name in service hosts."
+          end
+        end
+        raise InvalidOptionsError, "Cannot identify account name." if account_name.nil?
+        @storage_account_name = account_name
+      end
+    end
+
+    def setup_signer_for_service
+      if @storage_sas_token
+        determine_account_name
+        @signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new @storage_account_name, @storage_sas_token
+      end
     end
 
   end

@@ -65,5 +65,13 @@ module Azure
       autoload :Query,                    'azure/storage/table/query'
     end
 
+    module File
+      autoload :FileService,              'azure/storage/file/file_service'
+      autoload :Share,                    'azure/storage/file/share'
+      autoload :Directory,                'azure/storage/file/directory'
+      autoload :File,                     'azure/storage/file/file'
+      autoload :Serialization,            'azure/storage/file/serialization'
+    end
+
   end
 end

@@ -21,25 +21,38 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
+require 'integration/test_helper'
 
-module Azure
-  module Storage
-    class Version
-      # Fields represent the parts defined in http://semver.org/
-      MAJOR = 0 unless defined? MAJOR
-      MINOR = 12 unless defined? MINOR
-      UPDATE = 0 unless defined? UPDATE
-      PRE = 'preview' unless defined? PRE
+describe Azure::Storage::File::FileService do
+  subject { Azure::Storage::File::FileService.new }
+  after { ShareNameHelper.clean }
 
-      class << self
-        # @return [String]
-        def to_s
-          [MAJOR, MINOR, UPDATE, PRE].compact.join('.')
-        end
+  describe '#delete_file' do
+    let(:share_name) { ShareNameHelper.name }
+    let(:directory_name) { FileNameHelper.name }
+    let(:file_name) { FileNameHelper.name }
+    let(:file_length) { 1024 }
+    before { 
+      subject.create_share share_name
+      subject.create_directory share_name, directory_name
+      subject.create_file share_name, directory_name, file_name, file_length
+    }
 
-        def to_uas
-          [MAJOR, MINOR, UPDATE].join('.') + (PRE.empty? ? '' : '-preview')
-        end
+    it 'deletes the directory' do
+      file = subject.get_file_properties share_name, directory_name, file_name
+      file.properties[:content_length].must_equal file_length
+
+      result = subject.delete_file share_name, directory_name, file_name
+      result.must_be_nil
+
+      assert_raises(Azure::Core::Http::HTTPError) do
+        subject.get_file_properties share_name, directory_name, file_name
+      end
+    end
+
+    it 'errors if the directory does not exist' do
+      assert_raises(Azure::Core::Http::HTTPError) do
+        subject.delete_file share_name, directory_name, FileNameHelper.name
       end
     end
   end

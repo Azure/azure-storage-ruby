@@ -125,7 +125,7 @@ module Azure::Storage
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179394.aspx
     #
-    # Returns the blob properties
+    # Returns the blob properties with a Blob instance
     def get_blob_properties(container, blob, options={})
       query = { }
       StorageService.with_query query, 'snapshot', options[:snapshot]
@@ -620,13 +620,13 @@ module Azure::Storage
       response.headers['x-ms-snapshot']
     end
     
-    # Public: Copies a source blob to a destination blob.
+    # Public: Copies a source blob or file to a destination blob.
     #
     # ==== Attributes
     #
-    # * +source_container+           - String. The destination container name to copy to.
-    # * +source_blob+                - String. The destination blob name to copy to.
-    # * +source_blob_uri+            - String. The source blob URI to copy from.
+    # * +destination_container+      - String. The destination container name to copy to.
+    # * +destination_blob+           - String. The destination blob name to copy to.
+    # * +source_uri+                 - String. The source blob or file URI to copy from.
     # * +options+                    - Hash. Optional parameters.
     #
     # ==== Options
@@ -675,13 +675,13 @@ module Azure::Storage
     #                                    "success" - The copy completed successfully.
     #                                    "pending" - The copy is in progress.
     #
-    def copy_blob_from_uri(destination_container, destination_blob, source_blob_uri, options={})
+    def copy_blob_from_uri(destination_container, destination_blob, source_uri, options={})
       query = { }
       StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(destination_container, destination_blob, query)
       headers = StorageService.common_headers
-      StorageService.with_header headers, 'x-ms-copy-source', source_blob_uri
+      StorageService.with_header headers, 'x-ms-copy-source', source_uri
 
       unless options.empty?
         add_blob_conditional_headers options, headers
@@ -696,8 +696,8 @@ module Azure::Storage
     #
     # ==== Attributes
     #
-    # * +source_container+           - String. The destination container name to copy to.
-    # * +source_blob+                - String. The destination blob name to copy to.
+    # * +destination_container+      - String. The destination container name to copy to.
+    # * +destination_blob+           - String. The destination blob name to copy to.
     # * +source_container+           - String. The source container name to copy from.
     # * +source_blob+                - String. The source blob name to copy from.
     # * +options+                    - Hash. Optional parameters.

@@ -31,6 +31,7 @@ require 'azure/storage/service/storage_service'
 require 'azure/storage/blob/blob_service'
 require 'azure/storage/table/table_service'
 require 'azure/storage/queue/queue_service'
+require 'azure/storage/file/file_service'
 
 module Azure::Storage
   class Client
@@ -50,6 +51,7 @@ module Azure::Storage
     #
     # * +:use_development_storage+        - True. Whether to use storage emulator.
     # * +:development_storage_proxy_uri+  - String. Used with +:use_development_storage+ if emulator is hosted other than localhost.
+    # * +:storage_connection_string+      - String. The storage connection string.
     # * +:storage_account_name+           - String. The name of the storage account.
     # * +:storage_access_key+             - Base64 String. The access key of the storage account.
     # * +:storage_sas_token+              - String. The signed access signiture for the storage account or one of its service.
@@ -79,14 +81,9 @@ module Azure::Storage
     #
     # @return [Azure::Storage::Client]
     def initialize(options = {}, &block)
-      if options.is_a?(Hash)
-        options = setup_options if options.length == 0
-        options = parse_connection_string(options[:storage_connection_string]) if options[:storage_connection_string]
-
-        if options.has_key?(:user_agent_prefix)
-          Azure::Storage::Service::StorageService.user_agent_prefix = options[:user_agent_prefix]
-          options.delete :user_agent_prefix
-        end
+      if options.is_a?(Hash) and options.has_key?(:user_agent_prefix)
+        Azure::Storage::Service::StorageService.user_agent_prefix = options[:user_agent_prefix]
+        options.delete :user_agent_prefix
       end
       Azure::Storage::Service::StorageService.register_request_callback &block if block_given?
       reset!(options)
@@ -108,6 +105,12 @@ module Azure::Storage
     # @return [Azure::Storage::Table::TableService]
     def table_client(options = {})
       @table_client ||= Azure::Storage::Table::TableService.new(default_client(options))
+    end
+
+    # Azure File service client configured from this Azure Storage client instance
+    # @return [Azure::Storage::File::FileService]
+    def file_client(options = {})
+      @file_client ||= Azure::Storage::File::FileService.new(default_client(options))
     end
 
     class << self

@@ -69,6 +69,17 @@ QueueNameHelper = NameGenerator.new do |name|
   end
 end
 
+ShareNameHelper = NameGenerator.new do |name|
+  svc = Azure::Storage::File::FileService.new
+  begin
+    svc.delete_share name
+  rescue
+  end
+end
+
+FileNameHelper = NameGenerator.new do
+end
+
 ServiceBusRelayNameHelper = NameGenerator.new do |name|
   svc = Azure::ServiceBus::ServiceBusService.new
   begin

@@ -159,6 +159,7 @@ describe Azure::Storage::Service::StorageService do
   end
 
   describe '#get_service_properties' do
+    let(:query) { {} }
     let(:service_properties_xml) { Fixtures['storage_service_properties'] }
     let(:service_properties) { Azure::Storage::Service::StorageServiceProperties.new }
     let(:response) {
@@ -171,7 +172,7 @@ describe Azure::Storage::Service::StorageService do
 
     before do
       Azure::Storage::Service::Serialization.stubs(:service_properties_from_xml).with(service_properties_xml).returns(service_properties)
-      subject.stubs(:service_properties_uri).returns(service_properties_uri)
+      subject.stubs(:service_properties_uri).with(query).returns(service_properties_uri)
       subject.stubs(:call).with(:get, service_properties_uri, nil, {}, {}).returns(response)
     end
 
@@ -190,6 +191,15 @@ describe Azure::Storage::Service::StorageService do
       subject.get_service_properties
     end
 
+    it 'modifies the URI query parameters when provided a :timeout value' do
+      query.update({'timeout' => '30'})
+      subject.expects(:service_properties_uri).with(query).returns(service_properties_uri)
+
+      options = {:timeout => 30}
+      subject.expects(:call).with(:get, service_properties_uri, nil, {}, options).returns(response)
+      subject.get_service_properties options
+    end
+
     it 'returns a StorageServiceProperties instance' do
       result = subject.get_service_properties
       result.must_be_kind_of Azure::Storage::Service::StorageServiceProperties
@@ -197,6 +207,7 @@ describe Azure::Storage::Service::StorageService do
   end
 
   describe '#set_service_properties' do
+    let(:query) { {} }
     let(:service_properties_xml) { Fixtures['storage_service_properties'] }
     let(:service_properties) { Azure::Storage::Service::StorageServiceProperties.new }
     let(:response) {
@@ -209,7 +220,7 @@ describe Azure::Storage::Service::StorageService do
 
     before do
       Azure::Storage::Service::Serialization.stubs(:service_properties_to_xml).with(service_properties).returns(service_properties_xml)
-      subject.stubs(:service_properties_uri).returns(service_properties_uri)
+      subject.stubs(:service_properties_uri).with(query).returns(service_properties_uri)
       subject.stubs(:call).with(:put, service_properties_uri, service_properties_xml, {}, {}).returns(response)
     end
 
@@ -221,6 +232,15 @@ describe Azure::Storage::Service::StorageService do
     it 'posts to the HTTP API' do
       subject.expects(:call).with(:put, service_properties_uri, service_properties_xml, {}, {}).returns(response)
       subject.set_service_properties service_properties
+    end
+
+    it 'modifies the URI query parameters when provided a :timeout value' do
+      query.update({'timeout' => '30'})
+      subject.expects(:service_properties_uri).with(query).returns(service_properties_uri)
+
+      options = {:timeout => 30}
+      subject.expects(:call).with(:put, service_properties_uri, service_properties_xml, {}, options).returns(response)
+      subject.set_service_properties service_properties, options
     end
 
     it 'serializes the StorageServiceProperties object to xml' do

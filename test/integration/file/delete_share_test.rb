@@ -21,25 +21,33 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
+require 'integration/test_helper'
 
-module Azure
-  module Storage
-    class Version
-      # Fields represent the parts defined in http://semver.org/
-      MAJOR = 0 unless defined? MAJOR
-      MINOR = 12 unless defined? MINOR
-      UPDATE = 0 unless defined? UPDATE
-      PRE = 'preview' unless defined? PRE
+describe Azure::Storage::File::FileService do
+  subject { Azure::Storage::File::FileService.new }
+  after { ShareNameHelper.clean }
 
-      class << self
-        # @return [String]
-        def to_s
-          [MAJOR, MINOR, UPDATE, PRE].compact.join('.')
-        end
+  describe '#delete_share' do
+    let(:share_name) { ShareNameHelper.name }
+    before { 
+      subject.create_share share_name
+    }
 
-        def to_uas
-          [MAJOR, MINOR, UPDATE].join('.') + (PRE.empty? ? '' : '-preview')
-        end
+    it 'deletes the share' do
+      share = subject.get_share_stats share_name
+      share.usage.must_equal 0
+
+      result = subject.delete_share share_name
+      result.must_be_nil
+
+      assert_raises(Azure::Core::Http::HTTPError) do
+        subject.get_share_stats share_name
+      end
+    end
+
+    it 'errors if the share does not exist' do
+      assert_raises(Azure::Core::Http::HTTPError) do
+        subject.delete_share FileNameHelper.name
       end
     end
   end

@@ -60,13 +60,16 @@ module Azure::Storage
       #
       # ==== Options
       #
+      # * +:timeout+                   - Integer. A timeout in seconds.
       # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
       #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # Returns a Hash with the service properties or nil if the operation failed
       def get_service_properties(options={})
-        uri = service_properties_uri
-        response = call(:get, uri, nil, {}, options)
+        query = { }
+        StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+
+        response = call(:get, service_properties_uri(query), nil, {}, options)
         Serialization.service_properties_from_xml response.body
       end
 
@@ -79,14 +82,17 @@ module Azure::Storage
       #
       # ==== Options
       #
+      # * +:timeout+                   - Integer. A timeout in seconds.
       # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
       #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # Returns boolean indicating success.
       def set_service_properties(service_properties, options={})
+        query = { }
+        StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+
         body = Serialization.service_properties_to_xml service_properties
-        uri = service_properties_uri
-        call(:put, uri, body, {}, options)
+        call(:put, service_properties_uri(query), body, {}, options)
         nil
       end
 
@@ -106,13 +112,24 @@ module Azure::Storage
       # query   - Hash. the query parameters
       #
       # Returns the uri hash
-      def generate_uri(path='', query={})
+      def generate_uri(path='', query={}, encode=false)
         if self.client.is_a?(Azure::Storage::Client) && self.client.options[:use_path_style_uri]
           if path.length > 0
             path = self.client.options[:storage_account_name] + '/' + path
           else
             path = self.client.options[:storage_account_name]
           end
+        end
+
+        if encode
+          path = CGI.escape(path.encode('UTF-8'))
+
+          # decode the forward slashes to match what the server expects.
+          path = path.gsub(/%2F/, '/')
+          # decode the backward slashes to match what the server expects.
+          path = path.gsub(/%5C/, '/')
+          # Re-encode the spaces (encoded as space) to the % encoding.
+          path = path.gsub(/\+/, '%20')
         end
 
         super path, query

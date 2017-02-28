@@ -40,7 +40,7 @@ module Azure::Storage
       
       def initialize(options = {}, &block)
         client_config = options[:client] || Azure::Storage
-        signer = options[:signer] || Azure::Storage::Core::Auth::SharedKey.new(client_config.storage_account_name, client_config.storage_access_key)
+        signer = options[:signer] || client_config.signer || Azure::Storage::Core::Auth::SharedKey.new(client_config.storage_account_name, client_config.storage_access_key)
         super(signer, client_config.storage_account_name, options, &block)
         @host = client.storage_blob_host
       end
@@ -469,19 +469,9 @@ module Azure::Storage
         if container_name.nil? || container_name.empty?
           path = blob_name
         else
-          path = File.join(container_name, blob_name)
+          path = ::File.join(container_name, blob_name)
         end
-
-        path = CGI.escape(path.encode('UTF-8'))
-
-        # Unencode the forward slashes to match what the server expects.
-        path = path.gsub(/%2F/, '/')
-        # Unencode the backward slashes to match what the server expects.
-        path = path.gsub(/%5C/, '/')
-        # Re-encode the spaces (encoded as space) to the % encoding.
-        path = path.gsub(/\+/, '%20')
-
-        generate_uri(path, query)
+        generate_uri(path, query, true)
       end
       
       # Adds conditional header with required condition

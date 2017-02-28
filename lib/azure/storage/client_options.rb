@@ -34,7 +34,7 @@ module Azure::Storage
     #
     # ==== Attributes
     #
-    # * +options+    - Hash. Optional parameters.
+    # * +options+                         - Hash | String. Optional parameters or storage connection string.
     #
     # ==== Options
     #
@@ -42,6 +42,7 @@ module Azure::Storage
     #
     # * +:use_development_storage+        - TrueClass. Whether to use storage emulator.
     # * +:development_storage_proxy_uri+  - String. Used with +:use_development_storage+ if emulator is hosted other than localhost.
+    # * +:storage_connection_string+      - String. The storage connection string.
     # * +:storage_account_name+           - String. The name of the storage account.
     # * +:storage_access_key+             - Base64 String. The access key of the storage account.
     # * +:storage_sas_token+              - String. The signed access signiture for the storage account or one of its service.
@@ -71,9 +72,16 @@ module Azure::Storage
     def reset!(options = {})
       if options.is_a? String
         options = parse_connection_string(options)
+      elsif options.is_a? Hash
+        # When the options are provided via singlton setup: Azure::Storage.setup()
+        options = setup_options if options.length == 0
+        
+        options = parse_connection_string(options[:storage_connection_string]) if options[:storage_connection_string]
       end
-      
+
+      # Load from environment when no valid input
       options = load_env if options.length == 0
+
       @ca_file = options.delete(:ca_file)
       @options = filter(options)
       self.send(:reset_config!, @options) if self.respond_to?(:reset_config!)

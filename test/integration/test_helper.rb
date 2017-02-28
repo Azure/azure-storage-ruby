@@ -28,6 +28,4 @@ Azure::Storage.configure do |config|
   config.storage_access_key       = ENV.fetch('AZURE_STORAGE_ACCESS_KEY')
   config.storage_account_name     = ENV.fetch('AZURE_STORAGE_ACCOUNT')
   Azure::Storage.client(:storage_account_name => config.storage_account_name, :storage_access_key => config.storage_access_key)
-  require "azure/core/http/debug_filter"
-  Azure::Storage.client.blob_client.with_filter Azure::Core::Http::DebugFilter.new
 end
