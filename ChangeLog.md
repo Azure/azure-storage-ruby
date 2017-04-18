@@ -1,4 +1,4 @@
-Next
+2017.04 - version 0.12.1-preview
 
 ALL
 * Relaxed constraint on Nokogiri version dependency to allow Nokogiri 1.7.x for Ruby 2.1 and later, but preserving support for Ruby 1.9.3. (Note that this may require updating to Bundler 1.13 or later if you're using Ruby 1.9 or 2.0.)
