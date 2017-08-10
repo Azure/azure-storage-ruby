@@ -1,3 +1,8 @@
+2017.08 - version 0.12.2-preview
+
+ALL
+* Removed Nokogiri as a dependency to resolve conflict version caused by azure-core also depending on Nokogiri.
+
 2017.04 - version 0.12.1-preview
 
 ALL
