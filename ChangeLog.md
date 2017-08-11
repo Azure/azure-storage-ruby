@@ -1,3 +1,8 @@
+2017.08 - version 0.12.3-preview
+
+ALL
+* Added Nokogiri as a gem into Gemfile, resolving an issue where bundler failed to recognize that the dependency exists after installation.
+
 2017.08 - version 0.12.2-preview
 
 ALL
