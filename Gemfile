@@ -25,6 +25,4 @@ source 'https://rubygems.org'
 
 gemspec :name => 'azure-storage'
 
-gem 'nokogiri', require: false
-
 gem 'coveralls', require: false
