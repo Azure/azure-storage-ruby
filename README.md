@@ -21,7 +21,7 @@ This project provides a Ruby package that makes it easy to access and manage Mic
 Note: 
 
 * x64 Ruby for Windows is known to have some compatibility issues.
-* azure-storage depends on gem nokogiri, which doesn't support Ruby 2.2+ on Windows.
+* azure-storage depends on gem nokogiri. For Ruby version lower than 2.2, please install the compatible nokogiri before trying to install azure-storage.
 
 # Getting Started
 
