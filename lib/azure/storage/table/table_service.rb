@@ -52,16 +52,26 @@ module Azure::Storage
       # * +:timeout+                 - Integer. A timeout in seconds.
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
       #                                in the analytics logs when storage analytics logging is enabled.
+      # * +:accept+                  - String. Specifies the accepted content-type of the response payload. Possible values are:
+      #                                 :no_meta
+      #                                 :min_meta
+      #                                 :full_meta 
+      # * +:prefer+                  - String. Specifies whether the response should include the inserted entity in the payload. Possible values are:
+      #                                 HeaderConstants::PREFER_CONTENT
+      #                                 HeaderConstants::PREFER_NO_CONTENT
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd135729
       #
       # @return [nil] on success
       def create_table(table_name, options={})
-        query = { }
-        query['timeout'] = options[:timeout].to_s if options[:timeout]
 
-        body = Table::Serialization.hash_to_entry_xml({"TableName" => table_name}).to_xml
-        call(:post, collection_uri(query), body, {}, options)
+        headers = {
+          HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(options[:accept]),
+        }
+        headers[HeaderConstants::PREFER] = options[:prefer] unless options[:prefer].nil?
+        body = Serialization.hash_to_json({"TableName" => table_name})
+
+        call(:post, collection_uri(new_query(options)), body, headers, options)
         nil
       end
 
@@ -83,10 +93,8 @@ module Azure::Storage
       #
       # Returns nil on success
       def delete_table(table_name, options={})
-        query = { }
-        query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-        call(:delete, table_uri(table_name, query), nil, {}, options)
+        call(:delete, table_uri(table_name, new_query(options)), nil, {}, options)
         nil
       end
 
@@ -106,12 +114,11 @@ module Azure::Storage
       #
       # Returns the last updated time for the table
       def get_table(table_name, options={})
-        query = { }
-        query["timeout"] = options[:timeout].to_s if options[:timeout]
-
-        response = call(:get, table_uri(table_name, query), nil, {}, options)
-        results = Table::Serialization.hash_from_entry_xml(response.body)
-        results[:updated]
+        headers = {
+          HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(:full_meta),
+        }
+        response = call(:get, table_uri(table_name, new_query(options)), nil, headers, options)
+        results = Table::Serialization.table_entries_from_json(response.body)
       rescue => e
         raise_with_response(e, response)
       end
@@ -130,21 +137,27 @@ module Azure::Storage
       # * +:timeout+                 - Integer. A timeout in seconds.
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
       #                                in the analytics logs when storage analytics logging is enabled.
+      # * +:accept+                  - String. Specifies the accepted content-type of the response payload. Possible values are:
+      #                                 :no_meta
+      #                                 :min_meta
+      #                                 :full_meta
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179405
       #
       # Returns an array with an extra continuation_token property on success
       def query_tables(options={})
-        query = { }
-        query["NextTableName"] = options[:next_table_token] if options[:next_table_token]
-        query["timeout"] = options[:timeout].to_s if options[:timeout]
+        query = new_query(options)
+        query[TableConstants::NEXT_TABLE_NAME] = options[:next_table_token] if options[:next_table_token]
         uri = collection_uri(query)
 
-        response = call(:get, uri, nil, {}, options)
-        entries = Table::Serialization.entries_from_feed_xml(response.body) || []
+        headers = {
+          HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(options[:accept]),
+        }
 
+        response = call(:get, uri, nil, headers, options)
+        entries = Table::Serialization.table_entries_from_json(response.body) || []
         values = Azure::Service::EnumerationResults.new(entries)
-        values.continuation_token = response.headers["x-ms-continuation-NextTableName"]
+        values.continuation_token = response.headers[TableConstants::CONTINUATION_NEXT_TABLE_NAME]
         values
       rescue => e
         raise_with_response(e, response)
@@ -168,13 +181,13 @@ module Azure::Storage
       #
       # Returns a list of Azure::Storage::Entity::SignedIdentifier instances
       def get_table_acl(table_name, options={})
-        query = { 'comp' => 'acl'}
-        query['timeout'] = options[:timeout].to_s if options[:timeout]
+        query = new_query(options)
+        query[QueryStringConstants::COMP] = QueryStringConstants::ACL
 
         response = call(:get, generate_uri(table_name, query), nil, {'x-ms-version' => '2012-02-12'}, options)
 
         signed_identifiers = []
-        signed_identifiers = Table::Serialization.signed_identifiers_from_xml response.body unless response.body == nil or response.body.length < 1
+        signed_identifiers = Table::Serialization.signed_identifiers_from_xml response.body unless response.body == nil || response.body.length < 1
         signed_identifiers
       rescue => e
         raise_with_response(e, response)
@@ -199,8 +212,8 @@ module Azure::Storage
       #
       # Returns nil on success
       def set_table_acl(table_name, options={})
-        query = { 'comp' => 'acl'}
-        query['timeout'] = options[:timeout].to_s if options[:timeout]
+        query = new_query(options)
+        query[QueryStringConstants::COMP] = QueryStringConstants::ACL
 
         uri = generate_uri(table_name, query)
         body = nil
@@ -223,27 +236,26 @@ module Azure::Storage
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                 - Integer. A timeout in seconds.
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
+      # * +:accept+                  - String. Specifies the accepted content-type of the response payload. Possible values are:
+      #                                 :no_meta
+      #                                 :min_meta
+      #                                 :full_meta
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179433
       #
       # Returns a Azure::Storage::Entity::Table::Entity
-      def insert_entity(table_name, entity_values, options={})
-        body = Table::Serialization.hash_to_entry_xml(entity_values).to_xml
-
-        query = { }
-        query['timeout'] = options[:timeout].to_s if options[:timeout]
-
-        response = call(:post, entities_uri(table_name, nil, nil, query), body, {}, options)
-        result = Table::Serialization.hash_from_entry_xml(response.body)
-
-        Entity.new do |entity|
-          entity.table = table_name
-          entity.updated = result[:updated]
-          entity.etag = response.headers['etag'] || result[:etag]
-          entity.properties = result[:properties]
-        end
+      def insert_entity(table_name, entity_values, options = {})
+        body = Table::Serialization.hash_to_json(entity_values)
+        time = EdmType::to_edm_time(Time.now)
+        headers = {
+          HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(options[:accept])
+        }
+        response = call(:post, entities_uri(table_name, nil, nil, new_query(options)), body, headers, options)
+        result = Table::Serialization.entity_from_json(response.body)
+        result.etag = response.headers[HeaderConstants::ETAG] if result.etag.nil?
+        result
       rescue => e
         raise_with_response(e, response)
       end
@@ -265,86 +277,79 @@ module Azure::Storage
       # * +:top+                     - Integer. A limit for the number of results returned (optional)
       # * +:continuation_token+      - Hash. The continuation token.
       # * +:timeout+                 - Integer. A timeout in seconds.
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
+      # * +:accept+                  - String. Specifies the accepted content-type of the response payload. Possible values are:
+      #                                 :no_meta
+      #                                 :min_meta
+      #                                 :full_meta 
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179421
       #
       # Returns an array with an extra continuation_token property on success
-      def query_entities(table_name, options={})
-        query ={}
-        query["$select"] = options[:select].join ',' if options[:select]
-        query["$filter"] = options[:filter] if options[:filter]
-        query["$top"] = options[:top].to_s if options[:top] unless options[:partition_key] and options[:row_key]
-        query["NextPartitionKey"] = options[:continuation_token][:next_partition_key] if options[:continuation_token] and options[:continuation_token][:next_partition_key]
-        query["NextRowKey"] = options[:continuation_token][:next_row_key] if options[:continuation_token] and options[:continuation_token][:next_row_key]
-        query["timeout"] = options[:timeout].to_s if options[:timeout]
+      def query_entities(table_name, options = {})
+        query = new_query(options)
+        query[QueryStringConstants::SELECT] = options[:select].join ',' if options[:select]
+        query[QueryStringConstants::FILTER] = options[:filter] if options[:filter]
+        query[QueryStringConstants::TOP] = options[:top].to_s if options[:top] unless options[:partition_key] && options[:row_key]
+        query[QueryStringConstants::NEXT_PARTITION_KEY] = options[:continuation_token][:next_partition_key] if options[:continuation_token] && options[:continuation_token][:next_partition_key]
+        query[QueryStringConstants::NEXT_ROW_KEY] = options[:continuation_token][:next_row_key] if options[:continuation_token] && options[:continuation_token][:next_row_key]
 
         uri = entities_uri(table_name, options[:partition_key], options[:row_key], query)
-        response = call(:get, uri, nil, {"DataServiceVersion" => "2.0;NetFx"}, options)
 
-        entities = Azure::Service::EnumerationResults.new
+        headers = {
+          HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(options[:accept])
+        }
 
-        results = (options[:partition_key] and options[:row_key]) ? [Table::Serialization.hash_from_entry_xml(response.body)] : Table::Serialization.entries_from_feed_xml(response.body)
-        
-        results.each do |result|
-          entity = Entity.new do |e|
-            e.table = table_name
-            e.updated = result[:updated]
-            e.etag = response.headers["etag"] || result[:etag]
-            e.properties = result[:properties]
-          end
-          entities.push entity
-        end if results
+        response = call(:get, uri, nil, headers, options)
+
+        entities = Azure::Service::EnumerationResults.new.push(*Table::Serialization.entities_from_json(response.body))
 
         entities.continuation_token = nil
-        entities.continuation_token = { 
-          :next_partition_key=> response.headers["x-ms-continuation-NextPartitionKey"], 
-          :next_row_key => response.headers["x-ms-continuation-NextRowKey"]
-          } if response.headers["x-ms-continuation-NextPartitionKey"]
+        entities.continuation_token = {
+          next_partition_key: response.headers[TableConstants::CONTINUATION_NEXT_PARTITION_KEY],
+          next_row_key: response.headers[TableConstants::CONTINUATION_NEXT_ROW_KEY]
+        } if response.headers[TableConstants::CONTINUATION_NEXT_PARTITION_KEY]
 
         entities
       rescue => e
         raise_with_response(e, response)
       end
 
-      # Public: Updates an existing entity in a table. The Update Entity operation replaces 
+      # Public: Updates an existing entity in a table. The Update Entity operation replaces
       # the entire entity and can be used to remove properties.
       #
       # ==== Attributes
       #
       # * +table_name+               - String. The table name
       # * +entity_values+            - Hash. A hash of the name/value pairs for the entity.
-      # * +options+                  - Hash. Optional parameters. 
+      # * +options+                  - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:if_match+                - String. A matching condition which is required for update (optional, Default="*")
-      # * +:create_if_not_exists+    - Boolean. If true, and partition_key and row_key do not reference and existing entity, 
+      # * +:create_if_not_exists+    - Boolean. If true, and partition_key and row_key do not reference and existing entity,
       #                                that entity will be inserted. If false, the operation will fail. (optional, Default=false)
       # * +:timeout+                 - Integer. A timeout in seconds.
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179427
       #
-      # Returns the ETag for the entity on success 
-      def update_entity(table_name, entity_values, options={})
+      # Returns the ETag for the entity on success
+      def update_entity(table_name, entity_values, options = {})
         if_match = "*"
         if_match = options[:if_match] if options[:if_match]
 
-        query = { }
-        query["timeout"] = options[:timeout].to_s if options[:timeout]
-
-        uri = entities_uri(table_name, 
+        uri = entities_uri(table_name,
           entity_values[:PartitionKey] || entity_values['PartitionKey'],
-          entity_values[:RowKey] || entity_values["RowKey"], query)
+          entity_values[:RowKey] || entity_values["RowKey"], new_query(options))
 
         headers = {}
         headers["If-Match"] = if_match || "*" unless options[:create_if_not_exists]
 
-        body = Table::Serialization.hash_to_entry_xml(entity_values).to_xml
+        body = Table::Serialization.hash_to_json(entity_values)
 
         response = call(:put, uri, body, headers, options)
         response.headers["etag"]
@@ -359,36 +364,33 @@ module Azure::Storage
       #
       # * +table_name+               - String. The table name
       # * +entity_values+            - Hash. A hash of the name/value pairs for the entity.
-      # * +options+                  - Hash. Optional parameters. 
+      # * +options+                  - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:if_match+                - String. A matching condition which is required for update (optional, Default="*")
-      # * +:create_if_not_exists+    - Boolean. If true, and partition_key and row_key do not reference and existing entity, 
+      # * +:create_if_not_exists+    - Boolean. If true, and partition_key and row_key do not reference and existing entity,
       #                                that entity will be inserted. If false, the operation will fail. (optional, Default=false)
       # * +:timeout+                 - Integer. A timeout in seconds.
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # 
+      #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179392
-      # 
-      # Returns the ETag for the entity on success 
-      def merge_entity(table_name, entity_values, options={})
+      #
+      # Returns the ETag for the entity on success
+      def merge_entity(table_name, entity_values, options = {})
         if_match = "*"
         if_match = options[:if_match] if options[:if_match]
 
-        query = { }
-        query["timeout"] = options[:timeout].to_s if options[:timeout]
-
-        uri = entities_uri(table_name, 
+        uri = entities_uri(table_name,
           entity_values[:PartitionKey] || entity_values['PartitionKey'],
-          entity_values[:RowKey] || entity_values['RowKey'], query)
+          entity_values[:RowKey] || entity_values['RowKey'], new_query(options))
 
-        headers = { "X-HTTP-Method"=> "MERGE" }
+        headers = { "X-HTTP-Method" => "MERGE" }
         headers["If-Match"] = if_match || "*" unless options[:create_if_not_exists]
 
-        body = Table::Serialization.hash_to_entry_xml(entity_values).to_xml
+        body = Table::Serialization.hash_to_json(entity_values)
 
         response = call(:post, uri, body, headers, options)
         response.headers["etag"]
@@ -402,19 +404,19 @@ module Azure::Storage
       #
       # * +table_name+               - String. The table name
       # * +entity_values+            - Hash. A hash of the name/value pairs for the entity.
-      # * +options+                  - Hash. Optional parameters. 
+      # * +options+                  - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                 - Integer. A timeout in seconds.
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # 
+      #
       # See http://msdn.microsoft.com/en-us/library/azure/hh452241
-      # 
-      # Returns the ETag for the entity on success 
-      def insert_or_merge_entity(table_name, entity_values, options={})
+      #
+      # Returns the ETag for the entity on success
+      def insert_or_merge_entity(table_name, entity_values, options = {})
         options[:create_if_not_exists] = true
         merge_entity(table_name, entity_values, options)
       end
@@ -425,19 +427,19 @@ module Azure::Storage
       #
       # * +table_name+               - String. The table name
       # * +entity_values+            - Hash. A hash of the name/value pairs for the entity.
-      # * +options+                  - Hash. Optional parameters. 
+      # * +options+                  - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                 - Integer. A timeout in seconds.
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # 
+      #
       # See http://msdn.microsoft.com/en-us/library/azure/hh452242
       #
-      # Returns the ETag for the entity on success 
-      def insert_or_replace_entity(table_name, entity_values, options={})
+      # Returns the ETag for the entity on success
+      def insert_or_replace_entity(table_name, entity_values, options = {})
         options[:create_if_not_exists] = true
         update_entity(table_name, entity_values, options)
       end
@@ -456,19 +458,17 @@ module Azure::Storage
       # Accepted key/value pairs in options parameter are:
       # * +:if_match+                - String. A matching condition which is required for update (optional, Default="*")
       # * +:timeout+                 - Integer. A timeout in seconds.
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd135727
       #
       # Returns nil on success
-      def delete_entity(table_name, partition_key, row_key, options={})
+      def delete_entity(table_name, partition_key, row_key, options = {})
         if_match = "*"
         if_match = options[:if_match] if options[:if_match]
 
-        query = { }
-        query["timeout"] = options[:timeout].to_s if options[:timeout]
-        call(:delete, entities_uri(table_name, partition_key, row_key, query), nil, { "If-Match"=> if_match }, options)
+        call(:delete, entities_uri(table_name, partition_key, row_key, new_query(options)), nil, { "If-Match" => if_match }, options)
         nil
       end
 
@@ -491,16 +491,13 @@ module Azure::Storage
       # Returns an array of results, one for each operation in the batch
       def execute_batch(batch, options={})
         headers = {
-          'Content-Type' => "multipart/mixed; boundary=#{batch.batch_id}",
-          'Accept' => 'application/atom+xml,application/xml',
-          'Accept-Charset'=> 'UTF-8'
+          HeaderConstants::CONTENT_TYPE => "multipart/mixed; boundary=#{batch.batch_id}",
+          HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(options[:accept]),
+          'Accept-Charset' => 'UTF-8'
         }
 
-        query = { }
-        query["timeout"] = options[:timeout].to_s if options[:timeout]
-
         body = batch.to_body
-        response = call(:post, generate_uri('/$batch', query), body, headers, options)
+        response = call(:post, generate_uri('/$batch', new_query(options)), body, headers, options, true)
         batch.parse_response(response)
       rescue => e
         raise_with_response(e, response)
@@ -523,7 +520,7 @@ module Azure::Storage
       #                                in the analytics logs when storage analytics logging is enabled.
       #
       # Returns an Azure::Storage::Table::Entity instance on success
-      def get_entity(table_name, partition_key, row_key, options={})
+      def get_entity(table_name, partition_key, row_key, options = {})
         options[:partition_key] = partition_key
         options[:row_key] = row_key
         results = query_entities(table_name, options)
@@ -563,7 +560,7 @@ module Azure::Storage
       #
       # Returns a URI
       public
-      def entities_uri(table_name, partition_key=nil, row_key=nil, query={})
+      def entities_uri(table_name, partition_key = nil, row_key = nil, query = {})
         return table_name if table_name.kind_of? ::URI
 
         path = if partition_key && row_key
@@ -617,6 +614,19 @@ module Azure::Storage
       def raise_with_response(e, response)
         raise e if response.nil?
         raise "Response header: #{response.headers.inspect}\nResponse body: #{response.body.inspect}\n#{e.inspect}\n#{e.backtrace.join("\n")}"
+      end
+
+      protected
+      def call(method, uri, body = nil, headers = {}, options = {}, is_batch = false)
+        # Add JSON Content-Type header if is_batch is false because default is Atom.
+        headers[HeaderConstants::CONTENT_TYPE] = HeaderConstants::JSON_CONTENT_TYPE_VALUE unless is_batch
+        headers[HeaderConstants::DATA_SERVICE_VERSION] = TableConstants::DEFAULT_DATA_SERVICE_VERSION
+        super(method, uri, body, headers, options)
+      end
+
+      protected
+      def new_query(options = {})
+        options[:timeout].nil? ? {} : { QueryStringConstants::TIMEOUT => options[:timeout].to_s }
       end
     end
   end

@@ -31,8 +31,6 @@ module Azure::Storage
         yield self if block_given?
       end
 
-      attr_accessor :table
-      attr_accessor :updated
       attr_accessor :etag
       attr_accessor :properties
     end

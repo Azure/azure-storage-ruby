@@ -1,3 +1,11 @@
+Tracking Breaking Changes in 0.13.0-preview
+
+TABLE
+* The return type `Azure::Service::EnumerationResult` of `query_tables` has a changed structure. Now the `'updated'` will not be contained, and is flattened to a structure in the form of `{ {"TableName" => "tableone"}, {"TableName" => "tabletwo"}, {"TableName" => "tablethree"}}`.
+* The `Azure::Storage::Table::Entity` does not contain `:table` and `updated` anymore. The updated time can be found in `:properties`.
+* The return type of `get_table` is changed to a Hash that contains full metadata returned from the server when query the table.
+* The method `Azure::Storage::Table::EdmType::unserialize_query_value` is renamed to `unserialize_value`.
+
 Tracking Breaking Changes in 0.11.0-preview
 
 ALL

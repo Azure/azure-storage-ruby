@@ -33,9 +33,9 @@ describe Azure::Storage::Blob::BlobService do
 
     it "exception message should be valid" do
       subject.create_container container_name
-      
+
       # creating the same container again should throw
-      begin 
+      begin
         subject.create_container container_name
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error

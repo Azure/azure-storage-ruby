@@ -68,13 +68,7 @@ module Azure::Storage
         when "Edm.Binary"
           Base64.encode64(value.to_s).chomp("\n")
         when "Edm.DateTime"
-          value.xmlschema(7)
-        when "Edm.Boolean"
-          if value.nil?
-            ''
-          else
-            value == true ? '1' : '0'
-          end
+          to_edm_time(value)
         else
           value.to_s
         end
@@ -113,7 +107,7 @@ module Azure::Storage
       # type  - String. The Edm datatype
       #
       # Returns an typed object
-      def self.unserialize_query_value(value, type)
+      def self.unserialize_value(value, type)
         case type
         when "Edm.DateTime"
           Time.parse(value)
@@ -122,14 +116,19 @@ module Azure::Storage
         when "Edm.Int32", "Edm.Int64"
           Integer(value)
         when "Edm.Boolean"
-          /true/i === value
+          value == true || value == 'true' ? true : false
         when "Edm.Guid"
           GUID.new(value.to_s)
         when "Edm.Binary"
           Base64.decode64(value.to_s).force_encoding("BINARY")
         else
-          value.to_s
+          value == '' ? nil : value.to_s
         end
+      end
+
+      def self.to_edm_time(value)
+        date = value.is_a?(Time) ? value : Time.parse(value)
+        date.utc.strftime('%Y-%m-%dT%H:%M:%S.%6N0Z')
       end
     end
   end

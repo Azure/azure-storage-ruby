@@ -67,7 +67,6 @@ describe Azure::Storage::Table::TableService do
       result = subject.get_entity table_name, entity["PartitionKey"], entity["RowKey"]
 
       result.must_be_kind_of Azure::Storage::Table::Entity
-      result.table.must_equal table_name
       result.etag.wont_be_nil
       
       entity.each { |k,v|
@@ -115,7 +114,6 @@ describe Azure::Storage::Table::TableService do
       result.etag.wont_equal existing_etag
 
       result.must_be_kind_of Azure::Storage::Table::Entity
-      result.table.must_equal table_name
       
       # retained all existing props
       entity.each { |k,v|

@@ -34,6 +34,7 @@ describe Azure::Storage::Table::TableService do
 
     it "gets a list of tables for the account" do
       result = subject.query_tables
+
       while result.continuation_token
         token = result.continuation_token
         result.continuation_token = nil
@@ -42,15 +43,10 @@ describe Azure::Storage::Table::TableService do
       result.must_be_kind_of Array
 
       tables.each { |t| 
-        table = result.find {|c|
-          c[:properties]["TableName"] == t
+        table = result.find { |c|
+          c["TableName"] == t
         }
         table.wont_be_nil
-        updated = subject.get_table(t)
-        updated.wont_be_nil
-
-        # this is a weird, but sometimes it's off by a few seconds
-        assert ((table[:updated] - updated).abs < 30), "time stamps don't match"
       }
     end
   end

@@ -36,7 +36,7 @@ module Azure::Storage
       attr_accessor :size
       attr_accessor :type
     end
-    
+
     # Public: Creates a new block blob or updates the content of an existing block blob.
     #
     # Updating an existing block blob overwrites any existing metadata on the blob

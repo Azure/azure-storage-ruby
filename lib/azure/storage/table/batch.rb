@@ -106,12 +106,15 @@ module Azure::Storage
       end
 
       protected
-      def add_operation(method, uri, body=nil, headers=nil)
+      def add_operation(method, uri, body = nil, headers = nil)
         op = {
-          :method => method, 
-          :uri => uri, 
-          :body => body, 
-          :headers => headers
+          method: method,
+          uri: uri,
+          body: body,
+          headers: headers.merge(
+            HeaderConstants::CONTENT_TYPE => HeaderConstants::JSON_CONTENT_TYPE_VALUE,
+            HeaderConstants::DATA_SERVICE_VERSION => TableConstants::DEFAULT_DATA_SERVICE_VERSION
+          )
         }
         operations.push op
       end
@@ -141,13 +144,9 @@ module Azure::Storage
             case operation[:method]
             when :post
               # entity from body
-              result = Azure::Storage::Table::Serialization.hash_from_entry_xml(response[:body])
+              entity = Azure::Storage::Table::Serialization.entity_from_json(response[:body])
 
-              entity = Azure::Storage::Table::Entity.new
-              entity.table = table
-              entity.updated = result[:updated]
-              entity.etag = response[:headers]["etag"] || result[:etag]
-              entity.properties = result[:properties]
+              entity.etag = response[:headers]["etag"] if entity.etag.nil?
 
               new_responses.push entity
             when :put, :merge
@@ -172,31 +171,27 @@ module Azure::Storage
         body.add_line "Content-Type: multipart/mixed; boundary=#{changeset_id}"
         body.add_line ""
 
-        content_id = 1
         operations.each { |op|
           body.add_line "--#{changeset_id}"
           body.add_line "Content-Type: application/http"
           body.add_line "Content-Transfer-Encoding: binary"
           body.add_line ""
           body.add_line "#{op[:method].to_s.upcase} #{op[:uri]} HTTP/1.1"
-          body.add_line "Content-ID: #{content_id}"
 
           if op[:headers]
-            op[:headers].each { |k,v|
-                body.add_line "#{k}: #{v}"
+            op[:headers].each { |k, v|
+              body.add_line "#{k}: #{v}"
             }
           end
-          
+
           if op[:body]
-            body.add_line "Content-Type: application/atom+xml;type=entry"
             body.add_line "Content-Length: #{op[:body].bytesize}"
             body.add_line ""
             body.add_line op[:body]
           else
             body.add_line ""
-          end 
+          end
 
-          content_id += 1
         }
         body.add_line "--#{changeset_id}--"
         body.add_line "--#{batch_id}--"
@@ -207,81 +202,105 @@ module Azure::Storage
       # ==== Attributes
       #
       # * +row_key+       - String. The row key
-      # * +entity_values+ - Hash. A hash of the name/value pairs for the entity. 
-      #
-      # See http://msdn.microsoft.com/en-us/library/azure/dd179433
-      public
-      def insert(row_key, entity_values)
-        check_entity_key(row_key)
-
-        body = Azure::Storage::Table::Serialization.hash_to_entry_xml({ 
-            "PartitionKey" => partition, 
-            "RowKey" => row_key
-          }.merge(entity_values) ).to_xml
-
-        add_operation(:post, @table_service.entities_uri(table), body)
-        self
-      end
-
-      # Public: Updates an existing entity in a table. The Update Entity operation replaces 
-      # the entire entity and can be used to remove properties.
-      #
-      # ==== Attributes
-      #
-      # * +row_key+       - String. The row key
-      # * +entity_values+ - Hash. A hash of the name/value pairs for the entity. 
+      # * +entity_values+ - Hash. A hash of the name/value pairs for the entity.
       # * +options+       - Hash. Optional parameters. 
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
+      # * +:accept+              - String. Specifies the accepted content-type of the response payload. Possible values are:
+      #                             :no_meta
+      #                             :min_meta
+      #                             :full_meta
+      # * +:prefer+              - String. Specifies whether the response should include the inserted entity in the payload. Possible values are:
+      #                             HeaderConstants::PREFER_CONTENT
+      #                             HeaderConstants::PREFER_NO_CONTENT
+      #
+      # See http://msdn.microsoft.com/en-us/library/azure/dd179433
+      public
+      def insert(row_key, entity_values, options = {})
+        check_entity_key(row_key)
+
+        headers = { HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(options[:accept]) }
+        headers[HeaderConstants::PREFER] = options[:prefer] unless options[:prefer].nil?
+
+        body = Azure::Storage::Table::Serialization.hash_to_json({
+            "PartitionKey" => partition,
+            "RowKey" => row_key
+          }.merge(entity_values)
+        )
+
+        add_operation(:post, @table_service.entities_uri(table), body, headers)
+        self
+      end
+
+      # Public: Updates an existing entity in a table. The Update Entity operation replaces
+      # the entire entity and can be used to remove properties.
+      #
+      # ==== Attributes
+      #
+      # * +row_key+       - String. The row key
+      # * +entity_values+ - Hash. A hash of the name/value pairs for the entity.
+      # * +options+       - Hash. Optional parameters.
+      #
+      # ==== Options
+      #
+      # Accepted key/value pairs in options parameter are:
       # * :if_match              - String. A matching condition which is required for update (optional, Default="*")
-      # * :create_if_not_exists  - Boolean. If true, and partition_key and row_key do not reference and existing entity, 
+      # * :create_if_not_exists  - Boolean. If true, and partition_key and row_key do not reference and existing entity,
       #   that entity will be inserted. If false, the operation will fail. (optional, Default=false)
+      # * +:accept+              - String. Specifies the accepted content-type of the response payload. Possible values are:
+      #                             :no_meta
+      #                             :min_meta
+      #                             :full_meta
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179427
       public
-      def update(row_key, entity_values, options={})
+      def update(row_key, entity_values, options = {})
         check_entity_key(row_key)
 
         uri = @table_service.entities_uri(table, partition, row_key)
 
-        headers = {}
+        headers = { HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(options[:accept]) }
         headers["If-Match"] = options[:if_match] || "*" unless options[:create_if_not_exists]
 
-        body = Azure::Storage::Table::Serialization.hash_to_entry_xml(entity_values).to_xml
+        body = Azure::Storage::Table::Serialization.hash_to_json(entity_values)
 
         add_operation(:put, uri, body, headers)
         self
       end
-      
+
       # Public: Updates an existing entity by updating the entity's properties. This operation
       # does not replace the existing entity, as the update_entity operation does.
       #
       # ==== Attributes
       #
       # * +row_key+         - String. The row key
-      # * +entity_values+   - Hash. A hash of the name/value pairs for the entity. 
-      # * +options+         - Hash. Optional parameters. 
+      # * +entity_values+   - Hash. A hash of the name/value pairs for the entity.
+      # * +options+         - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +if_match+              - String. A matching condition which is required for update (optional, Default="*")
-      # * +create_if_not_exists+  - Boolean. If true, and partition_key and row_key do not reference and existing entity, 
+      # * +create_if_not_exists+  - Boolean. If true, and partition_key and row_key do not reference and existing entity,
       #   that entity will be inserted. If false, the operation will fail. (optional, Default=false)
-      # 
+      # * +:accept+              - String. Specifies the accepted content-type of the response payload. Possible values are:
+      #                             :no_meta
+      #                             :min_meta
+      #                             :full_meta
+      #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179392
       public
-      def merge(row_key, entity_values, options={})
+      def merge(row_key, entity_values, options = {})
         check_entity_key(row_key)
 
         uri = @table_service.entities_uri(table, partition, row_key)
 
-        headers = {}
+        headers = { HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(options[:accept]) }
         headers["If-Match"] = options[:if_match] || "*" unless options[:create_if_not_exists]
 
-        body = Azure::Storage::Table::Serialization.hash_to_entry_xml(entity_values).to_xml
+        body = Azure::Storage::Table::Serialization.hash_to_json(entity_values)
 
         add_operation(:merge, uri, body, headers)
         self
@@ -293,11 +312,11 @@ module Azure::Storage
       #
       # * +row_key+               - String. The row key
       # * +entity_values+         - Hash. A hash of the name/value pairs for the entity.
-      # 
+      #
       # See http://msdn.microsoft.com/en-us/library/azure/hh452241
       public
       def insert_or_merge(row_key, entity_values)
-        merge(row_key, entity_values, { :create_if_not_exists => true })
+        merge(row_key, entity_values, create_if_not_exists: true)
         self
       end
 
@@ -306,12 +325,12 @@ module Azure::Storage
       # ==== Attributes
       #
       # * +row_key+               - String. The row key
-      # * +entity_values+         - Hash. A hash of the name/value pairs for the entity. 
-      # 
+      # * +entity_values+         - Hash. A hash of the name/value pairs for the entity.
+      #
       # See http://msdn.microsoft.com/en-us/library/azure/hh452242
       public
       def insert_or_replace(row_key, entity_values)
-        update(row_key, entity_values, { :create_if_not_exists => true })
+        update(row_key, entity_values, create_if_not_exists: true)
         self
       end
 
@@ -320,17 +339,25 @@ module Azure::Storage
       # ==== Attributes
       #
       # * +row_key+       - String. The row key
-      # * +options+       - Hash. Optional parameters. 
+      # * +options+       - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +if_match+      - String. A matching condition which is required for update (optional, Default="*")
+      # * +:accept+              - String. Specifies the accepted content-type of the response payload. Possible values are:
+      #                             :no_meta
+      #                             :min_meta
+      #                             :full_meta
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd135727
       public
-      def delete(row_key, options={})
-        add_operation(:delete, @table_service.entities_uri(table, partition, row_key), nil, {"If-Match"=> options[:if_match] || "*"})
+      def delete(row_key, options = {})
+        headers = {
+          HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(options[:accept]),
+          "If-Match" => options[:if_match] || "*"
+        }
+        add_operation(:delete, @table_service.entities_uri(table, partition, row_key), nil, headers)
         self
       end
     end
