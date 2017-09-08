@@ -72,7 +72,6 @@ describe Azure::Storage::Table::TableService do
       result = subject.get_entity table_name, entity_properties["PartitionKey"], entity_properties["RowKey"]
 
       result.must_be_kind_of Azure::Storage::Table::Entity
-      result.table.must_equal table_name
       result.properties["PartitionKey"].must_equal entity_properties["PartitionKey"]
       result.properties["RowKey"].must_equal entity_properties["RowKey"]
 

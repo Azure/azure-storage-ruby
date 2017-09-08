@@ -36,6 +36,8 @@ describe Azure::Storage::Table::TableService do
         "PartitionKey" => "testingpartition",
         "RowKey" => "abcd123",
         "CustomDoubleProperty" => 3.141592,
+        "CustomDoubleTrailingZeroProperty" => 1.0,
+        "CustomDoublePrecisionProperty" => 1.012345678901234567890,
         "CustomInt32Property" => 37,
         "CustomInt64Property" => 2**32,
         "CustomInt64NegProperty" => -(2**32),
@@ -62,7 +64,6 @@ describe Azure::Storage::Table::TableService do
       results = subject.execute_batch batch
 
       results[0].must_be_kind_of Azure::Storage::Table::Entity
-      results[0].table.must_equal table_name
       entity_properties.each { |k,v|
         if entity_properties[k].class == Time
           floor_to(results[0].properties[k].to_f, 6).must_equal floor_to(entity_properties[k].to_f, 6)

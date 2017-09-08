@@ -33,15 +33,15 @@ describe Azure::Storage::Table::TableService do
 
     it "exception message should be valid" do
       subject.create_table(table_name)
-      
+
       # creating the same table again should throw
-      begin 
+      begin
         subject.create_table(table_name)
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
         error.status_code.must_equal 409
         error.type.must_equal "TableAlreadyExists"
-        error.description.start_with?("The table specified already exists.").must_equal true
+        error.description.include?("The table specified already exists.").must_equal true
       end
     end
   end

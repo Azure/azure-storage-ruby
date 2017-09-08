@@ -28,7 +28,7 @@ require 'azure/storage/version'
 module Azure::Storage
   module Default
     # Default REST service (STG) version number
-    STG_VERSION = '2015-04-05'
+    STG_VERSION = '2016-05-31'
 
     # The number of default concurrent requests for parallel operation.
     DEFAULT_PARALLEL_OPERATION_THREAD_COUNT = 1
@@ -405,6 +405,9 @@ module Azure::Storage
     # Constant representing the type for an entity property.
     ODATA_TYPE_MARKER = '$'
 
+    # Constant representing the hash key of etag for an entity property in JSON.
+    ODATA_ETAG = 'odata.etag'
+
     # The value to set the maximum data service version header.
     DEFAULT_DATA_SERVICE_VERSION = '3.0;NetFx'
 
@@ -413,6 +416,12 @@ module Azure::Storage
 
     # The name of the special table used to store tables.
     TABLE_SERVICE_TABLE_NAME = 'Tables'
+
+    # The key of partition key in hash
+    PARTITION_KEY = 'PartitionKey'
+
+    # The key of row key in hash
+    ROW_KEY = 'RowKey'
 
     # Operations
     module Operations
@@ -447,7 +456,7 @@ module Azure::Storage
     LAST_MODIFIED = 'Last-Modified'
 
     # The data service version.
-    DATA_SERVICE_VERSION = 'dataserviceversion'
+    DATA_SERVICE_VERSION = 'DataServiceVersion'
 
     # The maximum data service version.
     MAX_DATA_SERVICE_VERSION = 'maxdataserviceversion'
@@ -555,7 +564,7 @@ module Azure::Storage
     CONTENT_RANGE = 'cache-range'
 
     # The ContentType header.
-    CONTENT_TYPE = 'content-type'
+    CONTENT_TYPE = 'Content-Type'
 
     # The header that specifies blob content type.
     BLOB_CONTENT_TYPE = 'x-ms-blob-content-type'
@@ -594,8 +603,7 @@ module Azure::Storage
     INCLUDE_SNAPSHOTS_VALUE = 'include'
 
     # Specifies that the content-type is JSON.
-    JSON_CONTENT_TYPE_VALUE = 'application/json;'
-
+    JSON_CONTENT_TYPE_VALUE = 'application/json'
 
     # The header that specifies lease ID.
     LEASE_ID = 'x-ms-lease-id'
@@ -715,7 +723,7 @@ module Azure::Storage
     LEASE_ACTION = 'x-ms-lease-action'
 
     # The accept header.
-    ACCEPT = 'accept'
+    ACCEPT = 'Accept'
 
     # The accept charset header.
     ACCEPT_CHARSET = 'Accept-Charset'
@@ -743,6 +751,16 @@ module Azure::Storage
 
     # The append blob committed block header.
     BLOB_COMMITTED_BLOCK_COUNT = 'x-ms-blob-committed-block-count'
+
+    # The returned response payload should be with no metadata.
+    ODATA_NO_META = 'application/json;odata=nometadata'
+
+    # The returned response payload should be with minimal metadata.
+    ODATA_MIN_META = 'application/json;odata=minimalmetadata'
+
+    # The returned response payload should be with full metadata.
+    ODATA_FULL_META = 'application/json;odata=fullmetadata'
+
   end
 
   module QueryStringConstants
@@ -872,6 +890,9 @@ module Azure::Storage
 
     # The ending Partition Key for tableSAS URI's.
     ENDRK = 'erk'
+
+    # ACL
+    ACL = 'acl'
   end
 
   module StorageServiceClientConstants

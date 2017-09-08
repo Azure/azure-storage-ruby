@@ -26,6 +26,8 @@ require "pathname"
 Fixtures = Hash.new do |hash, fixture|
   if path = Fixtures.xml?(fixture)
     hash[fixture] = path.read
+  elsif path = Fixtures.json?(fixture)
+    hash[fixture] = path.read
   elsif path = Fixtures.file?(fixture)
     hash[fixture] = path
   end
@@ -42,4 +44,8 @@ end
 
 def Fixtures.xml?(fixture)
   file?("#{fixture}.xml")
+end
+
+def Fixtures.json?(fixture)
+  file?("#{fixture}.json")
 end

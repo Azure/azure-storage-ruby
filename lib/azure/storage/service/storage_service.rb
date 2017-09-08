@@ -49,7 +49,7 @@ module Azure::Storage
         super(signer, account_name, options)
       end
 
-      def call(method, uri, body=nil, headers={}, options={})
+      def call(method, uri, body=nil, headers={}, options = {})
         super(method, uri, body, StorageService.common_headers(options).merge(headers))
       end
 
