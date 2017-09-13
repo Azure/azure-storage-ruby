@@ -21,29 +21,29 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 
 describe Azure::Storage::File::FileService do
   subject { Azure::Storage::File::FileService.new }
   after { ShareNameHelper.clean }
 
-  describe '#get_file' do
+  describe "#get_file" do
     let(:share_name) { ShareNameHelper.name }
     let(:directory_name) { FileNameHelper.name }
     let(:file_name) { "filename" }
     let(:file_length) { 1024 }
-    let(:content) { content = ""; file_length.times.each{|i| content << "@" }; content }
-    let(:metadata) { { "CustomMetadataProperty"=>"CustomMetadataValue" } }
-    let(:options) { { :content_type=>"application/foo", :metadata => metadata } }
+    let(:content) { content = ""; file_length.times.each { |i| content << "@" }; content }
+    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    let(:options) { { content_type: "application/foo", metadata: metadata } }
 
-    before { 
+    before {
       subject.create_share share_name
       subject.create_directory share_name, directory_name
       subject.create_file share_name, directory_name, file_name, file_length, options
       subject.put_file_range share_name, directory_name, file_name, 0, file_length - 1, content
     }
 
-    it 'retrieves the file properties, metadata, and contents' do
+    it "retrieves the file properties, metadata, and contents" do
       file, returned_content = subject.get_file share_name, directory_name, file_name
       returned_content.must_equal content
       file.metadata.must_include "custommetadataproperty"
@@ -51,8 +51,8 @@ describe Azure::Storage::File::FileService do
       file.properties[:content_type].must_equal "application/foo"
     end
 
-    it 'retrieves a range of data from the file' do
-      file, returned_content = subject.get_file share_name, directory_name, file_name, { :start_range => 0, :end_range => 511 }
+    it "retrieves a range of data from the file" do
+      file, returned_content = subject.get_file share_name, directory_name, file_name, start_range: 0, end_range: 511
       returned_content.length.must_equal 512
       returned_content.must_equal content[0..511]
     end

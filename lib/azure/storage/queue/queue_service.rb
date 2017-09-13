@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,15 +23,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/storage/core/auth/shared_key'
-require 'azure/storage/service/storage_service'
-require 'azure/storage/queue/serialization'
+require "azure/storage/core/auth/shared_key"
+require "azure/storage/service/storage_service"
+require "azure/storage/queue/serialization"
 
 module Azure::Storage
   module Queue
     include Azure::Storage::Service
     class QueueService < StorageService
-
       def initialize(options = {}, &block)
         client_config = options[:client] || Azure::Storage
         signer = options[:signer] || client_config.signer || Azure::Storage::Core::Auth::SharedKey.new(client_config.storage_account_name, client_config.storage_access_key)
@@ -46,39 +47,39 @@ module Azure::Storage
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:prefix+                    - String. Filters the results to return only containers 
+      # * +:prefix+                    - String. Filters the results to return only containers
       #                                  whose name begins with the specified prefix. (optional)
-      # * +:marker+                    - String. An identifier the specifies the portion of the 
+      # * +:marker+                    - String. An identifier the specifies the portion of the
       #                                  list to be returned. This value comes from the property
-      #                                  Azure::Service::EnumerationResults.continuation_token when there 
-      #                                  are more containers available than were returned. The 
+      #                                  Azure::Service::EnumerationResults.continuation_token when there
+      #                                  are more containers available than were returned. The
       #                                  marker value may then be used here to request the next set
       #                                  of list items. (optional)
-      # * +:max_results+               - Integer. Specifies the maximum number of containers to return. 
-      #                                  If max_results is not specified, or is a value greater than 
-      #                                  5,000, the server will return up to 5,000 items. If it is set 
-      #                                  to a value less than or equal to zero, the server will return 
+      # * +:max_results+               - Integer. Specifies the maximum number of containers to return.
+      #                                  If max_results is not specified, or is a value greater than
+      #                                  5,000, the server will return up to 5,000 items. If it is set
+      #                                  to a value less than or equal to zero, the server will return
       #                                  status code 400 (Bad Request). (optional)
       # * +:metadata+                  - Boolean. Specifies whether or not to return the container metadata.
       #                                  (optional, Default=false)
       # * +:timeout+                   - Integer. A timeout in seconds.
-      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # NOTE: Metadata requested with the :metadata parameter must have been stored in
-      # accordance with the naming restrictions imposed by the 2009-09-19 version of the queue 
-      # service. Beginning with that version, all metadata names must adhere to the naming 
+      # accordance with the naming restrictions imposed by the 2009-09-19 version of the queue
+      # service. Beginning with that version, all metadata names must adhere to the naming
       # conventions for C# identifiers.
       #
-      # See http://msdn.microsoft.com/en-us/library/azure/dd179466 
+      # See http://msdn.microsoft.com/en-us/library/azure/dd179466
       #
-      # Any metadata with invalid names which were previously stored, will be returned with the 
+      # Any metadata with invalid names which were previously stored, will be returned with the
       # key "x-ms-invalid-name" in the metadata hash. This may contain multiple values and be an
       # Array (vs a String if it only contains a single value).
-      # 
+      #
       # Returns an Azure::Service::EnumerationResults
-      def list_queues(options={})
-        query = { }
+      def list_queues(options = {})
+        query = {}
         query["prefix"] = options[:prefix] if options[:prefix]
         query["marker"] = options[:marker] if options[:marker]
         query["maxresults"] = options[:max_results].to_s if options[:max_results]
@@ -92,14 +93,14 @@ module Azure::Storage
       end
 
       # Public: Clears all messages from the queue.
-      # 
-      # If a queue contains a large number of messages, Clear Messages may time out 
-      # before all messages have been deleted. In this case the Queue service will 
-      # return status code 500 (Internal Server Error), with the additional error 
-      # code OperationTimedOut. If the operation times out, the client should 
-      # continue to retry Clear Messages until it succeeds, to ensure that all 
+      #
+      # If a queue contains a large number of messages, Clear Messages may time out
+      # before all messages have been deleted. In this case the Queue service will
+      # return status code 500 (Internal Server Error), with the additional error
+      # code OperationTimedOut. If the operation times out, the client should
+      # continue to retry Clear Messages until it succeeds, to ensure that all
       # messages have been deleted.
-      # 
+      #
       # ==== Attributes
       #
       # * +queue_name+                 - String. The name of the queue.
@@ -109,45 +110,45 @@ module Azure::Storage
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                   - Integer. A timeout in seconds.
-      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
-      # 
+      #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179454
-      # 
+      #
       # Returns nil on success
-      def clear_messages(queue_name, options={})
-        query = { }
+      def clear_messages(queue_name, options = {})
+        query = {}
         query["timeout"] = options[:timeout].to_s if options[:timeout]
         uri = messages_uri(queue_name, query)
         call(:delete, uri, nil, {}, options)
         nil
       end
-    
+
       # Public: Creates a new queue under the storage account.
-      # 
+      #
       # ==== Attributes
       #
       # * +queue_name+                 - String. The queue name.
-      # * +options+                    - Hash. Optional parameters. 
+      # * +options+                    - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:metadata+                  - Hash. A hash of user defined metadata.
       # * +:timeout+                   - Integer. A timeout in seconds.
-      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179342
       #
       # Returns nil on success
-      def create_queue(queue_name, options={})
-        query = { }
+      def create_queue(queue_name, options = {})
+        query = {}
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         uri = queue_uri(queue_name, query)
 
-        headers = { }
+        headers = {}
         Service::StorageService.add_metadata_to_headers(options[:metadata] || {}, headers) if options[:metadata]
 
         call(:put, uri, nil, headers, options)
@@ -155,24 +156,24 @@ module Azure::Storage
       end
 
       # Public: Deletes a queue.
-      # 
+      #
       # ==== Attributes
       #
       # * +queue_name+                 - String. The queue name.
-      # * +options+                    - Hash. Optional parameters. 
+      # * +options+                    - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                   - Integer. A timeout in seconds.
-      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179436
       #
       # Returns nil on success
-      def delete_queue(queue_name, options={})
-        query = { }
+      def delete_queue(queue_name, options = {})
+        query = {}
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         uri = queue_uri(queue_name, query)
@@ -182,17 +183,17 @@ module Azure::Storage
       end
 
       # Public: Returns queue properties, including user-defined metadata.
-      # 
+      #
       # ==== Attributes
       #
       # * +queue_name+                 - String. The queue name.
-      # * +options+                    - Hash. Optional parameters. 
+      # * +options+                    - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                   - Integer. A timeout in seconds.
-      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179384
@@ -202,7 +203,7 @@ module Azure::Storage
       #   lower than the actual number of messages in the queue, but could be higher.
       # * metadata                    - Hash. The queue metadata (Default: {})
       #
-      def get_queue_metadata(queue_name, options={})
+      def get_queue_metadata(queue_name, options = {})
         query = { "comp" => "metadata" }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
@@ -216,32 +217,32 @@ module Azure::Storage
         return approximate_messages_count.to_i, metadata
       end
 
-      # Public: Sets user-defined metadata on the queue. To delete queue metadata, call 
+      # Public: Sets user-defined metadata on the queue. To delete queue metadata, call
       # this API with an empty hash in the metadata parameter.
-      # 
+      #
       # ==== Attributes
       #
       # * +queue_name+                 - String. The queue name.
       # * +metadata+                   - Hash. A hash of user defined metadata
-      # * +options+                    - Hash. Optional parameters. 
+      # * +options+                    - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                   - Integer. A timeout in seconds.
-      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179348
       #
       # Returns nil on success
-      def set_queue_metadata(queue_name, metadata, options={})
+      def set_queue_metadata(queue_name, metadata, options = {})
         query = { "comp" => "metadata" }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         uri = queue_uri(queue_name, query)
 
-        headers ={}
+        headers = {}
         Service::StorageService.add_metadata_to_headers(metadata || {}, headers)
 
         call(:put, uri, nil, headers, options)
@@ -253,26 +254,26 @@ module Azure::Storage
       # ==== Attributes
       #
       # * +queue_name+                 - String. The queue name.
-      # * +options+                    - Hash. Optional parameters. 
+      # * +options+                    - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                   - Integer. A timeout in seconds.
-      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/jj159101
       #
       # Returns a list of Azure::Storage::Entity::SignedIdentifier instances
-      def get_queue_acl(queue_name, options={})
+      def get_queue_acl(queue_name, options = {})
         query = { "comp" => "acl" }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         response = call(:get, queue_uri(queue_name, query), nil, {}, options)
 
         signed_identifiers = []
-        signed_identifiers = Serialization.signed_identifiers_from_xml(response.body) unless response.body == nil or response.body.length < 1
+        signed_identifiers = Serialization.signed_identifiers_from_xml(response.body) unless response.body == (nil) || response.body.length < (1)
         signed_identifiers
       end
 
@@ -281,24 +282,24 @@ module Azure::Storage
       # ==== Attributes
       #
       # * +queue_name+                 - String. The queue name.
-      # * +options+                    - Hash. Optional parameters. 
+      # * +options+                    - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:signed_identifiers+        - Array. A list of Azure::Storage::Entity::SignedIdentifier instances 
+      # * +:signed_identifiers+        - Array. A list of Azure::Storage::Entity::SignedIdentifier instances
       # * +:timeout+                   - Integer. A timeout in seconds.
-      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
-      # 
+      #
       # See http://msdn.microsoft.com/en-us/library/azure/jj159099
       #
       # Returns nil on success
-      def set_queue_acl(queue_name, options={})
+      def set_queue_acl(queue_name, options = {})
         query = { "comp" => "acl" }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-        uri =queue_uri(queue_name, query)
+        uri = queue_uri(queue_name, query)
         body = nil
         body = Serialization.signed_identifiers_to_xml(options[:signed_identifiers]) if options[:signed_identifiers] && options[:signed_identifiers].length > 0
 
@@ -307,33 +308,33 @@ module Azure::Storage
       end
 
       # Public: Adds a message to the queue and optionally sets a visibility timeout for the message.
-      # 
+      #
       # ==== Attributes
       #
       # * +queue_name+   - String. The queue name.
       # * +message_text+ - String. The message contents. Note that the message content must be in a format that may be encoded with UTF-8.
-      # * +options+      - Hash. Optional parameters. 
+      # * +options+      - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
-      # * +:visibility_timeout+        - Integer. Specifies the new visibility timeout value, in seconds, relative to server 
-      #                                  time. The new value must be larger than or equal to 0, and cannot be larger than 7 
-      #                                  days. The visibility timeout of a message cannot be set to a value later than the 
-      #                                  expiry time. :visibility_timeout should be set to a value smaller than the 
+      # * +:visibility_timeout+        - Integer. Specifies the new visibility timeout value, in seconds, relative to server
+      #                                  time. The new value must be larger than or equal to 0, and cannot be larger than 7
+      #                                  days. The visibility timeout of a message cannot be set to a value later than the
+      #                                  expiry time. :visibility_timeout should be set to a value smaller than the
       #                                  time-to-live value. If not specified, the default value is 0.
-      # * +:message_ttl+               - Integer. Specifies the time-to-live interval for the message, in seconds. The maximum 
+      # * +:message_ttl+               - Integer. Specifies the time-to-live interval for the message, in seconds. The maximum
       #                                  time-to-live allowed is 7 days. If not specified, the default time-to-live is 7 days.
       # * +:encode+                    - Boolean. If set to true, the message will be base64 encoded.
       # * +:timeout+                   - Integer. A timeout in seconds.
-      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179346
       #
       # Returns nil on success
-      def create_message(queue_name, message_text, options={})
-        query = { }
+      def create_message(queue_name, message_text, options = {})
+        query = {}
 
         unless options.empty?
           query["visibilitytimeout"] = options[:visibility_timeout] if options[:visibility_timeout]
@@ -349,64 +350,64 @@ module Azure::Storage
       end
 
       # Public: Deletes a specified message from the queue.
-      # 
+      #
       # ==== Attributes
       #
       # * +queue_name+                 - String. The queue name.
       # * +message_id+                 - String. The id of the message.
-      # * +pop_receipt+                - String. The valid pop receipt value returned from an earlier call to the Get Messages or 
+      # * +pop_receipt+                - String. The valid pop receipt value returned from an earlier call to the Get Messages or
       #                                  Update Message operation.
-      # * +options+                    - Hash. Optional parameters. 
+      # * +options+                    - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                   - Integer. A timeout in seconds.
-      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
-      # 
+      #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179347
       #
       # Returns nil on success
       #
       # Remarks:
       #
-      # When a message is successfully deleted, it is immediately marked for deletion and is no longer accessible to 
+      # When a message is successfully deleted, it is immediately marked for deletion and is no longer accessible to
       # clients. The message is later removed from the queue during garbage collection.
-      # 
-      # After a client retrieves a message with the Get Messages operation, the client is expected to process and 
-      # delete the message. To delete the message, you must have two items of data returned in the response body of 
+      #
+      # After a client retrieves a message with the Get Messages operation, the client is expected to process and
+      # delete the message. To delete the message, you must have two items of data returned in the response body of
       # the Get Messages operation:
-      # 
+      #
       # * The message ID, an opaque GUID value that identifies the message in the queue.
-      # 
+      #
       # * A valid pop receipt, an opaque value that indicates that the message has been retrieved.
-      # 
-      # The message ID is returned from the previous Get Messages operation. The pop receipt is returned from the most 
-      # recent Get Messages or Update Message operation. In order for the Delete Message operation to succeed, the pop 
-      # receipt specified on the request must match the pop receipt returned from the Get Messages or Update Message 
+      #
+      # The message ID is returned from the previous Get Messages operation. The pop receipt is returned from the most
+      # recent Get Messages or Update Message operation. In order for the Delete Message operation to succeed, the pop
+      # receipt specified on the request must match the pop receipt returned from the Get Messages or Update Message
       # operation.
-      # 
+      #
       # Pop receipts remain valid until one of the following events occurs:
       #
       # * The message has expired.
       #
-      # * The message has been deleted using the last pop receipt received either from Get Messages or Update Message. 
-      # 
-      # * The invisibility time has elapsed and the message has been dequeued by a Get Messages request. When the 
-      # invisibility time elapses, the message becomes visible again. If it is retrieved by another Get Messages 
+      # * The message has been deleted using the last pop receipt received either from Get Messages or Update Message.
+      #
+      # * The invisibility time has elapsed and the message has been dequeued by a Get Messages request. When the
+      # invisibility time elapses, the message becomes visible again. If it is retrieved by another Get Messages
       # request, the returned pop receipt can be used to delete or update the message.
-      # 
-      # * The message has been updated with a new visibility timeout. When the message is updated, a new pop receipt 
+      #
+      # * The message has been updated with a new visibility timeout. When the message is updated, a new pop receipt
       # will be returned.
-      # 
-      # If the message has already been deleted when Delete Message is called, the Queue service returns status code 
+      #
+      # If the message has already been deleted when Delete Message is called, the Queue service returns status code
       # 404 (Not Found).
-      # 
-      # If a message with a matching pop receipt is not found, the service returns status code 400 (Bad Request), with 
+      #
+      # If a message with a matching pop receipt is not found, the service returns status code 400 (Bad Request), with
       # additional error information indicating that the cause of the failure was a mismatched pop receipt.
       #
-      def delete_message(queue_name, message_id, pop_receipt, options={})
+      def delete_message(queue_name, message_id, pop_receipt, options = {})
         query = { "popreceipt" => pop_receipt }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
@@ -421,7 +422,7 @@ module Azure::Storage
       # ==== Attributes
       #
       # * +queue_name+                 - String. The queue name.
-      # * +options+                    - Hash. Optional parameters. 
+      # * +options+                    - Hash. Optional parameters.
       #
       # ==== Options
       #
@@ -429,17 +430,17 @@ module Azure::Storage
       # * +:number_of_messages+        - Integer. How many messages to return. (optional, Default: 1)
       # * +:decode+                    - Boolean. Boolean value indicating if the message should be base64 decoded.
       # * +:timeout+                   - Integer. A timeout in seconds.
-      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179472
       #
       # Returns a list of Azure::Storage::Entity::Queue::Message instances
-      def peek_messages(queue_name, options={})
-        number_of_messages=1
+      def peek_messages(queue_name, options = {})
+        number_of_messages = 1
         number_of_messages = options[:number_of_messages] if options[:number_of_messages]
 
-        query = { "peekonly" => "true", "numofmessages"=> number_of_messages.to_s }
+        query = { "peekonly" => "true", "numofmessages" => number_of_messages.to_s }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         uri = messages_uri(queue_name, query)
@@ -455,25 +456,25 @@ module Azure::Storage
       #
       # * +queue_name+                 - String. The queue name.
       # * +visibility_timeout+         - Integer. The new visibility timeout value, in seconds, relative to server time.
-      # * +options+                    - Hash. Optional parameters. 
+      # * +options+                    - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:number_of_messages+        - Integer. How many messages to return. (optional, Default: 1)
       # * +:timeout+                   - Integer. A timeout in seconds.
-      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
       # * +:decode+                    - Boolean. Boolean value indicating if the message should be base64 decoded.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179474
       #
       # Returns a list of Azure::Storage::Entity::Queue::Message instances
-      def list_messages(queue_name, visibility_timeout, options={})
-        number_of_messages=1
+      def list_messages(queue_name, visibility_timeout, options = {})
+        number_of_messages = 1
         number_of_messages = options[:number_of_messages] if options[:number_of_messages]
 
-        query = { "visibilitytimeout" => visibility_timeout.to_s, "numofmessages"=> number_of_messages.to_s }
+        query = { "visibilitytimeout" => visibility_timeout.to_s, "numofmessages" => number_of_messages.to_s }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         uri = messages_uri(queue_name, query)
@@ -484,24 +485,24 @@ module Azure::Storage
       end
 
       # Public: Adds a message to the queue and optionally sets a visibility timeout for the message.
-      # 
+      #
       # ==== Attributes
       #
       # * +queue_name+                 - String. The queue name.
       # * +message_id+                 - String. The id of the message.
-      # * +pop_receipt+                - String. The valid pop receipt value returned from an earlier call to the Get Messages or 
+      # * +pop_receipt+                - String. The valid pop receipt value returned from an earlier call to the Get Messages or
       #                                  update Message operation.
-      # * +message_text+               - String. The message contents. Note that the message content must be in a format that may 
+      # * +message_text+               - String. The message contents. Note that the message content must be in a format that may
       #                                  be encoded with UTF-8.
       # * +visibility_timeout+         - Integer. The new visibility timeout value, in seconds, relative to server time.
-      # * +options+                    - Hash. Optional parameters. 
+      # * +options+                    - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:encode+                    - Boolean. If set to true, the message will be base64 encoded.
       # * +:timeout+                   - Integer. A timeout in seconds.
-      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/hh452234
@@ -512,31 +513,31 @@ module Azure::Storage
       #
       # Remarks:
       #
-      # An Update Message operation will fail if the specified message does not exist in the queue, or if the 
+      # An Update Message operation will fail if the specified message does not exist in the queue, or if the
       # specified pop receipt does not match the message.
-      # 
-      # A pop receipt is returned by the Get Messages operation or the Update Message operation. Pop receipts 
+      #
+      # A pop receipt is returned by the Get Messages operation or the Update Message operation. Pop receipts
       # remain valid until one of the following events occurs:
-      # 
+      #
       # * The message has expired.
-      # 
-      # * The message has been deleted using the last pop receipt received either from Get Messages or 
-      # Update Message. 
-      # 
-      # * The invisibility time has elapsed and the message has been dequeued by a Get Messages request. When 
-      # the invisibility time elapses, the message becomes visible again. If it is retrieved by another 
+      #
+      # * The message has been deleted using the last pop receipt received either from Get Messages or
+      # Update Message.
+      #
+      # * The invisibility time has elapsed and the message has been dequeued by a Get Messages request. When
+      # the invisibility time elapses, the message becomes visible again. If it is retrieved by another
       # Get Messages request, the returned pop receipt can be used to delete or update the message.
-      # 
-      # * The message has been updated with a new visibility timeout. When the message is updated, a new pop 
+      #
+      # * The message has been updated with a new visibility timeout. When the message is updated, a new pop
       # receipt will be returned.
-      # 
-      # The Update Message operation can be used to continually extend the invisibility of a queue message. This 
-      # functionality can be useful if you want a worker role to "lease" a queue message. For example, if a worker 
-      # role calls Get Messages and recognizes that it needs more time to process a message, it can continually 
-      # extend the message's invisibility until it is processed. If the worker role were to fail during processing, 
+      #
+      # The Update Message operation can be used to continually extend the invisibility of a queue message. This
+      # functionality can be useful if you want a worker role to "lease" a queue message. For example, if a worker
+      # role calls Get Messages and recognizes that it needs more time to process a message, it can continually
+      # extend the message's invisibility until it is processed. If the worker role were to fail during processing,
       # eventually the message would become visible again and another worker role could process it.
       #
-      def update_message(queue_name, message_id, pop_receipt, message_text, visibility_timeout, options={})
+      def update_message(queue_name, message_id, pop_receipt, message_text, visibility_timeout, options = {})
         query = { "visibilitytimeout" => visibility_timeout.to_s, "popreceipt" => pop_receipt }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
@@ -557,10 +558,10 @@ module Azure::Storage
       #
       # Returns a URI.
       protected
-      def collection_uri(query={})
-        query.update({:comp => 'list', :include => 'metadata'})
-        generate_uri("", query)
-      end
+        def collection_uri(query = {})
+          query.update(comp: "list", include: "metadata")
+          generate_uri("", query)
+        end
 
       # Protected: Generate the URI for a given queue.
       #
@@ -571,10 +572,10 @@ module Azure::Storage
       #
       # Returns a URI.
       protected
-      def queue_uri(queue_name, query={})
-        return queue_name if queue_name.kind_of? ::URI
-        generate_uri(queue_name, query)
-      end
+        def queue_uri(queue_name, query = {})
+          return queue_name if queue_name.kind_of? ::URI
+          generate_uri(queue_name, query)
+        end
 
       # Protected: Generate the messages URI for the given queue.
       #
@@ -585,9 +586,9 @@ module Azure::Storage
       #
       # Returns a URI.
       protected
-      def messages_uri(queue_name, query={})
-        generate_uri("#{queue_name}/messages", query)
-      end
+        def messages_uri(queue_name, query = {})
+          generate_uri("#{queue_name}/messages", query)
+        end
 
       # Protected: Generate the URI for a given message
       #
@@ -599,9 +600,9 @@ module Azure::Storage
       #
       # Returns a URI.
       protected
-      def message_uri(queue_name, message_id, query={})
-        generate_uri("#{queue_name}/messages/#{message_id}", query)
-      end
+        def message_uri(queue_name, message_id, query = {})
+          generate_uri("#{queue_name}/messages/#{message_id}", query)
+        end
     end
   end
 end

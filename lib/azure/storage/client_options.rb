@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -22,12 +24,11 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-require 'uri'
-require 'azure/storage/client_options_error'
+require "uri"
+require "azure/storage/client_options_error"
 
 module Azure::Storage
   module ClientOptions
-
     attr_accessor :ca_file
 
     # Public: Reset options for [Azure::Storage::Client]
@@ -75,7 +76,7 @@ module Azure::Storage
       elsif options.is_a? Hash
         # When the options are provided via singlton setup: Azure::Storage.setup()
         options = setup_options if options.length == 0
-        
+
         options = parse_connection_string(options[:storage_connection_string]) if options[:storage_connection_string]
       end
 
@@ -90,7 +91,7 @@ module Azure::Storage
 
     # Check if this client is configured with the same options
     def same_options?(opts)
-      opts.length == 0 || opts.hash == options.hash 
+      opts.length == 0 || opts.hash == options.hash
     end
 
     # The options after validated and normalized
@@ -126,16 +127,16 @@ module Azure::Storage
     # @return [Hash]
     def self.env_vars_mapping
       @env_vars_mapping ||= {
-        'EMULATED' => :use_development_storage,
-        'AZURE_STORAGE_ACCOUNT' => :storage_account_name,
-        'AZURE_STORAGE_ACCESS_KEY' => :storage_access_key,
-        'AZURE_STORAGE_CONNECTION_STRING' => :storage_connection_string,
-        'AZURE_STORAGE_BLOB_HOST' => :storage_blob_host,
-        'AZURE_STORAGE_TABLE_HOST' => :storage_table_host,
-        'AZURE_STORAGE_QUEUE_HOST' => :storage_queue_host,
-        'AZURE_STORAGE_FILE_HOST' => :storage_file_host,
-        'AZURE_STORAGE_SAS_TOKEN' => :storage_sas_token,
-        'AZURE_STORAGE_DNS_SUFFIX' => :storage_dns_suffix
+        "EMULATED" => :use_development_storage,
+        "AZURE_STORAGE_ACCOUNT" => :storage_account_name,
+        "AZURE_STORAGE_ACCESS_KEY" => :storage_access_key,
+        "AZURE_STORAGE_CONNECTION_STRING" => :storage_connection_string,
+        "AZURE_STORAGE_BLOB_HOST" => :storage_blob_host,
+        "AZURE_STORAGE_TABLE_HOST" => :storage_table_host,
+        "AZURE_STORAGE_QUEUE_HOST" => :storage_queue_host,
+        "AZURE_STORAGE_FILE_HOST" => :storage_file_host,
+        "AZURE_STORAGE_SAS_TOKEN" => :storage_sas_token,
+        "AZURE_STORAGE_DNS_SUFFIX" => :storage_dns_suffix
       }
     end
 
@@ -144,211 +145,209 @@ module Azure::Storage
     # @return [Hash]
     def self.connection_string_mapping
       @connection_string_mapping ||= {
-        'UseDevelopmentStorage' => :use_development_storage,
-        'DevelopmentStorageProxyUri' => :development_storage_proxy_uri,
-        'DefaultEndpointsProtocol' => :default_endpoints_protocol,
-        'AccountName' => :storage_account_name,
-        'AccountKey' => :storage_access_key,
-        'BlobEndpoint' => :storage_blob_host,
-        'TableEndpoint' => :storage_table_host,
-        'QueueEndpoint' => :storage_queue_host,
-        'FileEndpoint' => :storage_file_host,
-        'SharedAccessSignature' => :storage_sas_token,
-        'EndpointSuffix' => :storage_dns_suffix
+        "UseDevelopmentStorage" => :use_development_storage,
+        "DevelopmentStorageProxyUri" => :development_storage_proxy_uri,
+        "DefaultEndpointsProtocol" => :default_endpoints_protocol,
+        "AccountName" => :storage_account_name,
+        "AccountKey" => :storage_access_key,
+        "BlobEndpoint" => :storage_blob_host,
+        "TableEndpoint" => :storage_table_host,
+        "QueueEndpoint" => :storage_queue_host,
+        "FileEndpoint" => :storage_file_host,
+        "SharedAccessSignature" => :storage_sas_token,
+        "EndpointSuffix" => :storage_dns_suffix
       }
     end
 
     private
 
-    def method_missing(method_name)
-      return super unless options.key? method_name
-      options[method_name]
-    end
-
-    def filter(opts={})
-      results = {}
-
-      # P1 - develpoment storage
-      begin
-        results = validated_options(opts,
-                                    :required => [:use_development_storage],
-                                    :optional => [:development_storage_proxy_uri])
-        results[:use_development_storage] = true
-        proxy_uri = results[:development_storage_proxy_uri] ||= StorageServiceClientConstants::DEV_STORE_URI
-        results.merge!({:storage_account_name => StorageServiceClientConstants::DEVSTORE_STORAGE_ACCOUNT,
-                        :storage_access_key => StorageServiceClientConstants::DEVSTORE_STORAGE_ACCESS_KEY,
-                        :storage_blob_host => "#{proxy_uri}:#{StorageServiceClientConstants::DEVSTORE_BLOB_HOST_PORT}",
-                        :storage_table_host => "#{proxy_uri}:#{StorageServiceClientConstants::DEVSTORE_TABLE_HOST_PORT}",
-                        :storage_queue_host => "#{proxy_uri}:#{StorageServiceClientConstants::DEVSTORE_QUEUE_HOST_PORT}",
-                        :storage_file_host => "#{proxy_uri}:#{StorageServiceClientConstants::DEVSTORE_FILE_HOST_PORT}",
-                        :use_path_style_uri => true})
-        return results
-      rescue InvalidOptionsError => e
-      end
-      
-      # P2 - explicit hosts with account connection string
-      begin
-        results = validated_options(opts,
-                                    :required => [:storage_connection_string],
-                                    :optional => [:use_path_style_uri])
-        results[:use_path_style_uri] = results.key?(:use_path_style_uri)
-        normalize_hosts(results)
-        return results
-      rescue InvalidOptionsError => e
+      def method_missing(method_name)
+        return super unless options.key? method_name
+        options[method_name]
       end
 
-      # P3 - account name and key or sas with default hosts or an end suffix
-      begin
-        results = validated_options(opts,
-                                    :required => [:storage_account_name],
-                                    :only_one => [:storage_access_key, :storage_sas_token],
-                                    :optional => [:default_endpoints_protocol, :storage_dns_suffix])
-        protocol = results[:default_endpoints_protocol] ||= StorageServiceClientConstants::DEFAULT_PROTOCOL
-        suffix = results[:storage_dns_suffix] ||= StorageServiceClientConstants::DEFAULT_ENDPOINT_SUFFIX
-        account = results[:storage_account_name]
-        results.merge!({:storage_blob_host => "#{protocol}://#{account}.#{ServiceType::BLOB}.#{suffix}",
-                        :storage_table_host => "#{protocol}://#{account}.#{ServiceType::TABLE}.#{suffix}",
-                        :storage_queue_host => "#{protocol}://#{account}.#{ServiceType::QUEUE}.#{suffix}",
-                        :storage_file_host => "#{protocol}://#{account}.#{ServiceType::FILE}.#{suffix}",
-                        :use_path_style_uri => false})
-        return results
-      rescue InvalidOptionsError => e
+      def filter(opts = {})
+        results = {}
+
+        # P1 - develpoment storage
+        begin
+          results = validated_options(opts,
+                                      required: [:use_development_storage],
+                                      optional: [:development_storage_proxy_uri])
+          results[:use_development_storage] = true
+          proxy_uri = results[:development_storage_proxy_uri] ||= StorageServiceClientConstants::DEV_STORE_URI
+          results.merge!(storage_account_name: StorageServiceClientConstants::DEVSTORE_STORAGE_ACCOUNT,
+                          storage_access_key: StorageServiceClientConstants::DEVSTORE_STORAGE_ACCESS_KEY,
+                          storage_blob_host: "#{proxy_uri}:#{StorageServiceClientConstants::DEVSTORE_BLOB_HOST_PORT}",
+                          storage_table_host: "#{proxy_uri}:#{StorageServiceClientConstants::DEVSTORE_TABLE_HOST_PORT}",
+                          storage_queue_host: "#{proxy_uri}:#{StorageServiceClientConstants::DEVSTORE_QUEUE_HOST_PORT}",
+                          storage_file_host: "#{proxy_uri}:#{StorageServiceClientConstants::DEVSTORE_FILE_HOST_PORT}",
+                          use_path_style_uri: true)
+          return results
+        rescue InvalidOptionsError => e
+        end
+
+        # P2 - explicit hosts with account connection string
+        begin
+          results = validated_options(opts,
+                                      required: [:storage_connection_string],
+                                      optional: [:use_path_style_uri])
+          results[:use_path_style_uri] = results.key?(:use_path_style_uri)
+          normalize_hosts(results)
+          return results
+        rescue InvalidOptionsError => e
+        end
+
+        # P3 - account name and key or sas with default hosts or an end suffix
+        begin
+          results = validated_options(opts,
+                                      required: [:storage_account_name],
+                                      only_one: [:storage_access_key, :storage_sas_token],
+                                      optional: [:default_endpoints_protocol, :storage_dns_suffix])
+          protocol = results[:default_endpoints_protocol] ||= StorageServiceClientConstants::DEFAULT_PROTOCOL
+          suffix = results[:storage_dns_suffix] ||= StorageServiceClientConstants::DEFAULT_ENDPOINT_SUFFIX
+          account = results[:storage_account_name]
+          results.merge!(storage_blob_host: "#{protocol}://#{account}.#{ServiceType::BLOB}.#{suffix}",
+                          storage_table_host: "#{protocol}://#{account}.#{ServiceType::TABLE}.#{suffix}",
+                          storage_queue_host: "#{protocol}://#{account}.#{ServiceType::QUEUE}.#{suffix}",
+                          storage_file_host: "#{protocol}://#{account}.#{ServiceType::FILE}.#{suffix}",
+                          use_path_style_uri: false)
+          return results
+        rescue InvalidOptionsError => e
+        end
+
+        # P4 - explicit hosts with account name and key
+        begin
+          results = validated_options(opts,
+                                      required: [:storage_account_name, :storage_access_key],
+                                      at_least_one: [:storage_blob_host, :storage_table_host, :storage_file_host, :storage_queue_host],
+                                      optional: [:use_path_style_uri, :default_endpoints_protocol])
+          results[:use_path_style_uri] = results.key?(:use_path_style_uri)
+          normalize_hosts(results)
+          return results
+        rescue InvalidOptionsError => e
+        end
+
+        # P5 - anonymous or sas only for one or more particular services, options with account name/key + hosts should be already validated in P4
+        begin
+          results = validated_options(opts,
+                                      at_least_one: [:storage_blob_host, :storage_table_host, :storage_file_host, :storage_queue_host],
+                                      optional: [:use_path_style_uri, :default_endpoints_protocol, :storage_sas_token])
+          results[:use_path_style_uri] = results.key?(:use_path_style_uri)
+          normalize_hosts(results)
+          return results
+        rescue InvalidOptionsError => e
+        end
+
+        # P6 - account name and key or sas with explicit hosts
+        begin
+          results = validated_options(opts,
+                                      required: [:storage_account_name],
+                                      only_one: [:storage_access_key, :storage_sas_token],
+                                      at_least_one: [:storage_blob_host, :storage_table_host, :storage_file_host, :storage_queue_host])
+          results[:use_path_style_uri] = results.key?(:use_path_style_uri)
+          normalize_hosts(results)
+          return results
+        rescue InvalidOptionsError => e
+        end
+
+        raise InvalidOptionsError, "options provided are not valid set: #{opts}" # wrong opts if move to this line
       end
 
-      # P4 - explicit hosts with account name and key
-      begin
-        results = validated_options(opts,
-                                    :required => [:storage_account_name, :storage_access_key],
-                                    :at_least_one => [:storage_blob_host, :storage_table_host, :storage_file_host, :storage_queue_host],
-                                    :optional => [:use_path_style_uri, :default_endpoints_protocol])
-        results[:use_path_style_uri] = results.key?(:use_path_style_uri)
-        normalize_hosts(results)
-        return results
-      rescue InvalidOptionsError => e
-      end
-
-      # P5 - anonymous or sas only for one or more particular services, options with account name/key + hosts should be already validated in P4
-      begin
-        results = validated_options(opts,
-                                    :at_least_one => [:storage_blob_host, :storage_table_host, :storage_file_host, :storage_queue_host],
-                                    :optional => [:use_path_style_uri, :default_endpoints_protocol, :storage_sas_token])
-        results[:use_path_style_uri] = results.key?(:use_path_style_uri)
-        normalize_hosts(results)
-        return results
-      rescue InvalidOptionsError => e
-      end
-
-      # P6 - account name and key or sas with explicit hosts
-      begin
-        results = validated_options(opts,
-                                    :required => [:storage_account_name],
-                                    :only_one => [:storage_access_key, :storage_sas_token],
-                                    :at_least_one => [:storage_blob_host, :storage_table_host, :storage_file_host, :storage_queue_host])
-        results[:use_path_style_uri] = results.key?(:use_path_style_uri)
-        normalize_hosts(results)
-        return results
-      rescue InvalidOptionsError => e
-      end
-
-      raise InvalidOptionsError,"options provided are not valid set: #{opts}" # wrong opts if move to this line
-    end
-
-    def normalize_hosts(options)
-      if options[:default_endpoints_protocol]
-        [:storage_blob_host, :storage_table_host, :storage_file_host, :storage_queue_host].each do |k|
-          if options[k]
-            raise InvalidOptionsError,'Explict host cannot contain scheme if default_endpoints_protocol is set.' if options[k] =~ /^https?/
-            options[k] = "#{options[:default_endpoints_protocol]}://#{options[k]}"
+      def normalize_hosts(options)
+        if options[:default_endpoints_protocol]
+          [:storage_blob_host, :storage_table_host, :storage_file_host, :storage_queue_host].each do |k|
+            if options[k]
+              raise InvalidOptionsError, "Explict host cannot contain scheme if default_endpoints_protocol is set." if options[k] =~ /^https?/
+              options[k] = "#{options[:default_endpoints_protocol]}://#{options[k]}"
+            end
           end
         end
       end
-    end
 
-    def is_base64_encoded
-      Proc.new do |i|
-        i.is_a?(String) && i =~ /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/
-      end
-    end
-
-    def is_url
-      Proc.new do |i|
-        i = 'http://'+i unless i =~ /\Ahttps?:\/\//
-        i =~ URI.regexp(['http', 'https'])
-      end
-    end
-
-    def is_true
-      Proc.new { |i| i == true || (i.is_a?(String) && i.downcase == 'true') }
-    end
-
-    def is_non_empty_string
-      Proc.new { |i| i && i.is_a?(String) && i.strip.length }
-    end
-
-    def validated_options(opts, requirements = {})
-      raise InvalidOptionsError,'nil is not allowed for option\'s value' if opts.values.any? { |v| v == nil }
-      required = requirements[:required] || []
-      at_least_one = requirements[:at_least_one] || []
-      only_one = requirements[:only_one] || []
-      optional = requirements[:optional] || []
-
-      raise InvalidOptionsError,"Not all required keys are provided: #{required}" if required.any? { |k| !opts.key? k}
-      raise InvalidOptionsError,"Only one of #{only_one} is required" unless only_one.length == 0 || only_one.count { |k| opts.key? k} == 1
-      raise InvalidOptionsError,"At least one of #{at_least_one} is required" unless at_least_one.length == 0 || at_least_one.any? { |k| opts.key? k}
-
-      @@option_validators ||= {
-        :use_development_storage => is_true,
-        :development_storage_proxy_uri => is_url,
-        :storage_account_name => lambda { |i| i.is_a?(String) },
-        :storage_access_key => is_base64_encoded,
-        :storage_sas_token => lambda { |i| i.is_a?(String) },
-        :storage_blob_host => is_url,
-        :storage_table_host => is_url,
-        :storage_queue_host => is_url,
-        :storage_file_host => is_url,
-        :storage_dns_suffix => is_url,
-        :default_endpoints_protocol => lambda { |i| ['http', 'https'].include? i.downcase },
-        :use_path_style_uri => is_true
-      }
-
-      valid_options = required + at_least_one + only_one + optional
-      results = {}
-
-      opts.each do |k,v|
-        raise InvalidOptionsError,"#{k} is not included in valid options" unless valid_options.length == 0 || valid_options.include?(k)
-        unless @@option_validators.key?(k) && @@option_validators[k].call(v)
-          raise InvalidOptionsError,"#{k} is invalid"
+      def is_base64_encoded
+        Proc.new do |i|
+          i.is_a?(String) && i =~ /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/
         end
-        results[k] = v
       end
-      results
-    end
 
-    def load_env
-      cs = ENV['AZURE_STORAGE_CONNECTION_STRING']
-      return parse_connection_string(cs) if cs
-
-      opts = {}
-      ClientOptions.env_vars_mapping.each { |k,v| opts[v] = ENV[k] if ENV[k] }
-      opts
-    end
-
-    def parse_connection_string(connection_string)
-      opts = {}
-      connection_string.split(';').each do |i|
-        e = i.index('=')
-        raise InvalidConnectionStringError,SR::INVALID_CONNECTION_STRING if e < 0 || e == i.length - 1
-        key,value = i[0..e-1],i[e+1..i.length-1]
-        raise InvalidConnectionStringError, SR::INVALID_CONNECTION_STRING_BAD_KEY % key unless ClientOptions.connection_string_mapping.key? key
-        raise InvalidConnectionStringError, SR::INVALID_CONNECTION_STRING_EMPTY_KEY % key if value.length == 0
-        raise InvalidConnectionStringError, SR::INVALID_CONNECTION_STRING_DUPLICATE_KEY % key if opts.key? key
-        opts[ClientOptions.connection_string_mapping[key]] = value
+      def is_url
+        Proc.new do |i|
+          i = "http://" + i unless i =~ /\Ahttps?:\/\//
+          i =~ URI.regexp(["http", "https"])
+        end
       end
-      raise InvalidConnectionStringError,SR::INVALID_CONNECTION_STRING if opts.length == 0
 
-      opts
-    end
+      def is_true
+        Proc.new { |i| i == true || (i.is_a?(String) && i.downcase == "true") }
+      end
 
+      def is_non_empty_string
+        Proc.new { |i| i && i.is_a?(String) && i.strip.length }
+      end
+
+      def validated_options(opts, requirements = {})
+        raise InvalidOptionsError, 'nil is not allowed for option\'s value' if opts.values.any? { |v| v == nil }
+        required = requirements[:required] || []
+        at_least_one = requirements[:at_least_one] || []
+        only_one = requirements[:only_one] || []
+        optional = requirements[:optional] || []
+
+        raise InvalidOptionsError, "Not all required keys are provided: #{required}" if required.any? { |k| !opts.key? k }
+        raise InvalidOptionsError, "Only one of #{only_one} is required" unless only_one.length == 0 || only_one.count { |k| opts.key? k } == 1
+        raise InvalidOptionsError, "At least one of #{at_least_one} is required" unless at_least_one.length == 0 || at_least_one.any? { |k| opts.key? k }
+
+        @@option_validators ||= {
+          use_development_storage: is_true,
+          development_storage_proxy_uri: is_url,
+          storage_account_name: lambda { |i| i.is_a?(String) },
+          storage_access_key: is_base64_encoded,
+          storage_sas_token: lambda { |i| i.is_a?(String) },
+          storage_blob_host: is_url,
+          storage_table_host: is_url,
+          storage_queue_host: is_url,
+          storage_file_host: is_url,
+          storage_dns_suffix: is_url,
+          default_endpoints_protocol: lambda { |i| ["http", "https"].include? i.downcase },
+          use_path_style_uri: is_true
+        }
+
+        valid_options = required + at_least_one + only_one + optional
+        results = {}
+
+        opts.each do |k, v|
+          raise InvalidOptionsError, "#{k} is not included in valid options" unless valid_options.length == 0 || valid_options.include?(k)
+          unless @@option_validators.key?(k) && @@option_validators[k].call(v)
+            raise InvalidOptionsError, "#{k} is invalid"
+          end
+          results[k] = v
+        end
+        results
+      end
+
+      def load_env
+        cs = ENV["AZURE_STORAGE_CONNECTION_STRING"]
+        return parse_connection_string(cs) if cs
+
+        opts = {}
+        ClientOptions.env_vars_mapping.each { |k, v| opts[v] = ENV[k] if ENV[k] }
+        opts
+      end
+
+      def parse_connection_string(connection_string)
+        opts = {}
+        connection_string.split(";").each do |i|
+          e = i.index("=")
+          raise InvalidConnectionStringError, SR::INVALID_CONNECTION_STRING if e < 0 || e == i.length - 1
+          key, value = i[0..e - 1], i[e + 1..i.length - 1]
+          raise InvalidConnectionStringError, SR::INVALID_CONNECTION_STRING_BAD_KEY % key unless ClientOptions.connection_string_mapping.key? key
+          raise InvalidConnectionStringError, SR::INVALID_CONNECTION_STRING_EMPTY_KEY % key if value.length == 0
+          raise InvalidConnectionStringError, SR::INVALID_CONNECTION_STRING_DUPLICATE_KEY % key if opts.key? key
+          opts[ClientOptions.connection_string_mapping[key]] = value
+        end
+        raise InvalidConnectionStringError, SR::INVALID_CONNECTION_STRING if opts.length == 0
+
+        opts
+      end
   end
-
 end

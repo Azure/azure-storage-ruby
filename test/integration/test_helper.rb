@@ -21,11 +21,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'test_helper'
-require 'azure/storage'
+require "test_helper"
+require "azure/storage"
 
 Azure::Storage.configure do |config|
-  config.storage_access_key       = ENV.fetch('AZURE_STORAGE_ACCESS_KEY')
-  config.storage_account_name     = ENV.fetch('AZURE_STORAGE_ACCOUNT')
-  Azure::Storage.client(:storage_account_name => config.storage_account_name, :storage_access_key => config.storage_access_key)
+  config.storage_access_key       = ENV.fetch("AZURE_STORAGE_ACCESS_KEY")
+  config.storage_account_name     = ENV.fetch("AZURE_STORAGE_ACCOUNT")
+  Azure::Storage.client(storage_account_name: config.storage_account_name, storage_access_key: config.storage_access_key)
 end

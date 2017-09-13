@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,12 +23,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/storage/file/serialization'
+require "azure/storage/file/serialization"
 
 module Azure::Storage::File
   module Share
     include Azure::Storage::Service
-    
+
     class Share
       def initialize
         @properties = {}
@@ -55,16 +57,16 @@ module Azure::Storage::File
     # * +:quota+                    - Integer. The maximum size of the share, in gigabytes.
     #                                 Must be greater than 0, and less than or equal to 5TB (5120). (optional).
     # * +:timeout+                  - Integer. A timeout in seconds.
-    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/create-share
     #
     # Returns a Share
-    def create_share(name, options={})
+    def create_share(name, options = {})
       # Query
-      query = { }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
+      query = {}
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Scheme + path
       uri = share_uri(name, query)
@@ -72,7 +74,7 @@ module Azure::Storage::File
       # Headers
       headers = StorageService.common_headers
       StorageService.add_metadata_to_headers(options[:metadata], headers) if options[:metadata]
-      headers['x-ms-share-quota'] = options[:quota].to_s if options[:quota]
+      headers["x-ms-share-quota"] = options[:quota].to_s if options[:quota]
 
       # Call
       response = call(:put, uri, nil, headers, options)
@@ -96,16 +98,16 @@ module Azure::Storage::File
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                  - Integer. A timeout in seconds.
-    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-share-properties
     #
     # Returns a Share
-    def get_share_properties(name, options={})
+    def get_share_properties(name, options = {})
       # Query
-      query = { }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
+      query = {}
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Call
       response = call(:get, share_uri(name, query), nil, {}, options)
@@ -129,24 +131,24 @@ module Azure::Storage::File
     # * +:quota+                    - Integer. The maximum size of the share, in gigabytes.
     #                                 Must be greater than 0, and less than or equal to 5TB (5120). (optional).
     # * +:timeout+                  - Integer. A timeout in seconds.
-    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set-share-properties
     #
     # Returns nil on success
-    def set_share_properties(name, options={})
+    def set_share_properties(name, options = {})
       # Query
-      query = { 'comp' => 'properties' }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
+      query = { "comp" => "properties" }
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Headers
       headers = StorageService.common_headers
-      headers['x-ms-share-quota'] = options[:quota].to_s if options[:quota]
+      headers["x-ms-share-quota"] = options[:quota].to_s if options[:quota]
 
       # Call
       call(:put, share_uri(name, query), nil, headers, options)
-      
+
       # Result
       nil
     end
@@ -162,16 +164,16 @@ module Azure::Storage::File
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                  - Integer. A timeout in seconds.
-    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-share-metadata
     #
     # Returns a Share
-    def get_share_metadata(name, options={})
+    def get_share_metadata(name, options = {})
       # Query
-      query = { 'comp' => 'metadata' }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
+      query = { "comp" => "metadata" }
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Call
       response = call(:get, share_uri(name, query), nil, {}, options)
@@ -194,16 +196,16 @@ module Azure::Storage::File
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                  - Integer. A timeout in seconds.
-    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set-share-metadata
     #
     # Returns nil on success
-    def set_share_metadata(name, metadata, options={})
+    def set_share_metadata(name, metadata, options = {})
       # Query
-      query = { 'comp' => 'metadata' }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
+      query = { "comp" => "metadata" }
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Headers
       headers = StorageService.common_headers
@@ -211,7 +213,7 @@ module Azure::Storage::File
 
       # Call
       call(:put, share_uri(name, query), nil, headers, options)
-      
+
       # Result
       nil
     end
@@ -227,20 +229,20 @@ module Azure::Storage::File
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                  - Integer. A timeout in seconds.
-    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/delete-share
     #
     # Returns nil on success
-    def delete_share(name, options={})
+    def delete_share(name, options = {})
       # Query
-      query = { }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
+      query = {}
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Call
       call(:delete, share_uri(name, query), nil, {}, options)
-      
+
       # result
       nil
     end
@@ -256,7 +258,7 @@ module Azure::Storage::File
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                  - Integer. A timeout in seconds.
-    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-share-acl
@@ -265,11 +267,11 @@ module Azure::Storage::File
     #   share                       - A Azure::Storage::File::Share::Share instance
     #   signed_identifiers          - A list of Azure::Storage::Service::SignedIdentifier instances
     #
-    def get_share_acl(name, options={})
+    def get_share_acl(name, options = {})
       # Query
-      query = { 'comp' => 'acl' }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
-      
+      query = { "comp" => "acl" }
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
+
       # Call
       response = call(:get, share_uri(name, query), nil, {}, options)
 
@@ -295,19 +297,19 @@ module Azure::Storage::File
     # Accepted key/value pairs in options parameter are:
     # * +:signed_identifiers+          - Array. A list of Azure::Storage::Service::SignedIdentifier instances.
     # * +:timeout+                     - Integer. A timeout in seconds.
-    # * +:request_id+                  - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                  - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                    in the analytics logs when storage analytics logging is enabled.
-    # 
+    #
     # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set-share-acl
     #
     # Returns a tuple of (share, signed_identifiers)
     # * +share+                        - A Azure::Storage::File::Share::Share instance
     # * +signed_identifiers+           - A list of Azure::Storage::Service::SignedIdentifier instances
     #
-    def set_share_acl(name, options={})
+    def set_share_acl(name, options = {})
       # Query
-      query = { 'comp' => 'acl' }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
+      query = { "comp" => "acl" }
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Scheme + path
       uri = share_uri(name, query)
@@ -339,16 +341,16 @@ module Azure::Storage::File
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                  - Integer. A timeout in seconds.
-    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-share-stats
     #
     # Returns a Share
-    def get_share_stats(name, options={})
+    def get_share_stats(name, options = {})
       # Query
-      query = { 'comp' => 'stats' }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
+      query = { "comp" => "stats" }
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Call
       response = call(:get, share_uri(name, query), nil, {}, options)

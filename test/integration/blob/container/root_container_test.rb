@@ -21,7 +21,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/blob/blob_service"
 require "azure/core/http/http_error"
 
@@ -37,10 +37,10 @@ describe Azure::Storage::Blob::BlobService do
   let(:length) { 1024 }
 
   after {
-    subject.delete_container '$root'
+    subject.delete_container "$root"
   }
 
-  it 'creates the container with explicit name and some blobs' do
+  it "creates the container with explicit name and some blobs" do
     begin
       container = subject.create_container container_name
       container.name.must_equal container_name
@@ -54,7 +54,7 @@ describe Azure::Storage::Blob::BlobService do
       blob.name.must_equal blob_name2
 
       # empty string container name
-      blob = subject.create_page_blob '', blob_name3, length
+      blob = subject.create_page_blob "", blob_name3, length
       blob.name.must_equal blob_name3
     rescue Azure::Core::Http::HTTPError => error
       puts error.message

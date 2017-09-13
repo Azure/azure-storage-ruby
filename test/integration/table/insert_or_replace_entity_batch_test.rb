@@ -21,7 +21,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/table/batch"
 require "azure/storage/table/table_service"
 require "azure/core/http/http_error"
@@ -29,10 +29,10 @@ require "azure/core/http/http_error"
 describe Azure::Storage::Table::TableService do
   describe "#insert_or_replace_entity_batch" do
     subject { Azure::Storage::Table::TableService.new }
-    let(:table_name){ TableNameHelper.name }
+    let(:table_name) { TableNameHelper.name }
 
     let(:entity_properties) {
-      { 
+      {
         "PartitionKey" => "testingpartition",
         "CustomStringProperty" => "CustomPropertyValue",
         "CustomIntegerProperty" => 37,
@@ -41,13 +41,13 @@ describe Azure::Storage::Table::TableService do
       }
     }
 
-    before { 
+    before {
       subject.create_table table_name
     }
 
     after { TableNameHelper.clean }
 
-    it "creates an entity if it does not already exist" do 
+    it "creates an entity if it does not already exist" do
       entity = entity_properties.dup
       entity["RowKey"] = "abcd1234"
 
@@ -70,8 +70,8 @@ describe Azure::Storage::Table::TableService do
 
       result.must_be_kind_of Azure::Storage::Table::Entity
       result.etag.must_equal etags[0]
-      
-      entity.each { |k,v|
+
+      entity.each { |k, v|
         unless entity[k].class == Time
           result.properties[k].must_equal entity[k]
         else
@@ -80,7 +80,7 @@ describe Azure::Storage::Table::TableService do
       }
     end
 
-    it "updates an existing entity, removing any properties not included in the update operation" do 
+    it "updates an existing entity, removing any properties not included in the update operation" do
       entity = entity_properties.dup
       entity["RowKey"] = "abcd1234_existing"
 
@@ -99,22 +99,20 @@ describe Azure::Storage::Table::TableService do
       assert exists, "cannot verify existing record"
 
       batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
-      batch.insert_or_replace entity["RowKey"], { 
-        "PartitionKey" => entity["PartitionKey"],
+      batch.insert_or_replace entity["RowKey"],         "PartitionKey" => entity["PartitionKey"],
         "RowKey" => entity["RowKey"],
         "NewCustomProperty" => "NewCustomValue"
-      }
       etags = subject.execute_batch batch
 
       etags[0].must_be_kind_of String
       etags[0].wont_equal existing_etag
 
       result = subject.get_entity table_name, entity["PartitionKey"], entity["RowKey"]
-      
+
       result.must_be_kind_of Azure::Storage::Table::Entity
 
       # removed all existing props
-      entity.each { |k,v|
+      entity.each { |k, v|
         result.properties.wont_include k unless k == "PartitionKey" || k == "RowKey"
       }
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -22,56 +24,54 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-require 'azure/storage/core/autoload'
+require "azure/storage/core/autoload"
 
 module Azure
-
-  autoload :Storage,                      'azure/storage/core'
+  autoload :Storage,                      "azure/storage/core"
 
   module Storage
-    autoload :Default,                    'azure/storage/default'
-    autoload :Configurable,               'azure/storage/configurable'
-    autoload :Client,                     'azure/storage/client'
-    autoload :ClientOptions,              'azure/storage/client_options'
-    
+    autoload :Default,                    "azure/storage/default"
+    autoload :Configurable,               "azure/storage/configurable"
+    autoload :Client,                     "azure/storage/client"
+    autoload :ClientOptions,              "azure/storage/client_options"
+
     module Auth
-      autoload :SharedAccessSignature,    'azure/storage/core/auth/shared_access_signature'
+      autoload :SharedAccessSignature,    "azure/storage/core/auth/shared_access_signature"
     end
 
     module Service
-      autoload :Serialization,            'azure/storage/service/serialization'
-      autoload :StorageService,           'azure/storage/service/storage_service'
+      autoload :Serialization,            "azure/storage/service/serialization"
+      autoload :StorageService,           "azure/storage/service/storage_service"
     end
 
     module Blob
-      autoload :Blob,                     'azure/storage/blob/blob'
-      autoload :Block,                    'azure/storage/blob/block'
-      autoload :Page,                     'azure/storage/blob/page'
-      autoload :Append,                   'azure/storage/blob/append'
-      autoload :Container,                'azure/storage/blob/container'
-      autoload :Serialization,            'azure/storage/blob/serialization'
-      autoload :BlobService,              'azure/storage/blob/blob_service'
+      autoload :Blob,                     "azure/storage/blob/blob"
+      autoload :Block,                    "azure/storage/blob/block"
+      autoload :Page,                     "azure/storage/blob/page"
+      autoload :Append,                   "azure/storage/blob/append"
+      autoload :Container,                "azure/storage/blob/container"
+      autoload :Serialization,            "azure/storage/blob/serialization"
+      autoload :BlobService,              "azure/storage/blob/blob_service"
     end
 
     module Queue
-      autoload :QueueService,             'azure/storage/queue/queue_service'
-      autoload :Message,                  'azure/storage/queue/message'
-      autoload :Queue,                    'azure/storage/queue/queue'
+      autoload :QueueService,             "azure/storage/queue/queue_service"
+      autoload :Message,                  "azure/storage/queue/message"
+      autoload :Queue,                    "azure/storage/queue/queue"
     end
 
     module Table
-      autoload :TableService,             'azure/storage/table/table_service'
-      autoload :Batch,                    'azure/storage/table/batch'
-      autoload :Query,                    'azure/storage/table/query'
+      autoload :TableService,             "azure/storage/table/table_service"
+      autoload :Batch,                    "azure/storage/table/batch"
+      autoload :Query,                    "azure/storage/table/query"
     end
 
     module File
-      autoload :FileService,              'azure/storage/file/file_service'
-      autoload :Share,                    'azure/storage/file/share'
-      autoload :Directory,                'azure/storage/file/directory'
-      autoload :File,                     'azure/storage/file/file'
-      autoload :Serialization,            'azure/storage/file/serialization'
+      autoload :FileService,              "azure/storage/file/file_service"
+      autoload :Share,                    "azure/storage/file/share"
+      autoload :Directory,                "azure/storage/file/directory"
+      autoload :File,                     "azure/storage/file/file"
+      autoload :Serialization,            "azure/storage/file/serialization"
     end
-
   end
 end

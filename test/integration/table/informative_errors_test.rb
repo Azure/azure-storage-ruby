@@ -21,14 +21,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/table/table_service"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Table::TableService do
   describe "#informative_errors_table" do
     subject { Azure::Storage::Table::TableService.new }
-    let(:table_name){ TableNameHelper.name }
+    let(:table_name) { TableNameHelper.name }
     after { TableNameHelper.clean }
 
     it "exception message should be valid" do

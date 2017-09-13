@@ -21,23 +21,23 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/blob/blob_service"
 
-describe 'Queue GB-18030' do
+describe "Queue GB-18030" do
   subject { Azure::Storage::Queue::QueueService.new }
 
-  let(:queue_name){ QueueNameHelper.name }
+  let(:queue_name) { QueueNameHelper.name }
 
   before {
     subject.create_queue queue_name
   }
 
-  it 'Read/Write Queue Name UTF-8' do
+  it "Read/Write Queue Name UTF-8" do
     # Expected results: Failure, because the Queue
     # name can only contain ASCII
     # characters, per the Queue Service spec.
-    GB18030TestStrings.get.each { |k,v|
+    GB18030TestStrings.get.each { |k, v|
       begin
         subject.create_queue queue_name + v.encode("UTF-8")
         flunk "No exception"
@@ -47,11 +47,11 @@ describe 'Queue GB-18030' do
     }
   end
 
-  it 'Read/Write Queue Name GB-18030' do
+  it "Read/Write Queue Name GB-18030" do
     # Expected results: Failure, because the Queue
     # name can only contain ASCII
     # characters, per the Queue Service spec.
-    GB18030TestStrings.get.each { |k,v|
+    GB18030TestStrings.get.each { |k, v|
       begin
         subject.create_queue queue_name + v.encode("GB18030")
         flunk "No exception"
@@ -61,10 +61,10 @@ describe 'Queue GB-18030' do
     }
   end
 
-  it 'Read/Write Queue Metadata UTF-8 key' do
-    GB18030TestStrings.get.each { |k,v|
+  it "Read/Write Queue Metadata UTF-8 key" do
+    GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = {"custommetadata" + v.encode("UTF-8") => "CustomMetadataValue" }
+        metadata = { "custommetadata" + v.encode("UTF-8") => "CustomMetadataValue" }
         subject.set_queue_metadata queue_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
@@ -73,10 +73,10 @@ describe 'Queue GB-18030' do
     }
   end
 
-  it 'Read/Write Queue Metadata GB-18030 key' do
-    GB18030TestStrings.get.each { |k,v|
+  it "Read/Write Queue Metadata GB-18030 key" do
+    GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = {"custommetadata" + v.encode("GB18030") => "CustomMetadataValue" }
+        metadata = { "custommetadata" + v.encode("GB18030") => "CustomMetadataValue" }
         subject.set_queue_metadata queue_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
@@ -85,10 +85,10 @@ describe 'Queue GB-18030' do
     }
   end
 
-  it 'Read/Write Queue Metadata UTF-8 value' do
-    GB18030TestStrings.get.each { |k,v|
+  it "Read/Write Queue Metadata UTF-8 value" do
+    GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = {"custommetadata" => "CustomMetadataValue" + v.encode("UTF-8")}
+        metadata = { "custommetadata" => "CustomMetadataValue" + v.encode("UTF-8") }
         subject.set_queue_metadata queue_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
@@ -98,10 +98,10 @@ describe 'Queue GB-18030' do
     }
   end
 
-  it 'Read/Write Queue Metadata GB-18030 value' do
-    GB18030TestStrings.get.each { |k,v|
+  it "Read/Write Queue Metadata GB-18030 value" do
+    GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = {"custommetadata" => "CustomMetadataValue" + v.encode("GB18030")}
+        metadata = { "custommetadata" => "CustomMetadataValue" + v.encode("GB18030") }
         subject.set_queue_metadata queue_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
@@ -111,8 +111,8 @@ describe 'Queue GB-18030' do
     }
   end
 
-  it 'Read/Write Queue Content UTF-8' do
-    GB18030TestStrings.get.each { |k,v|
+  it "Read/Write Queue Content UTF-8" do
+    GB18030TestStrings.get.each { |k, v|
       content = v.encode("UTF-8")
       subject.create_message queue_name, content
       messages = subject.list_messages queue_name, 500
@@ -125,8 +125,8 @@ describe 'Queue GB-18030' do
 
   # Fails because of
   # https://github.com/appfog/azure-sdk-for-ruby/issues/295
-  it 'Read/Write Queue Content GB18030' do
-    GB18030TestStrings.get.each { |k,v|
+  it "Read/Write Queue Content GB18030" do
+    GB18030TestStrings.get.each { |k, v|
       content = v.encode("GB18030")
       subject.create_message queue_name, content
       messages = subject.list_messages queue_name, 500

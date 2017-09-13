@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -43,21 +45,21 @@ module Azure::Storage::Core
 
     private
 
-    def build_http(uri)
-      ssl_options = {}
-      if uri.is_a?(URI) && uri.scheme.downcase == 'https'
-        ssl_options[:ca_file] = self.ca_file if self.ca_file
-        ssl_options[:verify] = true
+      def build_http(uri)
+        ssl_options = {}
+        if uri.is_a?(URI) && uri.scheme.downcase == "https"
+          ssl_options[:ca_file] = self.ca_file if self.ca_file
+          ssl_options[:verify] = true
+        end
+        proxy_options = if ENV["HTTP_PROXY"]
+                          URI::parse(ENV["HTTP_PROXY"])
+                        elsif ENV["HTTPS_PROXY"]
+                          URI::parse(ENV["HTTPS_PROXY"])
+                        end || nil
+        Faraday.new(uri, ssl: ssl_options, proxy: proxy_options) do |conn|
+          conn.use FaradayMiddleware::FollowRedirects
+          conn.adapter Faraday.default_adapter
+        end
       end
-      proxy_options = if ENV['HTTP_PROXY']
-                        URI::parse(ENV['HTTP_PROXY'])
-                      elsif ENV['HTTPS_PROXY']
-                        URI::parse(ENV['HTTPS_PROXY'])
-                      end || nil
-      Faraday.new(uri, ssl: ssl_options, proxy: proxy_options) do |conn|
-        conn.use FaradayMiddleware::FollowRedirects
-        conn.adapter Faraday.default_adapter
-      end
-    end
   end
 end

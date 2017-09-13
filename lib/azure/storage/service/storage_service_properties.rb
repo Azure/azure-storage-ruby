@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,9 +23,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/storage/service/logging'
-require 'azure/storage/service/metrics'
-require 'azure/storage/service/cors'
+require "azure/storage/service/logging"
+require "azure/storage/service/metrics"
+require "azure/storage/service/cors"
 
 module Azure::Storage
   module Service

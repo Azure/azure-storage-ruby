@@ -22,7 +22,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/table/batch"
 require "azure/storage/table/table_service"
 require "azure/core/http/http_error"
@@ -30,9 +30,9 @@ require "azure/core/http/http_error"
 describe Azure::Storage::Table::TableService do
   describe "#merge_entity_batch" do
     subject { Azure::Storage::Table::TableService.new }
-    let(:table_name){ TableNameHelper.name }
+    let(:table_name) { TableNameHelper.name }
 
-    let(:entity_properties){
+    let(:entity_properties) {
       {
         "PartitionKey" => "testingpartition",
         "RowKey" => "abcd1234_existing",
@@ -63,11 +63,9 @@ describe Azure::Storage::Table::TableService do
 
     it "updates an existing entity, merging the properties" do
       batch = Azure::Storage::Table::Batch.new table_name, entity_properties["PartitionKey"]
-      batch.merge entity_properties["RowKey"], { 
-        "PartitionKey" => entity_properties["PartitionKey"],
+      batch.merge entity_properties["RowKey"],         "PartitionKey" => entity_properties["PartitionKey"],
         "RowKey" => entity_properties["RowKey"],
         "NewCustomProperty" => "NewCustomValue"
-      }
       etags = subject.execute_batch batch
 
       etags[0].must_be_kind_of String
@@ -80,7 +78,7 @@ describe Azure::Storage::Table::TableService do
       result.properties["RowKey"].must_equal entity_properties["RowKey"]
 
       # retained all existing props
-      entity_properties.each { |k,v|
+      entity_properties.each { |k, v|
         unless entity_properties[k].class == Time
           result.properties[k].must_equal entity_properties[k]
         else

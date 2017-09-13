@@ -41,7 +41,7 @@ describe Azure::Storage::Table::EdmType do
     end
 
     it "correctly serializes datetime query values" do
-      value = DateTime.new(2001,2,3,4,5,6)
+      value = DateTime.new(2001, 2, 3, 4, 5, 6)
       serializedValue = Azure::Storage::Table::EdmType.serialize_query_value(value)
       serializedValue.must_equal "datetime'2001-02-03T04:05:06+00:00'"
     end

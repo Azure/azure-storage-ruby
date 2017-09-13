@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,12 +23,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/storage/file/serialization'
+require "azure/storage/file/serialization"
 
 module Azure::Storage::File
   module Directory
     include Azure::Storage::Service
-    
+
     class Directory
       def initialize
         @properties = {}
@@ -68,19 +70,19 @@ module Azure::Storage::File
   #
   # * +:timeout+                 - Integer. A timeout in seconds.
   #
-  # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+  # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                in the analytics logs when storage analytics logging is enabled.
   #
   # See: https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/list-directories-and-files
   #
   # Returns an Azure::Service::EnumerationResults
   #
-  def list_directories_and_files(share, directory_path, options={})
-    query = {'comp' => 'list'}
+  def list_directories_and_files(share, directory_path, options = {})
+    query = { "comp" => "list" }
     unless options.nil?
-      StorageService.with_query query, 'marker', options[:marker]
-      StorageService.with_query query, 'maxresults', options[:max_results].to_s if options[:max_results]
-      StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+      StorageService.with_query query, "marker", options[:marker]
+      StorageService.with_query query, "maxresults", options[:max_results].to_s if options[:max_results]
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
     end
 
     uri = directory_uri(share, directory_path, query)
@@ -107,16 +109,16 @@ module Azure::Storage::File
   # Accepted key/value pairs in options parameter are:
   # * +:metadata+                 - Hash. User defined metadata for the share (optional).
   # * +:timeout+                  - Integer. A timeout in seconds.
-  # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+  # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                 in the analytics logs when storage analytics logging is enabled.
   #
   # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/create-directory
   #
   # Returns a Directory
-  def create_directory(share, directory_path, options={})
+  def create_directory(share, directory_path, options = {})
     # Query
-    query = { }
-    query['timeout'] = options[:timeout].to_s if options[:timeout]
+    query = {}
+    query["timeout"] = options[:timeout].to_s if options[:timeout]
 
     # Scheme + path
     uri = directory_uri(share, directory_path, query)
@@ -149,16 +151,16 @@ module Azure::Storage::File
   #
   # Accepted key/value pairs in options parameter are:
   # * +:timeout+                  - Integer. A timeout in seconds.
-  # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+  # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                 in the analytics logs when storage analytics logging is enabled.
   #
   # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-directory-properties
   #
   # Returns a Directory
-  def get_directory_properties(share, directory_path, options={})
+  def get_directory_properties(share, directory_path, options = {})
     # Query
-    query = { }
-    query['timeout'] = options[:timeout].to_s if options[:timeout]
+    query = {}
+    query["timeout"] = options[:timeout].to_s if options[:timeout]
 
     # Call
     response = call(:get, directory_uri(share, directory_path, query), nil, {}, options)
@@ -181,20 +183,20 @@ module Azure::Storage::File
   #
   # Accepted key/value pairs in options parameter are:
   # * +:timeout+                  - Integer. A timeout in seconds.
-  # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+  # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                 in the analytics logs when storage analytics logging is enabled.
   #
   # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/delete-directory
   #
   # Returns nil on success
-  def delete_directory(share, directory_path, options={})
+  def delete_directory(share, directory_path, options = {})
     # Query
-    query = { }
-    query['timeout'] = options[:timeout].to_s if options[:timeout]
+    query = {}
+    query["timeout"] = options[:timeout].to_s if options[:timeout]
 
     # Call
     call(:delete, directory_uri(share, directory_path, query), nil, {}, options)
-    
+
     # result
     nil
   end
@@ -211,16 +213,16 @@ module Azure::Storage::File
   #
   # Accepted key/value pairs in options parameter are:
   # * +:timeout+                  - Integer. A timeout in seconds.
-  # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+  # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                 in the analytics logs when storage analytics logging is enabled.
   #
   # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-directory-metadata
   #
   # Returns a Directory
-  def get_directory_metadata(share, directory_path, options={})
+  def get_directory_metadata(share, directory_path, options = {})
     # Query
-    query = { 'comp' => 'metadata' }
-    query['timeout'] = options[:timeout].to_s if options[:timeout]
+    query = { "comp" => "metadata" }
+    query["timeout"] = options[:timeout].to_s if options[:timeout]
 
     # Call
     response = call(:get, directory_uri(share, directory_path, query), nil, {}, options)
@@ -244,16 +246,16 @@ module Azure::Storage::File
   #
   # Accepted key/value pairs in options parameter are:
   # * +:timeout+                  - Integer. A timeout in seconds.
-  # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+  # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                 in the analytics logs when storage analytics logging is enabled.
   #
   # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set-directory-metadata
   #
   # Returns nil on success
-  def set_directory_metadata(share, directory_path, metadata, options={})
+  def set_directory_metadata(share, directory_path, metadata, options = {})
     # Query
-    query = { 'comp' => 'metadata' }
-    query['timeout'] = options[:timeout].to_s if options[:timeout]
+    query = { "comp" => "metadata" }
+    query["timeout"] = options[:timeout].to_s if options[:timeout]
 
     # Headers
     headers = StorageService.common_headers
@@ -261,7 +263,7 @@ module Azure::Storage::File
 
     # Call
     call(:put, directory_uri(share, directory_path, query), nil, headers, options)
-    
+
     # Result
     nil
   end

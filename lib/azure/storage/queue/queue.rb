@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -24,7 +26,6 @@
 module Azure::Storage
   module Queue
     class Queue
-
       def initialize
         @metadata = {}
         yield self if block_given?

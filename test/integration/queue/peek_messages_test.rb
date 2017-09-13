@@ -21,17 +21,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/queue/queue_service"
 
 describe Azure::Storage::Queue::QueueService do
   subject { Azure::Storage::Queue::QueueService.new }
-  
-  describe '#peek_messages' do
-    let(:queue_name){ QueueNameHelper.name }
-    let(:message_text) { "some random text " + QueueNameHelper.name}
-    before { 
-      subject.create_queue queue_name 
+
+  describe "#peek_messages" do
+    let(:queue_name) { QueueNameHelper.name }
+    let(:message_text) { "some random text " + QueueNameHelper.name }
+    before {
+      subject.create_queue queue_name
       subject.create_message queue_name, message_text
     }
     after { QueueNameHelper.clean }
@@ -56,7 +56,7 @@ describe Azure::Storage::Queue::QueueService do
       msg_text2 = "some random text " + QueueNameHelper.name
       subject.create_message queue_name, msg_text2
 
-      result = subject.peek_messages queue_name, { :number_of_messages => 2 }
+      result = subject.peek_messages queue_name, number_of_messages: 2
       result.wont_be_nil
       result.wont_be_empty
       result.length.must_equal 2

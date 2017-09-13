@@ -21,42 +21,42 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 
 describe Azure::Storage::File::FileService do
-  let(:user_agent_prefix) { 'azure_storage_ruby_integration_test' }
-  subject { 
+  let(:user_agent_prefix) { "azure_storage_ruby_integration_test" }
+  subject {
     Azure::Storage::File::FileService.new { |headers|
-      headers['User-Agent'] = "#{user_agent_prefix}; #{headers['User-Agent']}"
+      headers["User-Agent"] = "#{user_agent_prefix}; #{headers['User-Agent']}"
     }
   }
   after { ShareNameHelper.clean }
-  
-  describe '#set/get_file_metadata' do
+
+  describe "#set/get_file_metadata" do
     let(:share_name) { ShareNameHelper.name }
     let(:directory_name) { FileNameHelper.name }
     let(:file_name) { FileNameHelper.name }
     let(:file_length) { 1024 }
-    let(:metadata) { { "CustomMetadataProperty"=>"CustomMetadataValue" } }
-    before { 
+    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    before {
       subject.create_share share_name
       subject.create_directory share_name, directory_name
       subject.create_file share_name, directory_name, file_name, file_length
     }
 
-    it 'sets and gets custom file for the directory' do
+    it "sets and gets custom file for the directory" do
       result = subject.set_file_metadata share_name, directory_name, file_name, metadata
       result.must_be_nil
       file = subject.get_file_metadata share_name, directory_name, file_name
       file.wont_be_nil
       file.name.must_equal file_name
-      metadata.each { |k,v|
+      metadata.each { |k, v|
         file.metadata.must_include k.downcase
         file.metadata[k.downcase].must_equal v
       }
     end
 
-    it 'errors if the file does not exist' do
+    it "errors if the file does not exist" do
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.get_file_metadata share_name, directory_name, FileNameHelper.name
       end

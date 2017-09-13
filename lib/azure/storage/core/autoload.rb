@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -25,21 +27,21 @@
 module Azure
   module Storage
     module Core
-      autoload :HttpClient,                     'azure/storage/core/http_client'
-      autoload :Utility,                        'azure/storage/core/utility'
-      autoload :Logger,                         'azure/storage/core/utility'
-      autoload :Error,                          'azure/storage/core/error'
-      
+      autoload :HttpClient,                     "azure/storage/core/http_client"
+      autoload :Utility,                        "azure/storage/core/utility"
+      autoload :Logger,                         "azure/storage/core/utility"
+      autoload :Error,                          "azure/storage/core/error"
+
       module Auth
-        autoload :SharedKey,                    'azure/storage/core/auth/shared_key.rb'
-        autoload :SharedAccessSignature,        'azure/storage/core/auth/shared_access_signature_generator.rb'
-        autoload :SharedAccessSignatureSigner,  'azure/storage/core/auth/shared_access_signature_signer.rb'
+        autoload :SharedKey,                    "azure/storage/core/auth/shared_key.rb"
+        autoload :SharedAccessSignature,        "azure/storage/core/auth/shared_access_signature_generator.rb"
+        autoload :SharedAccessSignatureSigner,  "azure/storage/core/auth/shared_access_signature_signer.rb"
       end
-      
+
       module Filter
-        autoload :RetryPolicyFilter,            'azure/storage/core/filter/retry_filter'
-        autoload :LinearRetryPolicyFilter,      'azure/storage/core/filter/linear_retry_filter'
-        autoload :ExponentialRetryPolicyFilter, 'azure/storage/core/filter/exponential_retry_filter'
+        autoload :RetryPolicyFilter,            "azure/storage/core/filter/retry_filter"
+        autoload :LinearRetryPolicyFilter,      "azure/storage/core/filter/linear_retry_filter"
+        autoload :ExponentialRetryPolicyFilter, "azure/storage/core/filter/exponential_retry_filter"
       end
     end
   end

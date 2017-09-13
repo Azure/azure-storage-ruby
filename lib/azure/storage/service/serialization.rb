@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,23 +23,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'nokogiri'
+require "nokogiri"
 
-require 'azure/storage/service/enumeration_results'
-require 'azure/storage/service/signed_identifier'
-require 'azure/storage/service/access_policy'
-require 'azure/storage/service/storage_service_properties'
-require 'azure/storage/service/logging'
-require 'azure/storage/service/metrics'
-require 'azure/storage/service/retention_policy'
-require 'azure/storage/service/cors'
-require 'azure/storage/service/cors_rule'
+require "azure/storage/service/enumeration_results"
+require "azure/storage/service/signed_identifier"
+require "azure/storage/service/access_policy"
+require "azure/storage/service/storage_service_properties"
+require "azure/storage/service/logging"
+require "azure/storage/service/metrics"
+require "azure/storage/service/retention_policy"
+require "azure/storage/service/cors"
+require "azure/storage/service/cors_rule"
 
 module Azure::Storage
   module Service
     module Serialization
       module ClassMethods
-
         def signed_identifiers_from_xml(xml)
           xml = slopify(xml)
           expect_node("SignedIdentifiers", xml)
@@ -48,7 +49,7 @@ module Azure::Storage
           if xml.SignedIdentifier.count == 0
             identifiers.push(signed_identifier_from_xml(xml.SignedIdentifier))
           else
-            xml.SignedIdentifier.each { |identifier_node| 
+            xml.SignedIdentifier.each { |identifier_node|
               identifiers.push(signed_identifier_from_xml(identifier_node))
             }
           end
@@ -57,7 +58,7 @@ module Azure::Storage
         end
 
         def signed_identifiers_to_xml(signed_identifiers)
-          builder = Nokogiri::XML::Builder.new(:encoding=>"utf-8") do |xml|
+          builder = Nokogiri::XML::Builder.new(encoding: "utf-8") do |xml|
             xml.SignedIdentifiers {
               signed_identifiers.each do |identifier|
                 xml.SignedIdentifier {
@@ -99,7 +100,7 @@ module Azure::Storage
           xml = slopify(xml)
           expect_node("EnumerationResults", xml)
 
-          results = results || Azure::Service::EnumerationResults.new; 
+          results = results || Azure::Service::EnumerationResults.new;
 
           results.continuation_token = xml.NextMarker.text if (xml > "NextMarker").any?
           results
@@ -114,7 +115,7 @@ module Azure::Storage
           xml.children.each { |meta_node|
 
             key = meta_node.name.downcase
-            if metadata.has_key? key 
+            if metadata.has_key? key
               metadata[key] = [metadata[key]] unless metadata[key].respond_to? :push
               metadata[key].push(meta_node.text)
             else
@@ -127,9 +128,9 @@ module Azure::Storage
         def metadata_from_headers(headers)
           metadata = {}
 
-          headers.each { |k, v| 
+          headers.each { |k, v|
             if key = k[/^x-ms-meta-(.*)/, 1]
-              if metadata.has_key? key 
+              if metadata.has_key? key
                 metadata[key] = [metadata[key]] unless metadata[key].respond_to? :push
                 metadata[key].push(v)
               else
@@ -167,13 +168,13 @@ module Azure::Storage
         end
 
         def hour_metrics_to_xml(metrics, xml)
-          xml.HourMetrics { 
+          xml.HourMetrics {
             metrics_to_xml_children(metrics, xml)
           } if metrics
         end
 
         def minute_metrics_to_xml(metrics, xml)
-          xml.MinuteMetrics { 
+          xml.MinuteMetrics {
             metrics_to_xml_children(metrics, xml)
           } if metrics
         end
@@ -190,7 +191,7 @@ module Azure::Storage
         end
 
         def logging_to_xml(logging, xml)
-          xml.Logging { 
+          xml.Logging {
             xml.Version logging.version
             xml.Delete logging.delete
             xml.Read logging.read
@@ -235,7 +236,7 @@ module Azure::Storage
           expect_node("Cors", xml)
 
           Cors.new do |cors|
-            cors.cors_rules = xml.children.to_a.map {|child| cors_rule_from_xml(child)}
+            cors.cors_rules = xml.children.to_a.map { |child| cors_rule_from_xml(child) }
           end
         end
 
@@ -253,11 +254,11 @@ module Azure::Storage
         end
 
         def ary_from_node(node)
-          node.text.split(",").map {|s| s.strip}
+          node.text.split(",").map { |s| s.strip }
         end
-        
+
         def service_properties_to_xml(properties)
-          builder = Nokogiri::XML::Builder.new(:encoding => 'utf-8') do |xml|
+          builder = Nokogiri::XML::Builder.new(encoding: "utf-8") do |xml|
             xml.StorageServiceProperties {
               xml.DefaultServiceVersion(properties.default_service_version) if properties.default_service_version
               logging_to_xml(properties.logging, xml) if properties.logging
@@ -283,7 +284,7 @@ module Azure::Storage
         end
 
         def to_bool(s)
-          (s || "").downcase == 'true'
+          (s || "").downcase == "true"
         end
 
         def slopify(xml)
@@ -299,9 +300,9 @@ module Azure::Storage
       end
 
       extend ClassMethods
-      
-      def self.included( other )
-        other.extend( ClassMethods )
+
+      def self.included(other)
+        other.extend(ClassMethods)
       end
     end
   end

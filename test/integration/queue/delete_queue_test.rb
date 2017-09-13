@@ -21,14 +21,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/queue/queue_service"
 
 describe Azure::Storage::Queue::QueueService do
   subject { Azure::Storage::Queue::QueueService.new }
-  
-  describe '#delete_queue' do
-    let(:queue_name){ QueueNameHelper.name }
+
+  describe "#delete_queue" do
+    let(:queue_name) { QueueNameHelper.name }
     before { subject.create_queue queue_name }
     after { QueueNameHelper.clean }
 

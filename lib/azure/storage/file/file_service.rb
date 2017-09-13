@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,9 +23,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/storage/core/auth/shared_key'
-require 'azure/storage/file/serialization'
-require 'azure/storage/file/file'
+require "azure/storage/core/auth/shared_key"
+require "azure/storage/file/serialization"
+require "azure/storage/file/file"
 
 module Azure::Storage
   module File
@@ -40,13 +42,13 @@ module Azure::Storage
         @host = client.storage_file_host
       end
 
-      def call(method, uri, body=nil, headers={}, options={})
+      def call(method, uri, body = nil, headers = {}, options = {})
         # Force the request.body to the content encoding of specified in the header
-        if headers && !body.nil? && (body.is_a? String) && ((body.encoding.to_s <=> 'ASCII_8BIT') != 0)
-          if headers['x-ms-content-type'].nil?
-            Service::StorageService.with_header headers, 'x-ms-content-type', "text/plain; charset=#{body.encoding}"
+        if headers && !body.nil? && (body.is_a? String) && ((body.encoding.to_s <=> "ASCII_8BIT") != 0)
+          if headers["x-ms-content-type"].nil?
+            Service::StorageService.with_header headers, "x-ms-content-type", "text/plain; charset=#{body.encoding}"
           else
-            charset = parse_charset_from_content_type(headers['x-ms-content-type'])
+            charset = parse_charset_from_content_type(headers["x-ms-content-type"])
             body.force_encoding(charset) if charset
           end
         end
@@ -55,8 +57,8 @@ module Azure::Storage
 
         # Force the response.body to the content charset of specified in the header.
         # Content-Type is echo'd back for the blob and is used to store the encoding of the octet stream
-        if !response.nil? && !response.body.nil? && response.headers['Content-Type']
-          charset = parse_charset_from_content_type(response.headers['Content-Type'])
+        if !response.nil? && !response.body.nil? && response.headers["Content-Type"]
+          charset = parse_charset_from_content_type(response.headers["Content-Type"])
           response.body.force_encoding(charset) if charset && charset.length > 0
         end
 
@@ -93,21 +95,21 @@ module Azure::Storage
       #
       # * +:timeout+                 - Integer. A timeout in seconds.
       #
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
       #
       # See: https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/list-shares
       #
       # Returns an Azure::Service::EnumerationResults
       #
-      def list_shares(options={})
-        query = { }
+      def list_shares(options = {})
+        query = {}
         if options
-          StorageService.with_query query, 'prefix', options[:prefix]
-          StorageService.with_query query, 'marker', options[:marker]
-          StorageService.with_query query, 'maxresults', options[:max_results].to_s if options[:max_results]
-          StorageService.with_query query, 'include', 'metadata' if options[:metadata] == true
-          StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+          StorageService.with_query query, "prefix", options[:prefix]
+          StorageService.with_query query, "marker", options[:marker]
+          StorageService.with_query query, "maxresults", options[:max_results].to_s if options[:max_results]
+          StorageService.with_query query, "include", "metadata" if options[:metadata] == true
+          StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
         end
 
         uri = shares_uri(query)
@@ -125,10 +127,10 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-      def shares_uri(query={})
-        query = { 'comp' => 'list' }.merge(query)
-        generate_uri('', query)
-      end
+        def shares_uri(query = {})
+          query = { "comp" => "list" }.merge(query)
+          generate_uri("", query)
+        end
 
       # Protected: Generate the URI for a specific share.
       #
@@ -140,11 +142,11 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-      def share_uri(name, query={})
-        return name if name.kind_of? ::URI
-        query = { 'restype' => 'share' }.merge(query)
-        generate_uri(name, query)
-      end
+        def share_uri(name, query = {})
+          return name if name.kind_of? ::URI
+          query = { "restype" => "share" }.merge(query)
+          generate_uri(name, query)
+        end
 
       # Protected: Generate the URI for a specific directory.
       #
@@ -158,11 +160,11 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-      def directory_uri(share, directory_path, query={})
-        path = directory_path.nil? ? share : ::File.join(share, directory_path)
-        query = { 'restype' => 'directory' }.merge(query)
-        generate_uri(path, query, true)
-      end
+        def directory_uri(share, directory_path, query = {})
+          path = directory_path.nil? ? share : ::File.join(share, directory_path)
+          query = { "restype" => "directory" }.merge(query)
+          generate_uri(path, query, true)
+        end
 
       # Protected: Generate the URI for a specific file.
       #
@@ -176,14 +178,14 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-      def file_uri(share, directory_path, file, query={})
-        if directory_path.nil?
-          path = ::File.join(share, file)
-        else
-          path = ::File.join(share, directory_path, file)
+        def file_uri(share, directory_path, file, query = {})
+          if directory_path.nil?
+            path = ::File.join(share, file)
+          else
+            path = ::File.join(share, directory_path, file)
+          end
+          generate_uri(path, query, true)
         end
-        generate_uri(path, query, true)
-      end
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -25,8 +27,7 @@
 module Azure::Storage
   module Table
     class Entity
-      
-      def initialize 
+      def initialize
         @properties = {}
         yield self if block_given?
       end

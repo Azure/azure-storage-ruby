@@ -21,21 +21,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/queue/queue_service"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Queue::QueueService do
-  let(:user_agent_prefix) { 'azure_storage_ruby_integration_test' }
-  subject { 
+  let(:user_agent_prefix) { "azure_storage_ruby_integration_test" }
+  subject {
     Azure::Storage::Queue::QueueService.new { |headers|
-      headers['User-Agent'] = "#{user_agent_prefix}; #{headers['User-Agent']}"
+      headers["User-Agent"] = "#{user_agent_prefix}; #{headers['User-Agent']}"
     }
   }
-  
-  describe '#create_queue' do
-    let(:queue_name){ QueueNameHelper.name }
-    let(:metadata){ {"custommetadata" => "CustomMetadataValue"} }
+
+  describe "#create_queue" do
+    let(:queue_name) { QueueNameHelper.name }
+    let(:metadata) { { "custommetadata" => "CustomMetadataValue" } }
     after { QueueNameHelper.clean }
 
     it "creates a queue with a valid name" do
@@ -44,12 +44,12 @@ describe Azure::Storage::Queue::QueueService do
     end
 
     it "creates a queue with a valid name and metadata" do
-      result = subject.create_queue queue_name, { :metadata => metadata }
+      result = subject.create_queue queue_name, metadata: metadata
       result.must_be_nil
 
       message_count, queue_metadata = subject.get_queue_metadata queue_name
 
-      metadata.each { |k,v|
+      metadata.each { |k, v|
         queue_metadata.must_include k
         queue_metadata[k].must_equal v
       }

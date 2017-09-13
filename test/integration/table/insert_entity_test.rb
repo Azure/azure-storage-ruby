@@ -21,22 +21,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/table/table_service"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Table::TableService do
   describe "#insert_entity" do
     subject { Azure::Storage::Table::TableService.new }
-    let(:table_name){ TableNameHelper.name }
+    let(:table_name) { TableNameHelper.name }
 
     let(:entity_properties) {
-      { 
+      {
         "PartitionKey" => "testingpartition",
         "RowKey" => "abcd123",
         "CustomDoubleProperty" => 3.141592,
         "CustomDoubleTrailingZeroProperty" => 1.0,
-        "CustomDoublePrecisionProperty" => '1.012345678901234567890',
+        "CustomDoublePrecisionProperty" => "1.012345678901234567890",
         "CustomInt32Property" => 37,
         "CustomInt64Property" => 2**32,
         "CustomInt64NegProperty" => -(2**32),
@@ -52,11 +52,11 @@ describe Azure::Storage::Table::TableService do
       }
     }
 
-    before { 
+    before {
       subject.create_table table_name
     }
     after { TableNameHelper.clean }
-    it "creates an entity" do 
+    it "creates an entity" do
       result = subject.insert_entity table_name, entity_properties
       result.must_be_kind_of Azure::Storage::Table::Entity
       entity_properties.each { |k, v|

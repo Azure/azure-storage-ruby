@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -22,16 +24,16 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-require 'azure/storage/core'
-require 'azure/storage/core/http_client'
+require "azure/storage/core"
+require "azure/storage/core/http_client"
 
-require 'azure/storage/client_options'
+require "azure/storage/client_options"
 
-require 'azure/storage/service/storage_service'
-require 'azure/storage/blob/blob_service'
-require 'azure/storage/table/table_service'
-require 'azure/storage/queue/queue_service'
-require 'azure/storage/file/file_service'
+require "azure/storage/service/storage_service"
+require "azure/storage/blob/blob_service"
+require "azure/storage/table/table_service"
+require "azure/storage/queue/queue_service"
+require "azure/storage/file/file_service"
 
 module Azure::Storage
   class Client
@@ -81,7 +83,7 @@ module Azure::Storage
     #
     # @return [Azure::Storage::Client]
     def initialize(options = {}, &block)
-      if options.is_a?(Hash) and options.has_key?(:user_agent_prefix)
+      if options.is_a?(Hash) && options.has_key?(:user_agent_prefix)
         Azure::Storage::Service::StorageService.user_agent_prefix = options[:user_agent_prefix]
         options.delete :user_agent_prefix
       end
@@ -154,7 +156,7 @@ module Azure::Storage
       # When empty options are given, it will try to read settings from Environment Variables. Refer to [Azure::Storage::ClientOptions.env_vars_mapping] for the mapping relationship
       #
       # @return [Azure::Storage::Client]
-      def create(options={}, &block)
+      def create(options = {}, &block)
         Client.new(options, &block)
       end
 
@@ -165,9 +167,9 @@ module Azure::Storage
       # * +proxy_uri+    - String. Used with +:use_development_storage+ if emulator is hosted other than localhost.
       #
       # @return [Azure::Storage::Client]
-      def create_development(proxy_uri=nil, &block)
+      def create_development(proxy_uri = nil, &block)
         proxy_uri ||= StorageServiceClientConstants::DEV_STORE_URI
-        create(:use_development_storage => true, :development_storage_proxy_uri => proxy_uri, &block)
+        create(use_development_storage: true, development_storage_proxy_uri: proxy_uri, &block)
       end
 
       # Public: Creates an instance of [Azure::Storage::Client] from Environment Variables
@@ -191,9 +193,8 @@ module Azure::Storage
 
     private
 
-    def default_client(opts)
-      !opts.empty? ? {client: Azure::Storage.client(opts)} : {client: self} 
-    end
-
+      def default_client(opts)
+        !opts.empty? ? { client: Azure::Storage.client(opts) } : { client: self }
+      end
   end
 end

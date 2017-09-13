@@ -21,16 +21,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 
 describe Azure::Storage::File::FileService do
   subject { Azure::Storage::File::FileService.new }
   after { ShareNameHelper.clean }
-  
-  describe '#get_share_stats' do
+
+  describe "#get_share_stats" do
     let(:share_name) { ShareNameHelper.name }
 
-    it 'gets acl and custom metadata for the share' do
+    it "gets acl and custom metadata for the share" do
       share = subject.create_share share_name
       properties = share.properties
 
@@ -40,7 +40,7 @@ describe Azure::Storage::File::FileService do
       share.usage.must_equal 0
     end
 
-    it 'errors if the share does not exist' do
+    it "errors if the share does not exist" do
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.get_share_properties FileNameHelper.name
       end

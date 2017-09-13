@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -22,7 +24,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-require 'azure/storage/core/auth/shared_access_signature_generator'
-require 'azure/storage/core/auth/shared_access_signature_signer'
+require "azure/storage/core/auth/shared_access_signature_generator"
+require "azure/storage/core/auth/shared_access_signature_signer"
 
 include Azure::Storage::Core::Auth

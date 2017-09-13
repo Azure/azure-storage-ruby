@@ -21,31 +21,31 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 
 describe Azure::Storage::File::FileService do
   subject { Azure::Storage::File::FileService.new }
   after { ShareNameHelper.clean }
-  
-  describe '#list_directories' do
+
+  describe "#list_directories" do
     let(:share_name) { ShareNameHelper.name }
     let(:directories_names) { [FileNameHelper.name, FileNameHelper.name, FileNameHelper.name] }
     let(:sub_directories_names) { [FileNameHelper.name, FileNameHelper.name, FileNameHelper.name] }
-    let(:metadata) { { "CustomMetadataProperty"=>"CustomMetadataValue" } }
+    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
     before {
-      subject.create_share share_name, { :metadata => metadata }
+      subject.create_share share_name, metadata: metadata
       directories_names.each { |directory_name|
-        subject.create_directory share_name, directory_name, { :metadata => metadata }
-        
+        subject.create_directory share_name, directory_name, metadata: metadata
+
         sub_directories_names.each { |sub_directory_name|
           sub_directory_path = ::File.join(directory_name, sub_directory_name)
-          subject.create_directory share_name, sub_directory_path, { :metadata => metadata }
+          subject.create_directory share_name, sub_directory_path, metadata: metadata
         }
       }
     }
 
-    it 'lists the level_1 directories for the account' do
-      result =  subject.list_directories_and_files share_name, nil
+    it "lists the level_1 directories for the account" do
+      result = subject.list_directories_and_files share_name, nil
       found = 0
       result.each { |directory|
         found += 1 if directories_names.include? directory.name
@@ -53,8 +53,8 @@ describe Azure::Storage::File::FileService do
       found.must_equal directories_names.length
     end
 
-    it 'lists the level_2 directories for the account' do
-      result =  subject.list_directories_and_files share_name, nil
+    it "lists the level_2 directories for the account" do
+      result = subject.list_directories_and_files share_name, nil
       found = 0
       result.each { |directory|
         found += 1 if directories_names.include? directory.name
@@ -67,51 +67,51 @@ describe Azure::Storage::File::FileService do
       found.must_equal directories_names.length + directories_names.length * sub_directories_names.length
     end
 
-    it 'lists the shares for the account with max results' do
-      result =  subject.list_directories_and_files(share_name, nil, { :max_results => 1 })
+    it "lists the shares for the account with max results" do
+      result = subject.list_directories_and_files(share_name, nil, max_results: 1)
       result.length.must_equal 1
       first_directory = result[0]
       result.continuation_token.wont_equal ""
 
-      result = subject.list_directories_and_files(share_name, nil, { :max_results => 2, :marker => result.continuation_token })
+      result = subject.list_directories_and_files(share_name, nil, max_results: 2, marker: result.continuation_token)
       result.length.must_equal 2
       result[0].name.wont_equal first_directory.name
     end
   end
 
-  describe '#list_directories_and_files' do
+  describe "#list_directories_and_files" do
     let(:share_name) { FileNameHelper.name }
     let(:directories_names) { [FileNameHelper.name, FileNameHelper.name, FileNameHelper.name] }
     let(:sub_directories_names) { [FileNameHelper.name, FileNameHelper.name, FileNameHelper.name] }
     let(:file_names) { [FileNameHelper.name, FileNameHelper.name, FileNameHelper.name] }
     let(:file_length) { 1024 }
-    let(:metadata) { { "CustomMetadataProperty"=>"CustomMetadataValue" } }
+    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
     before {
-      subject.create_share share_name, { :metadata => metadata }
+      subject.create_share share_name, metadata: metadata
       directories_names.each { |directory_name|
         # Create level 1 directories
-        subject.create_directory share_name, directory_name, { :metadata => metadata }
+        subject.create_directory share_name, directory_name, metadata: metadata
 
         # Create level 1 files
         file_names.each { |file_name|
-          subject.create_file share_name, directory_name, file_name, file_length, { :metadata => metadata }
+          subject.create_file share_name, directory_name, file_name, file_length, metadata: metadata
         }
 
         # Create level 2 directories
         sub_directories_names.each { |sub_directory_name|
           sub_directory_path = ::File.join(directory_name, sub_directory_name)
-          subject.create_directory share_name, sub_directory_path, { :metadata => metadata }
+          subject.create_directory share_name, sub_directory_path, metadata: metadata
         }
       }
     }
 
-    it 'lists the level_2 directories and files for the account' do
-      result =  subject.list_directories_and_files share_name, directories_names[0]
+    it "lists the level_2 directories and files for the account" do
+      result = subject.list_directories_and_files share_name, directories_names[0]
       directory_found = 0
       file_found = 0
       result.each { |entry|
-        directory_found += 1 if sub_directories_names.include? entry.name and entry.is_a? Azure::Storage::File::Directory::Directory
-        file_found += 1 if file_names.include? entry.name and entry.is_a? Azure::Storage::File::File
+        directory_found += 1 if sub_directories_names.include?(entry.name) && entry.is_a?(Azure::Storage::File::Directory::Directory)
+        file_found += 1 if file_names.include?(entry.name) && entry.is_a?(Azure::Storage::File::File)
       }
       directory_found.must_equal sub_directories_names.length
       file_found.must_equal file_names.length

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -22,7 +24,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-require 'azure/storage/table/guid'
+require "azure/storage/table/guid"
 
 require "time"
 require "date"
@@ -75,7 +77,7 @@ module Azure::Storage
       end
 
       # Public: Serializes EDM value into proper value to be used in query.
-      # 
+      #
       # value - String. The value to serialize.
       #
       # Returns the serialized value
@@ -96,7 +98,7 @@ module Azure::Storage
             "X'" + value.to_s.unpack("H*").join("") + "'"
           else
             # NULL also is treated as EdmType::STRING
-            value.to_s.gsub("'","''");
+            value.to_s.gsub("'", "''");
           end
         end
       end
@@ -116,19 +118,19 @@ module Azure::Storage
         when "Edm.Int32", "Edm.Int64"
           Integer(value)
         when "Edm.Boolean"
-          value == true || value == 'true' ? true : false
+          value == true || value == "true" ? true : false
         when "Edm.Guid"
           GUID.new(value.to_s)
         when "Edm.Binary"
           Base64.decode64(value.to_s).force_encoding("BINARY")
         else
-          value == '' ? nil : value.to_s
+          value == "" ? nil : value.to_s
         end
       end
 
       def self.to_edm_time(value)
         date = value.is_a?(Time) ? value : Time.parse(value)
-        date.utc.strftime('%Y-%m-%dT%H:%M:%S.%6N0Z')
+        date.utc.strftime("%Y-%m-%dT%H:%M:%S.%6N0Z")
       end
     end
   end

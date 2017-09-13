@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,8 +23,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gemspec :name => 'azure-storage'
+gemspec name: "azure-storage"
 
-gem 'coveralls', require: false
+gem "coveralls", require: false

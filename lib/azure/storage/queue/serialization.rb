@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,10 +23,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/storage/service/serialization'
+require "azure/storage/service/serialization"
 
-require 'azure/storage/queue/queue'
-require 'azure/storage/queue/message'
+require "azure/storage/queue/queue"
+require "azure/storage/queue/message"
 
 module Azure::Storage
   module Queue
@@ -37,7 +39,7 @@ module Azure::Storage
         expect_node("QueueMessagesList", xml)
         results = []
         return results unless (xml > "QueueMessage").any?
-  
+
         if xml.QueueMessage.count == 0
           results.push(queue_message_from_xml(xml.QueueMessage, decode))
         else
@@ -72,7 +74,7 @@ module Azure::Storage
             xml.QueueMessage { xml.MessageText Base64.encode64(message_text) }
           end
         else
-          builder = Nokogiri::XML::Builder.new(:encoding => 'utf-8') do |xml|
+          builder = Nokogiri::XML::Builder.new(encoding: "utf-8") do |xml|
             xml.QueueMessage { xml.MessageText message_text.encode("utf-8") }
           end
         end

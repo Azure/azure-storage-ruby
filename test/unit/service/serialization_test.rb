@@ -24,13 +24,13 @@
 require "unit/test_helper"
 require "azure/storage/service/serialization"
 
-require 'azure/storage/service/signed_identifier'
-require 'azure/storage/service/access_policy'
+require "azure/storage/service/signed_identifier"
+require "azure/storage/service/access_policy"
 
-require 'azure/storage/service/storage_service_properties'
-require 'azure/storage/service/logging'
-require 'azure/storage/service/metrics'
-require 'azure/storage/service/retention_policy'
+require "azure/storage/service/storage_service_properties"
+require "azure/storage/service/logging"
+require "azure/storage/service/metrics"
+require "azure/storage/service/retention_policy"
 
 describe Azure::Storage::Service::Serialization do
   subject { Azure::Storage::Service::Serialization }
@@ -39,12 +39,12 @@ describe Azure::Storage::Service::Serialization do
   let(:storage_service_properties_xml) { Fixtures["storage_service_properties"] }
 
   describe "#signed_identifiers_from_xml" do
-    let(:signed_identifiers_xml) { Fixtures["container_acl"]}
+    let(:signed_identifiers_xml) { Fixtures["container_acl"] }
 
     it "accepts an XML string" do
       subject.signed_identifiers_from_xml signed_identifiers_xml
     end
-    
+
     it "returns an Array of SignedIdentifier instances" do
       results = subject.signed_identifiers_from_xml signed_identifiers_xml
       results.must_be_kind_of Array
@@ -54,7 +54,7 @@ describe Azure::Storage::Service::Serialization do
   end
 
   describe "#signed_identifiers_to_xml" do
-    let(:signed_identifiers) { 
+    let(:signed_identifiers) {
       identifier = Azure::Storage::Service::SignedIdentifier.new
       identifier.id = "MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI="
       identifier.access_policy.start = "2009-09-28T08:49:37.0000000Z"
@@ -62,9 +62,9 @@ describe Azure::Storage::Service::Serialization do
       identifier.access_policy.permission = "rwd"
       [identifier]
     }
-    
-    let(:signed_identifiers_xml) { Fixtures["container_acl"]}
-    
+
+    let(:signed_identifiers_xml) { Fixtures["container_acl"] }
+
     it "accepts a list of SignedIdentifier instances" do
       subject.signed_identifiers_to_xml signed_identifiers
     end
@@ -83,7 +83,7 @@ describe Azure::Storage::Service::Serialization do
     it "accepts an XML node" do
       subject.signed_identifier_from_xml signed_identifier_xml
     end
-    
+
     it "returns a SignedIdentifier instance" do
       identifier = subject.signed_identifier_from_xml signed_identifier_xml
       identifier.must_be_kind_of Azure::Storage::Service::SignedIdentifier
@@ -102,7 +102,7 @@ describe Azure::Storage::Service::Serialization do
     it "accepts an XML node" do
       subject.access_policy_from_xml access_policy_xml
     end
-    
+
     it "returns a AccessPolicy instance" do
       access_policy = subject.access_policy_from_xml access_policy_xml
       access_policy.must_be_kind_of Azure::Storage::Service::AccessPolicy
@@ -123,7 +123,7 @@ describe Azure::Storage::Service::Serialization do
 
     describe "when passed an instance of EnumerationResults" do
       let(:enumeration_results) { Azure::Service::EnumerationResults.new }
-      
+
       it "parses the XML and populates the provided EnumerationResults instance" do
         result = subject.enumeration_results_from_xml enumeration_results_xml, enumeration_results
         result.must_be :kind_of?, Azure::Service::EnumerationResults
@@ -169,15 +169,15 @@ describe Azure::Storage::Service::Serialization do
       it "returns and array of values for that key" do
         hash = subject.metadata_from_xml(metadata_xml_node)
         hash["x-ms-invalid-name"].must_be_kind_of Array
-        hash["x-ms-invalid-name"].must_equal ["invalid-metadata-name","invalid-metadata-name2"]
+        hash["x-ms-invalid-name"].must_equal ["invalid-metadata-name", "invalid-metadata-name2"]
       end
     end
   end
 
   describe "#metadata_from_headers" do
-    let(:headers) { { "Content-Type"=>"application/xml", "Content-Length"=>"37" } }
+    let(:headers) { { "Content-Type" => "application/xml", "Content-Length" => "37" } }
 
-    let(:metadata_headers) { headers.merge({ "x-ms-meta-MyMetadata1" => "first value", "x-ms-meta-MyMetadata2" => "second value" })}
+    let(:metadata_headers) { headers.merge("x-ms-meta-MyMetadata1" => "first value", "x-ms-meta-MyMetadata2" => "second value") }
 
     it "returns a Hash" do
       subject.metadata_from_headers(metadata_headers).must_be_kind_of Hash
@@ -197,16 +197,16 @@ describe Azure::Storage::Service::Serialization do
   end
 
   describe "#retention_policy_to_xml" do
-    let(:retention_policy) { 
+    let(:retention_policy) {
       retention_policy = Azure::Storage::Service::RetentionPolicy.new
       retention_policy.enabled = true
       retention_policy.days = 7
-      
+
       retention_policy
     }
-    
-    let(:retention_policy_xml) { Fixtures["retention_policy"]}
-    
+
+    let(:retention_policy_xml) { Fixtures["retention_policy"] }
+
     it "accepts a RetentionPolicy instance and an Nokogiri::XML::Builder instance" do
       Nokogiri::XML::Builder.new do |xml|
         subject.retention_policy_to_xml retention_policy, xml
@@ -223,11 +223,11 @@ describe Azure::Storage::Service::Serialization do
 
   describe "#retention_policy_from_xml" do
     let(:retention_policy_xml) { Nokogiri.Slop(Fixtures["storage_service_properties"]).root.HourMetrics.RetentionPolicy }
-    
+
     it "accepts an XML Node" do
       subject.retention_policy_from_xml retention_policy_xml
     end
-    
+
     it "returns an RetentionPolicy instance" do
       retention_policy = subject.retention_policy_from_xml retention_policy_xml
       retention_policy.wont_be_nil
@@ -242,7 +242,7 @@ describe Azure::Storage::Service::Serialization do
   end
 
   describe "#hour_metrics_to_xml" do
-    let(:metrics) { 
+    let(:metrics) {
       metrics = Azure::Storage::Service::Metrics.new
       metrics.version = "1.0"
       metrics.enabled = true
@@ -250,12 +250,12 @@ describe Azure::Storage::Service::Serialization do
       retention_policy = metrics.retention_policy = Azure::Storage::Service::RetentionPolicy.new
       retention_policy.enabled = true
       retention_policy.days = 7
-      
+
       metrics
     }
-    
-    let(:metrics_xml) { Fixtures["metrics"]}
-    
+
+    let(:metrics_xml) { Fixtures["metrics"] }
+
     it "accepts a Metrics instance and an Nokogiri::XML::Builder instance" do
       Nokogiri::XML::Builder.new do |xml|
         subject.hour_metrics_to_xml metrics, xml
@@ -269,19 +269,19 @@ describe Azure::Storage::Service::Serialization do
       builder.to_xml.must_equal metrics_xml
     end
   end
-  
+
   describe "#metrics_from_xml" do
     let(:metrics_xml) { Nokogiri.Slop(Fixtures["storage_service_properties"]).root.HourMetrics }
     let(:mock_retention_policy) { mock }
 
-    before { 
+    before {
       subject.expects(:retention_policy_from_xml).returns(mock_retention_policy)
     }
-    
+
     it "accepts an XML Node" do
       subject.metrics_from_xml metrics_xml
     end
-    
+
     it "returns an Metrics instance" do
       metrics = subject.metrics_from_xml metrics_xml
       metrics.wont_be_nil
@@ -297,9 +297,9 @@ describe Azure::Storage::Service::Serialization do
     end
   end
 
-  
+
   describe "#logging_to_xml" do
-    let(:logging) { 
+    let(:logging) {
       logging = Azure::Storage::Service::Logging.new
       logging.version = "1.0"
       logging.delete = true
@@ -309,12 +309,12 @@ describe Azure::Storage::Service::Serialization do
       retention_policy = logging.retention_policy = Azure::Storage::Service::RetentionPolicy.new
       retention_policy.enabled = true
       retention_policy.days = 7
-      
+
       logging
     }
-    
-    let(:logging_xml) { Fixtures["logging"]}
-    
+
+    let(:logging_xml) { Fixtures["logging"] }
+
     it "accepts a Logging instance and an Nokogiri::XML::Builder instance" do
       Nokogiri::XML::Builder.new do |xml|
         subject.logging_to_xml logging, xml
@@ -333,14 +333,14 @@ describe Azure::Storage::Service::Serialization do
     let(:logging_xml) { Nokogiri.Slop(Fixtures["storage_service_properties"]).root.Logging }
     let(:mock_retention_policy) { mock }
 
-    before { 
+    before {
       subject.expects(:retention_policy_from_xml).returns(mock_retention_policy)
     }
-    
+
     it "accepts an XML Node" do
       subject.logging_from_xml logging_xml
     end
-    
+
     it "returns an Logging instance" do
       logging = subject.logging_from_xml logging_xml
       logging.wont_be_nil
@@ -358,7 +358,7 @@ describe Azure::Storage::Service::Serialization do
   end
 
   describe "#service_properties_to_xml" do
-    let(:service_properties) { 
+    let(:service_properties) {
       service_properties = Azure::Storage::Service::StorageServiceProperties.new
       service_properties.default_service_version = "2011-08-18"
       logging = service_properties.logging = Azure::Storage::Service::Logging.new
@@ -409,9 +409,9 @@ describe Azure::Storage::Service::Serialization do
 
       service_properties
     }
-    
-    let(:service_properties_xml) { Fixtures["storage_service_properties"]}
-    
+
+    let(:service_properties_xml) { Fixtures["storage_service_properties"] }
+
     it "accepts a StorageServiceProperties instance" do
       subject.service_properties_to_xml service_properties
     end
@@ -423,21 +423,21 @@ describe Azure::Storage::Service::Serialization do
   end
 
   describe "#service_properties_from_xml" do
-    let(:service_properties_xml) { Fixtures["storage_service_properties"]}
+    let(:service_properties_xml) { Fixtures["storage_service_properties"] }
     let(:mock_logging) { mock }
     let(:mock_metrics) { mock }
     let(:mock_cors) { mock }
 
-    before { 
+    before {
       subject.expects(:logging_from_xml).returns(mock_logging)
       subject.expects(:metrics_from_xml).twice.returns(mock_metrics)
       subject.expects(:cors_from_xml).returns(mock_cors)
     }
-    
+
     it "accepts an XML string" do
       subject.service_properties_from_xml service_properties_xml
     end
-    
+
     it "returns an StorageServiceProperties instance" do
       service_properties = subject.service_properties_from_xml service_properties_xml
       service_properties.wont_be_nil
@@ -454,20 +454,20 @@ describe Azure::Storage::Service::Serialization do
 
   describe "#to_bool" do
     it "converts a valid string value to a Boolean" do
-      subject.to_bool('true').must_be_kind_of TrueClass
-      subject.to_bool('false').must_be_kind_of FalseClass
+      subject.to_bool("true").must_be_kind_of TrueClass
+      subject.to_bool("false").must_be_kind_of FalseClass
     end
 
     it "is case insensitive" do
       # mixed case
-      subject.to_bool('True').must_equal true
+      subject.to_bool("True").must_equal true
 
       # upper case
-      subject.to_bool('TRUE').must_equal true
+      subject.to_bool("TRUE").must_equal true
     end
 
     it "returns false for any value other than 'true'" do
-      subject.to_bool('random string').must_equal false
+      subject.to_bool("random string").must_equal false
       subject.to_bool(nil).must_equal false
     end
   end
@@ -477,15 +477,15 @@ describe Azure::Storage::Service::Serialization do
     let(:document) { Nokogiri.Slop xml_data }
     let(:root_node) { document.root }
     let(:non_slop_node) { Nokogiri.parse(xml_data).root }
-    
+
     describe "when passed a String" do
 
-      it "parses the string into a Nokogiri::XML::Element node" do 
+      it "parses the string into a Nokogiri::XML::Element node" do
         result = subject.slopify(xml_data)
         result.must_be_kind_of Nokogiri::XML::Element
       end
-      
-      it "returns the root of the parsed Document" do 
+
+      it "returns the root of the parsed Document" do
         result = subject.slopify(xml_data)
         result.name.must_equal root_node.name
       end
@@ -495,18 +495,18 @@ describe Azure::Storage::Service::Serialization do
         result.must_respond_to :method_missing
       end
     end
-    
+
     describe "when passed a Nokogiri::XML::Document" do
-      it "returns a Nokogiri::XML::Element node" do 
+      it "returns a Nokogiri::XML::Element node" do
         result = subject.slopify(document)
         result.must_be_kind_of Nokogiri::XML::Element
       end
 
-      it "returns the root of the Document" do 
+      it "returns the root of the Document" do
         result = subject.slopify(document)
         result.name.must_equal root_node.name
       end
-      
+
       it "enables Nokogiri 'Slop' mode on the returned Element" do
         result = subject.slopify(xml_data)
         result.must_respond_to :method_missing
@@ -514,7 +514,7 @@ describe Azure::Storage::Service::Serialization do
     end
 
     describe "when passed a Nokogiri::XML::Element" do
-      it "returns the Element unchanged" do 
+      it "returns the Element unchanged" do
         result = subject.slopify(root_node)
         result.must_equal root_node
       end

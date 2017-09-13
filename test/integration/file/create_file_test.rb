@@ -21,14 +21,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/core/http/http_error'
-require 'integration/test_helper'
+require "azure/core/http/http_error"
+require "integration/test_helper"
 
 describe Azure::Storage::File::FileService do
   subject { Azure::Storage::File::FileService.new }
   after { ShareNameHelper.clean }
 
-  describe '#create_file' do
+  describe "#create_file" do
     let(:share_name) { ShareNameHelper.name }
     let(:directory_name) { FileNameHelper.name }
     let(:file_name) { FileNameHelper.name }
@@ -38,7 +38,7 @@ describe Azure::Storage::File::FileService do
       subject.create_directory share_name, directory_name
     }
 
-    it 'creates the file' do
+    it "creates the file" do
       file = subject.create_file share_name, directory_name, file_name, file_length
       file.name.must_equal file_name
 
@@ -46,33 +46,32 @@ describe Azure::Storage::File::FileService do
       file.properties[:content_length].must_equal file_length
     end
 
-    it 'creates the file with custom metadata' do
-      metadata = { 'CustomMetadataProperty' => 'CustomMetadataValue'}
-      file = subject.create_file share_name, directory_name, file_name, file_length, { :metadata => metadata }
-      
+    it "creates the file with custom metadata" do
+      metadata = { "CustomMetadataProperty" => "CustomMetadataValue" }
+      file = subject.create_file share_name, directory_name, file_name, file_length, metadata: metadata
+
       file.name.must_equal file_name
       file.metadata.must_equal metadata
       file = subject.get_file_metadata share_name, directory_name, file_name
 
-      metadata.each { |k,v|
+      metadata.each { |k, v|
         file.metadata.must_include k.downcase
         file.metadata[k.downcase].must_equal v
       }
     end
 
-    it 'no errors if the file already exists' do
+    it "no errors if the file already exists" do
       subject.create_file share_name, directory_name, file_name, file_length
       subject.create_file share_name, directory_name, file_name, file_length + file_length
       file = subject.get_file_properties share_name, directory_name, file_name
       file.name.must_equal file_name
       file.properties[:content_length].must_equal file_length * 2
     end
-    
-    it 'errors if the difilerectory name is invalid' do
+
+    it "errors if the difilerectory name is invalid" do
       assert_raises(Azure::Core::Http::HTTPError) do
-        subject.create_file share_name, directory_name, 'this_file/cannot/exist!', file_length
+        subject.create_file share_name, directory_name, "this_file/cannot/exist!", file_length
       end
     end
   end
 end
-

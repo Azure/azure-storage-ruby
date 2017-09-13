@@ -21,15 +21,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 
-describe 'File GB-18030' do
+describe "File GB-18030" do
   subject { Azure::Storage::File::FileService.new }
   after { ShareNameHelper.clean }
 
   let(:share_name) { ShareNameHelper.name }
   let(:directory_name) { FileNameHelper.name }
-  let(:file_name) { 'rubyfilename' }
+  let(:file_name) { "rubyfilename" }
   let(:file_length) { 64 }
 
   before {
@@ -38,43 +38,43 @@ describe 'File GB-18030' do
     subject.create_file share_name, directory_name, file_name, file_length
   }
 
-  it 'Read/Write File Share Name UTF-8' do
+  it "Read/Write File Share Name UTF-8" do
     # Expected results: Failure, because the File
     # share name can only contain ASCII
     # characters, per the File Service spec.
-    GB18030TestStrings.get.each { |k,v|
+    GB18030TestStrings.get.each { |k, v|
       begin
-        subject.create_share share_name + v.encode('UTF-8')
-        flunk 'No exception'
+        subject.create_share share_name + v.encode("UTF-8")
+        flunk "No exception"
       rescue
         # Add validation?
       end
     }
   end
 
-  it 'Read/Write File Share Name GB-18030' do
+  it "Read/Write File Share Name GB-18030" do
     # Expected results: Failure, because the File
     # share name can only contain ASCII
     # characters, per the File Service spec.
-    GB18030TestStrings.get.each { |k,v|
+    GB18030TestStrings.get.each { |k, v|
       begin
-        subject.create_share share_name + v.encode('GB18030')
-        flunk 'No exception'
+        subject.create_share share_name + v.encode("GB18030")
+        flunk "No exception"
       rescue
         # Add validation?
       end
     }
   end
 
-  it 'Read/Write File Name UTF-8' do
+  it "Read/Write File Name UTF-8" do
     share_name = ShareNameHelper.name
     subject.create_share share_name
     subject.create_directory share_name, directory_name
 
-    GB18030TestStrings.get.each { |k,v|
+    GB18030TestStrings.get.each { |k, v|
       # The File service does not support characters from extended plains.
-      if k != 'ChineseExtB' and k != 'Chinese2B5' then
-        test_name = share_name + v.encode('UTF-8')
+      if k != ("ChineseExtB") && k != ("Chinese2B5") then
+        test_name = share_name + v.encode("UTF-8")
         subject.create_file share_name, directory_name, test_name, file_length
         files = subject.list_directories_and_files share_name, directory_name
         files.each { |value|
@@ -86,54 +86,54 @@ describe 'File GB-18030' do
   end
 
   # Fails because of https://github.com/appfog/azure-sdk-for-ruby/issues/293
-  it 'Read/Write File Name GB18030' do
+  it "Read/Write File Name GB18030" do
     share_name = ShareNameHelper.name
     subject.create_share share_name
     subject.create_directory share_name, directory_name
-    GB18030TestStrings.get.each { |k,v|
+    GB18030TestStrings.get.each { |k, v|
       # The File service does not support characters from extended plains.
-      if k != 'ChineseExtB' and k != 'Chinese2B5' then
-        test_name = share_name + v.encode('GB18030')
+      if k != ("ChineseExtB") && k != ("Chinese2B5") then
+        test_name = share_name + v.encode("GB18030")
         subject.create_file share_name, directory_name, test_name, file_length
         files = subject.list_directories_and_files share_name, directory_name
         files.each { |value|
-          value.name.encode('UTF-8').must_equal test_name.encode('UTF-8')
+          value.name.encode("UTF-8").must_equal test_name.encode("UTF-8")
         }
         subject.delete_file share_name, directory_name, test_name
       end
     }
   end
 
-  it 'Read/Write File Metadata UTF-8 key' do
-    GB18030TestStrings.get.each { |k,v|
+  it "Read/Write File Metadata UTF-8 key" do
+    GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = {'custommetadata' + v.encode('UTF-8') => 'CustomMetadataValue'}
+        metadata = { "custommetadata" + v.encode("UTF-8") => "CustomMetadataValue" }
         subject.set_file_metadata share_name, directory_name, file_name, metadata
-        flunk 'No exception'
+        flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
         error.status_code.must_equal 400
       end
     }
   end
 
-  it 'Read/Write File Metadata GB-18030 key' do
-    GB18030TestStrings.get.each { |k,v|
+  it "Read/Write File Metadata GB-18030 key" do
+    GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = {'custommetadata' + v.encode('GB18030') => 'CustomMetadataValue'}
+        metadata = { "custommetadata" + v.encode("GB18030") => "CustomMetadataValue" }
         subject.set_file_metadata share_name, directory_name, file_name, metadata
-        flunk 'No exception'
+        flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
         error.status_code.must_equal 400
       end
     }
   end
 
-  it 'Read/Write File Metadata UTF-8 value' do
-    GB18030TestStrings.get.each { |k,v|
+  it "Read/Write File Metadata UTF-8 value" do
+    GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = {'custommetadata' => 'CustomMetadataValue' + v.encode('UTF-8')}
+        metadata = { "custommetadata" => "CustomMetadataValue" + v.encode("UTF-8") }
         subject.set_file_metadata share_name, directory_name, file_name, metadata
-        flunk 'No exception'
+        flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
         # TODO: Error should really be 400
         error.status_code.must_equal 403
@@ -141,12 +141,12 @@ describe 'File GB-18030' do
     }
   end
 
-  it 'Read/Write File Metadata GB-18030 value' do
-    GB18030TestStrings.get.each { |k,v|
+  it "Read/Write File Metadata GB-18030 value" do
+    GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = {'custommetadata' => 'CustomMetadataValue' + v.encode('GB18030')}
+        metadata = { "custommetadata" => "CustomMetadataValue" + v.encode("GB18030") }
         subject.set_file_metadata share_name, directory_name, file_name, metadata
-        flunk 'No exception'
+        flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
         # TODO: Error should really be 400
         error.status_code.must_equal 403
@@ -154,10 +154,10 @@ describe 'File GB-18030' do
     }
   end
 
-  it 'Read/Write File Content UTF-8 with auto charset' do
-    GB18030TestStrings.get.each { |k,v|
-      file_name = 'Read-Write File Content UTF-8 for ' + k
-      content = v.encode('UTF-8')
+  it "Read/Write File Content UTF-8 with auto charset" do
+    GB18030TestStrings.get.each { |k, v|
+      file_name = "Read-Write File Content UTF-8 for " + k
+      content = v.encode("UTF-8")
       subject.create_file share_name, directory_name, file_name, content.bytesize
       subject.put_file_range share_name, directory_name, file_name, 0, content.bytesize - 1, content
       file, returned_content = subject.get_file share_name, directory_name, file_name
@@ -165,49 +165,49 @@ describe 'File GB-18030' do
     }
   end
 
-  it 'Read/Write File Content GB18030 with explicit charset' do
-    GB18030TestStrings.get.each { |k,v|
-      file_name = 'Read-Write File Content GB18030 for ' + k
-      content = v.encode('GB18030')
-      options = { :content_type => 'text/html; charset=GB18030' }
+  it "Read/Write File Content GB18030 with explicit charset" do
+    GB18030TestStrings.get.each { |k, v|
+      file_name = "Read-Write File Content GB18030 for " + k
+      content = v.encode("GB18030")
+      options = { content_type: "text/html; charset=GB18030" }
       subject.create_file share_name, directory_name, file_name, content.bytesize, options
       subject.put_file_range share_name, directory_name, file_name, 0, content.bytesize - 1, content
       file, returned_content = subject.get_file share_name, directory_name, file_name
-      charset = file.properties[:content_type][file.properties[:content_type].index('charset=') + 'charset='.length...file.properties[:content_type].length]
+      charset = file.properties[:content_type][file.properties[:content_type].index("charset=") + "charset=".length...file.properties[:content_type].length]
       returned_content.force_encoding(charset)
       returned_content.must_equal content
     }
   end
 
-  it 'Read/Write 512 bytes UTF-8 with explicit charset' do
-    GB18030TestStrings.get.each { |k,v|
-      file_name = 'Read-Write File Content UTF-8 for ' + k
-      options = { :content_type => 'text/html; charset=UTF-8' }
-      content = v.encode('UTF-8')
+  it "Read/Write 512 bytes UTF-8 with explicit charset" do
+    GB18030TestStrings.get.each { |k, v|
+      file_name = "Read-Write File Content UTF-8 for " + k
+      options = { content_type: "text/html; charset=UTF-8" }
+      content = v.encode("UTF-8")
       while content.bytesize < 512 do
-        content << 'X'
+        content << "X"
       end
       subject.create_file share_name, directory_name, file_name, 512, options
       subject.put_file_range share_name, directory_name, file_name, 0, 511, content
       file, returned_content = subject.get_file share_name, directory_name, file_name
-      charset = file.properties[:content_type][file.properties[:content_type].index('charset=') + 'charset='.length...file.properties[:content_type].length]
+      charset = file.properties[:content_type][file.properties[:content_type].index("charset=") + "charset=".length...file.properties[:content_type].length]
       returned_content.force_encoding(charset)
       returned_content.must_equal content
     }
   end
 
-  it 'Read/Write 512 bytes GB18030 with explicit charset' do
-    GB18030TestStrings.get.each { |k,v|
-      file_name = 'Read-Write File Content GB18030 for ' + k
-      options = { :content_type => 'text/html; charset=GB18030' }
-      content = v.encode('GB18030')
+  it "Read/Write 512 bytes GB18030 with explicit charset" do
+    GB18030TestStrings.get.each { |k, v|
+      file_name = "Read-Write File Content GB18030 for " + k
+      options = { content_type: "text/html; charset=GB18030" }
+      content = v.encode("GB18030")
       while content.bytesize < 512 do
-        content << 'X'
+        content << "X"
       end
       subject.create_file share_name, directory_name, file_name, 512, options
       subject.put_file_range share_name, directory_name, file_name, 0, 511, content
       file, returned_content = subject.get_file share_name, directory_name, file_name
-      charset = file.properties[:content_type][file.properties[:content_type].index('charset=') + 'charset='.length...file.properties[:content_type].length]
+      charset = file.properties[:content_type][file.properties[:content_type].index("charset=") + "charset=".length...file.properties[:content_type].length]
       returned_content.force_encoding(charset)
       returned_content.must_equal content
     }

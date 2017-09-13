@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -22,13 +24,12 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-require 'azure/storage/core'
+require "azure/storage/core"
 
 module Azure::Storage
-
   class InvalidConnectionStringError < Core::StorageError
     def initialize(message = SR::INVALID_CONNECTION_STRING)
-    	super(message)
+      super(message)
     end
   end
 
@@ -37,5 +38,4 @@ module Azure::Storage
       super(message)
     end
   end
-
 end

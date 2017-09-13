@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,22 +23,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/core'
-require 'azure/core/http/retry_policy'
+require "azure/core"
+require "azure/core/http/retry_policy"
 
 module Azure::Storage::Core::Filter
   class LinearRetryPolicyFilter < RetryPolicyFilter
-    def initialize(retry_count=nil, retry_interval=nil)
+    def initialize(retry_count = nil, retry_interval = nil)
       @retry_count = retry_count || LinearRetryPolicyFilter::DEFAULT_RETRY_COUNT
       @retry_interval = retry_interval || LinearRetryPolicyFilter::DEFAULT_RETRY_INTERVAL
-      
+
       super @retry_count, @retry_interval
     end
-    
+
     DEFAULT_RETRY_COUNT = 3
     DEFAULT_RETRY_INTERVAL = 30
-    
-    # Overrides the base class implementation of call to determine 
+
+    # Overrides the base class implementation of call to determine
     # how the HTTP request should continue retrying
     #
     # retry_data - Hash. Stores stateful retry data

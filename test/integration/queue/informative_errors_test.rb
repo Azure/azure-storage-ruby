@@ -21,20 +21,20 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/queue/queue_service"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Queue::QueueService do
   subject { Azure::Storage::Queue::QueueService.new }
-  
-  describe '#informative_errors_queue' do
-    let(:queue_name){ QueueNameHelper.name }
+
+  describe "#informative_errors_queue" do
+    let(:queue_name) { QueueNameHelper.name }
     after { QueueNameHelper.clean }
 
     it "exception message should be valid" do
       # getting metadata from a non existent should throw
-      begin 
+      begin
         subject.get_queue_metadata queue_name
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,9 +23,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'cgi'
-require 'azure/core/auth/signer'
-require 'azure/core/auth/shared_key'
+require "cgi"
+require "azure/core/auth/signer"
+require "azure/core/auth/shared_key"
 
 module Azure::Storage::Core
   module Auth
@@ -38,17 +40,17 @@ module Azure::Storage::Core
       def signable_string(method, uri, headers)
         [
           method.to_s.upcase,
-          headers.fetch('Content-Encoding', ''),
-          headers.fetch('Content-Language', ''),
-          headers.fetch('Content-Length', '').sub(/^0+/,''), # from 2015-02-21, if Content-Length == 0, it won't be signed
-          headers.fetch('Content-MD5', ''),
-          headers.fetch('Content-Type', ''),
-          headers.fetch('Date', ''),
-          headers.fetch('If-Modified-Since', ''),
-          headers.fetch('If-Match', ''),
-          headers.fetch('If-None-Match', ''),
-          headers.fetch('If-Unmodified-Since', ''),
-          headers.fetch('Range', ''),
+          headers.fetch("Content-Encoding", ""),
+          headers.fetch("Content-Language", ""),
+          headers.fetch("Content-Length", "").sub(/^0+/, ""), # from 2015-02-21, if Content-Length == 0, it won't be signed
+          headers.fetch("Content-MD5", ""),
+          headers.fetch("Content-Type", ""),
+          headers.fetch("Date", ""),
+          headers.fetch("If-Modified-Since", ""),
+          headers.fetch("If-Match", ""),
+          headers.fetch("If-None-Match", ""),
+          headers.fetch("If-Unmodified-Since", ""),
+          headers.fetch("Range", ""),
           canonicalized_headers(headers),
           canonicalized_resource(uri)
         ].join("\n")

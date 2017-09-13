@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,13 +23,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/storage/service/access_policy'
+require "azure/storage/service/access_policy"
 
 module Azure::Storage
   module Service
     class SignedIdentifier
-
-      def initialize 
+      def initialize
         @access_policy = AccessPolicy.new
         yield self if block_given?
       end

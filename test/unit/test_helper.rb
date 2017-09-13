@@ -22,8 +22,8 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-require 'test_helper'
-require 'azure/storage'
+require "test_helper"
+require "azure/storage"
 
 module Kernel
   def clear_storage_envs
@@ -49,14 +49,14 @@ module Kernel
   end
 
   def restore_storage_envs(removed)
-    removed.each do |k,v|
+    removed.each do |k, v|
       ENV[k] = v
     end
   end
 
   def restore_storage_instance_variables(removed)
-    removed.each do |k,v|
-      Azure::Storage.instance_variable_set(:"@#{k}", v) 
+    removed.each do |k, v|
+      Azure::Storage.instance_variable_set(:"@#{k}", v)
     end
   end
 
@@ -71,16 +71,15 @@ module Kernel
   end
 
   def set_storage_envs(vals = {})
-    vals.each do |k,v|
+    vals.each do |k, v|
       ENV[vars_env_mapping[k]] = v if vars_env_mapping.key?(k)
     end
   end
 
   def get_connection_string(vals = {})
-    vals.map { |k,v| "#{vars_cs_mapping[k]}=#{v}" if vars_cs_mapping.key?(k) }.join(';')
+    vals.map { |k, v| "#{vars_cs_mapping[k]}=#{v}" if vars_cs_mapping.key?(k) }.join(";")
   end
-
 end
 
 # mock configuration setup
-Azure::Storage.client(:storage_account_name => 'mockaccount', :storage_access_key => 'YWNjZXNzLWtleQ==')
+Azure::Storage.client(storage_account_name: "mockaccount", storage_access_key: "YWNjZXNzLWtleQ==")

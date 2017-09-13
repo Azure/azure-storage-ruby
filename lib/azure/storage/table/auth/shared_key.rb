@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,8 +23,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'cgi'
-require 'azure/storage/core/auth/shared_key'
+require "cgi"
+require "azure/storage/core/auth/shared_key"
 
 module Azure::Storage
   module Table
@@ -41,9 +43,9 @@ module Azure::Storage
         def signable_string(method, uri, headers)
           [
               method.to_s.upcase,
-              headers.fetch('Content-MD5', ''),
-              headers.fetch('Content-Type', ''),
-              headers.fetch('Date') { headers.fetch('x-ms-date') },
+              headers.fetch("Content-MD5", ""),
+              headers.fetch("Content-Type", ""),
+              headers.fetch("Date") { headers.fetch("x-ms-date") },
               canonicalized_resource(uri)
           ].join("\n")
         end
@@ -56,12 +58,11 @@ module Azure::Storage
         def canonicalized_resource(uri)
           resource = "/#{account_name}#{uri.path}"
 
-          comp = CGI.parse(uri.query.to_s).fetch('comp', nil)
-          resource = [resource, 'comp=' + comp[0]].join('?') if comp
+          comp = CGI.parse(uri.query.to_s).fetch("comp", nil)
+          resource = [resource, "comp=" + comp[0]].join("?") if comp
 
           resource
         end
-
       end
     end
   end

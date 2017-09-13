@@ -21,31 +21,31 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/queue/queue_service"
 
 describe Azure::Storage::Queue::QueueService do
   subject { Azure::Storage::Queue::QueueService.new }
 
-  describe '#list_queues' do
-    let(:queue_names){ [QueueNameHelper.name, QueueNameHelper.name] }
+  describe "#list_queues" do
+    let(:queue_names) { [QueueNameHelper.name, QueueNameHelper.name] }
     before { queue_names.each { |q| subject.create_queue q } }
     after { QueueNameHelper.clean }
-    
-    it 'lists the available queues' do
+
+    it "lists the available queues" do
       expected_queues = 0
 
       # An empty next marker means to start at the beginning
-      next_marker = ''
+      next_marker = ""
       begin
-        result = subject.list_queues( { :marker => next_marker } )
+        result = subject.list_queues(marker: next_marker)
         result.each { |q|
           q.name.wont_be_nil
           expected_queues += 1 if queue_names.include? q.name
         }
 
         next_marker = result.continuation_token
-      end while next_marker != ''
+      end while next_marker != ""
       expected_queues.must_equal queue_names.length
     end
   end
