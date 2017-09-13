@@ -47,13 +47,13 @@ module Azure::Storage
     # Default HTTP port.
     DEFAULT_HTTP_PORT = 80
     # Default HTTPS port.
-    DEFAULT_HTTPS_PORT= 443
+    DEFAULT_HTTPS_PORT = 443
 
     # Marker for atom metadata.
     XML_METADATA_MARKER = '$'
     # Marker for atom value.
     XML_VALUE_MARKER = '_'
-    
+
     def os
       host_os = RbConfig::CONFIG['host_os']
       case host_os
@@ -69,17 +69,17 @@ module Azure::Storage
         "Unknown #{host_os}"
       end
     end
-      
+
     module_function :os
 
     # Default User Agent header string
     USER_AGENT = "Azure-Storage/#{Azure::Storage::Version.to_uas} (Ruby #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}; #{os})".freeze
-    
+
     class << self
       def options
-        Hash[Azure::Storage::Configurable.keys.map{|key| [key, send(key)]}]
+        Hash[Azure::Storage::Configurable.keys.map { |key| [key, send(key)] }]
       end
-      
+
       # Default storage access key
       # @return [String]
       def storage_access_key
@@ -91,7 +91,7 @@ module Azure::Storage
       def storage_account_name
         ENV['AZURE_STORAGE_ACCOUNT']
       end
-      
+
       # Default storage connection string
       # @return [String]
       def storage_connection_string
@@ -121,7 +121,7 @@ module Azure::Storage
       def storage_queue_host
         ENV['AZURE_STORAGE_QUEUE_HOST']
       end
-      
+
       # Default storage file host
       # @return [String]
       def storage_file_host
@@ -760,11 +760,9 @@ module Azure::Storage
 
     # The returned response payload should be with full metadata.
     ODATA_FULL_META = 'application/json;odata=fullmetadata'
-
   end
 
   module QueryStringConstants
-
     # Query component for SAS API version.
     API_VERSION = 'api-version'
 

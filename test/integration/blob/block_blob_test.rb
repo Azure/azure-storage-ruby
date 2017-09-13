@@ -24,6 +24,7 @@
 require 'integration/test_helper'
 require "azure/storage/blob/blob_service"
 require 'base64'
+require 'securerandom'
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
@@ -31,11 +32,11 @@ describe Azure::Storage::Blob::BlobService do
 
   let(:container_name) { ContainerNameHelper.name }
   let(:blob_name) { "blobname" }
-  let(:content) { content = ""; 512.times.each{|i| content << "@" }; content }
-  before { 
+  let(:content) { content = ""; 512.times.each { |i| content << "@" }; content }
+  before {
     subject.create_container container_name
   }
-  
+
   describe '#create_block_blob' do
     it 'creates a block blob' do
       blob = subject.create_block_blob container_name, blob_name, content
@@ -58,13 +59,13 @@ describe Azure::Storage::Blob::BlobService do
         end
       end
     end
-    
-    it 'should create a block blob with spaces in name' do  
-      blob_name = 'blob with spaces'  
-      blob = subject.create_block_blob container_name, blob_name, 'content'  
-      blob.name.must_equal blob_name  
+
+    it 'should create a block blob with spaces in name' do
+      blob_name = 'blob with spaces'
+      blob = subject.create_block_blob container_name, blob_name, 'content'
+      blob.name.must_equal blob_name
     end
-    
+
     it 'should create block blob with complex in name' do
       blob_name = 'with фбаф.txt'
       blob = subject.create_block_blob container_name, blob_name, 'content'
@@ -73,11 +74,11 @@ describe Azure::Storage::Blob::BlobService do
 
     it 'sets additional properties when the options hash is used' do
       options = {
-        :content_type=>"application/xml",
-        :content_encoding=>"gzip",
-        :content_language=>"en-US",
-        :cache_control=>"max-age=1296000",
-        :metadata => { "CustomMetadataProperty"=>"CustomMetadataValue"}
+        content_type: "application/xml",
+        content_encoding: "gzip",
+        content_language: "en-US",
+        cache_control: "max-age=1296000",
+        metadata: { "CustomMetadataProperty" => "CustomMetadataValue" }
       }
 
       blob = subject.create_block_blob container_name, blob_name, content, options
@@ -102,23 +103,35 @@ describe Azure::Storage::Blob::BlobService do
   end
 
   describe '#put_blob_block' do
-    let(:blockid) {"anyblockid1" }
+    let(:blockid1) { "anyblockid1" }
+    let(:blockid2) { "anyblockid2" }
 
     it 'creates a block as part of a block blob' do
-      subject.put_blob_block container_name, blob_name, blockid, content
+      subject.put_blob_block container_name, blob_name, blockid1, content
 
       # verify
       block_list = subject.list_blob_blocks container_name, blob_name
       block = block_list[:uncommitted][0]
       block.type.must_equal :uncommitted
       block.size.must_equal 512
-      block.name.must_equal blockid
+      block.name.must_equal blockid1
+    end
+
+    it 'creates a 100M block as part of a block blob' do
+      content_100_mb = SecureRandom.random_bytes(100 * 1024 * 1024)
+      subject.put_blob_block container_name, blob_name, blockid2, content_100_mb
+      # verify
+      block_list = subject.list_blob_blocks container_name, blob_name
+      block = block_list[:uncommitted][0]
+      block.type.must_equal :uncommitted
+      block.size.must_equal 100 * 1024 * 1024
+      block.name.must_equal blockid2
     end
   end
 
   describe '#commit_blob_blocks' do
     let(:blocklist) { [["anyblockid0"], ["anyblockid1"]] }
-    before { 
+    before {
       blocklist.each { |block_entry|
         subject.put_blob_block container_name, blob_name, block_entry[0], content
       }
@@ -151,8 +164,8 @@ describe Azure::Storage::Blob::BlobService do
 
   describe '#list_blob_blocks' do
     let(:blocklist) { [["anyblockid0"], ["anyblockid1"], ["anyblockid2"], ["anyblockid3"]] }
-    before { 
-      
+    before {
+
       subject.put_blob_block container_name, blob_name, blocklist[0][0], content
       subject.put_blob_block container_name, blob_name, blocklist[1][0], content
 
@@ -180,7 +193,7 @@ describe Azure::Storage::Blob::BlobService do
 
       uncommitted = result[:uncommitted]
       uncommitted.length.must_equal 2
-      
+
       expected_blocks = blocklist.slice(2..3).each
 
       uncommitted.each { |block|
@@ -192,14 +205,14 @@ describe Azure::Storage::Blob::BlobService do
 
     describe 'when blocklist_type parameter is used' do
       it 'lists uncommitted blocks only if :uncommitted is passed' do
-        result = subject.list_blob_blocks container_name, blob_name, { :blocklist_type => :uncommitted }
+        result = subject.list_blob_blocks container_name, blob_name, blocklist_type: :uncommitted
 
         committed = result[:committed]
         committed.length.must_equal 0
-   
+
         uncommitted = result[:uncommitted]
         uncommitted.length.must_equal 2
-        
+
         expected_blocks = blocklist.slice(2..3).each
 
         uncommitted.each { |block|
@@ -208,13 +221,13 @@ describe Azure::Storage::Blob::BlobService do
           block.size.must_equal 512
         }
       end
-      
+
       it 'lists committed blocks only if :committed is passed' do
-        result = subject.list_blob_blocks container_name, blob_name, { :blocklist_type => :committed }
+        result = subject.list_blob_blocks container_name, blob_name, blocklist_type: :committed
 
         committed = result[:committed]
         committed.length.must_equal 2
-        
+
         expected_blocks = blocklist.slice(0..1).each
 
         committed.each { |block|
@@ -228,7 +241,7 @@ describe Azure::Storage::Blob::BlobService do
       end
 
       it 'lists committed and uncommitted blocks if :all is passed' do
-        result = subject.list_blob_blocks container_name, blob_name, { :blocklist_type => :all }
+        result = subject.list_blob_blocks container_name, blob_name, blocklist_type: :all
 
         committed = result[:committed]
         committed.length.must_equal 2
@@ -272,7 +285,7 @@ describe Azure::Storage::Blob::BlobService do
           block.size.must_equal 512
         }
 
-        result = subject.list_blob_blocks container_name, blob_name, { :blocklist_type => :all, :snapshot => snapshot }
+        result = subject.list_blob_blocks container_name, blob_name, blocklist_type: :all, snapshot: snapshot
 
         committed = result[:committed]
         committed.length.must_equal 2

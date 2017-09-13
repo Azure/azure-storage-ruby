@@ -107,7 +107,7 @@ module Azure::Storage
       # type  - String. The Edm datatype
       #
       # Returns an typed object
-      def self.unserialize_value(value, type)
+      def self.deserialize_value(value, type)
         case type
         when "Edm.DateTime"
           Time.parse(value)

@@ -75,7 +75,7 @@ describe Azure::Storage::Table::Serialization do
       ]
     }
 
-    it 'unserialize a table entries from json' do
+    it 'deserialize a table entries from json' do
       result = subject.table_entries_from_json(query_tables_json)
       result.must_equal table_entries
     end
