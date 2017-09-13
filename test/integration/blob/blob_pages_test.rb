@@ -23,6 +23,7 @@
 #--------------------------------------------------------------------------
 require "integration/test_helper"
 require "azure/storage/blob/blob_service"
+require "securerandom"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
@@ -31,11 +32,13 @@ describe Azure::Storage::Blob::BlobService do
   let(:container_name) { ContainerNameHelper.name }
   let(:blob_name) { "blobname" }
   let(:blob_name2) { "blobname2" }
+  let(:blob_name3) { "blobname3" }
   let(:length) { 2560 }
   before {
     subject.create_container container_name
     subject.create_page_blob container_name, blob_name, length
     subject.create_page_blob container_name, blob_name2, length
+    subject.create_page_blob container_name, blob_name3, length
   }
 
   describe "#put_blob_pages" do
@@ -123,6 +126,31 @@ describe Azure::Storage::Blob::BlobService do
       ranges[0][1].must_equal 511
       ranges[1][0].must_equal 1024
       ranges[1][1].must_equal 1535
+    end
+
+    it "list blob pages in the snapshot" do
+      # initialize the blob
+      content_512B = SecureRandom.random_bytes(512)
+      subject.put_blob_pages container_name, blob_name3, 0, 511, content_512B
+      subject.put_blob_pages container_name, blob_name3, 1024, 1535, content_512B
+      # snapshot
+      snapshot1 = subject.create_blob_snapshot container_name, blob_name3
+      # modify the blob after snapshot
+      subject.put_blob_pages container_name, blob_name3, 2048, 2559, content_512B
+      # verify that even the blob has been altered, the returned list
+      # will not contain the change if snapshot is specified
+      ranges = subject.list_page_blob_ranges container_name, blob_name3, snapshot: snapshot1
+      ranges.length.must_equal 2
+      # verify the change
+      ranges = subject.list_page_blob_ranges container_name, blob_name3
+      ranges.length.must_equal 3
+      # take another snapshot
+      snapshot2 = subject.create_blob_snapshot container_name, blob_name3
+      # only change between snapshot1 and snapshot2 will be listed
+      ranges = subject.list_page_blob_ranges container_name, blob_name3, snapshot: snapshot2, previous_snapshot: snapshot1
+      ranges.length.must_equal 1
+      ranges[0][0].must_equal 2048
+      ranges[0][1].must_equal 2559
     end
   end
 end

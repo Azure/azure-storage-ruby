@@ -3,6 +3,9 @@
 ALL
 * Added configuration file for Rubocop and auto-resolved coding style issue.
 
+BLOB
+* The `Azure::Storage::Blob::list_page_blob_ranges` API now accepts `:previous_snapshot` as an optional parameter, that specifies that the response returns pages that have been updated or cleared since the snapshot specified by `:previous_snapshot` was taken.
+
 2017.09 - version 0.13.0-preview
 
 ALL
