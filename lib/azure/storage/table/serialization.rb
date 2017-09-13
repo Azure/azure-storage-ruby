@@ -93,7 +93,7 @@ module Azure
             properties = {}
             h.each do |k, v|
               type = h[k + TableConstants::ODATA_TYPE_SUFFIX]
-              properties[k] = EdmType::unserialize_value(v, type.nil? ? EdmType::property_type(v) : type)
+              properties[k] = EdmType::deserialize_value(v, type.nil? ? EdmType::property_type(v) : type)
             end
             entity.properties = properties
           end

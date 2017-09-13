@@ -1,3 +1,18 @@
+2017.09 - version 0.13.0-preview
+
+ALL
+* Removed Nokogiri from Gemfile because it causes bundler fail to install azure-storage. Added it back to runtime dependency and explicitly require user to install the correct version of Nokogiri in README.md.
+* Service version is upgraded to 2016-05-31.
+
+BLOB
+* Block size can now be up to 100MB.
+
+TABLE
+* The return type `Azure::Service::EnumerationResult` of `query_tables` has a changed structure. Now the `'updated'` will not be contained, and is flattened to a structure in the form of `{ {"TableName" => "tableone"}, {"TableName" => "tabletwo"}, {"TableName" => "tablethree"}}`.
+* The `Azure::Storage::Table::Entity` does not contain `:table` and `updated` anymore. The updated time can be found in `:properties`.
+* The return type of `get_table` is changed to a Hash that contains full metadata returned from the server when query the table.
+* The method `Azure::Storage::Table::EdmType::unserialize_query_value` is renamed to `deserialize_value`.
+
 2017.08 - version 0.12.3-preview
 
 ALL
