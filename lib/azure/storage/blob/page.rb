@@ -269,16 +269,21 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to list the pages only if
     #                                  the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:previous_snapshot+         - String. An opaque DateTime value that specifies that the response will contain only pages that
+    #                                  were changed between target blob and previous snapshot. Changed pages include both updated and
+    #                                  cleared pages. The target blob may be a snapshot, as long as the snapshot specified by this
+    #                                  is the older of the two.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/ee691973.aspx
     #
     # Returns a list of page ranges in the format [ [start, end], [start, end], ... ]
     #
-    #   eg. [ [0, 511], [512, 1024], ... ]
+    #   e.g. [ [0, 511], [512, 1024], ... ]
     #
     def list_page_blob_ranges(container, blob, options = {})
       query = { "comp" => "pagelist" }
       query.update("snapshot" => options[:snapshot]) if options[:snapshot]
+      query.update("prevsnapshot" => options[:previous_snapshot]) if options[:previous_snapshot]
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
