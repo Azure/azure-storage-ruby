@@ -21,16 +21,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/table/table_service"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Table::TableService do
   describe "#delete_entity" do
     subject { Azure::Storage::Table::TableService.new }
-    let(:table_name){ TableNameHelper.name }
+    let(:table_name) { TableNameHelper.name }
 
-    let(:entity_properties){ 
+    let(:entity_properties) {
       {
         "PartitionKey" => "testingpartition",
         "RowKey" => "abcd123",
@@ -41,13 +41,13 @@ describe Azure::Storage::Table::TableService do
       }
     }
 
-    before { 
+    before {
       subject.create_table table_name
       subject.insert_entity table_name, entity_properties
     }
     after { TableNameHelper.clean }
 
-    it "deletes an entity" do 
+    it "deletes an entity" do
       result = subject.delete_entity table_name, entity_properties["PartitionKey"], entity_properties["RowKey"]
       result.must_be_nil
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,27 +23,27 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/core'
-require 'azure/core/http/retry_policy'
+require "azure/core"
+require "azure/core/http/retry_policy"
 
 module Azure::Storage::Core::Filter
   class ExponentialRetryPolicyFilter < RetryPolicyFilter
-    def initialize(retry_count=nil, min_retry_interval=nil, max_retry_interval=nil)
+    def initialize(retry_count = nil, min_retry_interval = nil, max_retry_interval = nil)
       @retry_count = retry_count || ExponentialRetryPolicyFilter::DEFAULT_RETRY_COUNT
       @min_retry_interval = min_retry_interval || ExponentialRetryPolicyFilter::DEFAULT_MIN_RETRY_INTERVAL
       @max_retry_interval = max_retry_interval || ExponentialRetryPolicyFilter::DEFAULT_MAX_RETRY_INTERVAL
-      
+
       super @retry_count, @min_retry_interval
     end
-    
+
     attr_reader :min_retry_interval,
                 :max_retry_interval
-    
+
     DEFAULT_RETRY_COUNT = 3
     DEFAULT_MIN_RETRY_INTERVAL = 10
     DEFAULT_MAX_RETRY_INTERVAL = 90
-    
-    # Overrides the base class implementation of call to determine 
+
+    # Overrides the base class implementation of call to determine
     # how the HTTP request should continue retrying
     #
     # retry_data - Hash. Stores stateful retry data
@@ -53,9 +55,9 @@ module Azure::Storage::Core::Filter
     def apply_retry_policy(retry_data)
       # Adjust retry count
       retry_data[:count] = retry_data[:count] === nil ? 1 : retry_data[:count] + 1
-      
+
       # Adjust retry interval
-      increment_delta = (@max_retry_interval - @min_retry_interval).fdiv(2 ** (@retry_count - 1)) * (2 ** (retry_data[:count] - 1));
+      increment_delta = (@max_retry_interval - @min_retry_interval).fdiv(2**(@retry_count - 1)) * (2**(retry_data[:count] - 1));
       retry_data[:interval] = retry_data[:interval] === nil ? @min_retry_interval : [@min_retry_interval + increment_delta, @max_retry_interval].min;
     end
   end

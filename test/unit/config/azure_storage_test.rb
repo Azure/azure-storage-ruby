@@ -22,37 +22,37 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-require 'unit/test_helper'
+require "unit/test_helper"
 
 describe Azure::Storage do
 
   before do
-    @account_name = 'mockaccount'
-    @access_key = 'YWNjZXNzLWtleQ=='
-  
+    @account_name = "mockaccount"
+    @access_key = "YWNjZXNzLWtleQ=="
+
     @account_key_options = {
-      :storage_account_name => @account_name,
-      :storage_access_key => @access_key
+      storage_account_name: @account_name,
+      storage_access_key: @access_key
     }
 
     @removed = clear_storage_envs
     set_storage_envs(@account_key_options)
   end
 
-  it 'should setup a singleton by calling setup' do
+  it "should setup a singleton by calling setup" do
     client = Azure::Storage.client
     client.wont_be_nil
     client.storage_account_name.must_equal(@account_name)
   end
 
-  it 'should delegate class methods to Azure::Storage::Client' do
+  it "should delegate class methods to Azure::Storage::Client" do
     class Azure::Storage::Client
       def mock_method
-        'hehe'
+        "hehe"
       end
     end
 
-    Azure::Storage.mock_method.must_equal('hehe')
+    Azure::Storage.mock_method.must_equal("hehe")
   end
 
   after do

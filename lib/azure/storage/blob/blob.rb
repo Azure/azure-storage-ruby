@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -24,7 +26,7 @@
 module Azure::Storage
   module Blob
     include Azure::Storage::Service
-    
+
     class Blob
       def initialize
         @properties = {}
@@ -37,7 +39,7 @@ module Azure::Storage
       attr_accessor :properties
       attr_accessor :metadata
     end
-    
+
     # Public: Reads or downloads a blob from the system, including its metadata and properties.
     #
     # ==== Attributes
@@ -56,35 +58,35 @@ module Azure::Storage
     # * +:get_content_md5+           - Boolean. Return the MD5 hash for the range. This option only valid if
     #                                  start_range and end_range are specified. (optional)
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
-    # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to get the blob 
-    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
+    # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to get the blob
+    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
-    # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to get the blob 
-    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified, 
+    # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to get the blob
+    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
-    # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to get the blob 
-    #                                  only if the blob's ETag value matches the value specified. If the values do not match, 
+    # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to get the blob
+    #                                  only if the blob's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
-    # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to get the blob 
-    #                                  only if the blob's ETag value does not match the value specified. If the values are identical, 
+    # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to get the blob
+    #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179440.aspx
     #
     # Returns a blob and the blob body
-    def get_blob(container, blob, options={})
-      query = { }
-      StorageService.with_query query, 'snapshot', options[:snapshot]
-      StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+    def get_blob(container, blob, options = {})
+      query = {}
+      StorageService.with_query query, "snapshot", options[:snapshot]
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
       uri = blob_uri(container, blob, query)
 
       headers = StorageService.common_headers
-      options[:start_range] = 0 if options[:end_range] and not options[:start_range]
+      options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
       if options[:start_range]
-        StorageService.with_header headers, 'x-ms-range', "bytes=#{options[:start_range]}-#{options[:end_range]}"
-        StorageService.with_header headers, 'x-ms-range-get-content-md5', true if options[:get_content_md5]
+        StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}"
+        StorageService.with_header headers, "x-ms-range-get-content-md5", true if options[:get_content_md5]
       end
       add_blob_conditional_headers options, headers
 
@@ -93,7 +95,7 @@ module Azure::Storage
       result.name = blob unless result.name
       return result, response.body
     end
-    
+
     # Public: Returns all properties and metadata on the blob.
     #
     # ==== Attributes
@@ -108,34 +110,34 @@ module Azure::Storage
     # * +:snapshot+                  - String. An opaque DateTime value that specifies the blob snapshot to
     #                                  retrieve information from.
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to get the blob properties
-    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
+    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to get the blob properties
-    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified, 
+    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to get the blob properties
-    #                                  only if the blob's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the blob's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to get the blob properties
-    #                                  only if the blob's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179394.aspx
     #
     # Returns the blob properties with a Blob instance
-    def get_blob_properties(container, blob, options={})
-      query = { }
-      StorageService.with_query query, 'snapshot', options[:snapshot]
-      StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+    def get_blob_properties(container, blob, options = {})
+      query = {}
+      StorageService.with_query query, "snapshot", options[:snapshot]
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       headers = StorageService.common_headers
       unless options.empty?
         add_blob_conditional_headers options, headers
       end
-        
+
       uri = blob_uri(container, blob, query)
 
       response = call(:head, uri, nil, headers, options)
@@ -147,7 +149,7 @@ module Azure::Storage
 
       result
     end
-    
+
     # Public: Sets system properties defined for a blob.
     #
     # ==== Attributes
@@ -164,7 +166,7 @@ module Azure::Storage
     # * +:content_language+          - String. Content language for the blob. Will be saved with blob.
     # * +:content_md5+               - String. Content MD5 for the blob. Will be saved with blob.
     # * +:cache_control+             - String. Cache control for the blob. Will be saved with blob.
-    # * +:content_disposition+       - String. Conveys additional information about how to process the response payload, 
+    # * +:content_disposition+       - String. Conveys additional information about how to process the response payload,
     #                                  and also can be used to attach additional metadata
     # * +:content_length+            - Integer. Resizes a page blob to the specified size. If the specified
     #                                  value is less than the current size of the blob, then all pages above
@@ -199,19 +201,19 @@ module Azure::Storage
     #                                  To set the sequence number to a value of your choosing, this property must be specified
     #                                  together with :sequence_number_action
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to set the blob properties
-    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
+    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to set the blob properties
-    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified, 
+    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to set the blob properties
-    #                                  only if the blob's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the blob's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to set the blob properties
-    #                                  only if the blob's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     #
     # Remarks:
@@ -242,37 +244,37 @@ module Azure::Storage
     # See http://msdn.microsoft.com/en-us/library/azure/ee691966.aspx
     #
     # Returns nil on success.
-    def set_blob_properties(container, blob, options={})
-      query = {'comp' => 'properties'}
-      StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+    def set_blob_properties(container, blob, options = {})
+      query = { "comp" => "properties" }
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
       uri = blob_uri(container, blob, query)
 
       headers = StorageService.common_headers
 
       unless options.empty?
-        StorageService.with_header headers, 'x-ms-blob-content-type', options[:content_type]
-        StorageService.with_header headers, 'x-ms-blob-content-encoding', options[:content_encoding]
-        StorageService.with_header headers, 'x-ms-blob-content-language', options[:content_language]
-        StorageService.with_header headers, 'x-ms-blob-content-md5', options[:content_md5]
-        StorageService.with_header headers, 'x-ms-blob-cache-control', options[:cache_control]
-        StorageService.with_header headers, 'x-ms-blob-content-length', options[:content_length].to_s if options[:content_length]
-        StorageService.with_header headers, 'x-ms-blob-content-disposition', options[:content_disposition]
-        
+        StorageService.with_header headers, "x-ms-blob-content-type", options[:content_type]
+        StorageService.with_header headers, "x-ms-blob-content-encoding", options[:content_encoding]
+        StorageService.with_header headers, "x-ms-blob-content-language", options[:content_language]
+        StorageService.with_header headers, "x-ms-blob-content-md5", options[:content_md5]
+        StorageService.with_header headers, "x-ms-blob-cache-control", options[:cache_control]
+        StorageService.with_header headers, "x-ms-blob-content-length", options[:content_length].to_s if options[:content_length]
+        StorageService.with_header headers, "x-ms-blob-content-disposition", options[:content_disposition]
+
         if options[:sequence_number_action]
-          StorageService.with_header headers, 'x-ms-blob-sequence-number-action', options[:sequence_number_action].to_s
-          
+          StorageService.with_header headers, "x-ms-blob-sequence-number-action", options[:sequence_number_action].to_s
+
           if options[:sequence_number_action] != :increment
-            StorageService.with_header headers, 'x-ms-blob-sequence-number', options[:sequence_number].to_s if options[:sequence_number]
+            StorageService.with_header headers, "x-ms-blob-sequence-number", options[:sequence_number].to_s if options[:sequence_number]
           end
         end
-        
+
         add_blob_conditional_headers options, headers
       end
 
       call(:put, uri, nil, headers, options)
       nil
     end
-    
+
     # Public: Returns metadata on the blob.
     #
     # ==== Attributes
@@ -287,28 +289,28 @@ module Azure::Storage
     # * +:snapshot+                  - String. An opaque DateTime value that specifies the blob snapshot to
     #                                  retrieve information from.
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to get the blob metadata
-    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
+    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to get the blob metadata
-    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified, 
+    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to get the blob metadata
-    #                                  only if the blob's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the blob's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to get the blob metadata
-    #                                  only if the blob's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179350.aspx
     #
     # Returns a Blob
-    def get_blob_metadata(container, blob, options={})
-      query = {'comp' => 'metadata'}
-      StorageService.with_query query, 'snapshot', options[:snapshot]
-      StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+    def get_blob_metadata(container, blob, options = {})
+      query = { "comp" => "metadata" }
+      StorageService.with_query query, "snapshot", options[:snapshot]
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       headers = StorageService.common_headers
       unless options.empty?
@@ -324,7 +326,7 @@ module Azure::Storage
 
       result
     end
-    
+
     # Public: Sets metadata headers on the blob.
     #
     # ==== Attributes
@@ -338,28 +340,28 @@ module Azure::Storage
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to set the blob metadata
-    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
+    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to set the blob metadata
-    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified, 
+    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to set the blob metadata
-    #                                  only if the blob's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the blob's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to set the blob metadata
-    #                                  only if the blob's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179414.aspx
     #
     # Returns nil on success.
-    def set_blob_metadata(container, blob, metadata, options={})
-      query = {'comp' => 'metadata'}
-      StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
-      
+    def set_blob_metadata(container, blob, metadata, options = {})
+      query = { "comp" => "metadata" }
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
+
       uri = blob_uri(container, blob, query)
 
       headers = StorageService.common_headers
@@ -371,7 +373,7 @@ module Azure::Storage
       call(:put, uri, nil, headers, options)
       nil
     end
-    
+
     # Public: Establishes an exclusive write lock on a blob. The lock duration can be 15 to 60 seconds, or can be infinite.
     # To write to a locked blob, a client must provide a lease ID.
     #
@@ -389,19 +391,19 @@ module Azure::Storage
     # * +:proposed_lease_id+         - String. Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request)
     #                                  if the proposed lease ID is not in the correct format. (optional)
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to acquire the lease
-    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
+    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to acquire the lease
-    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified, 
+    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to acquire the lease
-    #                                  only if the blob's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the blob's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to acquire the lease
-    #                                  only if the blob's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
@@ -409,7 +411,7 @@ module Azure::Storage
     # Returns a String of the new unique lease id. While the lease is active, you must include the lease ID with any request
     # to write to the blob, or to renew, change, or release the lease.
     #
-    def acquire_blob_lease(container, blob, options={})
+    def acquire_blob_lease(container, blob, options = {})
       acquire_lease container, blob, options
     end
 
@@ -429,27 +431,27 @@ module Azure::Storage
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to renew the lease
-    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
+    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to renew the lease
-    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified, 
+    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to renew the lease
-    #                                  only if the blob's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the blob's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to renew the lease
-    #                                  only if the blob's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns the renewed lease id
-    def renew_blob_lease(container, blob, lease, options={})
+    def renew_blob_lease(container, blob, lease, options = {})
       renew_lease container, blob, lease, options
     end
-    
+
     # Public: Change the lease ID.
     #
     # ==== Attributes
@@ -465,24 +467,24 @@ module Azure::Storage
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to change the lease
-    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
+    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to change the lease
-    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified, 
+    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to change the lease
-    #                                  only if the blob's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the blob's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to change the lease
-    #                                  only if the blob's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns the changed lease id
-    def change_blob_lease(container, blob, lease, proposed_lease, options={})
+    def change_blob_lease(container, blob, lease, proposed_lease, options = {})
       change_lease container, blob, lease, proposed_lease, options
     end
 
@@ -501,24 +503,24 @@ module Azure::Storage
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to release the lease
-    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
+    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to release the lease
-    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified, 
+    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to release the lease
-    #                                  only if the blob's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the blob's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to release the lease
-    #                                  only if the blob's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns nil on success
-    def release_blob_lease(container, blob, lease, options={})
+    def release_blob_lease(container, blob, lease, options = {})
       release_lease container, blob, lease, options
     end
 
@@ -549,29 +551,29 @@ module Azure::Storage
     #                                  If this option is not used, a fixed-duration lease breaks after the remaining lease
     #                                  period elapses, and an infinite lease breaks immediately.
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to break the lease
-    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
+    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to break the lease
-    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified, 
+    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to break the lease
-    #                                  only if the blob's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the blob's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to break the lease
-    #                                  only if the blob's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns an Integer of the remaining lease time. This value is the approximate time remaining in the lease
     # period, in seconds. This header is returned only for a successful request to break the lease. If the break
     # is immediate, 0 is returned.
-    def break_blob_lease(container, blob, options={})
+    def break_blob_lease(container, blob, options = {})
       break_lease container, blob, options
     end
-    
+
     # Public: Creates a snapshot of a blob.
     #
     # ==== Attributes
@@ -585,27 +587,27 @@ module Azure::Storage
     # Accepted key/value pairs in options parameter are:
     # * +:metadata+                  - Hash. Custom metadata values to store with the blob snapshot.
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to create the blob snapshot
-    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
+    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to create the blob snapshot
-    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified, 
+    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to create the blob snapshot
-    #                                  only if the blob's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the blob's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to create the blob snapshot
-    #                                  only if the blob's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/ee691971.aspx
     #
     # Returns the snapshot DateTime value
-    def create_blob_snapshot(container, blob, options={})
-      query = { 'comp' => 'snapshot'}
-      StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+    def create_blob_snapshot(container, blob, options = {})
+      query = { "comp" => "snapshot" }
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
 
@@ -617,9 +619,9 @@ module Azure::Storage
 
       response = call(:put, uri, nil, headers, options)
 
-      response.headers['x-ms-snapshot']
+      response.headers["x-ms-snapshot"]
     end
-    
+
     # Public: Copies a source blob or file to a destination blob.
     #
     # ==== Attributes
@@ -662,7 +664,7 @@ module Azure::Storage
     #                                   blob's ETag value does not match the value specified. If the values are
     #                                   identical, the Blob service returns status code 412 (Precondition Failed).
     # * +:timeout+                    - Integer. A timeout in seconds.
-    # * +:request_id+                 - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                 - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                   in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd894037.aspx
@@ -675,13 +677,13 @@ module Azure::Storage
     #                                    "success" - The copy completed successfully.
     #                                    "pending" - The copy is in progress.
     #
-    def copy_blob_from_uri(destination_container, destination_blob, source_uri, options={})
-      query = { }
-      StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+    def copy_blob_from_uri(destination_container, destination_blob, source_uri, options = {})
+      query = {}
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(destination_container, destination_blob, query)
       headers = StorageService.common_headers
-      StorageService.with_header headers, 'x-ms-copy-source', source_uri
+      StorageService.with_header headers, "x-ms-copy-source", source_uri
 
       unless options.empty?
         add_blob_conditional_headers options, headers
@@ -689,9 +691,9 @@ module Azure::Storage
       end
 
       response = call(:put, uri, nil, headers, options)
-      return response.headers['x-ms-copy-id'], response.headers['x-ms-copy-status']
+      return response.headers["x-ms-copy-id"], response.headers["x-ms-copy-status"]
     end
-    
+
     # Public: Copies a source blob to a destination blob within the same storage account.
     #
     # ==== Attributes
@@ -735,7 +737,7 @@ module Azure::Storage
     #                                   blob's ETag value does not match the value specified. If the values are
     #                                   identical, the Blob service returns status code 412 (Precondition Failed).
     # * +:timeout+                    - Integer. A timeout in seconds.
-    # * +:request_id+                 - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                 - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                   in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd894037.aspx
@@ -748,13 +750,13 @@ module Azure::Storage
     #                                    "success" - The copy completed successfully.
     #                                    "pending" - The copy is in progress.
     #
-    def copy_blob(destination_container, destination_blob, source_container, source_blob, options={})
-      source_blob_uri = blob_uri(source_container, source_blob, options[:source_snapshot] ? { 'snapshot' => options[:source_snapshot] } : {}).to_s
+    def copy_blob(destination_container, destination_blob, source_container, source_blob, options = {})
+      source_blob_uri = blob_uri(source_container, source_blob, options[:source_snapshot] ? { "snapshot" => options[:source_snapshot] } : {}).to_s
 
       return copy_blob_from_uri(destination_container, destination_blob, source_blob_uri, options)
     end
-    
-    # Public: Aborts a pending Copy Blob operation and leaves a destination blob with zero length and full metadata. 
+
+    # Public: Aborts a pending Copy Blob operation and leaves a destination blob with zero length and full metadata.
     #
     # ==== Attributes
     #
@@ -768,29 +770,29 @@ module Azure::Storage
     # Accepted key/value pairs in options parameter are:
     # * +:lease_id+             - String. The lease id if the destination blob has an active infinite lease
     # * +:timeout+              - Integer. A timeout in seconds.
-    # * +:request_id+           - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+           - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                             in the analytics logs when storage analytics logging is enabled.
     #
     # See https://msdn.microsoft.com/en-us/library/azure/jj159098.aspx
     #
     # Returns nil on success
-    def abort_copy_blob(container, blob, copy_id, options={})
-      query = { 'comp' => 'copy'}
-      StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
-      StorageService.with_query query, 'copyid', copy_id
+    def abort_copy_blob(container, blob, copy_id, options = {})
+      query = { "comp" => "copy" }
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
+      StorageService.with_query query, "copyid", copy_id
 
       uri = blob_uri(container, blob, query);
       headers = StorageService.common_headers
-      StorageService.with_header headers, 'x-ms-copy-action', 'abort';
-      
+      StorageService.with_header headers, "x-ms-copy-action", "abort";
+
       unless options.empty?
-        StorageService.with_header headers, 'x-ms-lease-id', options[:lease_id]
+        StorageService.with_header headers, "x-ms-lease-id", options[:lease_id]
       end
 
       call(:put, uri, nil, headers, options)
       nil
     end
-    
+
     # Public: Deletes a blob or blob snapshot.
     #
     # ==== Attributes
@@ -812,40 +814,39 @@ module Azure::Storage
     #                                    * +:only+     - Deletes only the snapshots for the blob, but leaves the blob
     #                                    * +:include+  - Deletes the blob and all of the snapshots for the blob
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to create the blob snapshot
-    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
+    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to create the blob snapshot
-    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified, 
+    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to create the blob snapshot
-    #                                  only if the blob's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the blob's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to create the blob snapshot
-    #                                  only if the blob's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179440.aspx
     #
     # Returns nil on success
-    def delete_blob(container, blob, options={})
-      query = { }
-      StorageService.with_query query, 'snapshot', options[:snapshot]
-      StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+    def delete_blob(container, blob, options = {})
+      query = {}
+      StorageService.with_query query, "snapshot", options[:snapshot]
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
 
       options[:delete_snapshots] = :include unless options[:delete_snapshots]
 
       headers = StorageService.common_headers
-      StorageService.with_header headers, 'x-ms-delete-snapshots', options[:delete_snapshots].to_s if options[:delete_snapshots] && options[:snapshot] == nil
+      StorageService.with_header headers, "x-ms-delete-snapshots", options[:delete_snapshots].to_s if options[:delete_snapshots] && options[:snapshot] == nil
       add_blob_conditional_headers options, headers
 
       call(:delete, uri, nil, headers, options)
       nil
     end
-    
   end
 end

@@ -21,23 +21,23 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 
 describe Azure::Storage::File::FileService do
   subject { Azure::Storage::File::FileService.new }
   after { ShareNameHelper.clean }
-  
-  describe '#list_shares' do
+
+  describe "#list_shares" do
     let(:share_names) { [ShareNameHelper.name, ShareNameHelper.name, ShareNameHelper.name] }
-    let(:metadata) { { "CustomMetadataProperty"=>"CustomMetadataValue" } }
-    before { 
+    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    before {
       share_names.each { |c|
-        subject.create_share c, { :metadata => metadata }
+        subject.create_share c, metadata: metadata
       }
     }
 
-    it 'lists the shares for the account' do
-      result =  subject.list_shares
+    it "lists the shares for the account" do
+      result = subject.list_shares
       found = 0
       result.each { |c|
         found += 1 if share_names.include? c.name
@@ -45,25 +45,25 @@ describe Azure::Storage::File::FileService do
       found.must_equal share_names.length
     end
 
-    it 'lists the shares for the account with max results' do
-      result =  subject.list_shares({ :max_results => 1 })
+    it "lists the shares for the account with max results" do
+      result = subject.list_shares(max_results: 1)
       result.length.must_equal 1
       first_share = result[0]
       result.continuation_token.wont_equal("")
 
-      result = subject.list_shares({ :max_results => 2, :marker => result.continuation_token })
+      result = subject.list_shares(max_results: 2, marker: result.continuation_token)
       result.length.must_equal 2
       result[0].name.wont_equal first_share.name
     end
 
-    it 'returns metadata if the :metadata=>true option is used' do
-      result = subject.list_shares({ :metadata => true })
+    it "returns metadata if the :metadata=>true option is used" do
+      result = subject.list_shares(metadata: true)
 
       found = 0
       result.each { |c|
         if share_names.include? c.name
-          found += 1 
-          metadata.each { |k,v|
+          found += 1
+          metadata.each { |k, v|
             c.metadata.must_include k.downcase
             c.metadata[k.downcase].must_equal v
           }

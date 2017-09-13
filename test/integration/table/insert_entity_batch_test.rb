@@ -21,7 +21,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/table/batch"
 require "azure/storage/table/table_service"
 require "azure/core/http/http_error"
@@ -29,10 +29,10 @@ require "azure/core/http/http_error"
 describe Azure::Storage::Table::TableService do
   describe "#insert_entity_batch" do
     subject { Azure::Storage::Table::TableService.new }
-    let(:table_name){ TableNameHelper.name }
+    let(:table_name) { TableNameHelper.name }
 
     let(:entity_properties) {
-      { 
+      {
         "PartitionKey" => "testingpartition",
         "RowKey" => "abcd123",
         "CustomDoubleProperty" => 3.141592,
@@ -53,18 +53,18 @@ describe Azure::Storage::Table::TableService do
       }
     }
 
-    before { 
+    before {
       subject.create_table table_name
     }
     after { TableNameHelper.clean }
 
-    it "creates an entity" do 
+    it "creates an entity" do
       batch = Azure::Storage::Table::Batch.new table_name, entity_properties["PartitionKey"]
       batch.insert entity_properties["RowKey"], entity_properties
       results = subject.execute_batch batch
 
       results[0].must_be_kind_of Azure::Storage::Table::Entity
-      entity_properties.each { |k,v|
+      entity_properties.each { |k, v|
         if entity_properties[k].class == Time
           floor_to(results[0].properties[k].to_f, 6).must_equal floor_to(entity_properties[k].to_f, 6)
         else

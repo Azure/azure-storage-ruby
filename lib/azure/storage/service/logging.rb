@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,11 +23,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/storage/service/retention_policy'
+require "azure/storage/service/retention_policy"
 
 module Azure::Storage
   module Service
-    class Logging 
+    class Logging
       def initialize
         @version = "1.0"
         @delete = false

@@ -21,16 +21,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/queue/queue_service"
 
 describe Azure::Storage::Queue::QueueService do
   subject { Azure::Storage::Queue::QueueService.new }
-  
-  describe '#delete_message' do
-    let(:queue_name){ QueueNameHelper.name }
-    before { 
-      subject.create_queue queue_name 
+
+  describe "#delete_message" do
+    let(:queue_name) { QueueNameHelper.name }
+    before {
+      subject.create_queue queue_name
       subject.create_message queue_name, "some random text " + QueueNameHelper.name
     }
     after { QueueNameHelper.clean }
@@ -42,7 +42,7 @@ describe Azure::Storage::Queue::QueueService do
 
       result = subject.delete_message queue_name, message.id, message.pop_receipt
       result.must_be_nil
-      
+
       result = subject.peek_messages queue_name
       result.must_be_empty
     end

@@ -21,8 +21,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
-require 'azure/storage/core/auth/shared_access_signature'
+require "integration/test_helper"
+require "azure/storage/core/auth/shared_access_signature"
 
 describe Azure::Storage::Core::Auth::SharedAccessSignature do
   subject { Azure::Storage::Queue::QueueService.new }
@@ -39,45 +39,45 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
   }
   after { QueueNameHelper.clean }
 
-  it 'reads a message in the queue with a SAS in connection string' do
-    sas_token = generator.generate_service_sas_token queue_name, { service: 'q', permissions: 'r', protocol: 'https,http' }
+  it "reads a message in the queue with a SAS in connection string" do
+    sas_token = generator.generate_service_sas_token queue_name, service: "q", permissions: "r", protocol: "https,http"
     connection_string = "QueueEndpoint=https://#{ENV['AZURE_STORAGE_ACCOUNT']}.queue.core.windows.net;SharedAccessSignature=#{sas_token}"
     sas_client = Azure::Storage::Client::create_from_connection_string connection_string
     client = sas_client.queue_client
-    message = client.peek_messages queue_name, { number_of_messages: 2 }
+    message = client.peek_messages queue_name, number_of_messages: 2
     message.wont_be_nil
     assert message.length > 1
   end
 
-  it 'reads a message in the queue with a SAS' do
-    sas_token = generator.generate_service_sas_token queue_name, { service: 'q', permissions: 'r', protocol: 'https,http' }
+  it "reads a message in the queue with a SAS" do
+    sas_token = generator.generate_service_sas_token queue_name, service: "q", permissions: "r", protocol: "https,http"
     signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
     client = Azure::Storage::Queue::QueueService.new(signer: signer)
-    message = client.peek_messages queue_name, { number_of_messages: 2 }
+    message = client.peek_messages queue_name, number_of_messages: 2
     message.wont_be_nil
     assert message.length > 1
   end
 
-  it 'adds a message to the queue with a SAS' do
-    sas_token = generator.generate_service_sas_token queue_name, { service: 'q', permissions: 'a', protocol: 'https' }
+  it "adds a message to the queue with a SAS" do
+    sas_token = generator.generate_service_sas_token queue_name, service: "q", permissions: "a", protocol: "https"
     signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
     client = Azure::Storage::Queue::QueueService.new(signer: signer)
     result = client.create_message queue_name, message_3
     result.must_be_nil
   end
 
-  it 'processes and updates a message to the queue with a SAS' do
-    sas_token = generator.generate_service_sas_token queue_name, { service: 'q', permissions: 'up', protocol: 'https,http' }
+  it "processes and updates a message to the queue with a SAS" do
+    sas_token = generator.generate_service_sas_token queue_name, service: "q", permissions: "up", protocol: "https,http"
     signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
     client = Azure::Storage::Queue::QueueService.new(signer: signer)
     message = client.list_messages queue_name, 10
-    new_pop_receipt, time_next_visible = client.update_message queue_name, message[0].id, message[0].pop_receipt, 'updated message', 10
+    new_pop_receipt, time_next_visible = client.update_message queue_name, message[0].id, message[0].pop_receipt, "updated message", 10
     new_pop_receipt.wont_be_nil
     time_next_visible.wont_be_nil
   end
 
-  it 'deletes a message in the queue with a SAS' do
-    sas_token = generator.generate_service_sas_token queue_name, { service: 'q', permissions: 'p', protocol: 'https,http' }
+  it "deletes a message in the queue with a SAS" do
+    sas_token = generator.generate_service_sas_token queue_name, service: "q", permissions: "p", protocol: "https,http"
     signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
     client = Azure::Storage::Queue::QueueService.new(signer: signer)
     message = client.list_messages queue_name, 10

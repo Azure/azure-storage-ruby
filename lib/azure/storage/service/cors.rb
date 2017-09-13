@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -24,7 +26,7 @@
 
 module Azure::Storage
   module Service
-    class Cors 
+    class Cors
       def initialize
         @cors_rules = []
         yield self if block_given?

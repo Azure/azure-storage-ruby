@@ -21,17 +21,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'securerandom'
+require "securerandom"
 
-require 'azure/core/http/http_error'
-require 'azure/storage/table/serialization'
-require 'azure/storage/table/table_service'
-require 'azure/storage/table/batch_response'
+require "azure/core/http/http_error"
+require "azure/storage/table/serialization"
+require "azure/storage/table/table_service"
+require "azure/storage/table/batch_response"
 
 module Azure::Storage
   module Table
     # Represents a batch of table operations.
-    # 
+    #
     # Example usage (block syntax):
     #
     # results = Batch.new "table", "partition" do
@@ -46,9 +46,9 @@ module Azure::Storage
     #           .insert("row2", {"meta"=>"data"})
     #           .execute
     #
-    # which is equivalent to (as class): 
-    # 
-    # svc = TableSerice.new 
+    # which is equivalent to (as class):
+    #
+    # svc = TableSerice.new
     #
     # batch = Batch.new "table", "partition"
     # batch.insert "row1", {"meta"=>"data"}
@@ -70,74 +70,74 @@ module Azure::Storage
       end
 
       private
-      attr_reader :table
-      attr_reader :partition
-      attr_reader :table_service
+        attr_reader :table
+        attr_reader :partition
+        attr_reader :table_service
 
-      attr_accessor :operations
-      attr_accessor :entity_keys
-      attr_accessor :changeset_id
+        attr_accessor :operations
+        attr_accessor :entity_keys
+        attr_accessor :changeset_id
 
       public
       attr_accessor :batch_id
 
       protected
-      def execute
-        @table_service.execute_batch(self)
-      end
+        def execute
+          @table_service.execute_batch(self)
+        end
 
       protected
-      class ResponseWrapper
-        def initialize(hash)
-          @hash = hash
-        end
+        class ResponseWrapper
+          def initialize(hash)
+            @hash = hash
+          end
 
-        def uri 
-          @hash[:uri]
-        end
-        
-        def status_code
-          @hash[:status_code].to_i
-        end
+          def uri
+            @hash[:uri]
+          end
 
-        def body
-          @hash[:body]
+          def status_code
+            @hash[:status_code].to_i
+          end
+
+          def body
+            @hash[:body]
+          end
         end
-      end
 
       protected
-      def add_operation(method, uri, body = nil, headers = nil)
-        op = {
-          method: method,
-          uri: uri,
-          body: body,
-          headers: headers.merge(
-            HeaderConstants::CONTENT_TYPE => HeaderConstants::JSON_CONTENT_TYPE_VALUE,
-            HeaderConstants::DATA_SERVICE_VERSION => TableConstants::DEFAULT_DATA_SERVICE_VERSION
-          )
-        }
-        operations.push op
-      end
+        def add_operation(method, uri, body = nil, headers = nil)
+          op = {
+            method: method,
+            uri: uri,
+            body: body,
+            headers: headers.merge(
+              HeaderConstants::CONTENT_TYPE => HeaderConstants::JSON_CONTENT_TYPE_VALUE,
+              HeaderConstants::DATA_SERVICE_VERSION => TableConstants::DEFAULT_DATA_SERVICE_VERSION
+            )
+          }
+          operations.push op
+        end
 
       protected
-      def check_entity_key(key)
-        raise ArgumentError, "Only allowed to perform a single operation per entity, and there is already a operation registered in this batch for the key: #{key}." if entity_keys.include? key
-        entity_keys.push key
-      end
+        def check_entity_key(key)
+          raise ArgumentError, "Only allowed to perform a single operation per entity, and there is already a operation registered in this batch for the key: #{key}." if entity_keys.include? key
+          entity_keys.push key
+        end
 
       public
       def parse_response(response)
         responses = BatchResponse.parse response.body
         new_responses = []
 
-        (0..responses.length-1).each { |index|
+        (0..responses.length - 1).each { |index|
           operation = operations[index]
           response = responses[index]
 
           if response[:status_code].to_i > 299
             # failed
-            error = Azure::Core::Http::HTTPError.new(ResponseWrapper.new(response.merge({:uri=>operation[:uri]})))
-            error.description = response[:message] if (error.description || '').strip == ''
+            error = Azure::Core::Http::HTTPError.new(ResponseWrapper.new(response.merge(uri: operation[:uri])))
+            error.description = response[:message] if (error.description || "").strip == ""
             raise error
           else
             # success
@@ -150,10 +150,10 @@ module Azure::Storage
 
               new_responses.push entity
             when :put, :merge
-             # etag from headers
+              # etag from headers
               new_responses.push response[:headers]["etag"]
             when :delete
-              # true 
+              # true
               new_responses.push nil
             end
           end
@@ -165,7 +165,7 @@ module Azure::Storage
       public
       def to_body
         body = ""
-        body.define_singleton_method(:add_line) do |a| self << (a||nil) + "\n" end
+        body.define_singleton_method(:add_line) do |a| self << (a || nil) + "\n" end
 
         body.add_line "--#{batch_id}"
         body.add_line "Content-Type: multipart/mixed; boundary=#{changeset_id}"
@@ -203,7 +203,7 @@ module Azure::Storage
       #
       # * +row_key+       - String. The row key
       # * +entity_values+ - Hash. A hash of the name/value pairs for the entity.
-      # * +options+       - Hash. Optional parameters. 
+      # * +options+       - Hash. Optional parameters.
       #
       # ==== Options
       #

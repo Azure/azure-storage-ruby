@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,15 +23,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/storage/service/serialization'
+require "azure/storage/service/serialization"
 
-require 'azure/storage/table/guid'
-require 'azure/storage/table/edmtype'
-require 'azure/storage/table/entity'
+require "azure/storage/table/guid"
+require "azure/storage/table/edmtype"
+require "azure/storage/table/entity"
 
-require 'time'
-require 'date'
-require 'json'
+require "time"
+require "date"
+require "json"
 
 module Azure
   module Storage
@@ -60,11 +62,11 @@ module Azure
 
         def self.table_entries_from_hash(h)
           values = []
-          if h['value']
-            h['value'].each do |name|
+          if h["value"]
+            h["value"].each do |name|
               values.push(name)
             end
-          elsif h['TableName']
+          elsif h["TableName"]
             values = h
           end
           values
@@ -76,12 +78,12 @@ module Azure
 
         def self.entities_from_json(json)
           entities_hash = hash_from_json(json)
-          entities_hash['value'].nil? ? [entity_from_hash(entities_hash)] : entities_from_hash(entities_hash)
+          entities_hash["value"].nil? ? [entity_from_hash(entities_hash)] : entities_from_hash(entities_hash)
         end
 
         def self.entities_from_hash(h)
           entities = []
-          h['value'].each { |entity_hash|
+          h["value"].each { |entity_hash|
             entities.push(entity_from_hash(entity_hash))
           }
           entities

@@ -21,10 +21,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/blob/blob_service"
-require 'base64'
-require 'securerandom'
+require "base64"
+require "securerandom"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
@@ -37,15 +37,15 @@ describe Azure::Storage::Blob::BlobService do
     subject.create_container container_name
   }
 
-  describe '#create_block_blob' do
-    it 'creates a block blob' do
+  describe "#create_block_blob" do
+    it "creates a block blob" do
       blob = subject.create_block_blob container_name, blob_name, content
       blob.name.must_equal blob_name
     end
 
-    it 'creates a block blob with IO' do
+    it "creates a block blob with IO" do
       begin
-        file = File.open blob_name, 'w+'
+        file = File.open blob_name, "w+"
         file.write content
         file.seek 0
         subject.create_block_blob container_name, blob_name, file
@@ -60,19 +60,19 @@ describe Azure::Storage::Blob::BlobService do
       end
     end
 
-    it 'should create a block blob with spaces in name' do
-      blob_name = 'blob with spaces'
-      blob = subject.create_block_blob container_name, blob_name, 'content'
+    it "should create a block blob with spaces in name" do
+      blob_name = "blob with spaces"
+      blob = subject.create_block_blob container_name, blob_name, "content"
       blob.name.must_equal blob_name
     end
 
-    it 'should create block blob with complex in name' do
-      blob_name = 'with фбаф.txt'
-      blob = subject.create_block_blob container_name, blob_name, 'content'
+    it "should create block blob with complex in name" do
+      blob_name = "with фбаф.txt"
+      blob = subject.create_block_blob container_name, blob_name, "content"
       blob.name.must_equal blob_name
     end
 
-    it 'sets additional properties when the options hash is used' do
+    it "sets additional properties when the options hash is used" do
       options = {
         content_type: "application/xml",
         content_encoding: "gzip",
@@ -84,7 +84,7 @@ describe Azure::Storage::Blob::BlobService do
       blob = subject.create_block_blob container_name, blob_name, content, options
       blob = subject.get_blob_properties container_name, blob_name
       blob.name.must_equal blob_name
-      blob.properties[:blob_type].must_equal 'BlockBlob'
+      blob.properties[:blob_type].must_equal "BlockBlob"
       blob.properties[:content_type].must_equal options[:content_type]
       blob.properties[:content_encoding].must_equal options[:content_encoding]
       blob.properties[:cache_control].must_equal options[:cache_control]
@@ -95,18 +95,18 @@ describe Azure::Storage::Blob::BlobService do
       blob.metadata["custommetadataproperty"].must_equal "CustomMetadataValue"
     end
 
-    it 'errors if the container does not exist' do
+    it "errors if the container does not exist" do
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.create_block_blob ContainerNameHelper.name, blob_name, content
       end
     end
   end
 
-  describe '#put_blob_block' do
+  describe "#put_blob_block" do
     let(:blockid1) { "anyblockid1" }
     let(:blockid2) { "anyblockid2" }
 
-    it 'creates a block as part of a block blob' do
+    it "creates a block as part of a block blob" do
       subject.put_blob_block container_name, blob_name, blockid1, content
 
       # verify
@@ -117,7 +117,7 @@ describe Azure::Storage::Blob::BlobService do
       block.name.must_equal blockid1
     end
 
-    it 'creates a 100M block as part of a block blob' do
+    it "creates a 100M block as part of a block blob" do
       content_100_mb = SecureRandom.random_bytes(100 * 1024 * 1024)
       subject.put_blob_block container_name, blob_name, blockid2, content_100_mb
       # verify
@@ -129,7 +129,7 @@ describe Azure::Storage::Blob::BlobService do
     end
   end
 
-  describe '#commit_blob_blocks' do
+  describe "#commit_blob_blocks" do
     let(:blocklist) { [["anyblockid0"], ["anyblockid1"]] }
     before {
       blocklist.each { |block_entry|
@@ -137,7 +137,7 @@ describe Azure::Storage::Blob::BlobService do
       }
     }
 
-    it 'commits a list of blocks to blob' do
+    it "commits a list of blocks to blob" do
       # verify starting state
       block_list = subject.list_blob_blocks container_name, blob_name
 
@@ -162,7 +162,7 @@ describe Azure::Storage::Blob::BlobService do
     end
   end
 
-  describe '#list_blob_blocks' do
+  describe "#list_blob_blocks" do
     let(:blocklist) { [["anyblockid0"], ["anyblockid1"], ["anyblockid2"], ["anyblockid3"]] }
     before {
 
@@ -177,7 +177,7 @@ describe Azure::Storage::Blob::BlobService do
       subject.put_blob_block container_name, blob_name, blocklist[3][0], content
     }
 
-    it 'lists blocks in a blob, including their status' do
+    it "lists blocks in a blob, including their status" do
       result = subject.list_blob_blocks container_name, blob_name
 
       committed = result[:committed]
@@ -203,8 +203,8 @@ describe Azure::Storage::Blob::BlobService do
       }
     end
 
-    describe 'when blocklist_type parameter is used' do
-      it 'lists uncommitted blocks only if :uncommitted is passed' do
+    describe "when blocklist_type parameter is used" do
+      it "lists uncommitted blocks only if :uncommitted is passed" do
         result = subject.list_blob_blocks container_name, blob_name, blocklist_type: :uncommitted
 
         committed = result[:committed]
@@ -222,7 +222,7 @@ describe Azure::Storage::Blob::BlobService do
         }
       end
 
-      it 'lists committed blocks only if :committed is passed' do
+      it "lists committed blocks only if :committed is passed" do
         result = subject.list_blob_blocks container_name, blob_name, blocklist_type: :committed
 
         committed = result[:committed]
@@ -240,7 +240,7 @@ describe Azure::Storage::Blob::BlobService do
         uncommitted.length.must_equal 0
       end
 
-      it 'lists committed and uncommitted blocks if :all is passed' do
+      it "lists committed and uncommitted blocks if :all is passed" do
         result = subject.list_blob_blocks container_name, blob_name, blocklist_type: :all
 
         committed = result[:committed]
@@ -267,8 +267,8 @@ describe Azure::Storage::Blob::BlobService do
       end
     end
 
-    describe 'when snapshot parameter is used' do
-      it 'lists blocks for the blob snapshot' do
+    describe "when snapshot parameter is used" do
+      it "lists blocks for the blob snapshot" do
         snapshot = subject.create_blob_snapshot container_name, blob_name
 
         result = subject.commit_blob_blocks container_name, blob_name, blocklist

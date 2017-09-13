@@ -21,17 +21,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/table/table_service"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Table::TableService do
   describe "#update_entity" do
     subject { Azure::Storage::Table::TableService.new }
-    let(:table_name){ TableNameHelper.name }
+    let(:table_name) { TableNameHelper.name }
 
-    let(:entity_properties){ 
-      { 
+    let(:entity_properties) {
+      {
         "PartitionKey" => "testingpartition",
         "RowKey" => "abcd1234_existing",
         "CustomStringProperty" => "CustomPropertyValue",
@@ -59,22 +59,20 @@ describe Azure::Storage::Table::TableService do
 
     after { TableNameHelper.clean }
 
-    it "updates an existing entity, removing any properties not included in the update operation" do 
-      etag = subject.update_entity table_name, { 
-        PartitionKey: entity_properties["PartitionKey"],
+    it "updates an existing entity, removing any properties not included in the update operation" do
+      etag = subject.update_entity table_name,         PartitionKey: entity_properties["PartitionKey"],
         RowKey: entity_properties["RowKey"],
         NewCustomProperty: "NewCustomValue"
-      }
 
       etag.must_be_kind_of String
       etag.wont_equal @existing_etag
 
       result = subject.get_entity table_name, entity_properties["PartitionKey"], entity_properties["RowKey"]
-      
+
       result.must_be_kind_of Azure::Storage::Table::Entity
 
       # removed all existing props
-      entity_properties.each { |k,v|
+      entity_properties.each { |k, v|
         result.properties.wont_include k unless k == "PartitionKey" || k == "RowKey"
       }
 
@@ -82,22 +80,20 @@ describe Azure::Storage::Table::TableService do
       result.properties["NewCustomProperty"].must_equal "NewCustomValue"
     end
 
-    it "updates an existing entity, removing any properties not included in the update operation and adding nil one" do 
-      etag = subject.update_entity table_name, { 
-        PartitionKey: entity_properties["PartitionKey"],
+    it "updates an existing entity, removing any properties not included in the update operation and adding nil one" do
+      etag = subject.update_entity table_name,         PartitionKey: entity_properties["PartitionKey"],
         RowKey: entity_properties["RowKey"],
         NewCustomProperty: nil
-      }
 
       etag.must_be_kind_of String
       etag.wont_equal @existing_etag
 
       result = subject.get_entity table_name, entity_properties["PartitionKey"], entity_properties["RowKey"]
-      
+
       result.must_be_kind_of Azure::Storage::Table::Entity
 
       # removed all existing props
-      entity_properties.each { |k,v|
+      entity_properties.each { |k, v|
         result.properties.wont_include k unless k == "PartitionKey" || k == "RowKey"
       }
 

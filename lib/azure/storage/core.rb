@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -27,7 +29,7 @@ module Azure
   end
 end
 
-require 'azure/storage/core/error'
-require 'azure/storage/default'
-require 'azure/storage/core/sr'
-require 'azure/storage/core/utility'
+require "azure/storage/core/error"
+require "azure/storage/default"
+require "azure/storage/core/sr"
+require "azure/storage/core/utility"

@@ -21,19 +21,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/queue/queue_service"
-require 'azure/core/http/http_error'
+require "azure/core/http/http_error"
 
 describe Azure::Storage::Queue::QueueService do
   subject { Azure::Storage::Queue::QueueService.new }
-  
-  describe '#update_message' do
-    let(:queue_name){ QueueNameHelper.name }
-    let(:message_text){ "some random text " + QueueNameHelper.name }
-    let(:new_message_text){ "this is new text!!" } 
-    before { 
-      subject.create_queue queue_name 
+
+  describe "#update_message" do
+    let(:queue_name) { QueueNameHelper.name }
+    let(:message_text) { "some random text " + QueueNameHelper.name }
+    let(:new_message_text) { "this is new text!!" }
+    before {
+      subject.create_queue queue_name
       subject.create_message queue_name, message_text
     }
     after { QueueNameHelper.clean }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,12 +23,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/storage/blob/serialization'
+require "azure/storage/blob/serialization"
 
 module Azure::Storage::Blob
   module Container
     include Azure::Storage::Service
-    
+
     class Container
       def initialize
         @properties = {}
@@ -39,7 +41,7 @@ module Azure::Storage::Blob
       attr_accessor :metadata
       attr_accessor :public_access_level
     end
-    
+
     # Public: Create a new container
     #
     # ==== Attributes
@@ -53,16 +55,16 @@ module Azure::Storage::Blob
     # * +:metadata+                 - Hash. User defined metadata for the container (optional).
     # * +:public_access_level+      - String. One of "container" or "blob" (optional).
     # * +:timeout+                  - Integer. A timeout in seconds.
-    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179468.aspx
     #
     # Returns a Container
-    def create_container(name, options={})
+    def create_container(name, options = {})
       # Query
-      query = { }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
+      query = {}
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Scheme + path
       uri = container_uri(name, query)
@@ -70,7 +72,7 @@ module Azure::Storage::Blob
       # Headers
       headers = StorageService.common_headers
       StorageService.add_metadata_to_headers(options[:metadata], headers) if options[:metadata]
-      headers['x-ms-blob-public-access'] = options[:public_access_level].to_s if options[:public_access_level]
+      headers["x-ms-blob-public-access"] = options[:public_access_level].to_s if options[:public_access_level]
 
       # Call
       response = call(:put, uri, nil, headers, options)
@@ -81,7 +83,7 @@ module Azure::Storage::Blob
       container.metadata = options[:metadata]
       container
     end
-              
+
     # Public: Returns all properties and metadata on the container.
     #
     # ==== Attributes
@@ -93,16 +95,16 @@ module Azure::Storage::Blob
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                  - Integer. A timeout in seconds.
-    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179370.aspx
     #
     # Returns a Container
-    def get_container_properties(name, options={})
+    def get_container_properties(name, options = {})
       # Query
-      query = { }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
+      query = {}
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Call
       response = call(:get, container_uri(name, query), nil, {}, options)
@@ -112,7 +114,7 @@ module Azure::Storage::Blob
       container.name = name
       container
     end
-    
+
     # Public: Returns only user-defined metadata for the specified container.
     #
     # ==== Attributes
@@ -124,16 +126,16 @@ module Azure::Storage::Blob
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                  - Integer. A timeout in seconds.
-    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/ee691976.aspx
     #
     # Returns a Container
-    def get_container_metadata(name, options={})
+    def get_container_metadata(name, options = {})
       # Query
-      query = { 'comp' => 'metadata' }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
+      query = { "comp" => "metadata" }
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Call
       response = call(:get, container_uri(name, query), nil, {}, options)
@@ -143,7 +145,7 @@ module Azure::Storage::Blob
       container.name = name
       container
     end
-    
+
     # Public: Sets custom metadata for the container.
     #
     # ==== Attributes
@@ -156,16 +158,16 @@ module Azure::Storage::Blob
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                  - Integer. A timeout in seconds.
-    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179362.aspx
     #
     # Returns nil on success
-    def set_container_metadata(name, metadata, options={})
+    def set_container_metadata(name, metadata, options = {})
       # Query
-      query = { 'comp' => 'metadata' }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
+      query = { "comp" => "metadata" }
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Headers
       headers = StorageService.common_headers
@@ -173,11 +175,11 @@ module Azure::Storage::Blob
 
       # Call
       call(:put, container_uri(name, query), nil, headers, options)
-      
+
       # Result
       nil
     end
-    
+
     # Public: Gets the access control list (ACL) and any container-level access policies
     # for the container.
     #
@@ -190,7 +192,7 @@ module Azure::Storage::Blob
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                  - Integer. A timeout in seconds.
-    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179469.aspx
@@ -199,11 +201,11 @@ module Azure::Storage::Blob
     #   container           - A Azure::Storage::Entity::Blob::Container instance
     #   signed_identifiers  - A list of Azure::Storage::Entity::SignedIdentifier instances
     #
-    def get_container_acl(name, options={})
+    def get_container_acl(name, options = {})
       # Query
-      query = { 'comp' => 'acl' }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
-      
+      query = { "comp" => "acl" }
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
+
       # Call
       response = call(:get, container_uri(name, query), nil, {}, options)
 
@@ -230,26 +232,26 @@ module Azure::Storage::Blob
     # Accepted key/value pairs in options parameter are:
     # * +:signed_identifiers+          - Array. A list of Azure::Storage::Entity::SignedIdentifier instances (optional)
     # * +:timeout+                     - Integer. A timeout in seconds.
-    # * +:request_id+                  - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                  - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                    in the analytics logs when storage analytics logging is enabled.
-    # 
+    #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179391.aspx
     #
     # Returns a tuple of (container, signed_identifiers)
     # * +container+                    - A Azure::Storage::Entity::Blob::Container instance
     # * +signed_identifiers+           - A list of Azure::Storage::Entity::SignedIdentifier instances
     #
-    def set_container_acl(name, public_access_level, options={})
+    def set_container_acl(name, public_access_level, options = {})
       # Query
-      query = { 'comp' => 'acl' }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
+      query = { "comp" => "acl" }
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Scheme + path
       uri = container_uri(name, query)
 
       # Headers + body
       headers = StorageService.common_headers
-      headers['x-ms-blob-public-access'] = public_access_level if public_access_level && public_access_level.to_s.length > 0
+      headers["x-ms-blob-public-access"] = public_access_level if public_access_level && public_access_level.to_s.length > 0
 
       signed_identifiers = nil
       signed_identifiers = options[:signed_identifiers] if options[:signed_identifiers]
@@ -267,7 +269,7 @@ module Azure::Storage::Blob
 
       return container, signed_identifiers || []
     end
-    
+
     # Public: Deletes a container.
     #
     # ==== Attributes
@@ -279,24 +281,24 @@ module Azure::Storage::Blob
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                  - Integer. A timeout in seconds.
-    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179408.aspx
     #
     # Returns nil on success
-    def delete_container(name, options={})
+    def delete_container(name, options = {})
       # Query
-      query = { }
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
+      query = {}
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Call
       call(:delete, container_uri(name, query), nil, {}, options)
-      
+
       # result
       nil
     end
-    
+
     # Public: Establishes an exclusive write lock on a container. The lock duration can be 15 to 60 seconds, or can be infinite.
     # To write to a locked container, a client must provide a lease ID.
     #
@@ -313,19 +315,19 @@ module Azure::Storage::Blob
     # * +:proposed_lease_id+         - String. Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request)
     #                                  if the proposed lease ID is not in the correct format. (optional)
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to acquire the lease
-    #                                  only if the container has been modified since the specified date/time. If the container has not been modified, 
+    #                                  only if the container has been modified since the specified date/time. If the container has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to acquire the lease
-    #                                  only if the container has not been modified since the specified date/time. If the container has been modified, 
+    #                                  only if the container has not been modified since the specified date/time. If the container has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to acquire the lease
-    #                                  only if the container's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the container's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to acquire the lease
-    #                                  only if the container's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the container's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
@@ -333,7 +335,7 @@ module Azure::Storage::Blob
     # Returns a String of the new unique lease id. While the lease is active, you must include the lease ID with any request
     # to write, or to renew, change, or release the lease.
     #
-    def acquire_container_lease(container, options={})
+    def acquire_container_lease(container, options = {})
       acquire_lease container, nil, options
     end
 
@@ -352,27 +354,27 @@ module Azure::Storage::Blob
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to renew the lease
-    #                                  only if the container has been modified since the specified date/time. If the container has not been modified, 
+    #                                  only if the container has been modified since the specified date/time. If the container has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to renew the lease
-    #                                  only if the container has not been modified since the specified date/time. If the container has been modified, 
+    #                                  only if the container has not been modified since the specified date/time. If the container has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to renew the lease
-    #                                  only if the container's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the container's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to renew the lease
-    #                                  only if the container's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the container's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns the renewed lease id
-    def renew_container_lease(container, lease, options={})
+    def renew_container_lease(container, lease, options = {})
       renew_lease container, nil, lease, options
     end
-    
+
     # Public: Change the lease ID.
     #
     # ==== Attributes
@@ -387,24 +389,24 @@ module Azure::Storage::Blob
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to change the lease
-    #                                  only if the container has been modified since the specified date/time. If the container has not been modified, 
+    #                                  only if the container has been modified since the specified date/time. If the container has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to change the lease
-    #                                  only if the container has not been modified since the specified date/time. If the container has been modified, 
+    #                                  only if the container has not been modified since the specified date/time. If the container has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to change the lease
-    #                                  only if the container's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the container's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to change the lease
-    #                                  only if the container's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the container's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns the changed lease id
-    def change_container_lease(container, lease, proposed_lease, options={})
+    def change_container_lease(container, lease, proposed_lease, options = {})
       change_lease container, nil, lease, proposed_lease, options
     end
 
@@ -422,24 +424,24 @@ module Azure::Storage::Blob
     #
     # Accepted key/value pairs in options parameter are:
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to release the lease
-    #                                  only if the container has been modified since the specified date/time. If the container has not been modified, 
+    #                                  only if the container has been modified since the specified date/time. If the container has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to release the lease
-    #                                  only if the container has not been modified since the specified date/time. If the container has been modified, 
+    #                                  only if the container has not been modified since the specified date/time. If the container has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to release the lease
-    #                                  only if the container's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the container's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to release the lease
-    #                                  only if the container's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the container's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns nil on success
-    def release_container_lease(container, lease, options={})
+    def release_container_lease(container, lease, options = {})
       release_lease container, nil, lease, options
     end
 
@@ -469,29 +471,29 @@ module Azure::Storage::Blob
     #                                  If this option is not used, a fixed-duration lease breaks after the remaining lease
     #                                  period elapses, and an infinite lease breaks immediately.
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to break the lease
-    #                                  only if the container has been modified since the specified date/time. If the container has not been modified, 
+    #                                  only if the container has been modified since the specified date/time. If the container has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to break the lease
-    #                                  only if the container has not been modified since the specified date/time. If the container has been modified, 
+    #                                  only if the container has not been modified since the specified date/time. If the container has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to break the lease
-    #                                  only if the container's ETag value matches the value specified. If the values do not match, 
+    #                                  only if the container's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to break the lease
-    #                                  only if the container's ETag value does not match the value specified. If the values are identical, 
+    #                                  only if the container's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns an Integer of the remaining lease time. This value is the approximate time remaining in the lease
     # period, in seconds. This header is returned only for a successful request to break the lease. If the break
     # is immediate, 0 is returned.
-    def break_container_lease(container, options={})
+    def break_container_lease(container, options = {})
       break_lease container, nil, options
     end
-    
+
     # Public: Get a list of Blobs from the server
     #
     # ==== Attributes
@@ -532,7 +534,7 @@ module Azure::Storage::Blob
     #                         copy_blob operation should be included in the response.
     #                         (optional, Default=false)
     # * +:timeout+          - Integer. A timeout in seconds.
-    # * +:request_id+       - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+       - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                         in the analytics logs when storage analytics logging is enabled.
     #
     # NOTE: Metadata requested with the :metadata parameter must have been stored in
@@ -547,29 +549,29 @@ module Azure::Storage::Blob
     # Array (vs a String if it only contains a single value).
     #
     # Returns an Azure::Service::EnumerationResults
-    def list_blobs(name, options={})
+    def list_blobs(name, options = {})
       # Query
-      query = { 'comp' => 'list' }
-      query['prefix'] = options[:prefix].gsub(/\\/, '/') if options[:prefix]
-      query['delimiter'] = options[:delimiter] if options[:delimiter]
-      query['marker'] = options[:marker] if options[:marker]
-      query['maxresults'] = options[:max_results].to_s if options[:max_results]
-      query['timeout'] = options[:timeout].to_s if options[:timeout]
+      query = { "comp" => "list" }
+      query["prefix"] = options[:prefix].gsub(/\\/, "/") if options[:prefix]
+      query["delimiter"] = options[:delimiter] if options[:delimiter]
+      query["marker"] = options[:marker] if options[:marker]
+      query["maxresults"] = options[:max_results].to_s if options[:max_results]
+      query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       included_datasets = []
-      included_datasets.push('metadata') if options[:metadata] == true
-      included_datasets.push('snapshots') if options[:snapshots] == true
-      included_datasets.push('uncommittedblobs') if options[:uncommittedblobs] == true
-      included_datasets.push('copy') if options[:copy] == true
+      included_datasets.push("metadata") if options[:metadata] == true
+      included_datasets.push("snapshots") if options[:snapshots] == true
+      included_datasets.push("uncommittedblobs") if options[:uncommittedblobs] == true
+      included_datasets.push("copy") if options[:copy] == true
 
-      query['include'] = included_datasets.join ',' if included_datasets.length > 0
+      query["include"] = included_datasets.join "," if included_datasets.length > 0
 
       # Scheme + path
       uri = container_uri(name, query)
-      
+
       # Call
       response = call(:get, uri, nil, {}, options)
-      
+
       # Result
       if response.success?
         Serialization.blob_enumeration_results_from_xml(response.body)
@@ -577,6 +579,5 @@ module Azure::Storage::Blob
         response.exception
       end
     end
-
   end
 end

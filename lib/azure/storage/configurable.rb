@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -25,7 +27,6 @@
 module Azure::Storage
   # The Azure::Storage::Configurable module provides basic configuration for Azure storage activities.
   module Configurable
-
     # @!attribute [w] storage_access_key
     #   @return [String] Azure Storage access key.
     # @!attribute storage_account_name
@@ -93,7 +94,7 @@ module Azure::Storage
     def reset_config!(options = {})
       Azure::Storage::Configurable.keys.each do |key|
         value = if self == Azure::Storage
-                  Azure::Storage::Default.options[key]
+          Azure::Storage::Default.options[key]
                 else
                   Azure::Storage.send(key)
                 end
@@ -105,7 +106,7 @@ module Azure::Storage
     end
 
     alias setup reset_config!
-    
+
     # Storage queue host
     # @return [String]
     def storage_queue_host
@@ -123,7 +124,7 @@ module Azure::Storage
     def storage_table_host
       @storage_table_host || default_host(:table)
     end
-    
+
     # Storage file host
     # @return [String]
     def storage_file_host
@@ -132,48 +133,47 @@ module Azure::Storage
 
     private
 
-    def default_host(service)
-      "https://#{storage_account_name}.#{service}.core.windows.net" if storage_account_name
-    end
-
-    def setup_options
-      opts = {}
-      Azure::Storage::Configurable.keys.map do |key|
-        opts[key] = Azure::Storage.send(key) if Azure::Storage.send(key)
+      def default_host(service)
+        "https://#{storage_account_name}.#{service}.core.windows.net" if storage_account_name
       end
-      opts
-    end
 
-    def account_name_from_endpoint endpoint
-      return nil if endpoint.nil?
-      uri = URI::parse endpoint
-      fields = uri.host.split '.'
-      fields[0]
-    end
-
-    def determine_account_name
-      if instance_variable_get(:@storage_account_name).nil?
-        hosts = [@storage_blob_host, @storage_table_host, @storage_queue_host, @storage_file_host]
-        account_name = nil;
-        hosts.each do |host|
-          parsed = account_name_from_endpoint host
-          if account_name.nil?
-            account_name = parsed
-          elsif !account_name.nil? and !parsed.nil? and (account_name <=> parsed) != 0
-            raise InvalidOptionsError, "Ambiguous account name in service hosts."
-          end
+      def setup_options
+        opts = {}
+        Azure::Storage::Configurable.keys.map do |key|
+          opts[key] = Azure::Storage.send(key) if Azure::Storage.send(key)
         end
-        raise InvalidOptionsError, "Cannot identify account name." if account_name.nil?
-        @storage_account_name = account_name
+        opts
       end
-    end
 
-    def setup_signer_for_service
-      if @storage_sas_token
-        determine_account_name
-        @signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new @storage_account_name, @storage_sas_token
+      def account_name_from_endpoint(endpoint)
+        return nil if endpoint.nil?
+        uri = URI::parse endpoint
+        fields = uri.host.split "."
+        fields[0]
       end
-    end
 
+      def determine_account_name
+        if instance_variable_get(:@storage_account_name).nil?
+          hosts = [@storage_blob_host, @storage_table_host, @storage_queue_host, @storage_file_host]
+          account_name = nil;
+          hosts.each do |host|
+            parsed = account_name_from_endpoint host
+            if account_name.nil?
+              account_name = parsed
+            elsif !account_name.nil? && !parsed.nil? && (account_name <=> parsed) != (0)
+              raise InvalidOptionsError, "Ambiguous account name in service hosts."
+            end
+          end
+          raise InvalidOptionsError, "Cannot identify account name." if account_name.nil?
+          @storage_account_name = account_name
+        end
+      end
+
+      def setup_signer_for_service
+        if @storage_sas_token
+          determine_account_name
+          @signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new @storage_account_name, @storage_sas_token
+        end
+      end
   end
 end

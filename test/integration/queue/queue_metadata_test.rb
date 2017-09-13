@@ -21,23 +21,23 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/queue/queue_service"
 
 describe Azure::Storage::Queue::QueueService do
   subject { Azure::Storage::Queue::QueueService.new }
-  describe '#set/get_queue_metadata' do
-    let(:queue_name){ QueueNameHelper.name }
-    before { 
-      subject.create_queue queue_name 
+  describe "#set/get_queue_metadata" do
+    let(:queue_name) { QueueNameHelper.name }
+    before {
+      subject.create_queue queue_name
       subject.create_message queue_name, "some random text " + QueueNameHelper.name
     }
-    after { QueueNameHelper.clean }  
+    after { QueueNameHelper.clean }
 
-    it 'can set and retrieve queue metadata' do
-      result = subject.set_queue_metadata queue_name, {"CustomMetadataProperty" => "Custom Metadata Value"}
+    it "can set and retrieve queue metadata" do
+      result = subject.set_queue_metadata queue_name, "CustomMetadataProperty" => "Custom Metadata Value"
       result.must_be_nil
-      
+
       message_count, metadata = subject.get_queue_metadata queue_name
       message_count.must_equal 1
 

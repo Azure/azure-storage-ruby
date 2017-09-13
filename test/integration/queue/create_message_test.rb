@@ -21,14 +21,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/queue/queue_service"
 
 describe Azure::Storage::Queue::QueueService do
   subject { Azure::Storage::Queue::QueueService.new }
-  
-  describe '#create_message' do
-    let(:queue_name){ QueueNameHelper.name }
+
+  describe "#create_message" do
+    let(:queue_name) { QueueNameHelper.name }
     let(:message_text) { "message text random value: #{QueueNameHelper.name}" }
     before { subject.create_queue queue_name }
     after { QueueNameHelper.clean }
@@ -36,7 +36,7 @@ describe Azure::Storage::Queue::QueueService do
     it "creates a message in the specified queue and returns nil on success" do
       result = subject.create_message(queue_name, message_text)
       result.must_be_nil
-      
+
       result = subject.peek_messages queue_name
       result.wont_be_nil
       result.wont_be_empty
@@ -49,9 +49,9 @@ describe Azure::Storage::Queue::QueueService do
       let(:message_ttl) { 600 }
 
       it "the :visibility_timeout option causes the message to be invisible for a period of time" do
-        result = subject.create_message(queue_name, message_text, { :visibility_timeout=> visibility_timeout })
+        result = subject.create_message(queue_name, message_text, visibility_timeout: visibility_timeout)
         result.must_be_nil
-        
+
         result = subject.peek_messages queue_name
         result.length.must_equal 0
         sleep(visibility_timeout)
@@ -63,9 +63,9 @@ describe Azure::Storage::Queue::QueueService do
       end
 
       it "the :message_ttl option modifies the expiration_date of the message" do
-        result = subject.create_message(queue_name, message_text, { :message_ttl=> message_ttl })
+        result = subject.create_message(queue_name, message_text, message_ttl: message_ttl)
         result.must_be_nil
-        
+
         result = subject.peek_messages queue_name
         result.wont_be_nil
         result.wont_be_empty
@@ -74,7 +74,7 @@ describe Azure::Storage::Queue::QueueService do
         Time.parse(message.expiration_time).to_i.must_equal Time.parse(message.insertion_time).to_i + message_ttl
       end
     end
-    
+
     it "errors on an non-existent queue" do
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.create_message QueueNameHelper.name, message_text

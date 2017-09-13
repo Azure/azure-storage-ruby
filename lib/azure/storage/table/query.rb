@@ -21,13 +21,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/storage/table/table_service'
-require 'azure/storage/table/edmtype'
+require "azure/storage/table/table_service"
+require "azure/storage/table/edmtype"
 
 module Azure::Storage
   module Table
     class Query
-      def initialize(table="", partition=nil, row=nil, &block)
+      def initialize(table = "", partition = nil, row = nil, &block)
         @table = table
         @partition_key = partition
         @row_key = row
@@ -37,7 +37,7 @@ module Azure::Storage
         @table_service = Azure::Storage::Table::TableService.new
         self.instance_eval(&block) if block_given?
       end
-        
+
       attr_reader :table
       attr_reader :partition_key
       attr_reader :row_key
@@ -75,7 +75,7 @@ module Azure::Storage
         @filters.push(p)
         self
       end
-      
+
       def top(n)
         @top_n = n
         self
@@ -92,17 +92,15 @@ module Azure::Storage
       end
 
       def execute
-        @table_service.query_entities(@table, {
-          :partition_key => @partition_key,
-          :row_key => @row_key, 
-          :select => @fields.map{ |f| f.to_s },
-          :filter => _build_filter_string,
-          :top => (@top_n ? @top_n.to_i : @top_n),
-          :continuation_token => { 
-            :next_partition_key => @next_partition_key,
-            :next_row_key => @next_row_key
-          }
-        })
+        @table_service.query_entities(@table,           partition_key: @partition_key,
+          row_key: @row_key,
+          select: @fields.map { |f| f.to_s },
+          filter: _build_filter_string,
+          top: (@top_n ? @top_n.to_i : @top_n),
+          continuation_token: {
+            next_partition_key: @next_partition_key,
+            next_row_key: @next_row_key
+          })
       end
 
       def _build_filter_string
@@ -111,8 +109,8 @@ module Azure::Storage
         filters.each { |f|
           clauses.push "#{f[0]} #{f[1]} #{Azure::Storage::Table::EdmType.serialize_query_value(f[2])}"
         }
-        return nil if clauses.length == 0 
-        
+        return nil if clauses.length == 0
+
         result << clauses.join(" and ")
         result
       end

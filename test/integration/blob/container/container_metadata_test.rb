@@ -21,38 +21,38 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
-  let(:user_agent_prefix) { 'azure_storage_ruby_integration_test' }
-  subject { 
+  let(:user_agent_prefix) { "azure_storage_ruby_integration_test" }
+  subject {
     Azure::Storage::Blob::BlobService.new { |headers|
-      headers['User-Agent'] = "#{user_agent_prefix}; #{headers['User-Agent']}"
+      headers["User-Agent"] = "#{user_agent_prefix}; #{headers['User-Agent']}"
     }
   }
   after { ContainerNameHelper.clean }
-  
-  describe '#set/get_container_metadata' do
+
+  describe "#set/get_container_metadata" do
     let(:container_name) { ContainerNameHelper.name }
-    let(:metadata) { { "CustomMetadataProperty"=>"CustomMetadataValue" } }
-    before { 
+    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    before {
       subject.create_container container_name
     }
 
-    it 'sets and gets custom metadata for the container' do
+    it "sets and gets custom metadata for the container" do
       result = subject.set_container_metadata container_name, metadata
       result.must_be_nil
       container = subject.get_container_metadata container_name
       container.wont_be_nil
       container.name.must_equal container_name
-      metadata.each { |k,v|
+      metadata.each { |k, v|
         container.metadata.must_include k.downcase
         container.metadata[k.downcase].must_equal v
       }
     end
 
-    it 'errors if the container does not exist' do
+    it "errors if the container does not exist" do
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.get_container_metadata ContainerNameHelper.name
       end

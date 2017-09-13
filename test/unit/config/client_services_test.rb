@@ -21,26 +21,26 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'test_helper'
+require "test_helper"
 
 describe Azure::Storage::Client do
 
-  describe 'create client with options' do
-    let(:azure_storage_account) {"testStorageAccount"}
-    let(:azure_storage_access_key) {"testKey1"}
-    subject {Azure::Storage::Client.create(storage_account_name: azure_storage_account, storage_access_key: azure_storage_access_key)}
+  describe "create client with options" do
+    let(:azure_storage_account) { "testStorageAccount" }
+    let(:azure_storage_access_key) { "testKey1" }
+    subject { Azure::Storage::Client.create(storage_account_name: azure_storage_account, storage_access_key: azure_storage_access_key) }
 
-    it 'should create a blob client' do
+    it "should create a blob client" do
       subject.storage_account_name.must_equal azure_storage_account
       subject.blob_client.host.must_equal "https://#{azure_storage_account}.blob.core.windows.net"
     end
 
-    it 'should create a table client' do
+    it "should create a table client" do
       subject.storage_account_name.must_equal azure_storage_account
       subject.table_client.host.must_equal "https://#{azure_storage_account}.table.core.windows.net"
     end
-    
-    it 'should create a queue client' do
+
+    it "should create a queue client" do
       subject.storage_account_name.must_equal azure_storage_account
       subject.queue_client.host.must_equal "https://#{azure_storage_account}.queue.core.windows.net"
     end

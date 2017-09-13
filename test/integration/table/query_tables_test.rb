@@ -21,14 +21,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/table/table_service"
 require "azure/core/http/http_error"
 
-describe Azure::Storage::Table::TableService do 
+describe Azure::Storage::Table::TableService do
   describe "#query_tables" do
     subject { Azure::Storage::Table::TableService.new }
-    let(:tables){ [TableNameHelper.name, TableNameHelper.name] }
+    let(:tables) { [TableNameHelper.name, TableNameHelper.name] }
     before { tables.each { |t| subject.create_table t } }
     after { TableNameHelper.clean }
 
@@ -38,11 +38,11 @@ describe Azure::Storage::Table::TableService do
       while result.continuation_token
         token = result.continuation_token
         result.continuation_token = nil
-        result.concat(subject.query_tables(:next_table_token => token))
+        result.concat(subject.query_tables(next_table_token: token))
       end
       result.must_be_kind_of Array
 
-      tables.each { |t| 
+      tables.each { |t|
         table = result.find { |c|
           c["TableName"] == t
         }

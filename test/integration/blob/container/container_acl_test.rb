@@ -21,15 +21,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/blob/blob_service"
 require "azure/storage/service/signed_identifier"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
   after { ContainerNameHelper.clean }
-  
-  describe '#set/get_container_acl' do
+
+  describe "#set/get_container_acl" do
     let(:container_name) { ContainerNameHelper.name }
     let(:public_access_level) { :container.to_s }
     let(:identifiers) {
@@ -40,12 +40,12 @@ describe Azure::Storage::Blob::BlobService do
       identifier.access_policy.permission = "rwd"
       [identifier]
     }
-    before { 
+    before {
       subject.create_container container_name
     }
 
-    it 'sets and gets the ACL for the container' do
-      container, acl = subject.set_container_acl container_name, public_access_level, { :signed_identifiers => identifiers }
+    it "sets and gets the ACL for the container" do
+      container, acl = subject.set_container_acl container_name, public_access_level, signed_identifiers: identifiers
       container.wont_be_nil
       container.name.must_equal container_name
       container.public_access_level.must_equal public_access_level.to_s
@@ -66,12 +66,12 @@ describe Azure::Storage::Blob::BlobService do
       acl.first.access_policy.permission.must_equal identifiers.first.access_policy.permission
     end
 
-    it 'errors if the container does not exist' do
+    it "errors if the container does not exist" do
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.get_container_acl ContainerNameHelper.name
       end
       assert_raises(Azure::Core::Http::HTTPError) do
-        subject.set_container_acl ContainerNameHelper.name, public_access_level, { :identifiers => identifiers }
+        subject.set_container_acl ContainerNameHelper.name, public_access_level, identifiers: identifiers
       end
     end
   end

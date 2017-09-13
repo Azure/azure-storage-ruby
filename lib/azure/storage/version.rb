@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -27,18 +29,18 @@ module Azure
     class Version
       # Fields represent the parts defined in http://semver.org/
       MAJOR = 0 unless defined? MAJOR
-      MINOR = 13 unless defined? MINOR
+      MINOR = 14 unless defined? MINOR
       UPDATE = 0 unless defined? UPDATE
-      PRE = 'preview' unless defined? PRE
+      PRE = "preview" unless defined? PRE
 
       class << self
         # @return [String]
         def to_s
-          [MAJOR, MINOR, UPDATE, PRE].compact.join('.')
+          [MAJOR, MINOR, UPDATE, PRE].compact.join(".")
         end
 
         def to_uas
-          [MAJOR, MINOR, UPDATE].join('.') + (PRE.empty? ? '' : '-preview')
+          [MAJOR, MINOR, UPDATE].join(".") + (PRE.empty? ? "" : "-preview")
         end
       end
     end

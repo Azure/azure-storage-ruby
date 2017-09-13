@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,22 +23,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/core'
-require 'azure/core/http/retry_policy'
+require "azure/core"
+require "azure/core/http/retry_policy"
 
 module Azure::Storage::Core::Filter
   class RetryPolicyFilter < Azure::Core::Http::RetryPolicy
-    def initialize(retry_count=nil, retry_interval=nil)
+    def initialize(retry_count = nil, retry_interval = nil)
       @retry_count = retry_count
       @retry_interval = retry_interval
-      
+
       super &:should_retry?
     end
-    
+
     attr_reader :retry_count,
                 :retry_interval
-                
-    # Overrides the base class implementation of call to determine 
+
+    # Overrides the base class implementation of call to determine
     # whether to retry the operation
     #
     # response - HttpResponse. The response from the active request
@@ -57,10 +59,10 @@ module Azure::Storage::Core::Filter
       # Cannot retry immediately when it returns true, as it need check other errors
       should_retry_on_local_error? retry_data
       return false unless should_retry_on_error? response, retry_data
-      
+
       adjust_retry_parameter retry_data
     end
-    
+
     # Apply the retry policy to determine how the HTTP request should continue retrying
     #
     # retry_data - Hash. Stores stateful retry data
@@ -73,7 +75,7 @@ module Azure::Storage::Core::Filter
     # Alternatively, a subclass could override this method.
     def apply_retry_policy(retry_data)
     end
-    
+
     # Determines if the HTTP request should continue retrying
     #
     # retry_data - Hash. Stores stateful retry data
@@ -89,30 +91,30 @@ module Azure::Storage::Core::Filter
       end
 
       error_message = retry_data[:error].inspect
-      
-      if error_message.include?('SocketError: Hostname not known')
+
+      if error_message.include?("SocketError: Hostname not known")
         # Retry on local DNS resolving
-        # When uses resolv-replace.rb to replace the libc resolver 
-        # Reference: 
-        #  https://makandracards.com/ninjaconcept/30815-fixing-socketerror-getaddrinfo-name-or-service-not-known-with-ruby-s-resolv-replace-rb 
-        #  http://www.subelsky.com/2014/05/fixing-socketerror-getaddrinfo-name-or.html 
+        # When uses resolv-replace.rb to replace the libc resolver
+        # Reference:
+        #  https://makandracards.com/ninjaconcept/30815-fixing-socketerror-getaddrinfo-name-or-service-not-known-with-ruby-s-resolv-replace-rb
+        #  http://www.subelsky.com/2014/05/fixing-socketerror-getaddrinfo-name-or.html
         retry_data[:retryable] = true;
-      elsif error_message.include?('getaddrinfo: Name or service not known')
-        # When uses the default resolver 
+      elsif error_message.include?("getaddrinfo: Name or service not known")
+        # When uses the default resolver
         retry_data[:retryable] = true;
-      elsif error_message.downcase.include?('timeout')
+      elsif error_message.downcase.include?("timeout")
         retry_data[:retryable] = true;
-      elsif error_message.include?('Errno::ECONNRESET')
+      elsif error_message.include?("Errno::ECONNRESET")
         retry_data[:retryable] = true;
-      elsif error_message.include?('Errno::EACCES')
+      elsif error_message.include?("Errno::EACCES")
         retry_data[:retryable] = false;
-      elsif error_message.include?('NOSUPPORT')
+      elsif error_message.include?("NOSUPPORT")
         retry_data[:retryable] = false;
       end
-      
+
       retry_data[:retryable]
     end
-    
+
     # Determines if the HTTP request should continue retrying
     #
     # response - Azure::Core::Http::HttpResponse. The response from the active request
@@ -123,7 +125,7 @@ module Azure::Storage::Core::Filter
     # incrementing counter, timestamp, etc). The retry_data object
     # will be the same instance throughout the lifetime of the request.
     def should_retry_on_error?(response, retry_data)
-      response = response || retry_data[:error].http_response if retry_data[:error] && retry_data[:error].respond_to?('http_response')
+      response = response || retry_data[:error].http_response if retry_data[:error] && retry_data[:error].respond_to?("http_response")
       unless response
         retry_data[:retryable] = false unless retry_data[:error]
         return retry_data[:retryable]
@@ -143,7 +145,7 @@ module Azure::Storage::Core::Filter
           retry_data[:status_code] = nil
         end
       end
-      
+
       if (retry_data[:status_code] < 400)
         retry_data[:retryable] = false;
         return false;
@@ -177,15 +179,14 @@ module Azure::Storage::Core::Filter
       end
       retry_data[:retryable]
     end
-    
+
     # Adjust the retry parameter
     #
     # retry_data - Hash. Stores stateful retry data
     def adjust_retry_parameter(retry_data)
-      # TODO: Adjust the retry parameter according to the location and last attempt time 
+      # TODO: Adjust the retry parameter according to the location and last attempt time
       sleep retry_data[:interval] if retry_data[:retryable]
       retry_data[:retryable]
     end
-    
   end
 end

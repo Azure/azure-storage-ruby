@@ -1,3 +1,8 @@
+2017.09 - version 0.14.0-preview
+
+ALL
+* Added configuration file for Rubocop and auto-resolved coding style issue.
+
 2017.09 - version 0.13.0-preview
 
 ALL

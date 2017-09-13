@@ -21,21 +21,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/table/table_service"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Table::TableService do
   describe "#delete_table" do
     subject { Azure::Storage::Table::TableService.new }
-    let(:table_name){ TableNameHelper.name }
+    let(:table_name) { TableNameHelper.name }
     before { subject.create_table table_name }
     after { TableNameHelper.clean }
 
     it "deletes a table and returns nil on success" do
       result = subject.delete_table(table_name)
       result.must_be_nil
-      
+
       tables = subject.query_tables
       tables.wont_include table_name
     end

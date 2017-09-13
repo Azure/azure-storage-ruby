@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -22,27 +24,25 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-require 'azure/core/auth/signer'
+require "azure/core/auth/signer"
 
 module Azure::Storage::Core
   module Auth
     class SharedAccessSignatureSigner < Azure::Core::Auth::Signer
-
       attr :account_name, :sas_token
 
       # Public: Initialize the Signer with a SharedAccessSignature
       #
       # @param account_name [String] The account name. Defaults to the one in the global configuration.
       # @param sas_token [String]   The sas token to be used for signing
-      def initialize(account_name=Azure::Storage.storage_account_name, sas_token=Azure::Storage.storage_sas_token)
+      def initialize(account_name = Azure::Storage.storage_account_name, sas_token = Azure::Storage.storage_sas_token)
         @account_name = account_name
         @sas_token = sas_token
       end
 
       def sign_request(req)
-        req.uri = URI.parse(req.uri.to_s + (req.uri.query.nil? ? '?' : '&') + sas_token.sub(/^\?/,'') + '&api-version=' + Azure::Storage::Default::STG_VERSION)
+        req.uri = URI.parse(req.uri.to_s + (req.uri.query.nil? ? "?" : "&") + sas_token.sub(/^\?/, "") + "&api-version=" + Azure::Storage::Default::STG_VERSION)
       end
-
     end
   end
 end

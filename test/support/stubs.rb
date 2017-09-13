@@ -24,13 +24,13 @@
 require "ostruct"
 
 module Stubs
-  def double(messages={})
+  def double(messages = {})
     OpenStruct.new(messages)
   end
 end
 
 class MiniTest::Mock
-  def stub(name, value=nil)
+  def stub(name, value = nil)
     metaclass = class << self; self; end
     metaclass.send :define_method, name do |*args|
       value

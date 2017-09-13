@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -22,22 +24,22 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-require 'rubygems'
-require 'nokogiri'
-require 'base64'
-require 'openssl'
-require 'uri'
-require 'faraday'
-require 'faraday_middleware'
+require "rubygems"
+require "nokogiri"
+require "base64"
+require "openssl"
+require "uri"
+require "faraday"
+require "faraday_middleware"
 
-require 'azure/storage/autoload'
+require "azure/storage/autoload"
 
 module Azure
   module Storage
     class << self
       include Azure::Storage::Configurable
 
-      def client(options={})
+      def client(options = {})
         @client = Azure::Storage::Client.new(options) unless defined?(@client) && @client.same_options?(options)
         @client
       end
@@ -48,7 +50,6 @@ module Azure
         return super unless client.respond_to?(method_name)
         client.send(method_name, *args, &block)
       end
-
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -23,10 +25,9 @@
 #--------------------------------------------------------------------------
 module Azure::Storage
   module Blob
-    # Represents a Block as part of a BlockList 
+    # Represents a Block as part of a BlockList
     # The type should be one of :uncommitted, :committed or :latest
     class Block
-      
       def initialize
         @type = :latest
         yield self if block_given?
@@ -57,55 +58,55 @@ module Azure::Storage
     # ==== Options
     #
     # Accepted key/value pairs in options parameter are:
-    # * +:transactional_md5+         - String. An MD5 hash of the blob content. This hash is used to verify the integrity of the blob during transport. 
-    #                                  When this header is specified, the storage service checks the hash that has arrived with the one that was sent. 
+    # * +:transactional_md5+         - String. An MD5 hash of the blob content. This hash is used to verify the integrity of the blob during transport.
+    #                                  When this header is specified, the storage service checks the hash that has arrived with the one that was sent.
     #                                  If the two hashes do not match, the operation will fail with error code 400 (Bad Request).
     # * +:content_type+              - String. Content type for the blob. Will be saved with blob.
     # * +:content_encoding+          - String. Content encoding for the blob. Will be saved with blob.
     # * +:content_language+          - String. Content language for the blob. Will be saved with blob.
     # * +:content_md5+               - String. Content MD5 for the blob. Will be saved with blob.
     # * +:cache_control+             - String. Cache control for the blob. Will be saved with blob.
-    # * +:content_disposition+       - String. Conveys additional information about how to process the response payload, 
+    # * +:content_disposition+       - String. Conveys additional information about how to process the response payload,
     #                                  and also can be used to attach additional metadata
     # * +:metadata+                  - Hash. Custom metadata values to store with the blob.
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
-    # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to create a new blob 
-    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified, 
+    # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to create a new blob
+    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
-    # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to create a new blob 
-    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified, 
+    # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to create a new blob
+    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
-    # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to create a new blob 
-    #                                  only if the blob's ETag value matches the value specified. If the values do not match, 
+    # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to create a new blob
+    #                                  only if the blob's ETag value matches the value specified. If the values do not match,
     #                                  the Blob service returns status code 412 (Precondition Failed).
-    # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to create a new blob 
-    #                                  only if the blob's ETag value does not match the value specified. If the values are identical, 
+    # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to create a new blob
+    #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx
     #
     # Returns a Blob
-    def create_block_blob(container, blob, content, options={})
-      query = { }
-      StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+    def create_block_blob(container, blob, content, options = {})
+      query = {}
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
 
       headers = StorageService.common_headers
 
       # set x-ms-blob-type to BlockBlob
-      StorageService.with_header headers, 'x-ms-blob-type', 'BlockBlob'
+      StorageService.with_header headers, "x-ms-blob-type", "BlockBlob"
 
       # set the rest of the optional headers
-      StorageService.with_header headers, 'Content-MD5', options[:transactional_md5]
-      StorageService.with_header headers, 'x-ms-blob-content-type', options[:content_type]
-      StorageService.with_header headers, 'x-ms-blob-content-encoding', options[:content_encoding]
-      StorageService.with_header headers, 'x-ms-blob-content-language', options[:content_language]
-      StorageService.with_header headers, 'x-ms-blob-content-md5', options[:content_md5]
-      StorageService.with_header headers, 'x-ms-blob-cache-control', options[:cache_control]
-      StorageService.with_header headers, 'x-ms-blob-content-disposition', options[:content_disposition]
+      StorageService.with_header headers, "Content-MD5", options[:transactional_md5]
+      StorageService.with_header headers, "x-ms-blob-content-type", options[:content_type]
+      StorageService.with_header headers, "x-ms-blob-content-encoding", options[:content_encoding]
+      StorageService.with_header headers, "x-ms-blob-content-language", options[:content_language]
+      StorageService.with_header headers, "x-ms-blob-content-md5", options[:content_md5]
+      StorageService.with_header headers, "x-ms-blob-cache-control", options[:cache_control]
+      StorageService.with_header headers, "x-ms-blob-content-disposition", options[:content_disposition]
 
       StorageService.add_metadata_to_headers options[:metadata], headers
       add_blob_conditional_headers options, headers
@@ -119,7 +120,7 @@ module Azure::Storage
 
       result
     end
-    
+
     # Public: Creates a new block to be committed as part of a block blob.
     #
     # ==== Attributes
@@ -135,24 +136,24 @@ module Azure::Storage
     # Accepted key/value pairs in options parameter are:
     # * +:content_md5+           - String. Content MD5 for the request contents.
     # * +:timeout+               - Integer. A timeout in seconds.
-    # * +:request_id+            - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+            - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                              in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd135726.aspx
     #
     # Returns response of the operation
-    def put_blob_block(container, blob, block_id, content, options={})
-      query = { 'comp' => 'block'}
-      StorageService.with_query query, 'blockid', Base64.strict_encode64(block_id)
-      StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+    def put_blob_block(container, blob, block_id, content, options = {})
+      query = { "comp" => "block" }
+      StorageService.with_query query, "blockid", Base64.strict_encode64(block_id)
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
 
       headers = StorageService.common_headers
-      StorageService.with_header headers, 'Content-MD5', options[:content_md5]
+      StorageService.with_header headers, "Content-MD5", options[:content_md5]
 
       response = call(:put, uri, content, headers, options)
-      response.headers['Content-MD5']
+      response.headers["Content-MD5"]
     end
 
     # Public: Commits existing blob blocks to a blob.
@@ -187,34 +188,34 @@ module Azure::Storage
     # * +:content_language+          - String. Content language for the blob. Will be saved with blob.
     # * +:content_md5+               - String. Content MD5 for the blob. Will be saved with blob.
     # * +:cache_control+             - String. Cache control for the blob. Will be saved with blob.
-    # * +:content_disposition+       - String. Conveys additional information about how to process the response payload, 
+    # * +:content_disposition+       - String. Conveys additional information about how to process the response payload,
     #                                  and also can be used to attach additional metadata
     # * +:metadata+                  - Hash. Custom metadata values to store with the blob.
     # * +:timeout+                   - Integer. A timeout in seconds.
-    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
     #
     # This operation also supports the use of conditional headers to commit the block list if a specified condition is met.
     # For more information, see https://msdn.microsoft.com/en-us/library/azure/dd179371.aspx
     #
-    # See http://msdn.microsoft.com/en-us/library/azure/dd179467.aspx 
+    # See http://msdn.microsoft.com/en-us/library/azure/dd179467.aspx
     #
     # Returns nil on success
-    def commit_blob_blocks(container, blob, block_list, options={})
-      query = { 'comp' => 'blocklist'}
-      StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+    def commit_blob_blocks(container, blob, block_list, options = {})
+      query = { "comp" => "blocklist" }
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
 
       headers = StorageService.common_headers
       unless options.empty?
-        StorageService.with_header headers, 'Content-MD5', options[:transactional_md5]
-        StorageService.with_header headers, 'x-ms-blob-content-type', options[:content_type]
-        StorageService.with_header headers, 'x-ms-blob-content-encoding', options[:content_encoding]
-        StorageService.with_header headers, 'x-ms-blob-content-language', options[:content_language]
-        StorageService.with_header headers, 'x-ms-blob-content-md5', options[:content_md5]
-        StorageService.with_header headers, 'x-ms-blob-cache-control', options[:cache_control]
-        StorageService.with_header headers, 'x-ms-blob-content-disposition', options[:content_disposition]
+        StorageService.with_header headers, "Content-MD5", options[:transactional_md5]
+        StorageService.with_header headers, "x-ms-blob-content-type", options[:content_type]
+        StorageService.with_header headers, "x-ms-blob-content-encoding", options[:content_encoding]
+        StorageService.with_header headers, "x-ms-blob-content-language", options[:content_language]
+        StorageService.with_header headers, "x-ms-blob-content-md5", options[:content_md5]
+        StorageService.with_header headers, "x-ms-blob-cache-control", options[:cache_control]
+        StorageService.with_header headers, "x-ms-blob-content-disposition", options[:content_disposition]
 
         StorageService.add_metadata_to_headers(options[:metadata], headers)
         add_blob_conditional_headers(options, headers)
@@ -230,8 +231,8 @@ module Azure::Storage
     # There are two block lists maintained for a blob:
     # 1) Committed Block List: The list of blocks that have been successfully
     #    committed to a given blob with commitBlobBlocks.
-    # 2) Uncommitted Block List: The list of blocks that have been uploaded for a 
-    #    blob using Put Block (REST API), but that have not yet been committed. 
+    # 2) Uncommitted Block List: The list of blocks that have been uploaded for a
+    #    blob using Put Block (REST API), but that have not yet been committed.
     #    These blocks are stored in Microsoft Azure in association with a blob, but do
     #    not yet form part of the blob.
     #
@@ -248,20 +249,19 @@ module Azure::Storage
     # * +:snapshot+                 - String. An opaque DateTime value that specifies the blob snapshot to
     #                                 retrieve information from. (optional)
     # * +:timeout+                  - Integer. A timeout in seconds.
-    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+    # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179400.aspx
     #
     # Returns a list of Azure::Storage::Entity::Blob::Block instances
-    def list_blob_blocks(container, blob, options={})
-
+    def list_blob_blocks(container, blob, options = {})
       options[:blocklist_type] = options[:blocklist_type] || :all
 
-      query = { 'comp' => 'blocklist'}
-      StorageService.with_query query, 'snapshot', options[:snapshot]
-      StorageService.with_query query, 'blocklisttype', options[:blocklist_type].to_s if options[:blocklist_type]
-      StorageService.with_query query, 'timeout', options[:timeout].to_s if options[:timeout]
+      query = { "comp" => "blocklist" }
+      StorageService.with_query query, "snapshot", options[:snapshot]
+      StorageService.with_query query, "blocklisttype", options[:blocklist_type].to_s if options[:blocklist_type]
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
 

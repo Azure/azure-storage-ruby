@@ -21,39 +21,39 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 
 describe Azure::Storage::File::FileService do
-  let(:user_agent_prefix) { 'azure_storage_ruby_integration_test' }
-  subject { 
+  let(:user_agent_prefix) { "azure_storage_ruby_integration_test" }
+  subject {
     Azure::Storage::File::FileService.new { |headers|
-      headers['User-Agent'] = "#{user_agent_prefix}; #{headers['User-Agent']}"
+      headers["User-Agent"] = "#{user_agent_prefix}; #{headers['User-Agent']}"
     }
   }
   after { ShareNameHelper.clean }
-  
-  describe '#set/get_directory_metadata' do
+
+  describe "#set/get_directory_metadata" do
     let(:share_name) { ShareNameHelper.name }
     let(:directory_name) { FileNameHelper.name }
-    let(:metadata) { { "CustomMetadataProperty"=>"CustomMetadataValue" } }
-    before { 
+    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    before {
       subject.create_share share_name
       subject.create_directory share_name, directory_name
     }
 
-    it 'sets and gets custom metadata for the directory' do
+    it "sets and gets custom metadata for the directory" do
       result = subject.set_directory_metadata share_name, directory_name, metadata
       result.must_be_nil
       directory = subject.get_directory_metadata share_name, directory_name
       directory.wont_be_nil
       directory.name.must_equal directory_name
-      metadata.each { |k,v|
+      metadata.each { |k, v|
         directory.metadata.must_include k.downcase
         directory.metadata[k.downcase].must_equal v
       }
     end
 
-    it 'errors if the directory does not exist' do
+    it "errors if the directory does not exist" do
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.get_directory_metadata share_name, FileNameHelper.name
       end

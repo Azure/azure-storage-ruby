@@ -21,33 +21,33 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
   after { ContainerNameHelper.clean }
-  
-  describe '#create_page_blob' do
+
+  describe "#create_page_blob" do
     let(:container_name) { ContainerNameHelper.name }
     let(:blob_name) { "blobname" }
-    let(:complex_blob_name) { 'qa-872053-/*"\'&.({[<+ ' + [ 0x7D, 0xEB, 0x8B, 0xA4].pack('U*') + '_' + "0" }
+    let(:complex_blob_name) { 'qa-872053-/*"\'&.({[<+ ' + [ 0x7D, 0xEB, 0x8B, 0xA4].pack("U*") + "_" + "0" }
     let(:length) { 1024 }
-    before { 
+    before {
       subject.create_container container_name
     }
 
-    it 'creates a page blob' do
+    it "creates a page blob" do
       blob = subject.create_page_blob container_name, blob_name, length
       blob.name.must_equal blob_name
     end
-    
-    it 'creates page blob with non uri encoded path' do  
-      blob = subject.create_page_blob container_name, 'фбаф.jpg', length
-      blob.name.must_equal 'фбаф.jpg'
+
+    it "creates page blob with non uri encoded path" do
+      blob = subject.create_page_blob container_name, "фбаф.jpg", length
+      blob.name.must_equal "фбаф.jpg"
     end
 
-    it 'creates a page blob with complex name' do
+    it "creates a page blob with complex name" do
       blob = subject.create_page_blob container_name, complex_blob_name, length
       blob.name.must_equal complex_blob_name
 
@@ -61,19 +61,19 @@ describe Azure::Storage::Blob::BlobService do
       found_complex_name.must_equal true
     end
 
-    it 'sets additional properties when the options hash is used' do
+    it "sets additional properties when the options hash is used" do
       options = {
-        :content_type=>"application/xml",
-        :content_encoding=>"gzip",
-        :content_language=>"en-US",
-        :cache_control=>"max-age=1296000",
-        :metadata => { "CustomMetadataProperty"=>"CustomMetadataValue"}
+        content_type: "application/xml",
+        content_encoding: "gzip",
+        content_language: "en-US",
+        cache_control: "max-age=1296000",
+        metadata: { "CustomMetadataProperty" => "CustomMetadataValue" }
       }
 
       blob = subject.create_page_blob container_name, blob_name, length, options
       blob = subject.get_blob_properties container_name, blob_name
       blob.name.must_equal blob_name
-      blob.properties[:blob_type].must_equal 'PageBlob'
+      blob.properties[:blob_type].must_equal "PageBlob"
       blob.properties[:content_type].must_equal options[:content_type]
       blob.properties[:content_encoding].must_equal options[:content_encoding]
       blob.properties[:cache_control].must_equal options[:cache_control]
@@ -84,13 +84,13 @@ describe Azure::Storage::Blob::BlobService do
       blob.metadata["custommetadataproperty"].must_equal "CustomMetadataValue"
     end
 
-    it 'errors if the container does not exist' do
+    it "errors if the container does not exist" do
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.create_page_blob ContainerNameHelper.name, blob_name, length
       end
     end
 
-    it 'errors if the length is not 512 byte aligned' do
+    it "errors if the length is not 512 byte aligned" do
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.create_page_blob container_name, blob_name, length + 1
       end

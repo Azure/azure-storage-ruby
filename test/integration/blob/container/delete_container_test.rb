@@ -21,25 +21,25 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
   after { ContainerNameHelper.clean }
 
-  describe '#delete_container' do
+  describe "#delete_container" do
     let(:container_name) { ContainerNameHelper.name }
-    before { 
+    before {
       subject.create_container container_name
     }
 
-    it 'deletes the container' do
+    it "deletes the container" do
       result = subject.delete_container container_name
       result.must_be_nil
     end
 
-    it 'errors if the container does not exist' do
+    it "errors if the container does not exist" do
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.delete_container ContainerNameHelper.name
       end

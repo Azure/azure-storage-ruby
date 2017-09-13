@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,36 +23,36 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'rake/testtask'
-require 'rubygems/package_task'
-require 'dotenv/tasks'
-require 'yard'
+require "rake/testtask"
+require "rubygems/package_task"
+require "dotenv/tasks"
+require "yard"
 
 namespace :storage do
-  gem_spec = eval(File.read('./azure-storage.gemspec'))
+  gem_spec = eval(File.read("./azure-storage.gemspec"))
   Gem::PackageTask.new(gem_spec) do |pkg|
     pkg.need_zip = false
     pkg.need_tar = false
-    pkg.package_dir = 'pkg_azure_storage'
+    pkg.package_dir = "pkg_azure_storage"
   end
 end
 
 YARD::Rake::YardocTask.new do |t|
-  t.files   = ['lib/**/*.rb']
-  t.options = ['']
-  t.stats_options = ['--list-undoc']
+  t.files   = ["lib/**/*.rb"]
+  t.options = [""]
+  t.stats_options = ["--list-undoc"]
 end
 
 task :publishDoc do
-  desc 'Generate documents and publish to GitHub Pages'
-  repo = %x(git config remote.origin.url).gsub(/^git:/, 'https:')
-  deploy_branch = 'gh-pages'
+  desc "Generate documents and publish to GitHub Pages"
+  repo = %x(git config remote.origin.url).gsub(/^git:/, "https:")
+  deploy_branch = "gh-pages"
   if repo.match(/github\.com\.git$/)
-    deploy_branch = 'master'
+    deploy_branch = "master"
   end
   system "git remote set-url --push origin #{repo}"
   system "git remote set-branches --add origin #{deploy_branch}"
-  system 'git fetch -q'
+  system "git fetch -q"
   if ("#{ENV['GIT_NAME']}" != "")
     system "git config user.name '#{ENV['GIT_NAME']}'"
   end
@@ -58,7 +60,7 @@ task :publishDoc do
     system "git config user.email '#{ENV['GIT_EMAIL']}'"
   end
   system 'git config credential.helper "store --file=.git/credentials"'
-  File.open('.git/credentials', 'w') do |f|
+  File.open(".git/credentials", "w") do |f|
     f.write("https://#{ENV['GH_TOKEN']}:x-oauth-basic@github.com")
   end
   system "rake yard"
@@ -69,22 +71,22 @@ task :publishDoc do
   system "git commit -m \"update document\""
   system "git push"
   system "git checkout master"
-  File.delete '.git/credentials'
+  File.delete ".git/credentials"
 end
 
 namespace :test do
-  task :require_environment => :dotenv do
+  task require_environment: :dotenv do
     unset_environment = [
-      ENV.fetch('AZURE_STORAGE_ACCOUNT', nil),
-      ENV.fetch('AZURE_STORAGE_ACCESS_KEY', nil),
-      ENV.fetch('AZURE_STORAGE_CONNECTION_STRING', nil)
+      ENV.fetch("AZURE_STORAGE_ACCOUNT", nil),
+      ENV.fetch("AZURE_STORAGE_ACCESS_KEY", nil),
+      ENV.fetch("AZURE_STORAGE_CONNECTION_STRING", nil)
     ].include?(nil)
 
-    abort '[ABORTING] Configure your environment to run the integration tests' if unset_environment
+    abort "[ABORTING] Configure your environment to run the integration tests" if unset_environment
   end
 
   Rake::TestTask.new :unit do |t|
-    t.pattern = 'test/unit/**/*_test.rb'
+    t.pattern = "test/unit/**/*_test.rb"
     t.verbose = true
     t.libs = %w(lib test)
   end
@@ -102,14 +104,14 @@ namespace :test do
   end
 
   Rake::TestTask.new :integration do |t|
-    t.test_files = Dir['test/integration/**/*_test.rb'].reject do |path|
-      path.include?('database')
+    t.test_files = Dir["test/integration/**/*_test.rb"].reject do |path|
+      path.include?("database")
     end
     t.verbose = true
     t.libs = %w(lib test)
   end
 
-  task :integration => :require_environment
+  task integration: :require_environment
 
   namespace :integration do
     def component_task(component)
@@ -119,7 +121,7 @@ namespace :test do
         t.libs = %w(lib test)
       end
 
-      task component => 'test:require_environment'
+      task component => "test:require_environment"
     end
 
     component_task :storage
@@ -128,42 +130,42 @@ namespace :test do
   namespace :storage do
 
     Rake::TestTask.new :unit do |t|
-      t.pattern = 'test/unit/storage/**/*_test.rb'
+      t.pattern = "test/unit/storage/**/*_test.rb"
       t.verbose = true
       t.libs = %w(lib test)
     end
 
-    task :require_storage_env => :dotenv do
+    task require_storage_env: :dotenv do
       unset_environment = [
-        ENV.fetch('AZURE_STORAGE_ACCOUNT', nil),
-        ENV.fetch('AZURE_STORAGE_ACCESS_KEY', nil),
-        ENV.fetch('AZURE_STORAGE_CONNECTION_STRING', nil)
+        ENV.fetch("AZURE_STORAGE_ACCOUNT", nil),
+        ENV.fetch("AZURE_STORAGE_ACCESS_KEY", nil),
+        ENV.fetch("AZURE_STORAGE_CONNECTION_STRING", nil)
       ].include?(nil)
 
-      abort '[ABORTING] Configure your environment to run the storage integration tests' if unset_environment
+      abort "[ABORTING] Configure your environment to run the storage integration tests" if unset_environment
     end
 
 
     Rake::TestTask.new :integration do |t|
-      t.pattern = 'test/integration/storage/**/*_test.rb'
+      t.pattern = "test/integration/storage/**/*_test.rb"
       t.verbose = true
       t.libs = %w(lib test)
     end
 
-    task :integration => :require_storage_env
+    task integration: :require_storage_env
   end
 
-  task :cleanup => :require_environment do
-    $:.unshift 'lib'
-    require 'azure/storage'
+  task cleanup: :require_environment do
+    $:.unshift "lib"
+    require "azure/storage"
 
     Azure.configure do |config|
-      config.access_key     = ENV.fetch('AZURE_STORAGE_ACCESS_KEY')
-      config.account_name   = ENV.fetch('AZURE_STORAGE_ACCOUNT')
+      config.access_key     = ENV.fetch("AZURE_STORAGE_ACCESS_KEY")
+      config.account_name   = ENV.fetch("AZURE_STORAGE_ACCOUNT")
     end
   end
 end
 
-task :test => %w(test:unit test:integration)
+task test: %w(test:unit test:integration)
 
-task :default => :test
+task default: :test

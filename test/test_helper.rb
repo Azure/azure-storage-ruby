@@ -21,38 +21,38 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'coveralls'
+require "coveralls"
 Coveralls.wear!
 
-require 'dotenv'
+require "dotenv"
 Dotenv.load
 
-ENV["AZURE_STORAGE_ACCOUNT"] = 'mockaccount' unless ENV["AZURE_STORAGE_ACCOUNT"]
-ENV["AZURE_STORAGE_ACCESS_KEY"] = 'YWNjZXNzLWtleQ==' unless ENV["AZURE_STORAGE_ACCESS_KEY"]
+ENV["AZURE_STORAGE_ACCOUNT"] = "mockaccount" unless ENV["AZURE_STORAGE_ACCOUNT"]
+ENV["AZURE_STORAGE_ACCESS_KEY"] = "YWNjZXNzLWtleQ==" unless ENV["AZURE_STORAGE_ACCESS_KEY"]
 
-require 'minitest/autorun'
-require 'mocha/mini_test'
-require 'minitest/reporters'
+require "minitest/autorun"
+require "mocha/mini_test"
+require "minitest/reporters"
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
-require 'timecop'
-require 'logger'
-require 'stringio'
+require "timecop"
+require "logger"
+require "stringio"
 
 # add to the MiniTest DSL
 module Kernel
   def need_tests_for(name)
     describe "##{name}" do
-      it 'needs unit tests' do
-        skip ''
+      it "needs unit tests" do
+        skip ""
       end
     end
   end
 end
 
-Dir['./test/support/**/*.rb'].each { |dep| require dep }
+Dir["./test/support/**/*.rb"].each { |dep| require dep }
 
 # mock configuration setup
-require 'azure/storage'
+require "azure/storage"
 
-Azure::Storage.config.storage_account_name = 'mockaccount'
-Azure::Storage.config.storage_access_key = 'YWNjZXNzLWtleQ=='
+Azure::Storage.config.storage_account_name = "mockaccount"
+Azure::Storage.config.storage_access_key = "YWNjZXNzLWtleQ=="

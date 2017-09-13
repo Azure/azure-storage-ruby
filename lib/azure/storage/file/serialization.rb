@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,7 +23,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/storage/service/serialization'
+require "azure/storage/service/serialization"
 
 module Azure::Storage
   module File
@@ -33,7 +35,7 @@ module Azure::Storage
         expect_node("EnumerationResults", xml)
 
         results = enumeration_results_from_xml(xml, Azure::Service::EnumerationResults.new)
-        
+
         return results unless (xml > "Shares").any? && ((xml > "Shares") > "Share").any?
 
         if xml.Shares.Share.count == 0
@@ -79,7 +81,7 @@ module Azure::Storage
 
       def self.share_properties_from_headers(headers)
         props = {}
-        props[:last_modified] = headers["Last-Modified"] 
+        props[:last_modified] = headers["Last-Modified"]
         props[:etag] = headers["ETag"]
         props
       end
@@ -162,7 +164,7 @@ module Azure::Storage
 
       def self.directory_properties_from_headers(headers)
         props = {}
-        props[:last_modified] = headers["Last-Modified"] 
+        props[:last_modified] = headers["Last-Modified"]
         props[:etag] = headers["ETag"]
         props
       end
@@ -183,7 +185,7 @@ module Azure::Storage
 
         props[:content_length] = headers["Content-Length"].to_i unless headers["Content-Length"].nil?
         props[:content_length] = headers["x-ms-content-length"].to_i unless headers["x-ms-content-length"].nil?
-  
+
         props[:content_type] =  headers["Content-Type"]
         props[:content_encoding] = headers["Content-Encoding"]
         props[:content_language] = headers["Content-Language"]

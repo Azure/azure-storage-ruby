@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,13 +23,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/storage/service/serialization'
+require "azure/storage/service/serialization"
 
-require 'azure/storage/blob/container'
-require 'azure/storage/blob/blob'
-require 'azure/storage/blob/block'
+require "azure/storage/blob/container"
+require "azure/storage/blob/blob"
+require "azure/storage/blob/block"
 
-require 'base64'
+require "base64"
 
 module Azure::Storage
   module Blob
@@ -39,7 +41,7 @@ module Azure::Storage
         expect_node("EnumerationResults", xml)
 
         results = enumeration_results_from_xml(xml, Azure::Service::EnumerationResults.new)
-        
+
         return results unless (xml > "Containers").any? && ((xml > "Containers") > "Container").any?
 
         if xml.Containers.Container.count == 0
@@ -90,7 +92,7 @@ module Azure::Storage
       def self.container_properties_from_headers(headers)
         props = {}
 
-        props[:last_modified] = headers["Last-Modified"] 
+        props[:last_modified] = headers["Last-Modified"]
         props[:etag] = headers["Etag"]
         props[:lease_status] = headers["x-ms-lease-status"]
         props[:lease_state] = headers["x-ms-lease-state"]
@@ -104,7 +106,6 @@ module Azure::Storage
       end
 
       def self.blob_enumeration_results_from_xml(xml)
-      
         xml = slopify(xml)
         expect_node("EnumerationResults", xml)
 
@@ -142,7 +143,7 @@ module Azure::Storage
         name = xml.Name.text if (xml > "Name").any?
         name
       end
-      
+
       def self.blob_from_xml(xml)
         xml = slopify(xml)
         expect_node("Blob", xml)
@@ -204,7 +205,7 @@ module Azure::Storage
 
         props[:content_length] = headers["x-ms-blob-content-length"] || headers["Content-Length"]
         props[:content_length] = props[:content_length].to_i if props[:content_length]
-      
+
         props[:content_type] =  headers["x-ms-blob-content-type"] || headers["Content-Type"]
         props[:content_encoding] = headers["x-ms-blob-content-encoding"] || headers["Content-Encoding"]
         props[:content_language] = headers["x-ms-blob-content-language"] || headers["Content-Language"]
@@ -223,7 +224,7 @@ module Azure::Storage
         props[:copy_status_description] = headers["x-ms-copy-status-description"]
 
         props[:accept_ranges] = headers["Accept-Ranges"].to_i if headers["Accept-Ranges"]
-        
+
         props[:append_offset] = headers["x-ms-blob-append-offset"].to_i if headers["x-ms-blob-append-offset"]
         props[:committed_count] = headers["x-ms-blob-committed-block-count"].to_i if headers["x-ms-blob-committed-block-count"]
 
@@ -231,7 +232,7 @@ module Azure::Storage
       end
 
       def self.block_list_to_xml(block_list)
-        builder = Nokogiri::XML::Builder.new(:encoding => "UTF-8") do |xml|
+        builder = Nokogiri::XML::Builder.new(encoding: "UTF-8") do |xml|
           xml.BlockList {
             block_list.each { |block|
               encoded_id = Base64.strict_encode64(block[0])
@@ -253,9 +254,9 @@ module Azure::Storage
         xml = slopify(xml)
         expect_node("BlockList", xml)
 
-        block_list =  {
-          :committed => [],
-          :uncommitted => []
+        block_list = {
+          committed: [],
+          uncommitted: []
         }
 
         if ((xml > "CommittedBlocks") > "Block").any?
@@ -291,7 +292,7 @@ module Azure::Storage
         end
         block_list[type].push block
       end
-      
+
       def self.page_list_from_xml(xml)
         xml = slopify(xml)
         expect_node("PageList", xml)

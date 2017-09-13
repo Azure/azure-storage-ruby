@@ -21,19 +21,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/table/table_service"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Table::TableService do
   describe "#create_table" do
-    let(:user_agent_prefix) { 'azure_storage_ruby_integration_test' }
-    subject { 
+    let(:user_agent_prefix) { "azure_storage_ruby_integration_test" }
+    subject {
       Azure::Storage::Table::TableService.new { |headers|
-        headers['User-Agent'] = "#{user_agent_prefix}; #{headers['User-Agent']}"
+        headers["User-Agent"] = "#{user_agent_prefix}; #{headers['User-Agent']}"
       }
     }
-    let(:table_name){ TableNameHelper.name }
+    let(:table_name) { TableNameHelper.name }
     after { TableNameHelper.clean }
 
     it "creates a table with a valid name" do

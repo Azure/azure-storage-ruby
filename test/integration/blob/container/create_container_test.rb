@@ -21,48 +21,48 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/core/http/http_error'
-require 'integration/test_helper'
-require 'azure/storage/blob/blob_service'
+require "azure/core/http/http_error"
+require "integration/test_helper"
+require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
   after { ContainerNameHelper.clean }
 
-  describe '#create_container' do
+  describe "#create_container" do
     let(:container_name) { ContainerNameHelper.name }
 
-    it 'creates the container' do
+    it "creates the container" do
       container = subject.create_container container_name
       container.name.must_equal container_name
     end
 
-    it 'creates the container with custom metadata' do
-      metadata = { 'CustomMetadataProperty' => 'CustomMetadataValue'}
+    it "creates the container with custom metadata" do
+      metadata = { "CustomMetadataProperty" => "CustomMetadataValue" }
 
-      container = subject.create_container container_name, { :metadata => metadata }
-      
+      container = subject.create_container container_name, metadata: metadata
+
       container.name.must_equal container_name
       container.metadata.must_equal metadata
       container = subject.get_container_metadata container_name
 
-      metadata.each { |k,v|
+      metadata.each { |k, v|
         container.metadata.must_include k.downcase
         container.metadata[k.downcase].must_equal v
       }
     end
 
-    it 'errors if the container already exists' do
+    it "errors if the container already exists" do
       subject.create_container container_name
-      
+
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.create_container container_name
       end
     end
-    
-    it 'errors if the container name is invalid' do
+
+    it "errors if the container name is invalid" do
       assert_raises(Azure::Core::Http::HTTPError) do
-        subject.create_container 'this_container.cannot-exist!'
+        subject.create_container "this_container.cannot-exist!"
       end
     end
   end

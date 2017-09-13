@@ -21,34 +21,34 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
   after { ContainerNameHelper.clean }
-  
-  describe '#get_container_properties' do
-    let(:container_name) { ContainerNameHelper.name }
-    let(:metadata) { { "CustomMetadataProperty"=>"CustomMetadataValue" } }
 
-    it 'gets properties and custom metadata for the container' do
-      container = subject.create_container container_name, { :metadata => metadata }
+  describe "#get_container_properties" do
+    let(:container_name) { ContainerNameHelper.name }
+    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+
+    it "gets properties and custom metadata for the container" do
+      container = subject.create_container container_name, metadata: metadata
       properties = container.properties
-      
+
       container = subject.get_container_properties container_name
       container.wont_be_nil
       container.name.must_equal container_name
       container.properties[:etag].must_equal properties[:etag]
       container.properties[:last_modified].must_equal properties[:last_modified]
 
-      metadata.each { |k,v|
+      metadata.each { |k, v|
         container.metadata.must_include k.downcase
         container.metadata[k.downcase].must_equal v
       }
     end
 
-    it 'errors if the container does not exist' do
+    it "errors if the container does not exist" do
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.get_container_properties ContainerNameHelper.name
       end

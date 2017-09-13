@@ -21,24 +21,24 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'integration/test_helper'
+require "integration/test_helper"
 require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
   after { ContainerNameHelper.clean }
-  
-  describe '#list_containers' do
+
+  describe "#list_containers" do
     let(:container_names) { [ContainerNameHelper.name, ContainerNameHelper.name] }
-    let(:metadata) { { "CustomMetadataProperty"=>"CustomMetadataValue" } }
-    before { 
+    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    before {
       container_names.each { |c|
-        subject.create_container c, { :metadata => metadata }
+        subject.create_container c, metadata: metadata
       }
     }
 
-    it 'lists the containers for the account' do
-      result =  subject.list_containers
+    it "lists the containers for the account" do
+      result = subject.list_containers
 
       found = 0
       result.each { |c|
@@ -47,8 +47,8 @@ describe Azure::Storage::Blob::BlobService do
       found.must_equal container_names.length
     end
 
-    it 'lists the containers for the account with prefix' do
-      result =  subject.list_containers({ :prefix => container_names[0] })
+    it "lists the containers for the account with prefix" do
+      result = subject.list_containers(prefix: container_names[0])
 
       found = 0
       result.each { |c|
@@ -58,25 +58,25 @@ describe Azure::Storage::Blob::BlobService do
       found.must_equal 1
     end
 
-    it 'lists the containers for the account with max results' do
-      result =  subject.list_containers({ :max_results => 1 })
+    it "lists the containers for the account with max results" do
+      result = subject.list_containers(max_results: 1)
       result.length.must_equal 1
       first_container = result[0]
       result.continuation_token.wont_equal("")
 
-      result =  subject.list_containers({ :max_results => 1, :marker => result.continuation_token })
+      result = subject.list_containers(max_results: 1, marker: result.continuation_token)
       result.length.must_equal 1
       result[0].name.wont_equal first_container.name
     end
 
-    it 'returns metadata if the :metadata=>true option is used' do
-      result = subject.list_containers({ :metadata => true })
+    it "returns metadata if the :metadata=>true option is used" do
+      result = subject.list_containers(metadata: true)
 
       found = 0
       result.each { |c|
         if container_names.include? c.name
-          found += 1 
-          metadata.each { |k,v|
+          found += 1
+          metadata.each { |k, v|
             c.metadata.must_include k.downcase
             c.metadata[k.downcase].must_equal v
           }

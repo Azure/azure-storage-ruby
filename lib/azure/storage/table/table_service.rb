@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -21,16 +23,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require 'azure/storage/service/storage_service'
+require "azure/storage/service/storage_service"
 
-require 'azure/storage/table/auth/shared_key'
-require 'azure/storage/table/serialization'
-require 'azure/storage/table/entity'
+require "azure/storage/table/auth/shared_key"
+require "azure/storage/table/serialization"
+require "azure/storage/table/entity"
 
 module Azure::Storage
   module Table
     class TableService < Service::StorageService
-
       def initialize(options = {}, &block)
         client_config = options[:client] || Azure::Storage
         signer = options[:signer] || client_config.signer || Auth::SharedKey.new(client_config.storage_account_name, client_config.storage_access_key)
@@ -43,19 +44,19 @@ module Azure::Storage
       # ==== Attributes
       #
       # * +table_name+               - String. The table name
-      # * +options+                  - Hash. Optional parameters. 
+      # * +options+                  - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       #
       # * +:timeout+                 - Integer. A timeout in seconds.
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
       # * +:accept+                  - String. Specifies the accepted content-type of the response payload. Possible values are:
       #                                 :no_meta
       #                                 :min_meta
-      #                                 :full_meta 
+      #                                 :full_meta
       # * +:prefer+                  - String. Specifies whether the response should include the inserted entity in the payload. Possible values are:
       #                                 HeaderConstants::PREFER_CONTENT
       #                                 HeaderConstants::PREFER_NO_CONTENT
@@ -63,13 +64,12 @@ module Azure::Storage
       # See http://msdn.microsoft.com/en-us/library/azure/dd135729
       #
       # @return [nil] on success
-      def create_table(table_name, options={})
-
+      def create_table(table_name, options = {})
         headers = {
           HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(options[:accept]),
         }
         headers[HeaderConstants::PREFER] = options[:prefer] unless options[:prefer].nil?
-        body = Serialization.hash_to_json({"TableName" => table_name})
+        body = Serialization.hash_to_json("TableName" => table_name)
 
         call(:post, collection_uri(new_query(options)), body, headers, options)
         nil
@@ -80,20 +80,19 @@ module Azure::Storage
       # ==== Attributes
       #
       # * +table_name+               - String. The table name
-      # * +options+                  - Hash. Optional parameters. 
+      # * +options+                  - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                 - Integer. A timeout in seconds.
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179387
       #
       # Returns nil on success
-      def delete_table(table_name, options={})
-
+      def delete_table(table_name, options = {})
         call(:delete, table_uri(table_name, new_query(options)), nil, {}, options)
         nil
       end
@@ -103,17 +102,17 @@ module Azure::Storage
       # ==== Attributes
       #
       # * +table_name+               - String. The table name
-      # * +options+                  - Hash. Optional parameters. 
+      # * +options+                  - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                 - Integer. A timeout in seconds.
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
       #
       # Returns the last updated time for the table
-      def get_table(table_name, options={})
+      def get_table(table_name, options = {})
         headers = {
           HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(:full_meta),
         }
@@ -127,7 +126,7 @@ module Azure::Storage
       #
       # ==== Attributes
       #
-      # * +options+                  - Hash. Optional parameters. 
+      # * +options+                  - Hash. Optional parameters.
       #
       # ==== Options
       #
@@ -135,7 +134,7 @@ module Azure::Storage
       # * +:next_table_token+        - String. A token used to enumerate the next page of results, when the list of tables is
       #                                larger than a single operation can return at once. (optional)
       # * +:timeout+                 - Integer. A timeout in seconds.
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
       # * +:accept+                  - String. Specifies the accepted content-type of the response payload. Possible values are:
       #                                 :no_meta
@@ -145,7 +144,7 @@ module Azure::Storage
       # See http://msdn.microsoft.com/en-us/library/azure/dd179405
       #
       # Returns an array with an extra continuation_token property on success
-      def query_tables(options={})
+      def query_tables(options = {})
         query = new_query(options)
         query[TableConstants::NEXT_TABLE_NAME] = options[:next_table_token] if options[:next_table_token]
         uri = collection_uri(query)
@@ -168,23 +167,23 @@ module Azure::Storage
       # ==== Attributes
       #
       # * +table_name+               - String. The table name
-      # * +options+                  - Hash. Optional parameters. 
+      # * +options+                  - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                 - Integer. A timeout in seconds.
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/jj159100
       #
       # Returns a list of Azure::Storage::Entity::SignedIdentifier instances
-      def get_table_acl(table_name, options={})
+      def get_table_acl(table_name, options = {})
         query = new_query(options)
         query[QueryStringConstants::COMP] = QueryStringConstants::ACL
 
-        response = call(:get, generate_uri(table_name, query), nil, {'x-ms-version' => '2012-02-12'}, options)
+        response = call(:get, generate_uri(table_name, query), nil, { "x-ms-version" => "2012-02-12" }, options)
 
         signed_identifiers = []
         signed_identifiers = Table::Serialization.signed_identifiers_from_xml response.body unless response.body == nil || response.body.length < 1
@@ -198,20 +197,20 @@ module Azure::Storage
       # ==== Attributes
       #
       # * +table_name+               - String. The table name
-      # * +options+                  - Hash. Optional parameters. 
+      # * +options+                  - Hash. Optional parameters.
       #
       # ==== Options
       #
       # Accepted key/value pairs in options parameter are:
       # * +:signed_identifiers+      - Array. A list of Azure::Storage::Entity::SignedIdentifier instances
       # * +:timeout+                 - Integer. A timeout in seconds.
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # 
+      #
       # See http://msdn.microsoft.com/en-us/library/azure/jj159102
       #
       # Returns nil on success
-      def set_table_acl(table_name, options={})
+      def set_table_acl(table_name, options = {})
         query = new_query(options)
         query[QueryStringConstants::COMP] = QueryStringConstants::ACL
 
@@ -219,7 +218,7 @@ module Azure::Storage
         body = nil
         body = Table::Serialization.signed_identifiers_to_xml options[:signed_identifiers] if options[:signed_identifiers] && options[:signed_identifiers].length > 0
 
-        call(:put, uri, body, {'x-ms-version' => '2012-02-12'}, options)
+        call(:put, uri, body, { "x-ms-version" => "2012-02-12" }, options)
         nil
       end
 
@@ -229,8 +228,8 @@ module Azure::Storage
       # ==== Attributes
       #
       # * +table_name+               - String. The table name
-      # * +entity_values+            - Hash. A hash of the name/value pairs for the entity. 
-      # * +options+                  - Hash. Optional parameters. 
+      # * +entity_values+            - Hash. A hash of the name/value pairs for the entity.
+      # * +options+                  - Hash. Optional parameters.
       #
       # ==== Options
       #
@@ -265,7 +264,7 @@ module Azure::Storage
       # ==== Attributes
       #
       # * +table_name+               - String. The table name
-      # * +options+                  - Hash. Optional parameters. 
+      # * +options+                  - Hash. Optional parameters.
       #
       # ==== Options
       #
@@ -282,14 +281,14 @@ module Azure::Storage
       # * +:accept+                  - String. Specifies the accepted content-type of the response payload. Possible values are:
       #                                 :no_meta
       #                                 :min_meta
-      #                                 :full_meta 
+      #                                 :full_meta
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179421
       #
       # Returns an array with an extra continuation_token property on success
       def query_entities(table_name, options = {})
         query = new_query(options)
-        query[QueryStringConstants::SELECT] = options[:select].join ',' if options[:select]
+        query[QueryStringConstants::SELECT] = options[:select].join "," if options[:select]
         query[QueryStringConstants::FILTER] = options[:filter] if options[:filter]
         query[QueryStringConstants::TOP] = options[:top].to_s if options[:top] unless options[:partition_key] && options[:row_key]
         query[QueryStringConstants::NEXT_PARTITION_KEY] = options[:continuation_token][:next_partition_key] if options[:continuation_token] && options[:continuation_token][:next_partition_key]
@@ -343,7 +342,7 @@ module Azure::Storage
         if_match = options[:if_match] if options[:if_match]
 
         uri = entities_uri(table_name,
-          entity_values[:PartitionKey] || entity_values['PartitionKey'],
+          entity_values[:PartitionKey] || entity_values["PartitionKey"],
           entity_values[:RowKey] || entity_values["RowKey"], new_query(options))
 
         headers = {}
@@ -384,8 +383,8 @@ module Azure::Storage
         if_match = options[:if_match] if options[:if_match]
 
         uri = entities_uri(table_name,
-          entity_values[:PartitionKey] || entity_values['PartitionKey'],
-          entity_values[:RowKey] || entity_values['RowKey'], new_query(options))
+          entity_values[:PartitionKey] || entity_values["PartitionKey"],
+          entity_values[:RowKey] || entity_values["RowKey"], new_query(options))
 
         headers = { "X-HTTP-Method" => "MERGE" }
         headers["If-Match"] = if_match || "*" unless options[:create_if_not_exists]
@@ -483,21 +482,21 @@ module Azure::Storage
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                 - Integer. A timeout in seconds.
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd894038
       #
       # Returns an array of results, one for each operation in the batch
-      def execute_batch(batch, options={})
+      def execute_batch(batch, options = {})
         headers = {
           HeaderConstants::CONTENT_TYPE => "multipart/mixed; boundary=#{batch.batch_id}",
           HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(options[:accept]),
-          'Accept-Charset' => 'UTF-8'
+          "Accept-Charset" => "UTF-8"
         }
 
         body = batch.to_body
-        response = call(:post, generate_uri('/$batch', new_query(options)), body, headers, options, true)
+        response = call(:post, generate_uri("/$batch", new_query(options)), body, headers, options, true)
         batch.parse_response(response)
       rescue => e
         raise_with_response(e, response)
@@ -516,7 +515,7 @@ module Azure::Storage
       #
       # Accepted key/value pairs in options parameter are:
       # * +:timeout+                 - Integer. A timeout in seconds.
-      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded 
+      # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
       #
       # Returns an Azure::Storage::Table::Entity instance on success
@@ -531,9 +530,9 @@ module Azure::Storage
       #
       # Returns a URI
       protected
-      def collection_uri(query={})
-        generate_uri("Tables", query)
-      end
+        def collection_uri(query = {})
+          generate_uri("Tables", query)
+        end
 
       # Public: Generate the URI for a specific table.
       #
@@ -543,7 +542,7 @@ module Azure::Storage
       #
       # Returns a URI
       public
-      def table_uri(name, query={})
+      def table_uri(name, query = {})
         return name if name.kind_of? ::URI
         generate_uri("Tables('#{name}')", query)
       end
@@ -564,9 +563,9 @@ module Azure::Storage
         return table_name if table_name.kind_of? ::URI
 
         path = if partition_key && row_key
-               "%s(PartitionKey='%s',RowKey='%s')" % [
-                 table_name.encode("UTF-8"), encodeODataUriValue(partition_key.encode("UTF-8")), encodeODataUriValue(row_key.encode("UTF-8"))
-               ]
+          "%s(PartitionKey='%s',RowKey='%s')" % [
+            table_name.encode("UTF-8"), encodeODataUriValue(partition_key.encode("UTF-8")), encodeODataUriValue(row_key.encode("UTF-8"))
+          ]
                else
                  "%s()" % table_name.encode("UTF-8")
                end
@@ -579,55 +578,55 @@ module Azure::Storage
             val = val.encode("UTF-8")
 
             if key[0] == "$"
-              qs.push "#{key}#{::URI.encode_www_form(""=>val)}"
+              qs.push "#{key}#{::URI.encode_www_form("" => val)}"
             else
-              qs.push ::URI.encode_www_form(key=>val)
+              qs.push ::URI.encode_www_form(key => val)
             end
           end
         end
-        uri.query = qs.join '&' if qs.length > 0
+        uri.query = qs.join "&" if qs.length > 0
         uri
       end
 
       protected
-      def encodeODataUriValues(values)
-        new_values = []
-        values.each do |value|
-          new_values.push encodeODataUriValue(value)
+        def encodeODataUriValues(values)
+          new_values = []
+          values.each do |value|
+            new_values.push encodeODataUriValue(value)
+          end
+          new_values
         end
-        new_values
-      end
 
       protected
-      def encodeODataUriValue(value)
-        # Replace each single quote (') with double single quotes ('') not double
-        # quotes (")
-        value = value.gsub("'", "''")
+        def encodeODataUriValue(value)
+          # Replace each single quote (') with double single quotes ('') not double
+          # quotes (")
+          value = value.gsub("'", "''")
 
-        # Encode the special URL characters
-        value = URI.escape(value)
+          # Encode the special URL characters
+          value = URI.escape(value)
 
-        value
-      end
-
-      protected
-      def raise_with_response(e, response)
-        raise e if response.nil?
-        raise "Response header: #{response.headers.inspect}\nResponse body: #{response.body.inspect}\n#{e.inspect}\n#{e.backtrace.join("\n")}"
-      end
+          value
+        end
 
       protected
-      def call(method, uri, body = nil, headers = {}, options = {}, is_batch = false)
-        # Add JSON Content-Type header if is_batch is false because default is Atom.
-        headers[HeaderConstants::CONTENT_TYPE] = HeaderConstants::JSON_CONTENT_TYPE_VALUE unless is_batch
-        headers[HeaderConstants::DATA_SERVICE_VERSION] = TableConstants::DEFAULT_DATA_SERVICE_VERSION
-        super(method, uri, body, headers, options)
-      end
+        def raise_with_response(e, response)
+          raise e if response.nil?
+          raise "Response header: #{response.headers.inspect}\nResponse body: #{response.body.inspect}\n#{e.inspect}\n#{e.backtrace.join("\n")}"
+        end
 
       protected
-      def new_query(options = {})
-        options[:timeout].nil? ? {} : { QueryStringConstants::TIMEOUT => options[:timeout].to_s }
-      end
+        def call(method, uri, body = nil, headers = {}, options = {}, is_batch = false)
+          # Add JSON Content-Type header if is_batch is false because default is Atom.
+          headers[HeaderConstants::CONTENT_TYPE] = HeaderConstants::JSON_CONTENT_TYPE_VALUE unless is_batch
+          headers[HeaderConstants::DATA_SERVICE_VERSION] = TableConstants::DEFAULT_DATA_SERVICE_VERSION
+          super(method, uri, body, headers, options)
+        end
+
+      protected
+        def new_query(options = {})
+          options[:timeout].nil? ? {} : { QueryStringConstants::TIMEOUT => options[:timeout].to_s }
+        end
     end
   end
 end
