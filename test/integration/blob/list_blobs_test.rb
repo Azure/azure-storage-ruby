@@ -49,6 +49,7 @@ describe Azure::Storage::Blob::BlobService do
       result.each { |blob|
         blob.name.must_equal expected_blob_names.next
         blob.properties[:content_length].must_equal content.length
+        is_boolean(blob.encrypted).must_equal true
       }
     end
 
@@ -88,6 +89,7 @@ describe Azure::Storage::Blob::BlobService do
         result.each { |blob|
           blob.name.must_equal expected_blob_names.next
           blob.properties[:content_length].must_equal content.length
+          is_boolean(blob.encrypted).must_equal true
 
           metadata.each { |k, v|
             blob.metadata.must_include k.downcase

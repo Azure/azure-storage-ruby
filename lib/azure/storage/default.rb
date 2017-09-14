@@ -762,6 +762,12 @@ module Azure::Storage
 
     # The returned response payload should be with full metadata.
     ODATA_FULL_META = "application/json;odata=fullmetadata"
+
+    # The header for if request has been encrypted at server side.
+    REQUEST_SERVER_ENCRYPTED = "x-ms-request-server-encrypted"
+
+    # The header for if blob data and application metadata has been encrypted at server side.
+    SERVER_ENCRYPTED = "x-ms-server-encrypted"
   end
 
   module QueryStringConstants

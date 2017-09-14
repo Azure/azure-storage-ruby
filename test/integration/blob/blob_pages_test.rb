@@ -63,6 +63,7 @@ describe Azure::Storage::Blob::BlobService do
       512.times.each { |i| content << "@" }
 
       blob = subject.put_blob_pages container_name, blob_name2, 0, 511, content
+      is_boolean(blob.encrypted).must_equal true
 
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.put_blob_pages container_name, blob_name2, 1024, 1535, content, if_none_match: blob.properties[:etag]
@@ -74,6 +75,7 @@ describe Azure::Storage::Blob::BlobService do
       512.times.each { |i| content << "@" }
 
       blob = subject.put_blob_pages container_name, blob_name, 0, 511, content
+      is_boolean(blob.encrypted).must_equal true
       subject.put_blob_pages container_name, blob_name, 1024, 1535, content, if_match: blob.properties[:etag]
     end
   end

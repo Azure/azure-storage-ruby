@@ -152,8 +152,11 @@ module Azure::Storage
           blob.name = xml.Name.text if (xml > "Name").any?
           blob.snapshot = xml.Snapshot.text if (xml > "Snapshot").any?
 
-          blob.properties = blob_properties_from_xml(xml.Properties) if (xml > "Properties").any?
           blob.metadata = metadata_from_xml(xml.Metadata) if (xml > "Metadata").any?
+          if (xml > "Properties").any?
+            blob.properties = blob_properties_from_xml(xml.Properties)
+            blob.encrypted = xml.Properties.ServerEncrypted.text == "true" if (xml.Properties > "ServerEncrypted").any?
+          end
         end
       end
 
@@ -161,6 +164,8 @@ module Azure::Storage
         Blob.new do |blob|
           blob.properties = blob_properties_from_headers(headers)
           blob.metadata = metadata_from_headers(headers)
+          blob.encrypted = headers[HeaderConstants::REQUEST_SERVER_ENCRYPTED] || headers[HeaderConstants::SERVER_ENCRYPTED]
+          blob.encrypted = blob.encrypted.to_s == "true" unless blob.encrypted.nil?
         end
       end
 

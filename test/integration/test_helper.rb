@@ -29,3 +29,7 @@ Azure::Storage.configure do |config|
   config.storage_account_name     = ENV.fetch("AZURE_STORAGE_ACCOUNT")
   Azure::Storage.client(storage_account_name: config.storage_account_name, storage_access_key: config.storage_access_key)
 end
+
+def is_boolean(value)
+  (value == true || value == false) == true
+end

@@ -50,6 +50,7 @@ describe Azure::Storage::Blob::BlobService do
 
     it "retrieves a range of data from the blob" do
       blob, returned_content = subject.get_blob container_name, blob_name, start_range: 0, end_range: 511
+      is_boolean(blob.encrypted).must_equal true
       returned_content.length.must_equal 512
       returned_content.must_equal content[0..511]
     end
@@ -62,10 +63,12 @@ describe Azure::Storage::Blob::BlobService do
       subject.create_block_blob container_name, blob_name, content2, options
 
       blob, returned_content = subject.get_blob container_name, blob_name, start_range: 0, end_range: 511
+      is_boolean(blob.encrypted).must_equal true
       returned_content.length.must_equal 512
       returned_content.must_equal content2[0..511]
 
       blob, returned_content = subject.get_blob container_name, blob_name, start_range: 0, end_range: 511, snapshot: snapshot
+      is_boolean(blob.encrypted).must_equal true
 
       returned_content.length.must_equal 512
       returned_content.must_equal content[0..511]
