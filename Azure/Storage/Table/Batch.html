@@ -6,7 +6,7 @@
 <title>
   Class: Azure::Storage::Table::Batch
   
-    &mdash; Documentation by YARD 0.9.5
+    &mdash; Documentation by YARD 0.9.9
   
 </title>
 
@@ -28,7 +28,7 @@
   </head>
   <body>
     <div class="nav_wrap">
-      <iframe id="nav" src="../../../class_list.html"></iframe>
+      <iframe id="nav" src="../../../class_list.html?1"></iframe>
       <div id="resizer"></div>
     </div>
 
@@ -58,8 +58,6 @@
 </div>
         <div class="clear"></div>
       </div>
-
-      <iframe id="search_frame" src="../../../class_list.html"></iframe>
 
       <div id="content"><h1>Class: Azure::Storage::Table::Batch
   
@@ -245,7 +243,7 @@ end.execute</code></pre>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#insert-instance_method" title="#insert (instance method)">#<strong>insert</strong>(row_key, entity_values)  &#x21d2; Object </a>
+      <a href="#insert-instance_method" title="#insert (instance method)">#<strong>insert</strong>(row_key, entity_values, options = {})  &#x21d2; Object </a>
     
 
     
@@ -448,7 +446,7 @@ end.execute</code></pre>
   <span class='ivar'>@partition</span> <span class='op'>=</span> <span class='id identifier rubyid_partition'>partition</span>
   <span class='ivar'>@operations</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='ivar'>@entity_keys</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='ivar'>@table_service</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>TableService</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@table_service</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Table.html" title="Azure::Storage::Table (module)">Table</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="TableService.html" title="Azure::Storage::Table::TableService (class)">TableService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="TableService.html#initialize-instance_method" title="Azure::Storage::Table::TableService#initialize (method)">new</a></span></span>
   <span class='ivar'>@batch_id</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>batch_</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='const'>SecureRandom</span><span class='period'>.</span><span class='id identifier rubyid_uuid'>uuid</span>
   <span class='ivar'>@changeset_id</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>changeset_</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='const'>SecureRandom</span><span class='period'>.</span><span class='id identifier rubyid_uuid'>uuid</span>
 
@@ -529,16 +527,24 @@ end.execute</code></pre>
       <pre class="lines">
 
 
-332
-333
-334
-335</pre>
+355
+356
+357
+358
+359
+360
+361
+362</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 332</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 355</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_add_operation'>add_operation</span><span class='lparen'>(</span><span class='symbol'>:delete</span><span class='comma'>,</span> <span class='ivar'>@table_service</span><span class='period'>.</span><span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='id identifier rubyid_partition'>partition</span><span class='comma'>,</span> <span class='id identifier rubyid_row_key'>row_key</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If-Match</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:if_match</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+    <span class='const'><span class='object_link'><a href="../HeaderConstants.html" title="Azure::Storage::HeaderConstants (module)">HeaderConstants</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../HeaderConstants.html#ACCEPT-constant" title="Azure::Storage::HeaderConstants::ACCEPT (constant)">ACCEPT</a></span></span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="../Table.html" title="Azure::Storage::Table (module)">Table</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Table::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_get_accept_string'><span class='object_link'><a href="Serialization.html#get_accept_string-class_method" title="Azure::Storage::Table::Serialization.get_accept_string (method)">get_accept_string</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:accept</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If-Match</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:if_match</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span>
+  <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_add_operation'>add_operation</span><span class='lparen'>(</span><span class='symbol'>:delete</span><span class='comma'>,</span> <span class='ivar'>@table_service</span><span class='period'>.</span><span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='id identifier rubyid_partition'>partition</span><span class='comma'>,</span> <span class='id identifier rubyid_row_key'>row_key</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -549,7 +555,7 @@ end.execute</code></pre>
       <div class="method_details ">
   <h3 class="signature " id="insert-instance_method">
   
-    #<strong>insert</strong>(row_key, entity_values)  &#x21d2; <tt>Object</tt> 
+    #<strong>insert</strong>(row_key, entity_values, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -561,30 +567,38 @@ end.execute</code></pre>
       <pre class="lines">
 
 
-214
-215
-216
-217
-218
-219
-220
 221
 222
 223
-224</pre>
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 214</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 221</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_check_entity_key'>check_entity_key</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_to_entry_xml'>hash_to_entry_xml</span><span class='lparen'>(</span><span class='lbrace'>{</span> 
-      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PartitionKey</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_partition'>partition</span><span class='comma'>,</span> 
-      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>RowKey</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_row_key'>row_key</span>
-    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_values'>entity_values</span><span class='rparen'>)</span> <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_xml'>to_xml</span>
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="../HeaderConstants.html" title="Azure::Storage::HeaderConstants (module)">HeaderConstants</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../HeaderConstants.html#ACCEPT-constant" title="Azure::Storage::HeaderConstants::ACCEPT (constant)">ACCEPT</a></span></span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="../Table.html" title="Azure::Storage::Table (module)">Table</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Table::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_get_accept_string'><span class='object_link'><a href="Serialization.html#get_accept_string-class_method" title="Azure::Storage::Table::Serialization.get_accept_string (method)">get_accept_string</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:accept</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../HeaderConstants.html" title="Azure::Storage::HeaderConstants (module)">HeaderConstants</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../HeaderConstants.html#PREFER-constant" title="Azure::Storage::HeaderConstants::PREFER (constant)">PREFER</a></span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:prefer</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:prefer</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
-  <span class='id identifier rubyid_add_operation'>add_operation</span><span class='lparen'>(</span><span class='symbol'>:post</span><span class='comma'>,</span> <span class='ivar'>@table_service</span><span class='period'>.</span><span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Table.html" title="Azure::Storage::Table (module)">Table</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Table::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_hash_to_json'><span class='object_link'><a href="Serialization.html#hash_to_json-class_method" title="Azure::Storage::Table::Serialization.hash_to_json (method)">hash_to_json</a></span></span><span class='lparen'>(</span><span class='lbrace'>{</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PartitionKey</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_partition'>partition</span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>RowKey</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_row_key'>row_key</span>
+    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_values'>entity_values</span><span class='rparen'>)</span>
+  <span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_add_operation'>add_operation</span><span class='lparen'>(</span><span class='symbol'>:post</span><span class='comma'>,</span> <span class='ivar'>@table_service</span><span class='period'>.</span><span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -607,16 +621,16 @@ end.execute</code></pre>
       <pre class="lines">
 
 
-299
-300
-301
-302</pre>
+318
+319
+320
+321</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 299</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 318</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_insert_or_merge'>insert_or_merge</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='symbol'>:create_if_not_exists</span> <span class='op'>=&gt;</span> <span class='kw'>true</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='comma'>,</span> <span class='label'>create_if_not_exists:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -639,16 +653,16 @@ end.execute</code></pre>
       <pre class="lines">
 
 
-313
-314
-315
-316</pre>
+332
+333
+334
+335</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 313</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 332</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_insert_or_replace'>insert_or_replace</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='symbol'>:create_if_not_exists</span> <span class='op'>=&gt;</span> <span class='kw'>true</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='comma'>,</span> <span class='label'>create_if_not_exists:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -671,32 +685,32 @@ end.execute</code></pre>
       <pre class="lines">
 
 
-276
-277
-278
-279
-280
-281
-282
-283
-284
-285
-286
-287
-288</pre>
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 276</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 295</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_check_entity_key'>check_entity_key</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='ivar'>@table_service</span><span class='period'>.</span><span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='id identifier rubyid_partition'>partition</span><span class='comma'>,</span> <span class='id identifier rubyid_row_key'>row_key</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="../HeaderConstants.html" title="Azure::Storage::HeaderConstants (module)">HeaderConstants</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../HeaderConstants.html#ACCEPT-constant" title="Azure::Storage::HeaderConstants::ACCEPT (constant)">ACCEPT</a></span></span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="../Table.html" title="Azure::Storage::Table (module)">Table</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Table::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_get_accept_string'><span class='object_link'><a href="Serialization.html#get_accept_string-class_method" title="Azure::Storage::Table::Serialization.get_accept_string (method)">get_accept_string</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:accept</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If-Match</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:if_match</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:create_if_not_exists</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_to_entry_xml'>hash_to_entry_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_values'>entity_values</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_xml'>to_xml</span>
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Table.html" title="Azure::Storage::Table (module)">Table</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Table::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_hash_to_json'><span class='object_link'><a href="Serialization.html#hash_to_json-class_method" title="Azure::Storage::Table::Serialization.hash_to_json (method)">hash_to_json</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_entity_values'>entity_values</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_add_operation'>add_operation</span><span class='lparen'>(</span><span class='symbol'>:merge</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
@@ -721,9 +735,6 @@ end.execute</code></pre>
       <pre class="lines">
 
 
-126
-127
-128
 129
 130
 131
@@ -758,14 +769,13 @@ end.execute</code></pre>
 160
 161
 162
-163
-164</pre>
+163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 129</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_response'>parse_response</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_responses'>responses</span> <span class='op'>=</span> <span class='const'>BatchResponse</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span>
+  <span class='id identifier rubyid_responses'>responses</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="BatchResponse.html" title="Azure::Storage::Table::BatchResponse (module)">BatchResponse</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'><span class='object_link'><a href="BatchResponse.html#parse-class_method" title="Azure::Storage::Table::BatchResponse.parse (method)">parse</a></span></span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span>
   <span class='id identifier rubyid_new_responses'>new_responses</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 
   <span class='lparen'>(</span><span class='int'>0</span><span class='op'>..</span><span class='id identifier rubyid_responses'>responses</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_index'>index</span><span class='op'>|</span>
@@ -774,7 +784,7 @@ end.execute</code></pre>
 
     <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&gt;</span> <span class='int'>299</span>
       <span class='comment'># failed
-</span>      <span class='id identifier rubyid_error'>error</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Http</span><span class='op'>::</span><span class='const'>HTTPError</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>ResponseWrapper</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='symbol'>:uri</span><span class='op'>=&gt;</span><span class='id identifier rubyid_operation'>operation</span><span class='lbracket'>[</span><span class='symbol'>:uri</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
+</span>      <span class='id identifier rubyid_error'>error</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Http</span><span class='op'>::</span><span class='const'>HTTPError</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Batch/ResponseWrapper.html" title="Azure::Storage::Table::Batch::ResponseWrapper (class)">ResponseWrapper</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Batch/ResponseWrapper.html#initialize-instance_method" title="Azure::Storage::Table::Batch::ResponseWrapper#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='symbol'>:uri</span><span class='op'>=&gt;</span><span class='id identifier rubyid_operation'>operation</span><span class='lbracket'>[</span><span class='symbol'>:uri</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_error'>error</span><span class='period'>.</span><span class='id identifier rubyid_description'>description</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='symbol'>:message</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_error'>error</span><span class='period'>.</span><span class='id identifier rubyid_description'>description</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
       <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_error'>error</span>
     <span class='kw'>else</span>
@@ -782,13 +792,9 @@ end.execute</code></pre>
 </span>      <span class='kw'>case</span> <span class='id identifier rubyid_operation'>operation</span><span class='lbracket'>[</span><span class='symbol'>:method</span><span class='rbracket'>]</span>
       <span class='kw'>when</span> <span class='symbol'>:post</span>
         <span class='comment'># entity from body
-</span>        <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_from_entry_xml'>hash_from_entry_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='symbol'>:body</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+</span>        <span class='id identifier rubyid_entity'>entity</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Table.html" title="Azure::Storage::Table (module)">Table</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Table::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_entity_from_json'><span class='object_link'><a href="Serialization.html#entity_from_json-class_method" title="Azure::Storage::Table::Serialization.entity_from_json (method)">entity_from_json</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='symbol'>:body</span><span class='rbracket'>]</span><span class='rparen'>)</span>
 
-        <span class='id identifier rubyid_entity'>entity</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Entity</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-        <span class='id identifier rubyid_entity'>entity</span><span class='period'>.</span><span class='id identifier rubyid_table'>table</span> <span class='op'>=</span> <span class='id identifier rubyid_table'>table</span>
-        <span class='id identifier rubyid_entity'>entity</span><span class='period'>.</span><span class='id identifier rubyid_updated'>updated</span> <span class='op'>=</span> <span class='id identifier rubyid_result'>result</span><span class='lbracket'>[</span><span class='symbol'>:updated</span><span class='rbracket'>]</span>
-        <span class='id identifier rubyid_entity'>entity</span><span class='period'>.</span><span class='id identifier rubyid_etag'>etag</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='symbol'>:headers</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etag</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_result'>result</span><span class='lbracket'>[</span><span class='symbol'>:etag</span><span class='rbracket'>]</span>
-        <span class='id identifier rubyid_entity'>entity</span><span class='period'>.</span><span class='id identifier rubyid_properties'>properties</span> <span class='op'>=</span> <span class='id identifier rubyid_result'>result</span><span class='lbracket'>[</span><span class='symbol'>:properties</span><span class='rbracket'>]</span>
+        <span class='id identifier rubyid_entity'>entity</span><span class='period'>.</span><span class='id identifier rubyid_etag'>etag</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='symbol'>:headers</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etag</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_entity'>entity</span><span class='period'>.</span><span class='id identifier rubyid_etag'>etag</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
         <span class='id identifier rubyid_new_responses'>new_responses</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='id identifier rubyid_entity'>entity</span>
       <span class='kw'>when</span> <span class='symbol'>:put</span><span class='comma'>,</span> <span class='symbol'>:merge</span>
@@ -823,6 +829,7 @@ end.execute</code></pre>
       <pre class="lines">
 
 
+166
 167
 168
 169
@@ -854,15 +861,10 @@ end.execute</code></pre>
 195
 196
 197
-198
-199
-200
-201
-202
-203</pre>
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 167</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 166</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_body'>to_body</span>
   <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
@@ -872,31 +874,27 @@ end.execute</code></pre>
   <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Type: multipart/mixed; boundary=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_changeset_id'>changeset_id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='id identifier rubyid_content_id'>content_id</span> <span class='op'>=</span> <span class='int'>1</span>
   <span class='id identifier rubyid_operations'>operations</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span>
     <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_changeset_id'>changeset_id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Type: application/http</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Transfer-Encoding: binary</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='symbol'>:method</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_upcase'>upcase</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='symbol'>:uri</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> HTTP/1.1</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-ID: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_content_id'>content_id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 
     <span class='kw'>if</span> <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='symbol'>:headers</span><span class='rbracket'>]</span>
-      <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='symbol'>:headers</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
-          <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_k'>k</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_v'>v</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='symbol'>:headers</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+        <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_k'>k</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_v'>v</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
       <span class='rbrace'>}</span>
     <span class='kw'>end</span>
-    
+
     <span class='kw'>if</span> <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='symbol'>:body</span><span class='rbracket'>]</span>
-      <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Type: application/atom+xml;type=entry</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Length: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='symbol'>:body</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_bytesize'>bytesize</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='symbol'>:body</span><span class='rbracket'>]</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span> 
+    <span class='kw'>end</span>
 
-    <span class='id identifier rubyid_content_id'>content_id</span> <span class='op'>+=</span> <span class='int'>1</span>
   <span class='rbrace'>}</span>
   <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_changeset_id'>changeset_id</span><span class='embexpr_end'>}</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_add_line'>add_line</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_batch_id'>batch_id</span><span class='embexpr_end'>}</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span>
@@ -921,32 +919,32 @@ end.execute</code></pre>
       <pre class="lines">
 
 
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256</pre>
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 244</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch.rb', line 259</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='comma'>,</span> <span class='id identifier rubyid_entity_values'>entity_values</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_check_entity_key'>check_entity_key</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='ivar'>@table_service</span><span class='period'>.</span><span class='id identifier rubyid_entities_uri'>entities_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='id identifier rubyid_partition'>partition</span><span class='comma'>,</span> <span class='id identifier rubyid_row_key'>row_key</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="../HeaderConstants.html" title="Azure::Storage::HeaderConstants (module)">HeaderConstants</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../HeaderConstants.html#ACCEPT-constant" title="Azure::Storage::HeaderConstants::ACCEPT (constant)">ACCEPT</a></span></span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="../Table.html" title="Azure::Storage::Table (module)">Table</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Table::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_get_accept_string'><span class='object_link'><a href="Serialization.html#get_accept_string-class_method" title="Azure::Storage::Table::Serialization.get_accept_string (method)">get_accept_string</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:accept</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If-Match</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:if_match</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:create_if_not_exists</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Table</span><span class='op'>::</span><span class='const'>Serialization</span><span class='period'>.</span><span class='id identifier rubyid_hash_to_entry_xml'>hash_to_entry_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_values'>entity_values</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_xml'>to_xml</span>
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Table.html" title="Azure::Storage::Table (module)">Table</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Table::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_hash_to_json'><span class='object_link'><a href="Serialization.html#hash_to_json-class_method" title="Azure::Storage::Table::Serialization.hash_to_json (method)">hash_to_json</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_entity_values'>entity_values</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_add_operation'>add_operation</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
@@ -961,9 +959,9 @@ end.execute</code></pre>
 </div>
 
       <div id="footer">
-  Generated on Tue Feb 28 13:56:31 2017 by
+  Generated on Thu Sep 14 14:27:14 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.5 (ruby-2.2.5).
+  0.9.9 (ruby-2.4.1).
 </div>
 
     </div>
