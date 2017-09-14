@@ -6,7 +6,7 @@
 <title>
   Class: Azure::Storage::Core::Filter::RetryPolicyFilter
   
-    &mdash; Documentation by YARD 0.9.5
+    &mdash; Documentation by YARD 0.9.9
   
 </title>
 
@@ -28,7 +28,7 @@
   </head>
   <body>
     <div class="nav_wrap">
-      <iframe id="nav" src="../../../../class_list.html"></iframe>
+      <iframe id="nav" src="../../../../class_list.html?1"></iframe>
       <div id="resizer"></div>
     </div>
 
@@ -58,8 +58,6 @@
 </div>
         <div class="clear"></div>
       </div>
-
-      <iframe id="search_frame" src="../../../../class_list.html"></iframe>
 
       <div id="content"><h1>Class: Azure::Storage::Core::Filter::RetryPolicyFilter
   
@@ -787,7 +785,7 @@ lifetime of the request.</p>
   <span class='comment'># If a request sent to the secondary location fails with 404 (Not Found), it is possible
 </span>  <span class='comment'># that the resource replication is not finished yet. So, in case of 404 only in the secondary
 </span>  <span class='comment'># location, the failure should still be retryable.
-</span>  <span class='id identifier rubyid_secondary_not_found'>secondary_not_found</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:current_location</span><span class='rbracket'>]</span> <span class='op'>===</span> <span class='const'>Azure</span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>RequestLocationMode</span><span class='op'>::</span><span class='const'>SECONDARY_ONLY</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status_code'>status_code</span> <span class='op'>===</span> <span class='int'>404</span><span class='semicolon'>;</span>
+</span>  <span class='id identifier rubyid_secondary_not_found'>secondary_not_found</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:current_location</span><span class='rbracket'>]</span> <span class='op'>===</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RequestLocationMode.html#SECONDARY_ONLY-constant" title="Azure::Storage::RequestLocationMode::SECONDARY_ONLY (constant)">SECONDARY_ONLY</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status_code'>status_code</span> <span class='op'>===</span> <span class='int'>404</span><span class='semicolon'>;</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_secondary_not_found'>secondary_not_found</span>
     <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>500</span>
@@ -957,9 +955,9 @@ lifetime of the request.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Feb 28 13:56:33 2017 by
+  Generated on Thu Sep 14 14:27:16 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.5 (ruby-2.2.5).
+  0.9.9 (ruby-2.4.1).
 </div>
 
     </div>
