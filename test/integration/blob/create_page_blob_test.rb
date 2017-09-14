@@ -40,16 +40,19 @@ describe Azure::Storage::Blob::BlobService do
     it "creates a page blob" do
       blob = subject.create_page_blob container_name, blob_name, length
       blob.name.must_equal blob_name
+      is_boolean(blob.encrypted).must_equal true
     end
 
     it "creates page blob with non uri encoded path" do
       blob = subject.create_page_blob container_name, "фбаф.jpg", length
       blob.name.must_equal "фбаф.jpg"
+      is_boolean(blob.encrypted).must_equal true
     end
 
     it "creates a page blob with complex name" do
       blob = subject.create_page_blob container_name, complex_blob_name, length
       blob.name.must_equal complex_blob_name
+      is_boolean(blob.encrypted).must_equal true
 
       complex_blob_name.force_encoding("UTF-8")
       found_complex_name = false
@@ -72,6 +75,7 @@ describe Azure::Storage::Blob::BlobService do
 
       blob = subject.create_page_blob container_name, blob_name, length, options
       blob = subject.get_blob_properties container_name, blob_name
+      is_boolean(blob.encrypted).must_equal true
       blob.name.must_equal blob_name
       blob.properties[:blob_type].must_equal "PageBlob"
       blob.properties[:content_type].must_equal options[:content_type]

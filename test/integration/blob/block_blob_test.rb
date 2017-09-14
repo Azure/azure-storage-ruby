@@ -41,6 +41,7 @@ describe Azure::Storage::Blob::BlobService do
     it "creates a block blob" do
       blob = subject.create_block_blob container_name, blob_name, content
       blob.name.must_equal blob_name
+      is_boolean(blob.encrypted).must_equal true
     end
 
     it "creates a block blob with IO" do
@@ -51,6 +52,7 @@ describe Azure::Storage::Blob::BlobService do
         subject.create_block_blob container_name, blob_name, file
         blob = subject.get_blob_properties container_name, blob_name
         blob.name.must_equal blob_name
+        is_boolean(blob.encrypted).must_equal true
         blob.properties[:content_length].must_equal content.length
       ensure
         unless file.nil?
@@ -64,12 +66,14 @@ describe Azure::Storage::Blob::BlobService do
       blob_name = "blob with spaces"
       blob = subject.create_block_blob container_name, blob_name, "content"
       blob.name.must_equal blob_name
+      is_boolean(blob.encrypted).must_equal true
     end
 
     it "should create block blob with complex in name" do
       blob_name = "with фбаф.txt"
       blob = subject.create_block_blob container_name, blob_name, "content"
       blob.name.must_equal blob_name
+      is_boolean(blob.encrypted).must_equal true
     end
 
     it "sets additional properties when the options hash is used" do
@@ -84,6 +88,7 @@ describe Azure::Storage::Blob::BlobService do
       blob = subject.create_block_blob container_name, blob_name, content, options
       blob = subject.get_blob_properties container_name, blob_name
       blob.name.must_equal blob_name
+      is_boolean(blob.encrypted).must_equal true
       blob.properties[:blob_type].must_equal "BlockBlob"
       blob.properties[:content_type].must_equal options[:content_type]
       blob.properties[:content_encoding].must_equal options[:content_encoding]
@@ -157,6 +162,7 @@ describe Azure::Storage::Blob::BlobService do
       result.must_be_nil
 
       blob, returned_content = subject.get_blob container_name, blob_name
+      is_boolean(blob.encrypted).must_equal true
       blob.properties[:content_length].must_equal (content.length * 2)
       returned_content.must_equal (content + content)
     end

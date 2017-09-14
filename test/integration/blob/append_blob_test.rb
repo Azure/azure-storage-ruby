@@ -41,11 +41,13 @@ describe Azure::Storage::Blob::BlobService do
     it "creates an append blob" do
       blob = subject.create_append_blob container_name, blob_name
       blob.name.must_equal blob_name
+      is_boolean(blob.encrypted).must_equal true
     end
 
     it "creates an append blob with complex name" do
       blob = subject.create_append_blob container_name, complex_blob_name
       blob.name.must_equal complex_blob_name
+      is_boolean(blob.encrypted).must_equal true
 
       complex_blob_name.force_encoding("UTF-8")
       found_complex_name = false
@@ -67,8 +69,10 @@ describe Azure::Storage::Blob::BlobService do
       }
 
       blob = subject.create_append_blob container_name, blob_name, options
+      is_boolean(blob.encrypted).must_equal true
       blob = subject.get_blob_properties container_name, blob_name
       blob.name.must_equal blob_name
+      is_boolean(blob.encrypted).must_equal true
       blob.properties[:blob_type].must_equal "AppendBlob"
       blob.properties[:content_type].must_equal options[:content_type]
       blob.properties[:content_encoding].must_equal options[:content_encoding]
@@ -100,12 +104,14 @@ describe Azure::Storage::Blob::BlobService do
 
       options = { content_md5: Base64.strict_encode64(Digest::MD5.digest(content)) }
       blob = subject.append_blob_block container_name, blob_name, content, options
+      is_boolean(blob.encrypted).must_equal true
 
       # verify
       blob.properties[:content_md5].must_equal Base64.strict_encode64(Digest::MD5.digest(content))
       blob.properties[:append_offset].must_equal 0
 
       blob = subject.get_blob_properties container_name, blob_name
+      is_boolean(blob.encrypted).must_equal true
       blob.properties[:blob_type].must_equal "AppendBlob"
       blob.properties[:content_length].must_equal 512
       blob.properties[:committed_count].must_equal 1
@@ -133,6 +139,7 @@ describe Azure::Storage::Blob::BlobService do
 
       options = { max_size: 600.to_s }
       blob = subject.append_blob_block container_name, blob_name, content, options
+      is_boolean(blob.encrypted).must_equal true
       blob.properties[:append_offset].must_equal 0
       blob.properties[:committed_count].must_equal 1
 
@@ -147,11 +154,13 @@ describe Azure::Storage::Blob::BlobService do
       subject.create_append_blob container_name, blob_name
 
       blob = subject.append_blob_block container_name, blob_name, content
+      is_boolean(blob.encrypted).must_equal true
       blob.properties[:append_offset].must_equal 0
       blob.properties[:committed_count].must_equal 1
 
       options = { append_position: 512.to_s }
       blob = subject.append_blob_block container_name, blob_name, content, options
+      is_boolean(blob.encrypted).must_equal true
       blob.properties[:append_offset].must_equal 512
       blob.properties[:committed_count].must_equal 2
 

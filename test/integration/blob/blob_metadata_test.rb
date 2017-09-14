@@ -42,6 +42,7 @@ describe Azure::Storage::Blob::BlobService do
       result = subject.set_blob_metadata container_name, blob_name, metadata
       result.must_be_nil
       blob = subject.get_blob_metadata container_name, blob_name
+      blob.encrypted.must_be_nil
 
       metadata.each { |k, v|
         blob.metadata.must_include k
@@ -56,6 +57,7 @@ describe Azure::Storage::Blob::BlobService do
       it "gets metadata for a blob snapshot (when set during create)" do
 
         blob = subject.get_blob_metadata container_name, blob_name, snapshot: snapshot
+        blob.encrypted.must_be_nil
 
         blob.snapshot.must_equal snapshot
         metadata.each { |k, v|
