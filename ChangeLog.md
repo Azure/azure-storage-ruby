@@ -6,6 +6,7 @@ ALL
 BLOB
 * The `Azure::Storage::Blob::list_page_blob_ranges` API now accepts `:previous_snapshot` as an optional parameter, that specifies that the response returns pages that have been updated or cleared since the snapshot specified by `:previous_snapshot` was taken.
 * The `Azure::Storage::Blob::Blob` object now has an attribute `:encrypted` showing if the blob or blob related request has been encrypted.
+* The `Azure::Storage::Blob::BlobService::list_containers` and `Azure::Storage::Blob::BlobService::get_container_properties` will now also return public access level for each container.
 
 2017.09 - version 0.13.0-preview
 

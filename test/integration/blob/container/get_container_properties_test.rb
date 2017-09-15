@@ -31,9 +31,10 @@ describe Azure::Storage::Blob::BlobService do
   describe "#get_container_properties" do
     let(:container_name) { ContainerNameHelper.name }
     let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    let(:public_access_level) { "blob" }
 
     it "gets properties and custom metadata for the container" do
-      container = subject.create_container container_name, metadata: metadata
+      container = subject.create_container container_name, metadata: metadata, public_access_level: public_access_level
       properties = container.properties
 
       container = subject.get_container_properties container_name
@@ -41,6 +42,7 @@ describe Azure::Storage::Blob::BlobService do
       container.name.must_equal container_name
       container.properties[:etag].must_equal properties[:etag]
       container.properties[:last_modified].must_equal properties[:last_modified]
+      container.public_access_level.must_equal "blob"
 
       metadata.each { |k, v|
         container.metadata.must_include k.downcase
