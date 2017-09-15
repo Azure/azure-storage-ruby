@@ -8,6 +8,7 @@
       <Properties>
         <Last-Modified>Wed, 12 Aug 2009 20:39:39 GMT</Last-Modified>
         <Etag>0x8CACB9BD7C6B1B2</Etag>
+        <PublicAccess>container | blob</PublicAccess>
       </Properties>
     </Container>
     <Container>
@@ -16,6 +17,7 @@
       <Properties>
         <Last-Modified>Wed, 12 Aug 2009 20:39:39 GMT</Last-Modified>
         <Etag>0x8CACB9BD7C1EEEC</Etag>
+        <PublicAccess>container | blob</PublicAccess>
       </Properties>
       <Metadata>
         <MyMetadata1>first value</MyMetadata1>
@@ -31,6 +33,7 @@
         <Last-Modified>Wed, 12 Aug 2009 20:39:39 GMT</Last-Modified>
         <Etag>0x8CACB9BD7BACAC3</Etag>
         <LeaseStatus>locked</LeaseStatus>
+        <PublicAccess>container | blob</PublicAccess>
       </Properties>
     </Container>
   </Containers>

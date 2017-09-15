@@ -31,9 +31,10 @@ describe Azure::Storage::Blob::BlobService do
   describe "#list_containers" do
     let(:container_names) { [ContainerNameHelper.name, ContainerNameHelper.name] }
     let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    let(:public_access_level) { "blob" }
     before {
       container_names.each { |c|
-        subject.create_container c, metadata: metadata
+        subject.create_container c, metadata: metadata, public_access_level: public_access_level
       }
     }
 
@@ -43,6 +44,7 @@ describe Azure::Storage::Blob::BlobService do
       found = 0
       result.each { |c|
         found += 1 if container_names.include? c.name
+        c.public_access_level.must_equal "blob" if container_names.include? c.name
       }
       found.must_equal container_names.length
     end
@@ -53,6 +55,7 @@ describe Azure::Storage::Blob::BlobService do
       found = 0
       result.each { |c|
         found += 1 if container_names.include? c.name
+        c.public_access_level.must_equal "blob" if container_names.include? c.name
       }
 
       found.must_equal 1
@@ -80,6 +83,7 @@ describe Azure::Storage::Blob::BlobService do
             c.metadata.must_include k.downcase
             c.metadata[k.downcase].must_equal v
           }
+          c.public_access_level.must_equal "blob"
         end
       }
       found.must_equal container_names.length

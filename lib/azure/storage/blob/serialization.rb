@@ -63,6 +63,7 @@ module Azure::Storage
           container.name = xml.Name.text if (xml > "Name").any?
           container.properties = container_properties_from_xml(xml.Properties) if (xml > "Properties").any?
           container.metadata = metadata_from_xml(xml.Metadata) if (xml > "Metadata").any?
+          container.public_access_level = public_access_level_from_properties_xml(xml.Properties) if (xml > "Properties").any?
         end
       end
 
@@ -103,6 +104,10 @@ module Azure::Storage
 
       def self.public_access_level_from_headers(headers)
         headers["x-ms-blob-public-access"]
+      end
+
+      def self.public_access_level_from_properties_xml(xml)
+        (xml > "PublicAccess").any? ? xml.PublicAccess.text : nil
       end
 
       def self.blob_enumeration_results_from_xml(xml)
