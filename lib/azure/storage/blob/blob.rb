@@ -87,13 +87,14 @@ module Azure::Storage
       options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
       if options[:start_range]
         StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}"
-        StorageService.with_header headers, "x-ms-range-get-content-md5", true if options[:get_content_md5]
+        StorageService.with_header headers, "x-ms-range-get-content-md5", "true" if options[:get_content_md5]
       end
       add_blob_conditional_headers options, headers
 
       response = call(:get, uri, nil, headers, options)
       result = Serialization.blob_from_headers(response.headers)
       result.name = blob unless result.name
+
       return result, response.body
     end
 

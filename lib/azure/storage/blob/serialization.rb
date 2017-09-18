@@ -221,6 +221,7 @@ module Azure::Storage
         props[:content_language] = headers["x-ms-blob-content-language"] || headers["Content-Language"]
         props[:content_disposition] = headers["x-ms-blob-content-disposition"] || headers["Content-Disposition"]
         props[:content_md5] = headers["x-ms-blob-content-md5"] || headers["Content-MD5"]
+        props[:range_md5] = headers["Content-MD5"] if headers["x-ms-blob-content-md5"] && headers["Content-MD5"]
 
         props[:cache_control] = headers["x-ms-blob-cache-control"] || headers["Cache-Control"]
         props[:sequence_number] = headers["x-ms-blob-sequence-number"].to_i if headers["x-ms-blob-sequence-number"]

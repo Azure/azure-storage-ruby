@@ -190,7 +190,8 @@ module Azure::Storage
         props[:content_encoding] = headers["Content-Encoding"]
         props[:content_language] = headers["Content-Language"]
         props[:content_disposition] = headers["Content-Disposition"]
-        props[:content_md5] = headers["Content-MD5"]
+        props[:content_md5] = headers["x-ms-content-md5"] || headers["Content-MD5"]
+        props[:range_md5] = headers["Content-MD5"] if headers["x-ms-content-md5"] && headers["Content-MD5"]
         props[:cache_control] = headers["Cache-Control"]
 
         props[:copy_id] = headers["x-ms-copy-id"]

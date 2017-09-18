@@ -1249,7 +1249,7 @@ describe Azure::Storage::File::FileService do
           let(:end_range) { 512 }
           before {
             request_headers["x-ms-range"] = "bytes=#{start_range}-#{end_range}"
-            request_headers["x-ms-range-get-content-md5"] = true
+            request_headers["x-ms-range-get-content-md5"] = "true"
           }
 
           it "modifies the request headers to include the x-ms-range-get-content-md5 header" do

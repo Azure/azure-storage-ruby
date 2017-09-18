@@ -23,6 +23,7 @@
 #--------------------------------------------------------------------------
 require "integration/test_helper"
 require "azure/storage/blob/blob_service"
+require "digest/md5"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.new }
@@ -49,10 +50,12 @@ describe Azure::Storage::Blob::BlobService do
     end
 
     it "retrieves a range of data from the blob" do
-      blob, returned_content = subject.get_blob container_name, blob_name, start_range: 0, end_range: 511
+      blob, returned_content = subject.get_blob container_name, blob_name, start_range: 0, end_range: 511, get_content_md5: true
       is_boolean(blob.encrypted).must_equal true
       returned_content.length.must_equal 512
       returned_content.must_equal content[0..511]
+      blob.properties[:range_md5].must_equal Digest::MD5.base64digest(content[0..511])
+      blob.properties[:content_md5].must_equal Digest::MD5.base64digest(content)
     end
 
     it "retrieves a snapshot of data from the blob" do

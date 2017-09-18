@@ -22,6 +22,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
+require "digest/md5"
 
 describe Azure::Storage::File::FileService do
   subject { Azure::Storage::File::FileService.new }
@@ -34,7 +35,8 @@ describe Azure::Storage::File::FileService do
     let(:file_length) { 1024 }
     let(:content) { content = ""; file_length.times.each { |i| content << "@" }; content }
     let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
-    let(:options) { { content_type: "application/foo", metadata: metadata } }
+    let(:full_md5) { Digest::MD5.base64digest(content) }
+    let(:options) { { content_type: "application/foo", metadata: metadata, content_md5: full_md5 } }
 
     before {
       subject.create_share share_name
@@ -52,9 +54,11 @@ describe Azure::Storage::File::FileService do
     end
 
     it "retrieves a range of data from the file" do
-      file, returned_content = subject.get_file share_name, directory_name, file_name, start_range: 0, end_range: 511
+      file, returned_content = subject.get_file share_name, directory_name, file_name, start_range: 0, end_range: 511, get_content_md5: true
       returned_content.length.must_equal 512
       returned_content.must_equal content[0..511]
+      file.properties[:range_md5].must_equal Digest::MD5.base64digest(content[0..511])
+      file.properties[:content_md5].must_equal full_md5
     end
   end
 end
