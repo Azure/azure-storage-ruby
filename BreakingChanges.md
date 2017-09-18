@@ -1,3 +1,8 @@
+Tracking Breaking Changes in 0.14.0-preview
+
+QUEUE
+* The return type of `Azure::Storage::Queue::create_message` is changed from `nil` to an `Azure::Storage::Queue::Message` object.
+
 Tracking Breaking Changes in 0.13.0-preview
 
 TABLE

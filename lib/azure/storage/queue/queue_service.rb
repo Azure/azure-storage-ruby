@@ -332,7 +332,7 @@ module Azure::Storage
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179346
       #
-      # Returns nil on success
+      # Returns a list of Azure::Storage::Queue::Message object containing only the echo of request on success
       def create_message(queue_name, message_text, options = {})
         query = {}
 
@@ -345,8 +345,8 @@ module Azure::Storage
         uri = messages_uri(queue_name, query)
         body = Serialization.message_to_xml(message_text, options[:encode])
 
-        call(:post, uri, body, {}, options)
-        nil
+        response = call(:post, uri, body, {}, options)
+        Serialization.queue_messages_from_xml(response.body, options[:decode])
       end
 
       # Public: Deletes a specified message from the queue.

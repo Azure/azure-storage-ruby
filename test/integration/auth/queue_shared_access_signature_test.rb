@@ -63,7 +63,12 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
     signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
     client = Azure::Storage::Queue::QueueService.new(signer: signer)
     result = client.create_message queue_name, message_3
-    result.must_be_nil
+    result.wont_be_nil
+    result.wont_be_empty
+    result.length.must_equal 1
+    result[0].message_text.must_be_nil
+    result[0].pop_receipt.wont_be_nil
+    result[0].id.wont_be_nil
   end
 
   it "processes and updates a message to the queue with a SAS" do

@@ -8,6 +8,9 @@ BLOB
 * The `Azure::Storage::Blob::Blob` object now has an attribute `:encrypted` showing if the blob or blob related request has been encrypted.
 * The `Azure::Storage::Blob::BlobService::list_containers` and `Azure::Storage::Blob::BlobService::get_container_properties` will now also return public access level for each container.
 
+QUEUE
+* The return type of `Azure::Storage::Queue::create_message` is changed from `nil` to an `Azure::Storage::Queue::Message` object.
+
 2017.09 - version 0.13.0-preview
 
 ALL
