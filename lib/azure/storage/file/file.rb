@@ -142,12 +142,13 @@ module Azure::Storage::File
     options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
     if options[:start_range]
       StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}"
-      StorageService.with_header headers, "x-ms-range-get-content-md5", true if options[:get_content_md5]
+      StorageService.with_header headers, "x-ms-range-get-content-md5", "true" if options[:get_content_md5]
     end
 
     response = call(:get, uri, nil, headers, options)
     result = Serialization.file_from_headers(response.headers)
     result.name = file
+
     return result, response.body
   end
 
