@@ -29,7 +29,8 @@ describe Azure::Storage::File::FileService do
 
   describe "#list_directories" do
     let(:share_name) { ShareNameHelper.name }
-    let(:directories_names) { [FileNameHelper.name, FileNameHelper.name, FileNameHelper.name] }
+    let(:prefix) { FileNameHelper.name }
+    let(:directories_names) { [prefix + FileNameHelper.name, prefix + FileNameHelper.name, FileNameHelper.name] }
     let(:sub_directories_names) { [FileNameHelper.name, FileNameHelper.name, FileNameHelper.name] }
     let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
     before {
@@ -77,13 +78,40 @@ describe Azure::Storage::File::FileService do
       result.length.must_equal 2
       result[0].name.wont_equal first_directory.name
     end
+
+    it "lists directories with the prefix" do
+      result = subject.list_directories_and_files share_name, nil, prefix: prefix
+      found = 0
+      result.each { |directory|
+        found += 1 if directories_names.include? directory.name
+      }
+      count = 0
+      directories_names.each { |name|
+        count += 1 if name.start_with? prefix
+      }
+      found.must_equal count
+    end
+
+    it "lists directories with the directory's name as prefix" do
+      result = subject.list_directories_and_files(share_name, nil, prefix: directories_names[0])
+      result.length.must_equal 1
+      result.continuation_token.must_equal ""
+      result[0].name.must_equal directories_names[0]
+    end
+
+    it "lists directories with a prefix that does not exist" do
+      result = subject.list_directories_and_files(share_name, nil, prefix: directories_names[0] + "nonexistsuffix")
+      result.length.must_equal 0
+      result.continuation_token.must_equal ""
+    end
   end
 
   describe "#list_directories_and_files" do
     let(:share_name) { FileNameHelper.name }
+    let(:prefix) { FileNameHelper.name }
     let(:directories_names) { [FileNameHelper.name, FileNameHelper.name, FileNameHelper.name] }
     let(:sub_directories_names) { [FileNameHelper.name, FileNameHelper.name, FileNameHelper.name] }
-    let(:file_names) { [FileNameHelper.name, FileNameHelper.name, FileNameHelper.name] }
+    let(:file_names) { [prefix + FileNameHelper.name, prefix + FileNameHelper.name, FileNameHelper.name] }
     let(:file_length) { 1024 }
     let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
     before {
@@ -115,6 +143,19 @@ describe Azure::Storage::File::FileService do
       }
       directory_found.must_equal sub_directories_names.length
       file_found.must_equal file_names.length
+    end
+
+    it "lists the files with prefix" do
+      result = subject.list_directories_and_files share_name, directories_names[0], prefix: prefix
+      found = 0
+      result.each { |file|
+        found += 1 if file_names.include? file.name
+      }
+      count = 0
+      file_names.each { |name|
+        count += 1 if name.start_with? prefix
+      }
+      found.must_equal count
     end
   end
 end

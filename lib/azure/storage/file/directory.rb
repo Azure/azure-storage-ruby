@@ -55,6 +55,8 @@ module Azure::Storage::File
   #
   # Accepted key/value pairs in options parameter are:
   #
+  # * +:prefix+                  - String. Filters the results to return only directories and files
+  #                                whose name begins with the specified prefix. (optional)
   # * +:marker+                  - String. An identifier the specifies the portion of the
   #                                list to be returned. This value comes from the property
   #                                Azure::Service::EnumerationResults.continuation_token when there
@@ -83,6 +85,7 @@ module Azure::Storage::File
       StorageService.with_query query, "marker", options[:marker]
       StorageService.with_query query, "maxresults", options[:max_results].to_s if options[:max_results]
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
+      StorageService.with_query query, "prefix", options[:prefix].to_s if options[:prefix]
     end
 
     uri = directory_uri(share, directory_path, query)

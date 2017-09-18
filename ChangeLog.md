@@ -11,6 +11,9 @@ BLOB
 QUEUE
 * The return type of `Azure::Storage::Queue::create_message` is changed from `nil` to an `Azure::Storage::Queue::Message` object.
 
+FILE
+* The API `Azure::Storage::File::list_directories_and_files` now also accepts `:prefix` as an optional parameter. The return value will be filtered with the specified prefix if set.
+
 2017.09 - version 0.13.0-preview
 
 ALL
