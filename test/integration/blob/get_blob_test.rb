@@ -23,6 +23,7 @@
 #--------------------------------------------------------------------------
 require "integration/test_helper"
 require "azure/storage/blob/blob_service"
+require "azure/core/http/http_error"
 require "digest/md5"
 
 describe Azure::Storage::Blob::BlobService do
@@ -75,6 +76,19 @@ describe Azure::Storage::Blob::BlobService do
 
       returned_content.length.must_equal 512
       returned_content.must_equal content[0..511]
+    end
+
+    it "read failure with if_none_match: *" do
+      status_code = ""
+      description = ""
+      begin
+        blob = subject.get_blob container_name, blob_name, if_none_match: "*"
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "400"
+      description.must_include "The request includes an unsatisfiable condition for this operation."
     end
   end
 end
