@@ -47,8 +47,8 @@ module Azure
       private
 
       def method_missing(method_name, *args, &block)
-        return super unless client.respond_to?(method_name)
-        client.send(method_name, *args, &block)
+        return client.send(method_name, *args, &block) if Azure::Storage::Client.method_defined?(method_name)
+        super
       end
     end
   end

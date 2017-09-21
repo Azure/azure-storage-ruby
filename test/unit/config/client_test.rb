@@ -215,6 +215,13 @@ describe Azure::Storage::Client do
 
   end
 
+  describe "test method_missing" do
+    it "test to_s for class" do
+      joined = [Azure::Storage, "Client"].join("::")
+      joined.must_equal "Azure::Storage::Client"
+    end
+  end
+
   after do
     restore_storage_envs(@removed)
   end
