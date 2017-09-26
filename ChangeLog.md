@@ -8,6 +8,7 @@ BLOB
 * The `Azure::Storage::Blob::Blob` object now has an attribute `:encrypted` showing if the blob or blob related request has been encrypted.
 * The `Azure::Storage::Blob::BlobService::list_containers` and `Azure::Storage::Blob::BlobService::get_container_properties` will now also return public access level for each container.
 * The stored Content-MD5 property is now returned when requesting a range of a blob. Previously this was only returned for full blob downloads. `Azure::Storage::Blob::Blob.properties[:content_md5]` will always hold the stored Content_MD5 property, and `Azure::Storage::Blob::Blob.properties[:range_md5]` will always represent the MD5 for the content returned from the server.
+* Added an API `Azure::Storage::Blob::BlobService::incremental_copy_blob` to support [incremental copy](https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob) for page blob snapshots.
 
 FILE
 * The stored Content-MD5 property is now returned when requesting a range of a file. Previously this was only returned for full file downloads. `Azure::Storage::File::File.properties[:content_md5]` will always hold the stored Content_MD5 property, and `Azure::Storage::File::File.properties[:range_md5]` will always represent the MD5 for the content returned from the server.

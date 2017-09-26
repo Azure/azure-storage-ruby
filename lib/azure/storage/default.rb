@@ -899,6 +899,9 @@ module Azure::Storage
 
     # ACL
     ACL = "acl"
+
+    # Incremental Copy
+    INCREMENTAL_COPY = "incrementalcopy"
   end
 
   module StorageServiceClientConstants

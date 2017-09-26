@@ -736,6 +736,45 @@ describe Azure::Storage::Blob::BlobService do
         end
       end
 
+      describe "#incremental_copy_blob" do
+        let(:verb) { :put }
+        let(:query) { { "comp" => "incrementalcopy" } }
+        let(:source_uri) { "https://dummy.uri" }
+        let(:request_headers) {
+          {
+            "x-ms-copy-source" => source_uri,
+            "x-ms-version" => x_ms_version,
+            "User-Agent" => "#{user_agent_prefix}; #{user_agent}"
+          }
+        }
+        let(:copy_id) { "copy-id" }
+        let(:copy_status) { "copy-status" }
+
+        before {
+          subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+          response.stubs(:success?).returns(true)
+          response_headers["x-ms-copy-id"] = copy_id
+          response_headers["x-ms-copy-status"] = copy_status
+        }
+
+        it "assembles a URI for the request" do
+          subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          subject.incremental_copy_blob container_name, blob_name, source_uri
+        end
+
+        it "calls StorageService#call with the prepared request" do
+          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+          subject.incremental_copy_blob container_name, blob_name, source_uri
+        end
+
+        it "returns 'x-ms-copy-id' and 'x-ms-copy-status' on success" do
+          result = subject.incremental_copy_blob container_name, blob_name, source_uri
+          result[0].must_equal copy_id
+          result[1].must_equal copy_status
+        end
+      end
+
       describe "#put_blob_pages" do
         let(:verb) { :put }
         let(:start_range) { 255 }
