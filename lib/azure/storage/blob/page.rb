@@ -338,6 +338,82 @@ module Azure::Storage
       set_blob_properties container, blob, options
     end
 
+    # Public: Copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only
+    # the differential changes between the previously copied snapshot are transferred to the destination. The copied snapshots
+    # are complete copies of the original snapshot and can be read or copied from as usual.The destination of an incremental copy
+    # must either not exist, or must have been created with a previous incremental copy from the same source blob. Once created,
+    # the destination blob is permanently associated with the source and may only be used for incremental copies. The Get Blob
+    # Properties and List Blobs APIs indicate whether the blob is an incremental copy blob created in this way. Incremental
+    # copy blobs may not be downloaded directly. The only supported operations are Get Blob Properties, Incremental Copy Blob,
+    # and Delete Blob. The copied snapshots may be read and deleted as usual.
+    #
+    # ==== Attributes
+    #
+    # * +destination_container+       - String. The destination container name to copy to.
+    # * +destination_blob+            - String. The destination blob name to copy to.
+    # * +source_uri+                  - String. Specifies the URI of the source page blob snapshot.
+    #                                   This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The
+    #                                   value should be URL-encoded as it would appear in a request URI. The source blob must
+    #                                   either be public or must be authenticated via a shared access signature. Here is an
+    #                                   example of a source blob URL:
+    #                                     https://myaccount.blob.core.windows.net/mycontainer/myblob?snapshot=<DateTime>
+    # * +options+                     - Hash. Optional parameters.
+    #
+    # ==== Options
+    #
+    # Accepted key/value pairs in options parameter are:
+    # * +:metadata+                   - Hash. Custom metadata values to store with the copy. If this parameter is not
+    #                                   specified, the operation will copy the source blob metadata to the destination
+    #                                   blob. If this parameter is specified, the destination blob is created with the
+    #                                   specified metadata, and metadata is not copied from the source blob.
+    # * +:if_modified_since+          - String. A DateTime value. Specify this conditional header to copy the blob only if the
+    #                                   destination blob has been modified since the specified date/time. If the destination blob
+    #                                   has not been modified, the Blob service returns status code 412 (Precondition Failed).
+    # * +:if_unmodified_since+        - String. A DateTime value. Specify this conditional header to copy the blob only if the
+    #                                   destination blob has not been modified since the specified date/time. If the destination
+    #                                   blob has been modified, the Blob service returns status code 412 (Precondition Failed).
+    # * +:if_match+                   - String. An ETag value. Specify an ETag value for this conditional header to copy the blob
+    #                                   only if the specified ETag value matches the ETag value for an existing destination blob.
+    #                                   If the ETag for the destination blob does not match the ETag specified for If-Match,
+    #                                   the Blob service returns status code 412 (Precondition Failed).
+    # * +:if_none_match+              - String. An ETag value, or the wildcard character (*). Specify an ETag value for this
+    #                                   conditional header to copy the blob only if the specified ETag value does not match the
+    #                                   ETag value for the destination blob. Specify the wildcard character (*) to perform the
+    #                                   operation only if the destination blob does not exist. If the specified condition isn't met,
+    #                                   the Blob service returns status code 412 (Precondition Failed).
+    # * +:timeout+                    - Integer. A timeout in seconds.
+    # * +:request_id+                 - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
+    #                                   in the analytics logs when storage analytics logging is enabled.
+    #
+    # See https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob
+    #
+    # Returns a tuple of (copy_id, copy_status).
+    #
+    # * +copy_id+                    - String. String identifier for this copy operation. Use with Get Blob Properties to check
+    #                                  the status of this copy operation, or pass to Abort Copy Blob to abort a pending copy.
+    # * +copy_status+                - String. State of the copy operation. This is always pending to indicate that the copy has
+    #                                  started and is in progress.
+    #
+    def incremental_copy_blob(destination_container, destination_blob, source_uri, options = {})
+      # query parameters
+      query = { QueryStringConstants::COMP => QueryStringConstants::INCREMENTAL_COPY }
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
+
+      # URI
+      uri = blob_uri(destination_container, destination_blob, query)
+
+      # headers
+      headers = StorageService.common_headers
+      StorageService.with_header headers, "x-ms-copy-source", source_uri
+      unless options.empty?
+        add_blob_conditional_headers options, headers
+        StorageService.add_metadata_to_headers options[:metadata], headers
+      end
+
+      response = call(:put, uri, nil, headers, options)
+      return response.headers["x-ms-copy-id"], response.headers["x-ms-copy-status"]
+    end
+
     # Public: Sets a page blob's sequence number.
     #
     # ==== Attributes

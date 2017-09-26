@@ -200,6 +200,7 @@ module Azure::Storage
         props[:copy_progress] = xml.CopyProgress.text if (xml > "CopyProgress").any?
         props[:copy_completion_time] = xml.CopyCompletionTime.text if (xml > "CopyCompletionTime").any?
         props[:copy_status_description] = xml.CopyStatusDescription.text if (xml > "CopyStatusDescription").any?
+        props[:incremental_copy] = xml.IncrementalCopy.text == "true" if (xml > "IncrementalCopy").any?
 
         props
       end
@@ -238,6 +239,7 @@ module Azure::Storage
 
         props[:append_offset] = headers["x-ms-blob-append-offset"].to_i if headers["x-ms-blob-append-offset"]
         props[:committed_count] = headers["x-ms-blob-committed-block-count"].to_i if headers["x-ms-blob-committed-block-count"]
+        props[:incremental_copy] = headers["x-ms-incremental-copy"].to_s == "true" if headers["x-ms-incremental-copy"]
 
         props
       end
