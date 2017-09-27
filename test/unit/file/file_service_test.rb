@@ -55,6 +55,7 @@ describe Azure::Storage::File::FileService do
   before {
     response.stubs(:body).returns(response_body)
     response.stubs(:headers).returns(response_headers)
+    subject.stubs(:call).returns(response)
   }
 
   describe "#list_shares" do
