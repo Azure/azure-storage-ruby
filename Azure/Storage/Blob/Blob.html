@@ -109,6 +109,33 @@
       <li class="public ">
   <span class="summary_signature">
     
+      <a href="#encrypted-instance_method" title="#encrypted (instance method)">#<strong>encrypted</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute encrypted.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#metadata-instance_method" title="#metadata (instance method)">#<strong>metadata</strong>  &#x21d2; Object </a>
     
 
@@ -318,14 +345,14 @@
       <pre class="lines">
 
 
-29
-30
 31
 32
-33</pre>
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='ivar'>@properties</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -343,9 +370,52 @@
     <h2>Instance Attribute Details</h2>
     
       
-      <span id="metadata=-instance_method"></span>
+      <span id="encrypted=-instance_method"></span>
       <div class="method_details first">
-  <h3 class="signature first" id="metadata-instance_method">
+  <h3 class="signature first" id="encrypted-instance_method">
+  
+    #<strong>encrypted</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute encrypted</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_encrypted'>encrypted</span>
+  <span class='ivar'>@encrypted</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="metadata=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="metadata-instance_method">
   
     #<strong>metadata</strong>  &#x21d2; <tt>Object</tt> 
   
@@ -370,12 +440,12 @@
       <pre class="lines">
 
 
-38
-39
-40</pre>
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_metadata'>metadata</span>
   <span class='ivar'>@metadata</span>
@@ -413,12 +483,12 @@
       <pre class="lines">
 
 
-35
-36
-37</pre>
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_name'>name</span>
   <span class='ivar'>@name</span>
@@ -456,12 +526,12 @@
       <pre class="lines">
 
 
-37
-38
-39</pre>
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_properties'>properties</span>
   <span class='ivar'>@properties</span>
@@ -499,12 +569,12 @@
       <pre class="lines">
 
 
-36
-37
-38</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/blob.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_snapshot'>snapshot</span>
   <span class='ivar'>@snapshot</span>
@@ -520,7 +590,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 14 14:27:13 2017 by
+  Generated on Thu Sep 28 15:32:14 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

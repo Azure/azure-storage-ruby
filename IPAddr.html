@@ -290,15 +290,15 @@
       <pre class="lines">
 
 
-245
-246
-247</pre>
+247
+248
+249</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/utility.rb', line 245</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/utility.rb', line 247</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_address_prefix'>address_prefix</span><span class='lparen'>(</span><span class='id identifier rubyid_ip'>ip</span><span class='comma'>,</span> <span class='id identifier rubyid_cidr'>cidr</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_ip'>ip</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_cidr'>cidr</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='id identifier rubyid_ip'>ip</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_cidr'>cidr</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -342,12 +342,12 @@
       <pre class="lines">
 
 
-249
-250
-251</pre>
+251
+252
+253</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/utility.rb', line 249</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/utility.rb', line 251</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_valid?'>valid?</span><span class='lparen'>(</span><span class='id identifier rubyid_ip'>ip</span><span class='rparen'>)</span>
   <span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="IPAddr (class)">IPAddr</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_ip'>ip</span><span class='rparen'>)</span> <span class='kw'>rescue</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -372,19 +372,19 @@
       <pre class="lines">
 
 
-237
-238
 239
 240
 241
 242
-243</pre>
+243
+244
+245</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/utility.rb', line 237</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/utility.rb', line 239</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate_address_space'>validate_address_space</span><span class='lparen'>(</span><span class='id identifier rubyid_ip'>ip</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_ip'>ip</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>!=</span> <span class='int'>2</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_ip'>ip</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>!=</span> <span class='int'>2</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cidr is invalid for IP </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ip'>ip</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_valid?'>valid?</span><span class='lparen'>(</span><span class='id identifier rubyid_ip'>ip</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Address space &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ip'>ip</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; is invalid.</span><span class='tstring_end'>&quot;</span></span>
@@ -410,18 +410,18 @@
       <pre class="lines">
 
 
-227
-228
 229
 230
 231
 232
 233
 234
-235</pre>
+235
+236
+237</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/utility.rb', line 227</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/utility.rb', line 229</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate_ip_and_prefix'>validate_ip_and_prefix</span><span class='lparen'>(</span><span class='id identifier rubyid_ip'>ip</span><span class='comma'>,</span> <span class='id identifier rubyid_cidr'>cidr</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_cidr'>cidr</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -480,16 +480,16 @@
       <pre class="lines">
 
 
-214
-215
 216
 217
 218
 219
-220</pre>
+220
+221
+222</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/utility.rb', line 214</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/utility.rb', line 216</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_private?'>private?</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ipv4?'>ipv4?</span>
@@ -540,12 +540,12 @@
       <pre class="lines">
 
 
-222
-223
-224</pre>
+224
+225
+226</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/utility.rb', line 222</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/utility.rb', line 224</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_public?'>public?</span>
   <span class='op'>!</span><span class='id identifier rubyid_private?'>private?</span>
@@ -560,7 +560,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 14 14:27:14 2017 by
+  Generated on Thu Sep 28 15:32:15 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

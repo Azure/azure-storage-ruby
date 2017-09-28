@@ -359,20 +359,20 @@ service.</p>
       <pre class="lines">
 
 
-82
-83
 84
 85
 86
 87
-88</pre>
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 84</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_entities_from_hash'>entities_from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_h'>h</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_entities'>entities</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>value</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_entity_hash'>entity_hash</span><span class='op'>|</span>
+  <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>value</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_entity_hash'>entity_hash</span><span class='op'>|</span>
     <span class='id identifier rubyid_entities'>entities</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_from_hash'>entity_from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_hash'>entity_hash</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='rbrace'>}</span>
   <span class='id identifier rubyid_entities'>entities</span>
@@ -397,17 +397,17 @@ service.</p>
       <pre class="lines">
 
 
-77
-78
 79
-80</pre>
+80
+81
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_entities_from_json'>entities_from_json</span><span class='lparen'>(</span><span class='id identifier rubyid_json'>json</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_entities_hash'>entities_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_hash_from_json'>hash_from_json</span><span class='lparen'>(</span><span class='id identifier rubyid_json'>json</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_entities_hash'>entities_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>value</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_entity_from_hash'>entity_from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_entities_hash'>entities_hash</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='id identifier rubyid_entities_from_hash'>entities_from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_entities_hash'>entities_hash</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_entities_hash'>entities_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>value</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_entity_from_hash'>entity_from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_entities_hash'>entities_hash</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='id identifier rubyid_entities_from_hash'>entities_from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_entities_hash'>entities_hash</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -429,8 +429,6 @@ service.</p>
       <pre class="lines">
 
 
-90
-91
 92
 93
 94
@@ -439,10 +437,12 @@ service.</p>
 97
 98
 99
-100</pre>
+100
+101
+102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_entity_from_hash'>entity_from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_h'>h</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Entity.html" title="Azure::Storage::Table::Entity (class)">Entity</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Entity.html#initialize-instance_method" title="Azure::Storage::Table::Entity#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_entity'>entity</span><span class='op'>|</span>
@@ -475,12 +475,12 @@ service.</p>
       <pre class="lines">
 
 
-73
-74
-75</pre>
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_entity_from_json'>entity_from_json</span><span class='lparen'>(</span><span class='id identifier rubyid_json'>json</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_entity_from_hash'>entity_from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_hash_from_json'>hash_from_json</span><span class='lparen'>(</span><span class='id identifier rubyid_json'>json</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -505,8 +505,6 @@ service.</p>
       <pre class="lines">
 
 
-102
-103
 104
 105
 106
@@ -518,10 +516,12 @@ service.</p>
 112
 113
 114
-115</pre>
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_accept_string'>get_accept_string</span><span class='lparen'>(</span><span class='id identifier rubyid_accept_type'>accept_type</span> <span class='op'>=</span> <span class='symbol'>:min_meta</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_accept_type'>accept_type</span>
@@ -557,12 +557,12 @@ service.</p>
       <pre class="lines">
 
 
-57
-58
-59</pre>
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_hash_from_json'>hash_from_json</span><span class='lparen'>(</span><span class='id identifier rubyid_json'>json</span><span class='rparen'>)</span>
   <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_json'>json</span><span class='rparen'>)</span>
@@ -587,8 +587,6 @@ service.</p>
       <pre class="lines">
 
 
-42
-43
 44
 45
 46
@@ -596,10 +594,12 @@ service.</p>
 48
 49
 50
-51</pre>
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_hash_to_json'>hash_to_json</span><span class='lparen'>(</span><span class='id identifier rubyid_h'>h</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_newhash'>newhash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -631,8 +631,6 @@ service.</p>
       <pre class="lines">
 
 
-61
-62
 63
 64
 65
@@ -641,18 +639,20 @@ service.</p>
 68
 69
 70
-71</pre>
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_table_entries_from_hash'>table_entries_from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_h'>h</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>value</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>value</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>value</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>value</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span>
       <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>TableName</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>TableName</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_h'>h</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_values'>values</span>
@@ -677,12 +677,12 @@ service.</p>
       <pre class="lines">
 
 
-53
-54
-55</pre>
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/serialization.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_table_entries_from_json'>table_entries_from_json</span><span class='lparen'>(</span><span class='id identifier rubyid_json'>json</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_table_entries_from_hash'>table_entries_from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_hash_from_json'>hash_from_json</span><span class='lparen'>(</span><span class='id identifier rubyid_json'>json</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -697,7 +697,7 @@ service.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 14 14:27:12 2017 by
+  Generated on Thu Sep 28 15:32:14 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

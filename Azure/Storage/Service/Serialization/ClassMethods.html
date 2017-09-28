@@ -677,7 +677,6 @@
       <pre class="lines">
 
 
-87
 88
 89
 90
@@ -686,10 +685,11 @@
 93
 94
 95
-96</pre>
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_access_policy_from_xml'>access_policy_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
@@ -721,15 +721,15 @@
       <pre class="lines">
 
 
-255
 256
-257</pre>
+257
+258</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 255</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 256</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ary_from_node'>ary_from_node</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>,</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>,</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -751,24 +751,24 @@
       <pre class="lines">
 
 
-233
 234
 235
 236
 237
 238
 239
-240</pre>
+240
+241</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 233</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 234</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cors_from_xml'>cors_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cors</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
 
   <span class='const'><span class='object_link'><a href="../Cors.html" title="Azure::Storage::Service::Cors (class)">Cors</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Cors.html#initialize-instance_method" title="Azure::Storage::Service::Cors#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cors'>cors</span><span class='op'>|</span>
-    <span class='id identifier rubyid_cors'>cors</span><span class='period'>.</span><span class='id identifier rubyid_cors_rules'>cors_rules</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_child'>child</span><span class='op'>|</span> <span class='id identifier rubyid_cors_rule_from_xml'>cors_rule_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_child'>child</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_cors'>cors</span><span class='period'>.</span><span class='id identifier rubyid_cors_rules'>cors_rules</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_child'>child</span><span class='op'>|</span> <span class='id identifier rubyid_cors_rule_from_xml'>cors_rule_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_child'>child</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -791,7 +791,6 @@
       <pre class="lines">
 
 
-242
 243
 244
 245
@@ -802,10 +801,11 @@
 250
 251
 252
-253</pre>
+253
+254</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 242</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 243</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cors_rule_from_xml'>cors_rule_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
@@ -839,7 +839,6 @@
       <pre class="lines">
 
 
-223
 224
 225
 226
@@ -847,10 +846,11 @@
 228
 229
 230
-231</pre>
+231
+232</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 223</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 224</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cors_rule_to_xml'>cors_rule_to_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_cors_rule'>cors_rule</span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>CorsRule</span> <span class='lbrace'>{</span>
@@ -881,16 +881,16 @@
       <pre class="lines">
 
 
-215
 216
 217
 218
 219
 220
-221</pre>
+221
+222</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 215</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 216</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cors_to_xml'>cors_to_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_cors'>cors</span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Cors</span> <span class='lbrace'>{</span>
@@ -919,7 +919,6 @@
       <pre class="lines">
 
 
-98
 99
 100
 101
@@ -927,16 +926,17 @@
 103
 104
 105
-106</pre>
+106
+107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 98</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_enumeration_results_from_xml'>enumeration_results_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>EnumerationResults</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_results'>results</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Service.html" title="Azure::Service (module)">Service</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Service/EnumerationResults.html" title="Azure::Service::EnumerationResults (class)">EnumerationResults</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='semicolon'>;</span> 
+  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_results'>results</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Service.html" title="Azure::Service (module)">Service</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Service/EnumerationResults.html" title="Azure::Service::EnumerationResults (class)">EnumerationResults</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='semicolon'>;</span>
 
   <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_continuation_token'>continuation_token</span> <span class='op'>=</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>NextMarker</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span> <span class='op'>&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>NextMarker</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
   <span class='id identifier rubyid_results'>results</span>
@@ -961,12 +961,12 @@
       <pre class="lines">
 
 
-296
 297
-298</pre>
+298
+299</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 296</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 297</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expect_node'>expect_node</span><span class='lparen'>(</span><span class='id identifier rubyid_node_name'>node_name</span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Xml is not a </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node_name'>node_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> node. xml:\n</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_xml'>xml</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='id identifier rubyid_node_name'>node_name</span>
@@ -991,17 +991,17 @@
       <pre class="lines">
 
 
-169
 170
 171
 172
-173</pre>
+173
+174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 170</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hour_metrics_to_xml'>hour_metrics_to_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_metrics'>metrics</span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>HourMetrics</span> <span class='lbrace'>{</span> 
+  <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>HourMetrics</span> <span class='lbrace'>{</span>
     <span class='id identifier rubyid_metrics_to_xml_children'>metrics_to_xml_children</span><span class='lparen'>(</span><span class='id identifier rubyid_metrics'>metrics</span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_metrics'>metrics</span>
 <span class='kw'>end</span></pre>
@@ -1025,7 +1025,6 @@
       <pre class="lines">
 
 
-202
 203
 204
 205
@@ -1036,10 +1035,11 @@
 210
 211
 212
-213</pre>
+213
+214</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 202</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 203</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_logging_from_xml'>logging_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
@@ -1073,7 +1073,6 @@
       <pre class="lines">
 
 
-192
 193
 194
 195
@@ -1081,13 +1080,14 @@
 197
 198
 199
-200</pre>
+200
+201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 193</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_logging_to_xml'>logging_to_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_logging'>logging</span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Logging</span> <span class='lbrace'>{</span> 
+  <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Logging</span> <span class='lbrace'>{</span>
     <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Version</span> <span class='id identifier rubyid_logging'>logging</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span>
     <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Delete</span> <span class='id identifier rubyid_logging'>logging</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span>
     <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>Read</span> <span class='id identifier rubyid_logging'>logging</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span>
@@ -1115,7 +1115,6 @@
       <pre class="lines">
 
 
-127
 128
 129
 130
@@ -1130,17 +1129,18 @@
 139
 140
 141
-142</pre>
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 128</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_metadata_from_headers'>metadata_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
 
-  <span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span> 
+  <span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='id identifier rubyid_k'>k</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^x-ms-meta-(.*)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
-      <span class='kw'>if</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span> <span class='id identifier rubyid_key'>key</span> 
+      <span class='kw'>if</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span> <span class='id identifier rubyid_key'>key</span>
         <span class='id identifier rubyid_metadata'>metadata</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_metadata'>metadata</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span> <span class='symbol'>:push</span>
         <span class='id identifier rubyid_metadata'>metadata</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span>
       <span class='kw'>else</span>
@@ -1171,7 +1171,6 @@
       <pre class="lines">
 
 
-108
 109
 110
 111
@@ -1188,10 +1187,11 @@
 122
 123
 124
-125</pre>
+125
+126</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 109</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_metadata_from_xml'>metadata_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
@@ -1202,7 +1202,7 @@
   <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_meta_node'>meta_node</span><span class='op'>|</span>
 
     <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='id identifier rubyid_meta_node'>meta_node</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span> <span class='id identifier rubyid_key'>key</span> 
+    <span class='kw'>if</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span> <span class='id identifier rubyid_key'>key</span>
       <span class='id identifier rubyid_metadata'>metadata</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_metadata'>metadata</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span> <span class='symbol'>:push</span>
       <span class='id identifier rubyid_metadata'>metadata</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_meta_node'>meta_node</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
     <span class='kw'>else</span>
@@ -1231,7 +1231,6 @@
       <pre class="lines">
 
 
-181
 182
 183
 184
@@ -1240,10 +1239,11 @@
 187
 188
 189
-190</pre>
+190
+191</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 181</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 182</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_metrics_from_xml'>metrics_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
@@ -1275,16 +1275,16 @@
       <pre class="lines">
 
 
-161
 162
 163
 164
 165
 166
-167</pre>
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 161</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_metrics_to_xml_children'>metrics_to_xml_children</span><span class='lparen'>(</span><span class='id identifier rubyid_metrics'>metrics</span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_metrics'>metrics</span>
@@ -1313,17 +1313,17 @@
       <pre class="lines">
 
 
-175
 176
 177
 178
-179</pre>
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 176</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_minute_metrics_to_xml'>minute_metrics_to_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_metrics'>metrics</span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>MinuteMetrics</span> <span class='lbrace'>{</span> 
+  <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>MinuteMetrics</span> <span class='lbrace'>{</span>
     <span class='id identifier rubyid_metrics_to_xml_children'>metrics_to_xml_children</span><span class='lparen'>(</span><span class='id identifier rubyid_metrics'>metrics</span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_metrics'>metrics</span>
 <span class='kw'>end</span></pre>
@@ -1347,7 +1347,6 @@
       <pre class="lines">
 
 
-151
 152
 153
 154
@@ -1355,10 +1354,11 @@
 156
 157
 158
-159</pre>
+159
+160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 152</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_retention_policy_from_xml'>retention_policy_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
@@ -1389,15 +1389,15 @@
       <pre class="lines">
 
 
-144
 145
 146
 147
 148
-149</pre>
+149
+150</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 145</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_retention_policy_to_xml'>retention_policy_to_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_retention_policy'>retention_policy</span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>RetentionPolicy</span> <span class='lbrace'>{</span>
@@ -1425,7 +1425,6 @@
       <pre class="lines">
 
 
-272
 273
 274
 275
@@ -1436,10 +1435,11 @@
 280
 281
 282
-283</pre>
+283
+284</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 272</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 273</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_service_properties_from_xml'>service_properties_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
@@ -1473,7 +1473,6 @@
       <pre class="lines">
 
 
-259
 260
 261
 262
@@ -1484,13 +1483,14 @@
 267
 268
 269
-270</pre>
+270
+271</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 259</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 260</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_service_properties_to_xml'>service_properties_to_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_properties'>properties</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_builder'>builder</span> <span class='op'>=</span> <span class='const'>Nokogiri</span><span class='op'>::</span><span class='const'>XML</span><span class='op'>::</span><span class='const'>Builder</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:encoding</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>utf-8</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_xml'>xml</span><span class='op'>|</span>
+  <span class='id identifier rubyid_builder'>builder</span> <span class='op'>=</span> <span class='const'>Nokogiri</span><span class='op'>::</span><span class='const'>XML</span><span class='op'>::</span><span class='const'>Builder</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>encoding:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>utf-8</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_xml'>xml</span><span class='op'>|</span>
     <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>StorageServiceProperties</span> <span class='lbrace'>{</span>
       <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>DefaultServiceVersion</span><span class='lparen'>(</span><span class='id identifier rubyid_properties'>properties</span><span class='period'>.</span><span class='id identifier rubyid_default_service_version'>default_service_version</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_properties'>properties</span><span class='period'>.</span><span class='id identifier rubyid_default_service_version'>default_service_version</span>
       <span class='id identifier rubyid_logging_to_xml'>logging_to_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_properties'>properties</span><span class='period'>.</span><span class='id identifier rubyid_logging'>logging</span><span class='comma'>,</span> <span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_properties'>properties</span><span class='period'>.</span><span class='id identifier rubyid_logging'>logging</span>
@@ -1521,7 +1521,6 @@
       <pre class="lines">
 
 
-77
 78
 79
 80
@@ -1529,10 +1528,11 @@
 82
 83
 84
-85</pre>
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 78</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_signed_identifier_from_xml'>signed_identifier_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
@@ -1563,7 +1563,6 @@
       <pre class="lines">
 
 
-41
 42
 43
 44
@@ -1579,10 +1578,11 @@
 54
 55
 56
-57</pre>
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_signed_identifiers_from_xml'>signed_identifiers_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
@@ -1594,7 +1594,7 @@
   <span class='kw'>if</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>SignedIdentifier</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>0</span>
     <span class='id identifier rubyid_identifiers'>identifiers</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_signed_identifier_from_xml'>signed_identifier_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>SignedIdentifier</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>SignedIdentifier</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_identifier_node'>identifier_node</span><span class='op'>|</span> 
+    <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>SignedIdentifier</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_identifier_node'>identifier_node</span><span class='op'>|</span>
       <span class='id identifier rubyid_identifiers'>identifiers</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_signed_identifier_from_xml'>signed_identifier_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier_node'>identifier_node</span><span class='rparen'>)</span><span class='rparen'>)</span>
     <span class='rbrace'>}</span>
   <span class='kw'>end</span>
@@ -1621,7 +1621,6 @@
       <pre class="lines">
 
 
-59
 60
 61
 62
@@ -1637,13 +1636,14 @@
 72
 73
 74
-75</pre>
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_signed_identifiers_to_xml'>signed_identifiers_to_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_builder'>builder</span> <span class='op'>=</span> <span class='const'>Nokogiri</span><span class='op'>::</span><span class='const'>XML</span><span class='op'>::</span><span class='const'>Builder</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:encoding</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>utf-8</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_xml'>xml</span><span class='op'>|</span>
+  <span class='id identifier rubyid_builder'>builder</span> <span class='op'>=</span> <span class='const'>Nokogiri</span><span class='op'>::</span><span class='const'>XML</span><span class='op'>::</span><span class='const'>Builder</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>encoding:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>utf-8</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_xml'>xml</span><span class='op'>|</span>
     <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>SignedIdentifiers</span> <span class='lbrace'>{</span>
       <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_identifier'>identifier</span><span class='op'>|</span>
         <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='const'>SignedIdentifier</span> <span class='lbrace'>{</span>
@@ -1679,15 +1679,15 @@
       <pre class="lines">
 
 
-289
 290
 291
 292
 293
-294</pre>
+294
+295</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 289</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 290</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_slopify'>slopify</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'><span class='object_link'><a href="../../../../String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='const'>Nokogiri</span><span class='period'>.</span><span class='const'>Slop</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_root'><span class='object_link'><a href="../../../../top-level-namespace.html" title="Top Level Namespace (root)">root</a></span></span> <span class='op'>:</span> <span class='id identifier rubyid_xml'>xml</span>
@@ -1715,15 +1715,15 @@
       <pre class="lines">
 
 
-285
 286
-287</pre>
+287
+288</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 285</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/service/serialization.rb', line 286</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_bool'>to_bool</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
-  <span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>true</span><span class='tstring_end'>&#39;</span></span>
+  <span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>true</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1735,7 +1735,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 14 14:27:13 2017 by
+  Generated on Thu Sep 28 15:32:14 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>
