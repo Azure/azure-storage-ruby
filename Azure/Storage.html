@@ -233,15 +233,15 @@ DEALINGS IN THE SOFTWARE.</p>
       <pre class="lines">
 
 
-40
-41
 42
-43</pre>
+43
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage.rb', line 42</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_client'>client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_client'>client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@client</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Client.html" title="Azure::Storage::Client (class)">Client</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Storage/Client.html#initialize-instance_method" title="Azure::Storage::Client#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@client</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@client</span><span class='period'>.</span><span class='id identifier rubyid_same_options?'>same_options?</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='ivar'>@client</span>
 <span class='kw'>end</span></pre>
@@ -255,7 +255,7 @@ DEALINGS IN THE SOFTWARE.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 14 14:27:08 2017 by
+  Generated on Thu Sep 28 15:32:10 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

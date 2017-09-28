@@ -672,7 +672,7 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 30</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_partition'>partition</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_partition'>partition</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@table</span> <span class='op'>=</span> <span class='id identifier rubyid_table'>table</span>
   <span class='ivar'>@partition_key</span> <span class='op'>=</span> <span class='id identifier rubyid_partition'>partition</span>
   <span class='ivar'>@row_key</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span>
@@ -1101,6 +1101,8 @@
       <pre class="lines">
 
 
+106
+107
 108
 109
 110
@@ -1109,12 +1111,10 @@
 113
 114
 115
-116
-117
-118</pre>
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid__build_filter_string'>_build_filter_string</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
@@ -1122,8 +1122,8 @@
   <span class='id identifier rubyid_filters'>filters</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
     <span class='id identifier rubyid_clauses'>clauses</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Table.html" title="Azure::Storage::Table (module)">Table</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EdmType.html" title="Azure::Storage::Table::EdmType (module)">EdmType</a></span></span><span class='period'>.</span><span class='id identifier rubyid_serialize_query_value'><span class='object_link'><a href="EdmType.html#serialize_query_value-class_method" title="Azure::Storage::Table::EdmType.serialize_query_value (method)">serialize_query_value</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='rbrace'>}</span>
-  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='id identifier rubyid_clauses'>clauses</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>0</span> 
-  
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='id identifier rubyid_clauses'>clauses</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>0</span>
+
   <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_clauses'>clauses</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> and </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span>
 <span class='kw'>end</span></pre>
@@ -1157,25 +1157,21 @@
 101
 102
 103
-104
-105
-106</pre>
+104</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_execute'>execute</span>
-  <span class='ivar'>@table_service</span><span class='period'>.</span><span class='id identifier rubyid_query_entities'>query_entities</span><span class='lparen'>(</span><span class='ivar'>@table</span><span class='comma'>,</span> <span class='lbrace'>{</span>
-    <span class='symbol'>:partition_key</span> <span class='op'>=&gt;</span> <span class='ivar'>@partition_key</span><span class='comma'>,</span>
-    <span class='symbol'>:row_key</span> <span class='op'>=&gt;</span> <span class='ivar'>@row_key</span><span class='comma'>,</span> 
-    <span class='symbol'>:select</span> <span class='op'>=&gt;</span> <span class='ivar'>@fields</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='symbol'>:filter</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid__build_filter_string'>_build_filter_string</span><span class='comma'>,</span>
-    <span class='symbol'>:top</span> <span class='op'>=&gt;</span> <span class='lparen'>(</span><span class='ivar'>@top_n</span> <span class='op'>?</span> <span class='ivar'>@top_n</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>:</span> <span class='ivar'>@top_n</span><span class='rparen'>)</span><span class='comma'>,</span>
-    <span class='symbol'>:continuation_token</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span> 
-      <span class='symbol'>:next_partition_key</span> <span class='op'>=&gt;</span> <span class='ivar'>@next_partition_key</span><span class='comma'>,</span>
-      <span class='symbol'>:next_row_key</span> <span class='op'>=&gt;</span> <span class='ivar'>@next_row_key</span>
-    <span class='rbrace'>}</span>
-  <span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='ivar'>@table_service</span><span class='period'>.</span><span class='id identifier rubyid_query_entities'>query_entities</span><span class='lparen'>(</span><span class='ivar'>@table</span><span class='comma'>,</span>           <span class='label'>partition_key:</span> <span class='ivar'>@partition_key</span><span class='comma'>,</span>
+    <span class='label'>row_key:</span> <span class='ivar'>@row_key</span><span class='comma'>,</span>
+    <span class='label'>select:</span> <span class='ivar'>@fields</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>filter:</span> <span class='id identifier rubyid__build_filter_string'>_build_filter_string</span><span class='comma'>,</span>
+    <span class='label'>top:</span> <span class='lparen'>(</span><span class='ivar'>@top_n</span> <span class='op'>?</span> <span class='ivar'>@top_n</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>:</span> <span class='ivar'>@top_n</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='label'>continuation_token:</span> <span class='lbrace'>{</span>
+      <span class='label'>next_partition_key:</span> <span class='ivar'>@next_partition_key</span><span class='comma'>,</span>
+      <span class='label'>next_row_key:</span> <span class='ivar'>@next_row_key</span>
+    <span class='rbrace'>}</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1443,7 +1439,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 14 14:27:14 2017 by
+  Generated on Thu Sep 28 15:32:15 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

@@ -156,7 +156,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Overrides the base class implementation of call to determine  how the HTTP
+<p>Overrides the base class implementation of call to determine how the HTTP
 request should continue retrying.</p>
 </div></span>
   
@@ -233,20 +233,20 @@ request should continue retrying.</p>
       <pre class="lines">
 
 
-29
-30
 31
 32
 33
-34</pre>
+34
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/linear_retry_filter.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/linear_retry_filter.rb', line 31</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_count'>retry_count</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_interval'>retry_interval</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_count'>retry_count</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_interval'>retry_interval</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@retry_count</span> <span class='op'>=</span> <span class='id identifier rubyid_retry_count'>retry_count</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="" title="Azure::Storage::Core::Filter::LinearRetryPolicyFilter (class)">LinearRetryPolicyFilter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#DEFAULT_RETRY_COUNT-constant" title="Azure::Storage::Core::Filter::LinearRetryPolicyFilter::DEFAULT_RETRY_COUNT (constant)">DEFAULT_RETRY_COUNT</a></span></span>
   <span class='ivar'>@retry_interval</span> <span class='op'>=</span> <span class='id identifier rubyid_retry_interval'>retry_interval</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="" title="Azure::Storage::Core::Filter::LinearRetryPolicyFilter (class)">LinearRetryPolicyFilter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#DEFAULT_RETRY_INTERVAL-constant" title="Azure::Storage::Core::Filter::LinearRetryPolicyFilter::DEFAULT_RETRY_INTERVAL (constant)">DEFAULT_RETRY_INTERVAL</a></span></span>
-  
+
   <span class='kw'>super</span> <span class='ivar'>@retry_count</span><span class='comma'>,</span> <span class='ivar'>@retry_interval</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -273,7 +273,7 @@ request should continue retrying.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Overrides the base class implementation of call to determine  how the HTTP
+<p>Overrides the base class implementation of call to determine how the HTTP
 request should continue retrying</p>
 
 <p>retry_data - Hash. Stores stateful retry data</p>
@@ -295,13 +295,13 @@ lifetime of the request</p>
       <pre class="lines">
 
 
-48
-49
 50
-51</pre>
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/linear_retry_filter.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/linear_retry_filter.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_apply_retry_policy'>apply_retry_policy</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:count</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:count</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>nil</span> <span class='op'>?</span> <span class='int'>1</span> <span class='op'>:</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:count</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='int'>1</span>
@@ -317,7 +317,7 @@ lifetime of the request</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 14 14:27:16 2017 by
+  Generated on Thu Sep 28 15:32:17 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>
