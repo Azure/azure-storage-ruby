@@ -67,7 +67,7 @@ There are two ways you can set up the connections:
 ```ruby
 
   require 'azure/storage'
-  client = Azure::Storage::Client.create_develpoment
+  client = Azure::Storage::Client.create_development
 
   # Or create by options and provide your own proxy_uri
   client = Azure::Storage::Client.create(:use_development_storage => true, :development_storage_proxy_uri => 'your proxy uri')
