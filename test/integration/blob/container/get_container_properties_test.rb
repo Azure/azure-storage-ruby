@@ -29,11 +29,11 @@ describe Azure::Storage::Blob::BlobService do
   after { ContainerNameHelper.clean }
 
   describe "#get_container_properties" do
-    let(:container_name) { ContainerNameHelper.name }
     let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
     let(:public_access_level) { "blob" }
 
     it "gets properties and custom metadata for the container" do
+      container_name = ContainerNameHelper.name
       container = subject.create_container container_name, metadata: metadata, public_access_level: public_access_level
       properties = container.properties
 
@@ -54,6 +54,52 @@ describe Azure::Storage::Blob::BlobService do
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.get_container_properties ContainerNameHelper.name
       end
+    end
+
+    it "lease id works" do
+      container_name = ContainerNameHelper.name
+      container = subject.create_container container_name, metadata: metadata, public_access_level: public_access_level
+      properties = container.properties
+      lease_id = subject.acquire_container_lease container_name
+      subject.release_container_lease container_name, lease_id
+      new_lease_id = subject.acquire_container_lease container_name
+      # assert wrong lease fails
+      status_code = ""
+      description = ""
+      begin
+        container = subject.get_container_properties container_name, lease_id: lease_id
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "The lease ID specified did not match the lease ID for the container."
+      # assert right lease succeeds
+      container = subject.get_container_properties container_name, lease_id: new_lease_id
+      container.wont_be_nil
+      container.name.must_equal container_name
+      container.properties[:etag].must_equal properties[:etag]
+      container.properties[:last_modified].must_equal properties[:last_modified]
+      container.public_access_level.must_equal "blob"
+
+      metadata.each { |k, v|
+        container.metadata.must_include k.downcase
+        container.metadata[k.downcase].must_equal v
+      }
+      # assert no lease succeeds
+      container = subject.get_container_properties container_name
+      container.wont_be_nil
+      container.name.must_equal container_name
+      container.properties[:etag].must_equal properties[:etag]
+      container.properties[:last_modified].must_equal properties[:last_modified]
+      container.public_access_level.must_equal "blob"
+
+      metadata.each { |k, v|
+        container.metadata.must_include k.downcase
+        container.metadata[k.downcase].must_equal v
+      }
+      # release lease afterwards
+      subject.release_container_lease container_name, new_lease_id
     end
   end
 end

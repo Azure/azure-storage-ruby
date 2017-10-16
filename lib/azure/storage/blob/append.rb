@@ -63,6 +63,8 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to create a new blob
     #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:lease_id+                  - String. Required if the blob has an active lease. To perform this operation on a blob with an active lease,
+    #                                  specify the valid lease ID for this header.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx
     #
@@ -92,6 +94,7 @@ module Azure::Storage
 
       StorageService.add_metadata_to_headers options[:metadata], headers
       add_blob_conditional_headers options, headers
+      headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 
       # call PutBlob with empty body
       response = call(:put, uri, nil, headers, options)
@@ -135,6 +138,8 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to append a block only if
     #                                  the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:lease_id+                  - String. Required if the blob has an active lease. To perform this operation on a blob with an
+    #                                  active lease, specify the valid lease ID for this header.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/mt427365.aspx
     #
@@ -150,6 +155,7 @@ module Azure::Storage
       StorageService.with_header headers, "x-ms-lease-id", options[:lease_id]
 
       add_blob_conditional_headers options, headers
+      headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 
       response = call(:put, uri, content, headers, options)
       result = Serialization.blob_from_headers(response.headers)

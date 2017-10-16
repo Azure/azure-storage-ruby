@@ -99,5 +99,26 @@ describe Azure::Storage::Blob::BlobService do
         subject.create_page_blob container_name, blob_name, length + 1
       end
     end
+
+    it "lease id works for create_page_blob" do
+      page_blob_name = BlobNameHelper.name
+      subject.create_page_blob container_name, page_blob_name, length
+      # acquire lease for blob
+      lease_id = subject.acquire_blob_lease container_name, page_blob_name
+      # assert no lease fails
+      status_code = ""
+      description = ""
+      begin
+        subject.create_page_blob container_name, page_blob_name, length
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      # assert correct lease works
+      blob = subject.create_page_blob container_name, page_blob_name, length, lease_id: lease_id
+      blob.name.must_equal page_blob_name
+    end
   end
 end

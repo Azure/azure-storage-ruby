@@ -85,5 +85,31 @@ describe Azure::Storage::Blob::BlobService do
       }
 
     end
+
+    it "lease id works for create_blob_snapshot" do
+      page_blob_name = BlobNameHelper.name
+      subject.create_page_blob container_name, page_blob_name, 1024
+      # add lease to blob
+      lease_id = subject.acquire_blob_lease container_name, page_blob_name
+      subject.release_blob_lease container_name, page_blob_name, lease_id
+      new_lease_id = subject.acquire_blob_lease container_name, page_blob_name
+      # assert wrong lease fails
+      status_code = ""
+      description = ""
+      begin
+        snapshot = subject.create_blob_snapshot container_name, page_blob_name, lease_id: lease_id
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "The lease ID specified did not match the lease ID for the blob."
+      # assert right lease succeeds
+      snapshot = subject.create_blob_snapshot container_name, page_blob_name, lease_id: new_lease_id
+      snapshot.wont_be_nil
+      # assert no lease succeeds
+      snapshot = subject.create_blob_snapshot container_name, page_blob_name
+      snapshot.wont_be_nil
+    end
   end
 end

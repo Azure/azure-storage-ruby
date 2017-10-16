@@ -34,13 +34,11 @@ describe Azure::Storage::Blob::BlobService do
   after { ContainerNameHelper.clean }
 
   describe "#set/get_container_metadata" do
-    let(:container_name) { ContainerNameHelper.name }
     let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
-    before {
-      subject.create_container container_name
-    }
 
     it "sets and gets custom metadata for the container" do
+      container_name = ContainerNameHelper.name
+      subject.create_container container_name
       result = subject.set_container_metadata container_name, metadata
       result.must_be_nil
       container = subject.get_container_metadata container_name
@@ -59,6 +57,76 @@ describe Azure::Storage::Blob::BlobService do
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.set_container_metadata ContainerNameHelper.name, metadata
       end
+    end
+
+    it "lease id works for get_container_metadata" do
+      container_name = ContainerNameHelper.name
+      container = subject.create_container container_name, metadata: metadata
+
+      lease_id = subject.acquire_container_lease container_name
+      subject.release_container_lease container_name, lease_id
+      new_lease_id = subject.acquire_container_lease container_name
+      # assert wrong lease fails
+      status_code = ""
+      description = ""
+      begin
+        container = subject.get_container_metadata container_name, lease_id: lease_id
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "The lease ID specified did not match the lease ID for the container."
+      # assert right lease succeeds
+      container = subject.get_container_metadata container_name, lease_id: new_lease_id
+      container.wont_be_nil
+      container.name.must_equal container_name
+      metadata.each { |k, v|
+        container.metadata.must_include k.downcase
+        container.metadata[k.downcase].must_equal v
+      }
+      # assert no lease succeeds
+      container = subject.get_container_metadata container_name
+      container.wont_be_nil
+      metadata.each { |k, v|
+        container.metadata.must_include k.downcase
+        container.metadata[k.downcase].must_equal v
+      }
+      # release lease afterwards
+      subject.release_container_lease container_name, new_lease_id
+    end
+
+    it "lease id works for set_container_metadata" do
+      container_name = ContainerNameHelper.name
+      subject.create_container container_name
+      lease_id = subject.acquire_container_lease container_name
+      subject.release_container_lease container_name, lease_id
+      new_lease_id = subject.acquire_container_lease container_name
+      # assert wrong lease fails
+      status_code = ""
+      description = ""
+      begin
+        result = subject.set_container_metadata container_name, metadata, lease_id: lease_id
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "The lease ID specified did not match the lease ID for the container."
+      # assert right lease succeeds
+      result = subject.set_container_metadata container_name, metadata, lease_id: new_lease_id
+      result.must_be_nil
+      container = subject.get_container_metadata container_name
+      container.wont_be_nil
+      container.name.must_equal container_name
+      metadata.each { |k, v|
+        container.metadata.must_include k.downcase
+        container.metadata[k.downcase].must_equal v
+      }
+      # prove that no lease succeeds
+      result = subject.set_container_metadata container_name, metadata
+      # release lease afterwards
+      subject.release_container_lease container_name, new_lease_id
     end
   end
 end

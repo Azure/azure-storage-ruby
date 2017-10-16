@@ -82,5 +82,79 @@ describe Azure::Storage::Blob::BlobService do
         subject.set_blob_metadata container_name, "thisblobdoesnotexist", metadata
       end
     end
+
+    it "lease id works for get_blob_metadata" do
+      page_blob_name = BlobNameHelper.name
+      subject.create_page_blob container_name, page_blob_name, length
+      subject.set_blob_metadata container_name, page_blob_name, metadata
+      # add lease to blob
+      lease_id = subject.acquire_blob_lease container_name, page_blob_name
+      subject.release_blob_lease container_name, page_blob_name, lease_id
+      new_lease_id = subject.acquire_blob_lease container_name, page_blob_name
+      # assert wrong lease fails
+      status_code = ""
+      description = ""
+      begin
+        blob = subject.get_blob_metadata container_name, page_blob_name, lease_id: lease_id
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      # assert right lease succeeds
+      blob = subject.get_blob_metadata container_name, page_blob_name, lease_id: new_lease_id
+      blob.wont_be_nil
+      metadata.each { |k, v|
+        blob.metadata.must_include k
+        blob.metadata[k].must_equal v
+      }
+      # assert no lease succeeds
+      blob = subject.get_blob_metadata container_name, page_blob_name
+      blob.wont_be_nil
+      metadata.each { |k, v|
+        blob.metadata.must_include k
+        blob.metadata[k].must_equal v
+      }
+    end
+
+    it "lease id works for set_blob_metadata" do
+      page_blob_name = BlobNameHelper.name
+      subject.create_page_blob container_name, page_blob_name, length
+      # add lease to blob
+      lease_id = subject.acquire_blob_lease container_name, page_blob_name
+      subject.release_blob_lease container_name, page_blob_name, lease_id
+      new_lease_id = subject.acquire_blob_lease container_name, page_blob_name
+      # assert wrong lease fails
+      status_code = ""
+      description = ""
+      begin
+        blob = subject.set_blob_metadata container_name, page_blob_name, metadata, lease_id: lease_id
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "The lease ID specified did not match the lease ID for the blob."
+      # assert right lease succeeds
+      result = subject.set_blob_metadata container_name, page_blob_name, metadata, lease_id: new_lease_id
+      result.must_be_nil
+      blob = subject.get_blob_metadata container_name, page_blob_name
+      blob.wont_be_nil
+      metadata.each { |k, v|
+        blob.metadata.must_include k
+        blob.metadata[k].must_equal v
+      }
+      # prove that no lease fails
+      status_code = ""
+      description = ""
+      begin
+        blob = subject.set_blob_metadata container_name, page_blob_name, metadata
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+    end
   end
 end

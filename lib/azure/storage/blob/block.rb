@@ -84,6 +84,8 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to create a new blob
     #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:lease_id+                  - String. Required if the blob has an active lease. To perform this operation on a blob with an active lease,
+    #                                  specify the valid lease ID for this header.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx
     #
@@ -110,6 +112,7 @@ module Azure::Storage
 
       StorageService.add_metadata_to_headers options[:metadata], headers
       add_blob_conditional_headers options, headers
+      headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 
       # call PutBlob with empty body
       response = call(:put, uri, content, headers, options)
@@ -138,6 +141,8 @@ module Azure::Storage
     # * +:timeout+               - Integer. A timeout in seconds.
     # * +:request_id+            - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                              in the analytics logs when storage analytics logging is enabled.
+    # * +:lease_id+              - String. Required if the blob has an active lease. To perform this operation on a blob with an
+    #                              active lease, specify the valid lease ID for this header.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd135726.aspx
     #
@@ -151,6 +156,7 @@ module Azure::Storage
 
       headers = StorageService.common_headers
       StorageService.with_header headers, "Content-MD5", options[:content_md5]
+      headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 
       response = call(:put, uri, content, headers, options)
       response.headers["Content-MD5"]
@@ -194,6 +200,8 @@ module Azure::Storage
     # * +:timeout+                   - Integer. A timeout in seconds.
     # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
+    # * +:lease_id+                  - String. Required if the blob has an active lease. To perform this operation on a blob with an
+    #                                  active lease, specify the valid lease ID for this header.
     #
     # This operation also supports the use of conditional headers to commit the block list if a specified condition is met.
     # For more information, see https://msdn.microsoft.com/en-us/library/azure/dd179371.aspx
@@ -219,6 +227,7 @@ module Azure::Storage
 
         StorageService.add_metadata_to_headers(options[:metadata], headers)
         add_blob_conditional_headers(options, headers)
+        headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
       end
 
       body = Serialization.block_list_to_xml(block_list)
@@ -251,6 +260,12 @@ module Azure::Storage
     # * +:timeout+                  - Integer. A timeout in seconds.
     # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
+    # * +:lease_id+                 - String. If this header is specified, the operation will be performed only if both of the
+    #                                 following conditions are met:
+    #                                   - The blob's lease is currently active.
+    #                                   - The lease ID specified in the request matches that of the blob.
+    #                                 If this header is specified and both of these conditions are not met, the request will fail
+    #                                 and the operation will fail with status code 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179400.aspx
     #
@@ -262,10 +277,12 @@ module Azure::Storage
       StorageService.with_query query, "snapshot", options[:snapshot]
       StorageService.with_query query, "blocklisttype", options[:blocklist_type].to_s if options[:blocklist_type]
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
+      
+      headers = options[:lease_id] ? { "x-ms-lease-id" => options[:lease_id] } : {}
 
       uri = blob_uri(container, blob, query)
 
-      response = call(:get, uri, nil, {}, options)
+      response = call(:get, uri, nil, headers, options)
 
       Serialization.block_list_from_xml(response.body)
     end
