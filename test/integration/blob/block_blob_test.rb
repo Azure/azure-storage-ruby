@@ -105,6 +105,27 @@ describe Azure::Storage::Blob::BlobService do
         subject.create_block_blob ContainerNameHelper.name, blob_name, content
       end
     end
+
+    it "lease id works for create_block_blob" do
+      block_blob_name = BlobNameHelper.name
+      subject.create_block_blob container_name, block_blob_name, content
+      # acquire lease for blob
+      lease_id = subject.acquire_blob_lease container_name, block_blob_name
+      # assert no lease fails
+      status_code = ""
+      description = ""
+      begin
+        subject.create_block_blob container_name, block_blob_name, content
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      # assert correct lease works
+      blob = subject.create_block_blob container_name, block_blob_name, content, lease_id: lease_id
+      blob.name.must_equal block_blob_name
+    end
   end
 
   describe "#put_blob_block" do
@@ -131,6 +152,33 @@ describe Azure::Storage::Blob::BlobService do
       block.type.must_equal :uncommitted
       block.size.must_equal 100 * 1024 * 1024
       block.name.must_equal blockid2
+    end
+
+    it "lease id works for put_blob_block" do
+      block_blob_name = BlobNameHelper.name
+      subject.create_block_blob container_name, block_blob_name, content
+      # acquire lease for blob
+      lease_id = subject.acquire_blob_lease container_name, block_blob_name
+      # assert no lease fails
+      status_code = ""
+      description = ""
+      begin
+        subject.put_blob_block container_name, block_blob_name, blockid1, content
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      # assert correct lease works
+      subject.put_blob_block container_name, block_blob_name, blockid1, content, lease_id: lease_id
+
+      # verify
+      block_list = subject.list_blob_blocks container_name, block_blob_name
+      block = block_list[:uncommitted][0]
+      block.type.must_equal :uncommitted
+      block.size.must_equal 512
+      block.name.must_equal blockid1
     end
   end
 
@@ -166,6 +214,46 @@ describe Azure::Storage::Blob::BlobService do
       blob.properties[:content_length].must_equal (content.length * 2)
       returned_content.must_equal (content + content)
     end
+
+    it "lease id works for commit_blob_blocks" do
+      block_blob_name = BlobNameHelper.name
+      subject.create_block_blob container_name, block_blob_name, content
+      blocklist.each { |block_entry|
+        subject.put_blob_block container_name, block_blob_name, block_entry[0], content
+      }
+      # verify starting state
+      block_list = subject.list_blob_blocks container_name, block_blob_name
+
+      (0..1).each { |i|
+        block = block_list[:uncommitted][i]
+        block.type.must_equal :uncommitted
+        block.size.must_equal 512
+        block.name.must_equal blocklist[i][0]
+      }
+
+      # acquire lease for blob
+      lease_id = subject.acquire_blob_lease container_name, block_blob_name
+
+      # assert no lease fails
+      status_code = ""
+      description = ""
+      begin
+        result = subject.commit_blob_blocks container_name, block_blob_name, blocklist
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      # assert correct lease works
+      result = subject.commit_blob_blocks container_name, block_blob_name, blocklist, lease_id: lease_id
+      result.must_be_nil
+
+      blob, returned_content = subject.get_blob container_name, block_blob_name
+      is_boolean(blob.encrypted).must_equal true
+      blob.properties[:content_length].must_equal (content.length * 2)
+      returned_content.must_equal (content + content)
+    end
   end
 
   describe "#list_blob_blocks" do
@@ -185,6 +273,87 @@ describe Azure::Storage::Blob::BlobService do
 
     it "lists blocks in a blob, including their status" do
       result = subject.list_blob_blocks container_name, blob_name
+
+      committed = result[:committed]
+      committed.length.must_equal 2
+
+      expected_blocks = blocklist.slice(0..1).each
+
+      committed.each { |block|
+        block.name.must_equal expected_blocks.next[0]
+        block.type.must_equal :committed
+        block.size.must_equal 512
+      }
+
+      uncommitted = result[:uncommitted]
+      uncommitted.length.must_equal 2
+
+      expected_blocks = blocklist.slice(2..3).each
+
+      uncommitted.each { |block|
+        block.name.must_equal expected_blocks.next[0]
+        block.type.must_equal :uncommitted
+        block.size.must_equal 512
+      }
+    end
+
+    it "lease id works for list_blob_blocks" do
+      block_blob_name = BlobNameHelper.name
+      subject.create_block_blob container_name, block_blob_name, content
+
+      # two committed blocks, two uncommitted blocks
+      subject.put_blob_block container_name, block_blob_name, blocklist[0][0], content
+      subject.put_blob_block container_name, block_blob_name, blocklist[1][0], content
+
+      result = subject.commit_blob_blocks container_name, block_blob_name, blocklist.slice(0..1)
+      result.must_be_nil
+
+      subject.put_blob_block container_name, block_blob_name, blocklist[2][0], content
+      subject.put_blob_block container_name, block_blob_name, blocklist[3][0], content
+
+      # acquire lease for blob
+      lease_id = subject.acquire_blob_lease container_name, block_blob_name
+      subject.release_blob_lease container_name, block_blob_name, lease_id
+      new_lease_id = subject.acquire_blob_lease container_name, block_blob_name
+
+      # assert wrong lease fails
+      status_code = ""
+      description = ""
+      begin
+        result = subject.list_blob_blocks container_name, block_blob_name, lease_id: lease_id
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "The lease ID specified did not match the lease ID for the blob."
+      # assert correct lease works
+      result = subject.list_blob_blocks container_name, block_blob_name, lease_id: new_lease_id
+
+      committed = result[:committed]
+      committed.length.must_equal 2
+
+      expected_blocks = blocklist.slice(0..1).each
+
+      committed.each { |block|
+        block.name.must_equal expected_blocks.next[0]
+        block.type.must_equal :committed
+        block.size.must_equal 512
+      }
+
+      uncommitted = result[:uncommitted]
+      uncommitted.length.must_equal 2
+
+      expected_blocks = blocklist.slice(2..3).each
+
+      uncommitted.each { |block|
+        block.name.must_equal expected_blocks.next[0]
+        block.type.must_equal :uncommitted
+        block.size.must_equal 512
+      }
+
+      # assert no lease works
+      result = subject.list_blob_blocks container_name, block_blob_name
 
       committed = result[:committed]
       committed.length.must_equal 2

@@ -161,5 +161,32 @@ describe Azure::Storage::Blob::BlobService do
       copy_id = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri2.to_s, if_none_match: etag + "blablabla"
       copy_id.wont_be_nil
     end
+
+    it "lease id works for incremental_copy_blob" do
+      dest_blob_name = BlobNameHelper.name
+      result = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri1.to_s
+      result[1].must_equal "pending"
+      blob = subject.get_blob_properties(container_name, dest_blob_name)
+      blob.properties[:incremental_copy].must_equal true
+      # acquire lease for blob
+      lease_id = subject.acquire_blob_lease container_name, dest_blob_name
+      subject.release_blob_lease container_name, dest_blob_name, lease_id
+      new_lease_id = subject.acquire_blob_lease container_name, dest_blob_name
+
+      # assert wrong lease fails
+      status_code = ""
+      description = ""
+      begin
+        result = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri2.to_s, lease_id: lease_id
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "The lease ID specified did not match the lease ID for the blob."
+      # assert correct lease works
+      copy_id = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri2.to_s, lease_id: new_lease_id
+      copy_id.wont_be_nil
+    end
   end
 end

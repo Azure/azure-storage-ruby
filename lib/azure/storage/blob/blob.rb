@@ -73,6 +73,12 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to get the blob
     #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:lease_id+                  - String. If this header is specified, the operation will be performed only if both of the
+    #                                  following conditions are met:
+    #                                   - The blob's lease is currently active.
+    #                                   - The lease ID specified in the request matches that of the blob.
+    #                                  If this header is specified and both of these conditions are not met, the request will fail
+    #                                  and the Get Blob operation will fail with status code 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179440.aspx
     #
@@ -90,6 +96,7 @@ module Azure::Storage
         StorageService.with_header headers, "x-ms-range-get-content-md5", "true" if options[:get_content_md5]
       end
       add_blob_conditional_headers options, headers
+      headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 
       response = call(:get, uri, nil, headers, options)
       result = Serialization.blob_from_headers(response.headers)
@@ -126,6 +133,14 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to get the blob properties
     #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:lease_id+                  - String. If this header is specified, the operation will be performed only if both of the
+    #                                  following conditions are met:
+    #
+    #                                   - The blob's lease is currently active.
+    #                                   - The lease ID specified in the request matches that of the blob.
+    #
+    #                                  If this header is specified and both of these conditions are not met, the request will fail
+    #                                  and the Get Blob Properties operation will fail with status code 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179394.aspx
     #
@@ -139,6 +154,7 @@ module Azure::Storage
       unless options.empty?
         add_blob_conditional_headers options, headers
       end
+      headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 
       uri = blob_uri(container, blob, query)
 
@@ -217,6 +233,8 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to set the blob properties
     #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:lease_id+                  - String. Required if the blob has an active lease. To perform this operation on a blob with an active
+    #                                  lease, specify the valid lease ID for this header.
     #
     # Remarks:
     #
@@ -271,6 +289,7 @@ module Azure::Storage
         end
 
         add_blob_conditional_headers options, headers
+        headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
       end
 
       call(:put, uri, nil, headers, options)
@@ -305,6 +324,14 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to get the blob metadata
     #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:lease_id+                  - String. If this header is specified, the operation will be performed only if both of the
+    #                                  following conditions are met:
+    #
+    #                                   - The blob's lease is currently active.
+    #                                   - The lease ID specified in the request matches that of the blob.
+    #
+    #                                  If this header is specified and both of these conditions are not met, the request will fail
+    #                                  and the Get Blob Metadata operation will fail with status code 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179350.aspx
     #
@@ -317,6 +344,7 @@ module Azure::Storage
       headers = StorageService.common_headers
       unless options.empty?
         add_blob_conditional_headers options, headers
+        headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
       end
 
       uri = blob_uri(container, blob, query)
@@ -356,6 +384,8 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to set the blob metadata
     #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:lease_id+                  - String. Required if the blob has an active lease. To perform this operation on a blob with an active
+    #                                  lease, specify the valid lease ID for this header.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179414.aspx
     #
@@ -370,6 +400,7 @@ module Azure::Storage
       StorageService.add_metadata_to_headers metadata, headers
       unless options.empty?
         add_blob_conditional_headers options, headers
+        headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
       end
 
       call(:put, uri, nil, headers, options)
@@ -407,6 +438,8 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to acquire the lease
     #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:origin+                    - String. Optional. Specifies the origin from which the request is issued. The presence of this header results
+    #                                  in cross-origin resource sharing headers on the response.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
@@ -447,6 +480,8 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to renew the lease
     #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:origin+                    - String. Optional. Specifies the origin from which the request is issued. The presence of this header results
+    #                                  in cross-origin resource sharing headers on the response.
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns the renewed lease id
@@ -483,6 +518,8 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to change the lease
     #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:origin+                    - String. Optional. Specifies the origin from which the request is issued. The presence of this header results
+    #                                  in cross-origin resource sharing headers on the response.
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns the changed lease id
@@ -519,6 +556,8 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to release the lease
     #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:origin+                    - String. Optional. Specifies the origin from which the request is issued. The presence of this header results
+    #                                  in cross-origin resource sharing headers on the response.
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns nil on success
@@ -567,6 +606,8 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to break the lease
     #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:origin+                    - String. Optional. Specifies the origin from which the request is issued. The presence of this header results
+    #                                  in cross-origin resource sharing headers on the response.
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns an Integer of the remaining lease time. This value is the approximate time remaining in the lease
@@ -603,6 +644,12 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to create the blob snapshot
     #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:lease_id+                  - String. If this header is specified, the operation will be performed only if both of the
+    #                                  following conditions are met:
+    #                                   - The blob's lease is currently active.
+    #                                   - The lease ID specified in the request matches that of the blob.
+    #                                  If this header is specified and both of these conditions are not met, the request will fail
+    #                                  and the Snapshot Blob operation will fail with status code 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/ee691971.aspx
     #
@@ -617,6 +664,7 @@ module Azure::Storage
       unless options.empty?
         StorageService.add_metadata_to_headers(options[:metadata], headers)
         add_blob_conditional_headers(options, headers)
+        headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
       end
 
       response = call(:put, uri, nil, headers, options)
@@ -668,6 +716,13 @@ module Azure::Storage
     # * +:timeout+                    - Integer. A timeout in seconds.
     # * +:request_id+                 - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                   in the analytics logs when storage analytics logging is enabled.
+    # * +:lease_id+                   - String. Required if the destination blob has an active lease. The lease ID specified for
+    #                                   this header must match the lease ID of the destination blob. If the request does not include
+    #                                   the lease ID or it is not valid, the operation fails with status code 412 (Precondition Failed).
+    #                                   If this header is specified and the destination blob does not currently have an active lease,
+    #                                   the operation will also fail with status code 412 (Precondition Failed).
+    #                                   In version 2012-02-12 and newer, this value must specify an active, infinite lease for a
+    #                                   leased blob. A finite-duration lease ID fails with 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd894037.aspx
     #
@@ -690,6 +745,7 @@ module Azure::Storage
       unless options.empty?
         add_blob_conditional_headers options, headers
         StorageService.add_metadata_to_headers options[:metadata], headers
+        headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
       end
 
       response = call(:put, uri, nil, headers, options)
@@ -741,6 +797,13 @@ module Azure::Storage
     # * +:timeout+                    - Integer. A timeout in seconds.
     # * +:request_id+                 - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                   in the analytics logs when storage analytics logging is enabled.
+    # * +:lease_id+                   - String. Required if the destination blob has an active lease. The lease ID specified for
+    #                                   this header must match the lease ID of the destination blob. If the request does not include
+    #                                   the lease ID or it is not valid, the operation fails with status code 412 (Precondition Failed).
+    #                                   If this header is specified and the destination blob does not currently have an active lease,
+    #                                   the operation will also fail with status code 412 (Precondition Failed).
+    #                                   In version 2012-02-12 and newer, this value must specify an active, infinite lease for a
+    #                                   leased blob. A finite-duration lease ID fails with 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd894037.aspx
     #
@@ -830,6 +893,9 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to create the blob snapshot
     #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:lease_id+                  - String. Required if the blob has an active lease. To perform this operation on a blob with an
+    #                                  active lease, specify the valid lease ID for this header. If a valid lease ID is not specified
+    #                                  on the request, the operation will fail with status code 403 (Forbidden).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179440.aspx
     #
@@ -846,6 +912,7 @@ module Azure::Storage
       headers = StorageService.common_headers
       StorageService.with_header headers, "x-ms-delete-snapshots", options[:delete_snapshots].to_s if options[:delete_snapshots] && options[:snapshot] == nil
       add_blob_conditional_headers options, headers
+      headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 
       call(:delete, uri, nil, headers, options)
       nil

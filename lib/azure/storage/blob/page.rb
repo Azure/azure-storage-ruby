@@ -69,6 +69,8 @@ module Azure::Storage
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to create a new blob
     #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:lease_id+                  - String. Required if the blob has an active lease. To perform this operation on a blob with an active lease,
+    #                                  specify the valid lease ID for this header.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx
     #
@@ -102,6 +104,7 @@ module Azure::Storage
 
       StorageService.add_metadata_to_headers options[:metadata], headers
       add_blob_conditional_headers options, headers
+      headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 
       # call PutBlob with empty body
       response = call(:put, uri, nil, headers, options)
@@ -150,6 +153,8 @@ module Azure::Storage
     # * +:timeout+                   - Integer. A timeout in seconds.
     # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
+    # * +:lease_id+                  - String. Required if the blob has an active lease. To perform this operation on a blob with an active lease,
+    #                                  specify the valid lease ID for this header.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/ee691975.aspx
     #
@@ -166,6 +171,7 @@ module Azure::Storage
 
       # clear default content type
       StorageService.with_header headers, "Content-Type", ""
+      headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 
       # set optional headers
       unless options.empty?
@@ -273,6 +279,12 @@ module Azure::Storage
     #                                  were changed between target blob and previous snapshot. Changed pages include both updated and
     #                                  cleared pages. The target blob may be a snapshot, as long as the snapshot specified by this
     #                                  is the older of the two.
+    # * +:lease_id+                  - String. If this header is specified, the operation will be performed only if both of the
+    #                                  following conditions are met:
+    #                                   - The blob's lease is currently active.
+    #                                   - The lease ID specified in the request matches that of the blob.
+    #                                  If this header is specified and both of these conditions are not met, the request will fail
+    #                                  and the Get Blob operation will fail with status code 412 (Precondition Failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/ee691973.aspx
     #
@@ -293,6 +305,7 @@ module Azure::Storage
       headers = StorageService.common_headers
       StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}" if options[:start_range]
       add_blob_conditional_headers options, headers
+      headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 
       response = call(:get, uri, nil, headers, options)
 
@@ -384,6 +397,12 @@ module Azure::Storage
     # * +:timeout+                    - Integer. A timeout in seconds.
     # * +:request_id+                 - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                   in the analytics logs when storage analytics logging is enabled.
+    # * +:lease_id+                   - String. If this header is specified, the operation will be performed only if both of the
+    #                                   following conditions are met:
+    #                                     - The blob's lease is currently active.
+    #                                     - The lease ID specified in the request matches that of the blob.
+    #                                   If this header is specified and both of these conditions are not met, the request will fail
+    #                                   and the Snapshot Blob operation will fail with status code 412 (Precondition Failed).
     #
     # See https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob
     #
@@ -408,6 +427,7 @@ module Azure::Storage
       unless options.empty?
         add_blob_conditional_headers options, headers
         StorageService.add_metadata_to_headers options[:metadata], headers
+        headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
       end
 
       response = call(:put, uri, nil, headers, options)

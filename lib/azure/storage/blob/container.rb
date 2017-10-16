@@ -97,6 +97,9 @@ module Azure::Storage::Blob
     # * +:timeout+                  - Integer. A timeout in seconds.
     # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
+    # * +:lease_id+                 - String. If specified, Get Container Properties only succeeds if the container’s lease is
+    #                                 active and matches this ID. If there is no active lease or the ID does not match, 412
+    #                                 (Precondition Failed) is returned.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179370.aspx
     #
@@ -106,8 +109,10 @@ module Azure::Storage::Blob
       query = {}
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
+      headers = options[:lease_id] ? { "x-ms-lease-id" => options[:lease_id] } : {}
+
       # Call
-      response = call(:get, container_uri(name, query), nil, {}, options)
+      response = call(:get, container_uri(name, query), nil, headers, options)
 
       # result
       container = Serialization.container_from_headers(response.headers)
@@ -128,6 +133,9 @@ module Azure::Storage::Blob
     # * +:timeout+                  - Integer. A timeout in seconds.
     # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
+    # * +:lease_id+                 - String. If specified, Get Container Metadata only succeeds if the container’s lease is
+    #                                 active and matches this ID. If there is no active lease or the ID does not match, 412
+    #                                 (Precondition Failed) is returned.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/ee691976.aspx
     #
@@ -137,8 +145,10 @@ module Azure::Storage::Blob
       query = { "comp" => "metadata" }
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
+      headers = options[:lease_id] ? { "x-ms-lease-id" => options[:lease_id] } : {}
+
       # Call
-      response = call(:get, container_uri(name, query), nil, {}, options)
+      response = call(:get, container_uri(name, query), nil, headers, options)
 
       # result
       container = Serialization.container_from_headers(response.headers)
@@ -160,6 +170,9 @@ module Azure::Storage::Blob
     # * +:timeout+                  - Integer. A timeout in seconds.
     # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
+    # * +:lease_id+                 - String. If specified, Set Container Metadata only succeeds if the container’s lease is
+    #                                 active and matches this ID. If there is no active lease or the ID does not match, 412
+    #                                 (Precondition Failed) is returned.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179362.aspx
     #
@@ -172,6 +185,7 @@ module Azure::Storage::Blob
       # Headers
       headers = StorageService.common_headers
       StorageService.add_metadata_to_headers(metadata, headers) if metadata
+      headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 
       # Call
       call(:put, container_uri(name, query), nil, headers, options)
@@ -194,6 +208,9 @@ module Azure::Storage::Blob
     # * +:timeout+                  - Integer. A timeout in seconds.
     # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
+    # * +:lease_id+                 - String. If specified, Get Container ACL only succeeds if the container’s lease is
+    #                                 active and matches this ID. If there is no active lease or the ID does not match, 412
+    #                                 (Precondition Failed) is returned.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179469.aspx
     #
@@ -206,8 +223,10 @@ module Azure::Storage::Blob
       query = { "comp" => "acl" }
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
+      headers = options[:lease_id] ? { "x-ms-lease-id" => options[:lease_id] } : {}
+
       # Call
-      response = call(:get, container_uri(name, query), nil, {}, options)
+      response = call(:get, container_uri(name, query), nil, headers, options)
 
       # Result
       container = Serialization.container_from_headers(response.headers)
@@ -234,6 +253,9 @@ module Azure::Storage::Blob
     # * +:timeout+                     - Integer. A timeout in seconds.
     # * +:request_id+                  - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                    in the analytics logs when storage analytics logging is enabled.
+    # * +:lease_id+                    - String. If specified, Set Container ACL only succeeds if the container’s lease is
+    #                                    active and matches this ID. If there is no active lease or the ID does not match, 412
+    #                                    (Precondition Failed) is returned.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179391.aspx
     #
@@ -252,6 +274,7 @@ module Azure::Storage::Blob
       # Headers + body
       headers = StorageService.common_headers
       headers["x-ms-blob-public-access"] = public_access_level if public_access_level && public_access_level.to_s.length > 0
+      headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 
       signed_identifiers = nil
       signed_identifiers = options[:signed_identifiers] if options[:signed_identifiers]
@@ -283,6 +306,11 @@ module Azure::Storage::Blob
     # * +:timeout+                  - Integer. A timeout in seconds.
     # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
+    # * +:lease_id+                 - String. Required for version 2012-02-12 and newer if the container has an active lease. To call
+    #                                 Delete Container on a container that has an active lease, specify the lease ID in this header.
+    #                                 If this header is not specified when there is an active lease, Delete Container will return 409
+    #                                 (Conflict). If you specify the wrong lease ID, or a lease ID on a container that does not have
+    #                                 an active lease, Delete Container will return 412 (Precondition failed).
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179408.aspx
     #
@@ -292,8 +320,10 @@ module Azure::Storage::Blob
       query = {}
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
+      headers = options[:lease_id] ? { "x-ms-lease-id" => options[:lease_id] } : {}
+
       # Call
-      call(:delete, container_uri(name, query), nil, {}, options)
+      call(:delete, container_uri(name, query), nil, headers, options)
 
       # result
       nil
@@ -329,6 +359,8 @@ module Azure::Storage::Blob
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to acquire the lease
     #                                  only if the container's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:origin+                    - String. Optional. Specifies the origin from which the request is issued. The presence of this header results
+    #                                  in cross-origin resource sharing headers on the response.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
@@ -368,6 +400,8 @@ module Azure::Storage::Blob
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to renew the lease
     #                                  only if the container's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:origin+                    - String. Optional. Specifies the origin from which the request is issued. The presence of this header results
+    #                                  in cross-origin resource sharing headers on the response.
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns the renewed lease id
@@ -403,6 +437,8 @@ module Azure::Storage::Blob
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to change the lease
     #                                  only if the container's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:origin+                    - String. Optional. Specifies the origin from which the request is issued. The presence of this header results
+    #                                  in cross-origin resource sharing headers on the response.
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns the changed lease id
@@ -438,6 +474,8 @@ module Azure::Storage::Blob
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to release the lease
     #                                  only if the container's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:origin+                    - String. Optional. Specifies the origin from which the request is issued. The presence of this header results
+    #                                  in cross-origin resource sharing headers on the response.
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns nil on success
@@ -485,6 +523,8 @@ module Azure::Storage::Blob
     # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to break the lease
     #                                  only if the container's ETag value does not match the value specified. If the values are identical,
     #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:origin+                    - String. Optional. Specifies the origin from which the request is issued. The presence of this header results
+    #                                  in cross-origin resource sharing headers on the response.
     # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
     #
     # Returns an Integer of the remaining lease time. This value is the approximate time remaining in the lease

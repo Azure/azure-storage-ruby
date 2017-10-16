@@ -139,5 +139,29 @@ describe Azure::Storage::Blob::BlobService do
         end
       end
     end
+
+    it "lease id works for copy_blob and copy_blob_from_uri" do
+      blob_name = BlobNameHelper.name
+      subject.create_block_blob dest_container_name, blob_name, "nonsense"
+      # acquire lease for blob
+      lease_id = subject.acquire_blob_lease dest_container_name, blob_name
+      # assert no lease fails
+      status_code = ""
+      description = ""
+      begin
+        copy_id, copy_status = subject.copy_blob dest_container_name, blob_name, source_container_name, source_blob_name
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      # assert correct lease works
+      copy_id, copy_status = subject.copy_blob dest_container_name, blob_name, source_container_name, source_blob_name, lease_id: lease_id
+      copy_id.wont_be_nil
+      blob, returned_content = subject.get_blob dest_container_name, blob_name
+      blob.name.must_equal blob_name
+      returned_content.must_equal content
+    end
   end
 end

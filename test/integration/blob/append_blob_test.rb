@@ -89,6 +89,27 @@ describe Azure::Storage::Blob::BlobService do
         subject.create_append_blob ContainerNameHelper.name, blob_name
       end
     end
+
+    it "lease id works for create_append_blob" do
+      append_blob_name = BlobNameHelper.name
+      subject.create_append_blob container_name, append_blob_name
+      # acquire lease for blob
+      lease_id = subject.acquire_blob_lease container_name, append_blob_name
+      # assert no lease fails
+      status_code = ""
+      description = ""
+      begin
+        subject.create_append_blob container_name, append_blob_name
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      # assert correct lease works
+      blob = subject.create_append_blob container_name, append_blob_name, lease_id: lease_id
+      blob.name.must_equal append_blob_name
+    end
   end
 
   describe "#append_blob_block" do
@@ -168,6 +189,35 @@ describe Azure::Storage::Blob::BlobService do
         subject.append_blob_block container_name, blob_name, content, options
       end
       refute_nil(exception.message.index "AppendPositionConditionNotMet (412): The append position condition specified was not met")
+    end
+
+    it "lease id works for append_blob_block" do
+      append_blob_name = BlobNameHelper.name
+      subject.create_append_blob container_name, append_blob_name
+      # acquire lease for blob
+      lease_id = subject.acquire_blob_lease container_name, append_blob_name
+      # assert no lease fails
+      status_code = ""
+      description = ""
+      begin
+        subject.append_blob_block container_name, append_blob_name, content
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      # assert correct lease works
+      blob = subject.append_blob_block container_name, append_blob_name, content, lease_id: lease_id
+
+      blob.properties[:content_md5].must_equal Base64.strict_encode64(Digest::MD5.digest(content))
+      blob.properties[:append_offset].must_equal 0
+
+      blob = subject.get_blob_properties container_name, append_blob_name
+      is_boolean(blob.encrypted).must_equal true
+      blob.properties[:blob_type].must_equal "AppendBlob"
+      blob.properties[:content_length].must_equal 512
+      blob.properties[:committed_count].must_equal 1
     end
   end
 end

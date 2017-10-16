@@ -163,6 +163,8 @@ module Azure::Storage
       # * +:if_none_match+           - String. An ETag value. Specify an ETag value for this conditional header to acquire the lease
       #                                only if the blob's ETag value does not match the value specified. If the values are identical,
       #                                the Blob service returns status code 412 (Precondition Failed).
+      # * +:origin+                  - String. Optional. Specifies the origin from which the request is issued. The presence of this header results
+      #                                in cross-origin resource sharing headers on the response.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
       #
@@ -187,6 +189,7 @@ module Azure::Storage
           Service::StorageService.with_header headers, "x-ms-lease-action", "acquire"
           Service::StorageService.with_header headers, "x-ms-lease-duration", duration.to_s if duration
           Service::StorageService.with_header headers, "x-ms-proposed-lease-id", options[:proposed_lease_id]
+          Service::StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
           add_blob_conditional_headers options, headers
 
           response = call(:put, uri, nil, headers, options)
@@ -223,6 +226,8 @@ module Azure::Storage
       # * +:if_none_match+           - String. An ETag value. Specify an ETag value for this conditional header to renew the lease
       #                                only if the blob's ETag value does not match the value specified. If the values are identical,
       #                                the Blob service returns status code 412 (Precondition Failed).
+      # * +:origin+                  - String. Optional. Specifies the origin from which the request is issued. The presence of this header results
+      #                                in cross-origin resource sharing headers on the response.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
       #
@@ -242,6 +247,7 @@ module Azure::Storage
           headers = Service::StorageService.common_headers
           Service::StorageService.with_header headers, "x-ms-lease-action", "renew"
           Service::StorageService.with_header headers, "x-ms-lease-id", lease
+          Service::StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
           add_blob_conditional_headers options, headers
 
           response = call(:put, uri, nil, headers, options)
@@ -277,6 +283,8 @@ module Azure::Storage
       # * +:if_none_match+           - String. An ETag value. Specify an ETag value for this conditional header to change the lease
       #                                only if the blob's ETag value does not match the value specified. If the values are identical,
       #                                the Blob service returns status code 412 (Precondition Failed).
+      # * +:origin+                  - String. Optional. Specifies the origin from which the request is issued. The presence of this header results
+      #                                in cross-origin resource sharing headers on the response.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
       #
@@ -298,6 +306,7 @@ module Azure::Storage
           Service::StorageService.with_header headers, "x-ms-lease-action", "change"
           Service::StorageService.with_header headers, "x-ms-lease-id", lease
           Service::StorageService.with_header headers, "x-ms-proposed-lease-id", proposed_lease
+          Service::StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
           add_blob_conditional_headers options, headers
 
           response = call(:put, uri, nil, headers, options)
@@ -333,6 +342,8 @@ module Azure::Storage
       # * +:if_none_match+           - String. An ETag value. Specify an ETag value for this conditional header to release the lease
       #                                only if the blob's ETag value does not match the value specified. If the values are identical,
       #                                the Blob service returns status code 412 (Precondition Failed).
+      # * +:origin+                  - String. Optional. Specifies the origin from which the request is issued. The presence of this header results
+      #                                in cross-origin resource sharing headers on the response.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
       #
@@ -352,6 +363,7 @@ module Azure::Storage
           headers = Service::StorageService.common_headers
           Service::StorageService.with_header headers, "x-ms-lease-action", "release"
           Service::StorageService.with_header headers, "x-ms-lease-id", lease
+          Service::StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
           add_blob_conditional_headers options, headers
 
           call(:put, uri, nil, headers, options)
@@ -399,6 +411,8 @@ module Azure::Storage
       # * +:if_none_match+           - String. An ETag value. Specify an ETag value for this conditional header to acquire the lease
       #                                only if the blob's ETag value does not match the value specified. If the values are identical,
       #                                the Blob service returns status code 412 (Precondition Failed).
+      # * +:origin+                  - String. Optional. Specifies the origin from which the request is issued. The presence of this header results
+      #                                in cross-origin resource sharing headers on the response.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
       #
@@ -420,6 +434,7 @@ module Azure::Storage
           headers = Service::StorageService.common_headers
           Service::StorageService.with_header headers, "x-ms-lease-action", "break"
           Service::StorageService.with_header headers, "x-ms-lease-break-period", options[:break_period].to_s if options[:break_period]
+          Service::StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
           add_blob_conditional_headers options, headers
 
           response = call(:put, uri, nil, headers, options)

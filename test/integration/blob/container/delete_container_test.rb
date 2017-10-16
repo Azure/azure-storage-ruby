@@ -29,12 +29,9 @@ describe Azure::Storage::Blob::BlobService do
   after { ContainerNameHelper.clean }
 
   describe "#delete_container" do
-    let(:container_name) { ContainerNameHelper.name }
-    before {
-      subject.create_container container_name
-    }
-
     it "deletes the container" do
+      container_name = ContainerNameHelper.name
+      subject.create_container container_name
       result = subject.delete_container container_name
       result.must_be_nil
     end
@@ -43,6 +40,27 @@ describe Azure::Storage::Blob::BlobService do
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.delete_container ContainerNameHelper.name
       end
+    end
+
+    it "lease id works for delete_container" do
+      container_name = ContainerNameHelper.name
+      subject.create_container container_name
+      lease_id = subject.acquire_container_lease container_name
+      subject.release_container_lease container_name, lease_id
+      new_lease_id = subject.acquire_container_lease container_name
+      # assert wrong lease fails
+      status_code = ""
+      description = ""
+      begin
+        subject.delete_container container_name, lease_id: lease_id
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "The lease ID specified did not match the lease ID for the container."
+      # assert right lease succeeds
+      subject.delete_container container_name, lease_id: new_lease_id
     end
   end
 end

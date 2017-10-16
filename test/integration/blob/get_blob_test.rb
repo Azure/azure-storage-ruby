@@ -90,5 +90,33 @@ describe Azure::Storage::Blob::BlobService do
       status_code.must_equal "400"
       description.must_include "The request includes an unsatisfiable condition for this operation."
     end
+
+    it "lease id works for get_blob" do
+      block_blob_name = BlobNameHelper.name
+      subject.create_block_blob container_name, block_blob_name, content
+      # acquire lease for blob
+      lease_id = subject.acquire_blob_lease container_name, block_blob_name
+      subject.release_blob_lease container_name, block_blob_name, lease_id
+      new_lease_id = subject.acquire_blob_lease container_name, block_blob_name
+      # assert no lease fails
+      status_code = ""
+      description = ""
+      begin
+        subject.get_blob container_name, block_blob_name, lease_id: lease_id
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "The lease ID specified did not match the lease ID for the blob."
+      # assert correct lease works
+      blob, body = subject.get_blob container_name, block_blob_name, lease_id: new_lease_id
+      blob.name.must_equal block_blob_name
+      body.must_equal content
+      # assert no lease works
+      blob, body = subject.get_blob container_name, block_blob_name
+      blob.name.must_equal block_blob_name
+      body.must_equal content
+    end
   end
 end

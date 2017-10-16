@@ -1,3 +1,33 @@
+2017.10 - version 0.15.0-preview
+
+BLOB
+* Added full lease ID header support for following methods:
+  - Azure::Storage::Blob::BlobService::get_container_properties
+  - Azure::Storage::Blob::BlobService::get_container_metadata
+  - Azure::Storage::Blob::BlobService::get_container_acl
+  - Azure::Storage::Blob::BlobService::set_container_metadata
+  - Azure::Storage::Blob::BlobService::set_container_acl
+  - Azure::Storage::Blob::BlobService::delete_container
+  - Azure::Storage::Blob::BlobService::create_block_blob
+  - Azure::Storage::Blob::BlobService::create_page_blob
+  - Azure::Storage::Blob::BlobService::create_append_blob
+  - Azure::Storage::Blob::BlobService::get_blob
+  - Azure::Storage::Blob::BlobService::get_blob_properties
+  - Azure::Storage::Blob::BlobService::set_blob_properties
+  - Azure::Storage::Blob::BlobService::get_blob_metadata
+  - Azure::Storage::Blob::BlobService::set_blob_metadata
+  - Azure::Storage::Blob::BlobService::create_blob_snapshot
+  - Azure::Storage::Blob::BlobService::copy_blob
+  - Azure::Storage::Blob::BlobService::copy_blob_from_uri
+  - Azure::Storage::Blob::BlobService::delete_blob
+  - Azure::Storage::Blob::BlobService::put_blob_block
+  - Azure::Storage::Blob::BlobService::commit_blob_blocks
+  - Azure::Storage::Blob::BlobService::list_blob_blocks
+  - Azure::Storage::Blob::BlobService::put_blob_pages
+  - Azure::Storage::Blob::BlobService::list_page_blob_ranges
+  - Azure::Storage::Blob::BlobService::incremental_copy_blob
+  - Azure::Storage::Blob::BlobService::append_blob_block
+
 2017.09 - version 0.14.0-preview
 
 ALL

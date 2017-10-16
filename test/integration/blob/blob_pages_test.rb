@@ -55,6 +55,35 @@ describe Azure::Storage::Blob::BlobService do
       ranges[1][0].must_equal 1024
       ranges[1][1].must_equal 1535
     end
+
+    it "lease id works for put_blob_pages" do
+      page_blob_name = BlobNameHelper.name
+      subject.create_page_blob container_name, page_blob_name, length
+      content = ""
+      512.times.each { |i| content << "@" }
+      # add lease to blob
+      lease_id = subject.acquire_blob_lease container_name, page_blob_name
+      # assert no lease fails
+      status_code = ""
+      description = ""
+      begin
+        blob = subject.put_blob_pages container_name, page_blob_name, 0, 511, content
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      # assert right lease succeeds
+      subject.put_blob_pages container_name, page_blob_name, 0, 511, content, lease_id: lease_id
+      subject.put_blob_pages container_name, page_blob_name, 1024, 1535, content, lease_id: lease_id
+
+      ranges = subject.list_page_blob_ranges container_name, page_blob_name, start_range: 0, end_range: 1536
+      ranges[0][0].must_equal 0
+      ranges[0][1].must_equal 511
+      ranges[1][0].must_equal 1024
+      ranges[1][1].must_equal 1535
+    end
   end
 
   describe "when the options hash is used" do
@@ -153,6 +182,37 @@ describe Azure::Storage::Blob::BlobService do
       ranges.length.must_equal 1
       ranges[0][0].must_equal 2048
       ranges[0][1].must_equal 2559
+    end
+
+    it "lease id works for list_page_blob_ranges" do
+      # initialize the blob
+      page_blob_name = BlobNameHelper.name
+      subject.create_page_blob container_name, page_blob_name, length
+      content_512B = SecureRandom.random_bytes(512)
+      subject.put_blob_pages container_name, page_blob_name, 0, 511, content_512B
+      subject.put_blob_pages container_name, page_blob_name, 1024, 1535, content_512B
+      subject.put_blob_pages container_name, page_blob_name, 2048, 2559, content_512B
+      # acquire lease for blob
+      lease_id = subject.acquire_blob_lease container_name, page_blob_name
+      subject.release_blob_lease container_name, page_blob_name, lease_id
+      new_lease_id = subject.acquire_blob_lease container_name, page_blob_name
+      # assert wrong lease fails
+      status_code = ""
+      description = ""
+      begin
+        ranges = subject.list_page_blob_ranges container_name, page_blob_name, lease_id: lease_id
+      rescue Azure::Core::Http::HTTPError => e
+        status_code = e.status_code.to_s
+        description = e.description
+      end
+      status_code.must_equal "412"
+      description.must_include "The lease ID specified did not match the lease ID for the blob."
+      # assert correct lease works
+      ranges = subject.list_page_blob_ranges container_name, page_blob_name, lease_id: new_lease_id
+      ranges.length.must_equal 3
+      # assert no lease works
+      ranges = subject.list_page_blob_ranges container_name, page_blob_name
+      ranges.length.must_equal 3
     end
   end
 end
