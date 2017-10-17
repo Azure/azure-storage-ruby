@@ -11,6 +11,7 @@ This project provides a Ruby package that makes it easy to access and manage Mic
 * [Blobs](#blobs)
 * [Tables](#tables)
 * [Queues](#queues)
+* [Files](#files)
 
 # Supported Ruby Versions
 
