@@ -26,6 +26,7 @@
 
 require "uri"
 require "azure/storage/client_options_error"
+require "azure/storage/core/auth/anonymous_signer"
 
 module Azure::Storage
   module ClientOptions
@@ -46,7 +47,7 @@ module Azure::Storage
     # * +:storage_connection_string+      - String. The storage connection string.
     # * +:storage_account_name+           - String. The name of the storage account.
     # * +:storage_access_key+             - Base64 String. The access key of the storage account.
-    # * +:storage_sas_token+              - String. The signed access signiture for the storage account or one of its service.
+    # * +:storage_sas_token+              - String. The signed access signature for the storage account or one of its service.
     # * +:storage_blob_host+              - String. Specified Blob serivce endpoint or hostname
     # * +:storage_table_host+             - String. Specified Table serivce endpoint or hostname
     # * +:storage_queue_host+             - String. Specified Queue serivce endpoint or hostname
@@ -55,7 +56,7 @@ module Azure::Storage
     # * +:use_path_style_uri+             - String. Whether use path style URI for specified endpoints
     # * +:ca_file+                        - String. File path of the CA file if having issue with SSL
     #
-    # The valid set of options inlcude:
+    # The valid set of options include:
     # * Storage Emulator: +:use_development_storage+ required, +:development_storage_proxy_uri+ optionally
     # * Storage account name and key: +:storage_account_name+ and +:storage_access_key+ required, set +:storage_dns_suffix+ necessarily
     # * Storage account name and SAS token: +:storage_account_name+ and +:storage_sas_token+ required, set +:storage_dns_suffix+ necessarily
@@ -74,7 +75,7 @@ module Azure::Storage
       if options.is_a? String
         options = parse_connection_string(options)
       elsif options.is_a? Hash
-        # When the options are provided via singlton setup: Azure::Storage.setup()
+        # When the options are provided via singleton setup: Azure::Storage.setup()
         options = setup_options if options.length == 0
 
         options = parse_connection_string(options[:storage_connection_string]) if options[:storage_connection_string]
@@ -235,6 +236,8 @@ module Azure::Storage
                                       optional: [:use_path_style_uri, :default_endpoints_protocol, :storage_sas_token])
           results[:use_path_style_uri] = results.key?(:use_path_style_uri)
           normalize_hosts(results)
+          # Adds anonymous signer if no sas token
+          results[:signer] = Azure::Storage::Core::Auth::AnonymousSigner.new unless results.key?(:storage_sas_token)
           return results
         rescue InvalidOptionsError => e
         end

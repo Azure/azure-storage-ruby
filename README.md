@@ -110,6 +110,9 @@ require 'azure/storage'
 # Setup a specific instance of an Azure::Storage::Client
 client = Azure::Storage::Client.create(:storage_account_name => 'your account name', :storage_access_key => 'your access key')
 
+# Alternatively, create a client that can anonymously access public containers for read operations
+client = Azure::Storage::Client.create(storage_blob_host: "https://youraccountname.blob.core.windows.net")
+
 # Get an azure storage blob service object from a specific instance of an Azure::Storage::Client
 blobs = client.blob_client
 
