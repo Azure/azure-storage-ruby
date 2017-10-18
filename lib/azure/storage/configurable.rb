@@ -76,7 +76,8 @@ module Azure::Storage
           :storage_table_host,
           :storage_blob_host,
           :storage_queue_host,
-          :storage_file_host
+          :storage_file_host,
+          :signer
         ]
       end
     end
@@ -93,11 +94,12 @@ module Azure::Storage
     # Reset configuration options to default values
     def reset_config!(options = {})
       Azure::Storage::Configurable.keys.each do |key|
-        value = if self == Azure::Storage
-          Azure::Storage::Default.options[key]
-                else
-                  Azure::Storage.send(key)
-                end
+        value =
+          if self == Azure::Storage
+            Azure::Storage::Default.options[key]
+          else
+            Azure::Storage.send(key)
+          end
         instance_variable_set(:"@#{key}", options.fetch(key, value))
       end
       self.send(:reset_agents!) if self.respond_to?(:reset_agents!)

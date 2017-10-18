@@ -1,6 +1,7 @@
 2017.10 - version 0.15.0-preview
 
 BLOB
+* Added support for anonymous read access of public containers.
 * Added full lease ID header support for following methods:
   - Azure::Storage::Blob::BlobService::get_container_properties
   - Azure::Storage::Blob::BlobService::get_container_metadata

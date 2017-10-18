@@ -277,7 +277,7 @@ module Azure::Storage
       StorageService.with_query query, "snapshot", options[:snapshot]
       StorageService.with_query query, "blocklisttype", options[:blocklist_type].to_s if options[:blocklist_type]
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
-      
+
       headers = options[:lease_id] ? { "x-ms-lease-id" => options[:lease_id] } : {}
 
       uri = blob_uri(container, blob, query)

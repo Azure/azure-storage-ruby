@@ -56,7 +56,7 @@ module Azure::Storage
     # * +:storage_connection_string+      - String. The storage connection string.
     # * +:storage_account_name+           - String. The name of the storage account.
     # * +:storage_access_key+             - Base64 String. The access key of the storage account.
-    # * +:storage_sas_token+              - String. The signed access signiture for the storage account or one of its service.
+    # * +:storage_sas_token+              - String. The signed access signature for the storage account or one of its service.
     # * +:storage_blob_host+              - String. Specified Blob serivce endpoint or hostname
     # * +:storage_table_host+             - String. Specified Table serivce endpoint or hostname
     # * +:storage_queue_host+             - String. Specified Queue serivce endpoint or hostname
@@ -66,7 +66,7 @@ module Azure::Storage
     # * +:ca_file+                        - String. File path of the CA file if having issue with SSL
     # * +:user_agent_prefix+              - String. The user agent prefix that can identify the application calls the library
     #
-    # The valid set of options inlcude:
+    # The valid set of options include:
     # * Storage Emulator: +:use_development_storage+ required, +:development_storage_proxy_uri+ optionally
     # * Storage account name and key: +:storage_account_name+ and +:storage_access_key+ required, set +:storage_dns_suffix+ necessarily
     # * Storage account name and SAS token: +:storage_account_name+ and +:storage_sas_token+ required, set +:storage_dns_suffix+ necessarily
@@ -130,17 +130,17 @@ module Azure::Storage
       # * +:development_storage_proxy_uri+  - String. Used with +:use_development_storage+ if emulator is hosted other than localhost.
       # * +:storage_account_name+           - String. The name of the storage account.
       # * +:storage_access_key+             - Base64 String. The access key of the storage account.
-      # * +:storage_sas_token+              - String. The signed access signiture for the storage account or one of its service.
-      # * +:storage_blob_host+              - String. Specified Blob serivce endpoint or hostname
-      # * +:storage_table_host+             - String. Specified Table serivce endpoint or hostname
-      # * +:storage_queue_host+             - String. Specified Queue serivce endpoint or hostname
-      # * +:storage_dns_suffix+             - String. The suffix of a regional Storage Serivce, to
+      # * +:storage_sas_token+              - String. The signed access signature for the storage account or one of its service.
+      # * +:storage_blob_host+              - String. Specified Blob service endpoint or hostname
+      # * +:storage_table_host+             - String. Specified Table service endpoint or hostname
+      # * +:storage_queue_host+             - String. Specified Queue service endpoint or hostname
+      # * +:storage_dns_suffix+             - String. The suffix of a regional Storage Service, to
       # * +:default_endpoints_protocol+     - String. http or https
       # * +:use_path_style_uri+             - String. Whether use path style URI for specified endpoints
       # * +:ca_file+                        - String. File path of the CA file if having issue with SSL
       # * +:user_agent_prefix+              - String. The user agent prefix that can identify the application calls the library
       #
-      # The valid set of options inlcude:
+      # The valid set of options include:
       # * Storage Emulator: +:use_development_storage+ required, +:development_storage_proxy_uri+ optionally
       # * Storage account name and key: +:storage_account_name+ and +:storage_access_key+ required, set +:storage_dns_suffix+ necessarily
       # * Storage account name and SAS token: +:storage_account_name+ and +:storage_sas_token+ required, set +:storage_dns_suffix+ necessarily
