@@ -39,7 +39,8 @@ module Azure::Storage
         client_config = options[:client] || Azure::Storage
         signer = options[:signer] || client_config.signer || Core::Auth::SharedKey.new(client_config.storage_account_name, client_config.storage_access_key)
         super(signer, client_config.storage_account_name, options, &block)
-        @host = client.storage_file_host
+        @storage_service_host[:primary] = client.storage_file_host
+        @storage_service_host[:secondary] = client.storage_file_host true
       end
 
       def call(method, uri, body = nil, headers = {}, options = {})
@@ -98,6 +99,9 @@ module Azure::Storage
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
       #
+      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+      #                                which location the request should be sent to.
+      #
       # See: https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/list-shares
       #
       # Returns an Azure::Service::EnumerationResults
@@ -112,7 +116,8 @@ module Azure::Storage
           StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
         end
 
-        uri = shares_uri(query)
+        options[:request_location_mode] = RequestLocationMode::PRIMARY_OR_SECONDARY
+        uri = shares_uri(query, options)
         response = call(:get, uri, nil, {}, options)
 
         Serialization.share_enumeration_results_from_xml(response.body)
@@ -127,9 +132,9 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-        def shares_uri(query = {})
+        def shares_uri(query = {}, options = {})
           query = { "comp" => "list" }.merge(query)
-          generate_uri("", query)
+          generate_uri("", query, options)
         end
 
       # Protected: Generate the URI for a specific share.
@@ -142,10 +147,10 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-        def share_uri(name, query = {})
+        def share_uri(name, query = {}, options = {})
           return name if name.kind_of? ::URI
-          query = { "restype" => "share" }.merge(query)
-          generate_uri(name, query)
+          query = { restype: "share" }.merge(query)
+          generate_uri(name, query, options)
         end
 
       # Protected: Generate the URI for a specific directory.
@@ -160,10 +165,11 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-        def directory_uri(share, directory_path, query = {})
+        def directory_uri(share, directory_path, query = {}, options = {})
           path = directory_path.nil? ? share : ::File.join(share, directory_path)
-          query = { "restype" => "directory" }.merge(query)
-          generate_uri(path, query, true)
+          query = { restype: "directory" }.merge(query)
+          options = { encode: true }.merge(options)
+          generate_uri(path, query, options)
         end
 
       # Protected: Generate the URI for a specific file.
@@ -178,13 +184,14 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-        def file_uri(share, directory_path, file, query = {})
+        def file_uri(share, directory_path, file, query = {}, options = {})
           if directory_path.nil?
             path = ::File.join(share, file)
           else
             path = ::File.join(share, directory_path, file)
           end
-          generate_uri(path, query, true)
+          options = { encode: true }.merge(options)
+          generate_uri(path, query, options)
         end
     end
   end

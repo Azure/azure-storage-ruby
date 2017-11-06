@@ -75,6 +75,9 @@ module Azure::Storage::File
   # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                in the analytics logs when storage analytics logging is enabled.
   #
+  # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+  #                                which location the request should be sent to.
+  #
   # See: https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/list-directories-and-files
   #
   # Returns an Azure::Service::EnumerationResults
@@ -88,7 +91,8 @@ module Azure::Storage::File
       StorageService.with_query query, "prefix", options[:prefix].to_s if options[:prefix]
     end
 
-    uri = directory_uri(share, directory_path, query)
+    options[:request_location_mode] = Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
+    uri = directory_uri(share, directory_path, query, options)
     response = call(:get, uri, nil, {}, options)
 
     # Result
@@ -156,6 +160,8 @@ module Azure::Storage::File
   # * +:timeout+                  - Integer. A timeout in seconds.
   # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                 in the analytics logs when storage analytics logging is enabled.
+  # * +:location_mode+            - LocationMode. Specifies the location mode used to decide 
+  #                                 which location the request should be sent to.
   #
   # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-directory-properties
   #
@@ -166,7 +172,8 @@ module Azure::Storage::File
     query["timeout"] = options[:timeout].to_s if options[:timeout]
 
     # Call
-    response = call(:get, directory_uri(share, directory_path, query), nil, {}, options)
+    options[:request_location_mode] = Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
+    response = call(:get, directory_uri(share, directory_path, query, options), nil, {}, options)
 
     # result
     directory = Serialization.directory_from_headers(response.headers)
@@ -218,6 +225,8 @@ module Azure::Storage::File
   # * +:timeout+                  - Integer. A timeout in seconds.
   # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                 in the analytics logs when storage analytics logging is enabled.
+  # * +:location_mode+            - LocationMode. Specifies the location mode used to decide 
+  #                                 which location the request should be sent to.
   #
   # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-directory-metadata
   #
@@ -228,7 +237,8 @@ module Azure::Storage::File
     query["timeout"] = options[:timeout].to_s if options[:timeout]
 
     # Call
-    response = call(:get, directory_uri(share, directory_path, query), nil, {}, options)
+    options[:request_location_mode] = Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
+    response = call(:get, directory_uri(share, directory_path, query, options), nil, {}, options)
 
     # result
     directory = Serialization.directory_from_headers(response.headers)

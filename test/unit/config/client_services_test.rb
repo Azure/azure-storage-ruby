@@ -32,17 +32,26 @@ describe Azure::Storage::Client do
 
     it "should create a blob client" do
       subject.storage_account_name.must_equal azure_storage_account
-      subject.blob_client.host.must_equal "https://#{azure_storage_account}.blob.core.windows.net"
+      subject.blob_client.storage_service_host[:primary].must_equal "https://#{azure_storage_account}.blob.core.windows.net"
+      subject.blob_client.storage_service_host[:secondary].must_equal "https://#{azure_storage_account}-secondary.blob.core.windows.net"
     end
 
     it "should create a table client" do
       subject.storage_account_name.must_equal azure_storage_account
-      subject.table_client.host.must_equal "https://#{azure_storage_account}.table.core.windows.net"
+      subject.table_client.storage_service_host[:primary].must_equal "https://#{azure_storage_account}.table.core.windows.net"
+      subject.table_client.storage_service_host[:secondary].must_equal "https://#{azure_storage_account}-secondary.table.core.windows.net"
     end
 
     it "should create a queue client" do
       subject.storage_account_name.must_equal azure_storage_account
-      subject.queue_client.host.must_equal "https://#{azure_storage_account}.queue.core.windows.net"
+      subject.queue_client.storage_service_host[:primary].must_equal "https://#{azure_storage_account}.queue.core.windows.net"
+      subject.queue_client.storage_service_host[:secondary].must_equal "https://#{azure_storage_account}-secondary.queue.core.windows.net"
+    end
+
+    it "should create a file client" do
+      subject.storage_account_name.must_equal azure_storage_account
+      subject.file_client.storage_service_host[:primary].must_equal "https://#{azure_storage_account}.file.core.windows.net"
+      subject.file_client.storage_service_host[:secondary].must_equal "https://#{azure_storage_account}-secondary.file.core.windows.net"
     end
   end
 end

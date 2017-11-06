@@ -140,7 +140,16 @@ module Azure::Storage
     FILE = "file"
   end
 
-  # Specifies the location used to indicate which location the operation can be performed against.
+  # Specifies the location mode used to decide which location the request should be sent to.
+  module LocationMode
+    PRIMARY_ONLY = 0
+    PRIMARY_THEN_SECONDARY = 1
+    SECONDARY_ONLY = 2
+    SECONDARY_THEN_PRIMARY = 3
+  end
+
+  # Specifies the location used to indicate which location the operation (REST API) can be performed against.
+  # This is determined by the API and cannot be specified by the users.
   module RequestLocationMode
     PRIMARY_ONLY = 0
     SECONDARY_ONLY = 1

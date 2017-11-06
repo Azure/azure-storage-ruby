@@ -32,6 +32,11 @@ module Azure::Storage
   module Service
     # A base class for StorageService implementations
     class StorageService < Azure::Core::SignedService
+
+      # @!attribute storage_service_host
+      # @return [Hash] Get or set the storage service host
+      attr_accessor :storage_service_host
+
       # Create a new instance of the StorageService
       #
       # @param signer         [Azure::Core::Auth::Signer] An implementation of Signer used for signing requests.
@@ -39,7 +44,7 @@ module Azure::Storage
       # @param account_name   [String] The account name (optional, Default=Azure::Storage.storage_account_name)
       # @param options        [Azure::Storage::Configurable] the client configuration context
       def initialize(signer = nil, account_name = nil, options = {}, &block)
-        StorageService.register_request_callback &block if block_given?
+        StorageService.register_request_callback(&block) if block_given?
         options[:client] = Azure::Storage if options[:client] == nil
         client_config = options[:client]
         signer = signer || Azure::Storage::Core::Auth::SharedKey.new(
@@ -48,6 +53,7 @@ module Azure::Storage
         signer = signer || Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new(
           client_config.storage_account_name,
           client_config.storage_sas_token)
+        @storage_service_host = { primary: "", secondary: "" };
         super(signer, account_name, options)
       end
 
@@ -100,7 +106,7 @@ module Azure::Storage
 
       # Public: Generate the URI for the service properties
       #
-      # query - see Azure::Storage::Services::GetServiceProperties#call documentation.
+      # * +:query+ - see Azure::Storage::Services::GetServiceProperties#call documentation.
       #
       # Returns a URI.
       def service_properties_uri(query = {})
@@ -113,16 +119,41 @@ module Azure::Storage
       # path    - String. the request path
       # query   - Hash. the query parameters
       #
+      # ==== Options
+      #
+      # * +:encode+                    - bool. Specifies whether to encode the path.
+      # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+      #                                  which location the request should be sent to. 
+      # * +:request_location_mode+     - RequestLocationMode. Specifies the location used to indicate 
+      #                                  which location the operation (REST API) can be performed against.
+      #                                  This is determined by the API and cannot be specified by the users. 
+      #
       # Returns the uri hash
-      def generate_uri(path = "", query = {}, encode = false)
-        if self.client.is_a?(Azure::Storage::Client) && self.client.options[:use_path_style_uri]
-          if path.length > 0
-            path = self.client.options[:storage_account_name] + "/" + path
+      def generate_uri(path = "", query = {}, options = {})
+        location_mode =
+          if options[:location_mode].nil?  
+            LocationMode::PRIMARY_ONLY
           else
-            path = self.client.options[:storage_account_name]
+            options[:location_mode]
           end
+
+        request_location_mode = 
+          if options[:request_location_mode].nil?
+            RequestLocationMode::PRIMARY_ONLY
+          else
+            request_location_mode = options[:request_location_mode]
+          end
+
+        location = StorageService.get_location location_mode, request_location_mode
+
+        if self.client.is_a?(Azure::Storage::Client) && self.client.options[:use_path_style_uri]
+          account_path = get_account_path location
+          path = path.length > 0 ? account_path + "/" + path : account_path
         end
 
+        @host = location == StorageLocation::PRIMARY ? @storage_service_host[:primary] : @storage_service_host[:secondary]
+
+        encode = options[:encode].nil? ? false : options[:encode]
         if encode
           path = CGI.escape(path.encode("UTF-8"))
 
@@ -135,6 +166,19 @@ module Azure::Storage
         end
 
         super path, query
+      end
+
+      # Get account path according to the location settings.
+      #
+      # * +:location+                      - StorageLocation. Specifies the request location.
+      #
+      # Returns the account path
+      def get_account_path(location)
+        if location == StorageLocation::PRIMARY
+          self.client.options[:storage_account_name]
+        else
+          self.client.options[:storage_account_name] + "-secondary"
+        end
       end
 
       class << self
@@ -152,10 +196,41 @@ module Azure::Storage
           @request_callback = Proc.new
         end
 
+        # Get the request location.
+        #
+        # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+        #                                  which location the request should be sent to.
+        # * +:request_location_mode+     - RequestLocationMode. Specifies the location used to indicate 
+        #                                  which location the operation (REST API) can be performed against.
+        #                                  This is determined by the API and cannot be specified by the users. 
+        #
+        # Returns the reqeust location
+        def get_location(location_mode, request_location_mode)
+          if request_location_mode == RequestLocationMode::PRIMARY_ONLY && location_mode == LocationMode::SECONDARY_ONLY
+            raise InvalidOptionsError, "This operation can only be executed against the primary storage location."
+          end
+
+          if request_location_mode == RequestLocationMode::SECONDARY_ONLY && location_mode == LocationMode::PRIMARY_ONLY
+            raise InvalidOptionsError, "This operation can only be executed against the secondary storage location."
+          end
+
+          if request_location_mode == RequestLocationMode::PRIMARY_ONLY
+            return StorageLocation::PRIMARY
+          elsif request_location_mode == RequestLocationMode::SECONDARY_ONLY
+            return StorageLocation::SECONDARY
+          end
+
+          if location_mode == LocationMode::PRIMARY_ONLY || location_mode == LocationMode::PRIMARY_THEN_SECONDARY
+            StorageLocation::PRIMARY
+          elsif location_mode == LocationMode::SECONDARY_ONLY || location_mode == LocationMode::SECONDARY_THEN_PRIMARY
+            StorageLocation::SECONDARY
+          end
+        end
+
         # Adds metadata properties to header hash with required prefix
         #
-        # metadata  - A Hash of metadata name/value pairs
-        # headers   - A Hash of HTTP headers
+        # * +:metadata+  - A Hash of metadata name/value pairs
+        # * +:headers+   - A Hash of HTTP headers
         def add_metadata_to_headers(metadata, headers)
           if metadata
             metadata.each do |key, value|
@@ -166,25 +241,25 @@ module Azure::Storage
 
         # Adds a value to the Hash object
         #
-        # object     - A Hash object
-        # key        - The key name
-        # value      - The value
+        # * +:object+     - A Hash object
+        # * +:key+        - The key name
+        # * +:value+      - The value
         def with_value(object, key, value)
           object[key] = value if value
         end
 
         # Adds a header with the value
         #
-        # headers    - A Hash of HTTP headers
-        # name       - The header name
-        # value      - The value
+        # * +:headers+    - A Hash of HTTP headers
+        # * +:name+       - The header name
+        # * +:value+      - The value
         alias with_header with_value
 
         # Adds a query parameter
         #
-        # query      - A Hash of HTTP query
-        # name       - The parameter name
-        # value      - The value
+        # * +:query+      - A Hash of HTTP query
+        # * +:name+       - The parameter name
+        # * +:value+      - The value
         alias with_query with_value
 
         # Declares a default hash object for request headers

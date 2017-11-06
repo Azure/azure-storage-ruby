@@ -89,7 +89,7 @@ describe Azure::Storage::Client do
       client1 = Azure::Storage::Client.create(@devstore_options)
       client2 = Azure::Storage::Client.create(get_connection_string(@devstore_options))
       client3 = Azure::Storage::Client.create_development(@devstore_options[:development_storage_proxy_uri])
-      index = 0;
+
       [client1, client2, client3].each do |c|
         c.wont_be_nil
         c.storage_account_name.must_equal(Azure::Storage::StorageServiceClientConstants::DEVSTORE_STORAGE_ACCOUNT)
@@ -165,7 +165,7 @@ describe Azure::Storage::Client do
 
     it "should fail host if protocol are dup set" do
       opts = @account_key_protocol_options.merge(storage_blob_host: @mock_blob_host_with_protocol)
-      lambda { c = Azure::Storage::Client.new(opts) }.must_raise(Azure::Storage::InvalidOptionsError)
+      lambda { Azure::Storage::Client.new(opts) }.must_raise(Azure::Storage::InvalidOptionsError)
     end
   end
 
@@ -182,7 +182,7 @@ describe Azure::Storage::Client do
 
     it "should fail if both sas_token and key" do
       opts = @account_key_options.merge(storage_sas_token: @mock_sas)
-      lambda { c = Azure::Storage::Client.create(opts) }.must_raise(Azure::Storage::InvalidOptionsError)
+      lambda { Azure::Storage::Client.create(opts) }.must_raise(Azure::Storage::InvalidOptionsError)
     end
 
     it "should succeed if given a host anonymously" do
