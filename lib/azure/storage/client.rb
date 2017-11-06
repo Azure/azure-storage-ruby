@@ -87,7 +87,7 @@ module Azure::Storage
         Azure::Storage::Service::StorageService.user_agent_prefix = options[:user_agent_prefix]
         options.delete :user_agent_prefix
       end
-      Azure::Storage::Service::StorageService.register_request_callback &block if block_given?
+      Azure::Storage::Service::StorageService.register_request_callback(&block) if block_given?
       reset!(options)
     end
 
@@ -176,7 +176,7 @@ module Azure::Storage
       #
       # @return [Azure::Storage::Client]
       def create_from_env(&block)
-        create &block
+        create(&block)
       end
 
       # Public: Creates an instance of [Azure::Storage::Client] from Environment Variables

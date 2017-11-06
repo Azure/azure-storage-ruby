@@ -35,7 +35,8 @@ module Azure::Storage
         client_config = options[:client] || Azure::Storage
         signer = options[:signer] || client_config.signer || Azure::Storage::Core::Auth::SharedKey.new(client_config.storage_account_name, client_config.storage_access_key)
         super(signer, client_config.storage_account_name, options, &block)
-        @host = @client.storage_queue_host
+        @storage_service_host[:primary] = client.storage_queue_host
+        @storage_service_host[:secondary] = client.storage_queue_host true
       end
 
       # Public: Get a list of Queues from the server
@@ -65,6 +66,8 @@ module Azure::Storage
       # * +:timeout+                   - Integer. A timeout in seconds.
       # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
+      # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+      #                                  which location the request should be sent to.
       #
       # NOTE: Metadata requested with the :metadata parameter must have been stored in
       # accordance with the naming restrictions imposed by the 2009-09-19 version of the queue
@@ -86,7 +89,8 @@ module Azure::Storage
         query["include"] = "metadata" if options[:metadata] == true
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-        uri = collection_uri(query)
+        options[:request_location_mode] = RequestLocationMode::PRIMARY_OR_SECONDARY
+        uri = collection_uri(query, options)
         response = call(:get, uri, nil, {}, options)
 
         Serialization.queue_enumeration_results_from_xml(response.body)
@@ -195,6 +199,8 @@ module Azure::Storage
       # * +:timeout+                   - Integer. A timeout in seconds.
       # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
+      # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+      #                                  which location the request should be sent to.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179384
       #
@@ -207,7 +213,8 @@ module Azure::Storage
         query = { "comp" => "metadata" }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-        uri = queue_uri(queue_name, query)
+        options[:request_location_mode] = RequestLocationMode::PRIMARY_OR_SECONDARY
+        uri = queue_uri(queue_name, query, options)
 
         response = call(:get, uri, nil, {}, options)
 
@@ -262,6 +269,8 @@ module Azure::Storage
       # * +:timeout+                   - Integer. A timeout in seconds.
       # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
+      # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+      #                                  which location the request should be sent to.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/jj159101
       #
@@ -270,7 +279,8 @@ module Azure::Storage
         query = { "comp" => "acl" }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-        response = call(:get, queue_uri(queue_name, query), nil, {}, options)
+        options[:request_location_mode] = RequestLocationMode::PRIMARY_OR_SECONDARY
+        response = call(:get, queue_uri(queue_name, query, options), nil, {}, options)
 
         signed_identifiers = []
         signed_identifiers = Serialization.signed_identifiers_from_xml(response.body) unless response.body == (nil) || response.body.length < (1)
@@ -432,6 +442,8 @@ module Azure::Storage
       # * +:timeout+                   - Integer. A timeout in seconds.
       # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
+      # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+      #                                  which location the request should be sent to.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179472
       #
@@ -443,7 +455,8 @@ module Azure::Storage
         query = { "peekonly" => "true", "numofmessages" => number_of_messages.to_s }
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-        uri = messages_uri(queue_name, query)
+        options[:request_location_mode] = RequestLocationMode::PRIMARY_OR_SECONDARY
+        uri = messages_uri(queue_name, query, options)
         response = call(:get, uri, nil, {}, options)
 
         messages = Serialization.queue_messages_from_xml(response.body, options[:decode])
@@ -558,9 +571,9 @@ module Azure::Storage
       #
       # Returns a URI.
       protected
-        def collection_uri(query = {})
+        def collection_uri(query = {}, options = {})
           query.update(comp: "list", include: "metadata")
-          generate_uri("", query)
+          generate_uri("", query, options)
         end
 
       # Protected: Generate the URI for a given queue.
@@ -572,9 +585,9 @@ module Azure::Storage
       #
       # Returns a URI.
       protected
-        def queue_uri(queue_name, query = {})
+        def queue_uri(queue_name, query = {}, options = {})
           return queue_name if queue_name.kind_of? ::URI
-          generate_uri(queue_name, query)
+          generate_uri(queue_name, query, options)
         end
 
       # Protected: Generate the messages URI for the given queue.
@@ -586,8 +599,8 @@ module Azure::Storage
       #
       # Returns a URI.
       protected
-        def messages_uri(queue_name, query = {})
-          generate_uri("#{queue_name}/messages", query)
+        def messages_uri(queue_name, query = {}, options = {})
+          generate_uri("#{queue_name}/messages", query, options)
         end
 
       # Protected: Generate the URI for a given message
@@ -600,8 +613,8 @@ module Azure::Storage
       #
       # Returns a URI.
       protected
-        def message_uri(queue_name, message_id, query = {})
-          generate_uri("#{queue_name}/messages/#{message_id}", query)
+        def message_uri(queue_name, message_id, query = {}, options = {})
+          generate_uri("#{queue_name}/messages/#{message_id}", query, options)
         end
     end
   end

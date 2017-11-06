@@ -1,4 +1,7 @@
-2017.10 - version 0.15.0-preview
+2017.11 - version 0.15.0-preview
+
+ALL
+* Added the support for the location mode in the API options.
 
 BLOB
 * Added support for anonymous read access of public containers.

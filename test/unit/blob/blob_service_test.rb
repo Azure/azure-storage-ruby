@@ -56,16 +56,17 @@ describe Azure::Storage::Blob::BlobService do
 
   describe "#list_containers" do
     let(:verb) { :get }
+    let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
     let(:container_enumeration_result) { Azure::Service::EnumerationResults.new }
 
     before {
-      subject.stubs(:containers_uri).with({}).returns(uri)
-      subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
+      subject.stubs(:containers_uri).with({}, options).returns(uri)
+      subject.stubs(:call).with(verb, uri, nil, {}, options).returns(response)
       serialization.stubs(:container_enumeration_results_from_xml).with(response_body).returns(container_enumeration_result)
     }
 
     it "assembles a URI for the request" do
-      subject.expects(:containers_uri).with({}).returns(uri)
+      subject.expects(:containers_uri).with({}, options).returns(uri)
       subject.list_containers
     end
 
@@ -90,55 +91,55 @@ describe Azure::Storage::Blob::BlobService do
 
       it "modifies the URI query parameters when provided a :prefix value" do
         query = { "prefix" => "pre" }
-        subject.expects(:containers_uri).with(query).returns(uri)
-
-        options = { prefix: "pre" }
-        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-        subject.list_containers options
+        local_call_options = { prefix: "pre" }.merge options
+        
+        subject.expects(:containers_uri).with(query, local_call_options).returns(uri)
+        subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+        subject.list_containers local_call_options
       end
 
       it "modifies the URI query parameters when provided a :marker value" do
         query = { "marker" => "mark" }
-        subject.expects(:containers_uri).with(query).returns(uri)
-
-        options = { marker: "mark" }
-        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-        subject.list_containers options
+        local_call_options = { marker: "mark" }.merge options
+        
+        subject.expects(:containers_uri).with(query, local_call_options).returns(uri)
+        subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+        subject.list_containers local_call_options
       end
 
       it "modifies the URI query parameters when provided a :max_results value" do
         query = { "maxresults" => "5" }
-        subject.expects(:containers_uri).with(query).returns(uri)
+        local_call_options = { max_results: 5 }.merge options
 
-        options = { max_results: 5 }
-        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-        subject.list_containers options
+        subject.expects(:containers_uri).with(query, local_call_options).returns(uri)
+        subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+        subject.list_containers local_call_options
       end
 
       it "modifies the URI query parameters when provided a :metadata value" do
         query = { "include" => "metadata" }
-        subject.expects(:containers_uri).with(query).returns(uri)
+        local_call_options = { metadata: true }.merge options
 
-        options = { metadata: true }
-        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-        subject.list_containers options
+        subject.expects(:containers_uri).with(query, local_call_options).returns(uri)
+        subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+        subject.list_containers local_call_options
       end
 
       it "modifies the URI query parameters when provided a :timeout value" do
         query = { "timeout" => "37" }
-        subject.expects(:containers_uri).with(query).returns(uri)
-
-        options = { timeout: 37 }
-        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-        subject.list_containers options
+        local_call_options = { timeout: 37 }.merge options
+        
+        subject.expects(:containers_uri).with(query, local_call_options).returns(uri)
+        subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+        subject.list_containers local_call_options
       end
 
       it "does not modify the URI query parameters when provided an unknown value" do
-        subject.expects(:containers_uri).with({}).returns(uri)
+        local_call_options = { unknown_key: "some_value" }.merge options
 
-        options = { unknown_key: "some_value" }
-        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-        subject.list_containers options
+        subject.expects(:containers_uri).with({}, local_call_options).returns(uri)
+        subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+        subject.list_containers local_call_options
       end
     end
   end
@@ -247,23 +248,24 @@ describe Azure::Storage::Blob::BlobService do
 
     describe "#get_container_properties" do
       let(:verb) { :get }
+      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:container_properties) { {} }
 
       before {
         container.properties = container_properties
         response_headers = {}
-        subject.stubs(:container_uri).with(container_name, {}).returns(uri)
+        subject.stubs(:container_uri).with(container_name, {}, options).returns(uri)
         subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
         serialization.stubs(:container_from_headers).with(response_headers).returns(container)
       }
 
       it "assembles a URI for the request" do
-        subject.expects(:container_uri).with(container_name, {}).returns(uri)
+        subject.expects(:container_uri).with(container_name, {}, options).returns(uri)
         subject.get_container_properties container_name
       end
 
       it "calls StorageService#call with the prepared request" do
-        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.expects(:call).with(verb, uri, nil, {}, options).returns(response)
         subject.get_container_properties container_name
       end
 
@@ -282,26 +284,27 @@ describe Azure::Storage::Blob::BlobService do
 
     describe "#get_container_metadata" do
       let(:verb) { :get }
+      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:container_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
       let(:response_headers) { { "x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1" } }
 
       before {
         query.update("comp" => "metadata")
         response.stubs(:headers).returns(response_headers)
-        subject.stubs(:container_uri).with(container_name, query).returns(uri)
-        subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.stubs(:container_uri).with(container_name, query, options).returns(uri)
+        subject.stubs(:call).with(verb, uri, nil, {}, options).returns(response)
 
         container.metadata = container_metadata
         serialization.stubs(:container_from_headers).with(response_headers).returns(container)
       }
 
       it "assembles a URI for the request" do
-        subject.expects(:container_uri).with(container_name, query).returns(uri)
+        subject.expects(:container_uri).with(container_name, query, options).returns(uri)
         subject.get_container_metadata container_name
       end
 
       it "calls StorageService#call with the prepared request" do
-        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.expects(:call).with(verb, uri, nil, {}, options).returns(response)
         subject.get_container_metadata container_name
       end
 
@@ -320,6 +323,7 @@ describe Azure::Storage::Blob::BlobService do
 
     describe "#get_container_acl" do
       let(:verb) { :get }
+      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:signed_identifier) { Azure::Storage::Service::SignedIdentifier.new }
       let(:signed_identifiers) { [signed_identifier] }
 
@@ -327,7 +331,7 @@ describe Azure::Storage::Blob::BlobService do
         query.update("comp" => "acl")
         response.stubs(:headers).returns({})
         response_body.stubs(:length).returns(37)
-        subject.stubs(:container_uri).with(container_name, query).returns(uri)
+        subject.stubs(:container_uri).with(container_name, query, options).returns(uri)
         subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
 
         serialization.stubs(:container_from_headers).with(response_headers).returns(container)
@@ -335,12 +339,12 @@ describe Azure::Storage::Blob::BlobService do
       }
 
       it "assembles a URI for the request" do
-        subject.expects(:container_uri).with(container_name, query).returns(uri)
+        subject.expects(:container_uri).with(container_name, query, options).returns(uri)
         subject.get_container_acl container_name
       end
 
       it "calls StorageService#call with the prepared request" do
-        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.expects(:call).with(verb, uri, nil, {}, options).returns(response)
         subject.get_container_acl container_name
       end
 
@@ -504,22 +508,23 @@ describe Azure::Storage::Blob::BlobService do
     describe "#list_blobs" do
       let(:verb) { :get }
       let(:query) { { "comp" => "list" } }
+      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:blob_enumeration_results) { Azure::Service::EnumerationResults.new }
 
       before {
-        subject.stubs(:container_uri).with(container_name, query).returns(uri)
-        subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.stubs(:container_uri).with(container_name, query, options).returns(uri)
+        subject.stubs(:call).with(verb, uri, nil, {}, options).returns(response)
         response.stubs(:success?).returns(true)
         serialization.stubs(:blob_enumeration_results_from_xml).with(response_body).returns(blob_enumeration_results)
       }
 
       it "assembles a URI for the request" do
-        subject.expects(:container_uri).with(container_name, query).returns(uri)
+        subject.expects(:container_uri).with(container_name, query, options).returns(uri)
         subject.list_blobs container_name
       end
 
       it "calls StorageService#call with the prepared request" do
-        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.expects(:call).with(verb, uri, nil, {}, options).returns(response)
         subject.list_blobs container_name
       end
 
@@ -537,88 +542,98 @@ describe Azure::Storage::Blob::BlobService do
         before {
           response.expects(:success?).returns(true)
           serialization.expects(:blob_enumeration_results_from_xml).with(response_body).returns(blob_enumeration_results)
-          subject.expects(:container_uri).with(container_name, query).returns(uri)
         }
 
         it "modifies the URI query parameters when provided a :prefix value" do
           query["prefix"] = "pre"
-          options = { prefix: "pre" }
-          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-          subject.list_blobs container_name, options
+          local_call_options = { prefix: "pre" }.merge options
+          subject.expects(:container_uri).with(container_name, query, local_call_options).returns(uri)
+          subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+          subject.list_blobs container_name, local_call_options
         end
 
         it "modifies the URI query parameters when provided a :delimiter value" do
           query["delimiter"] = "delim"
-          options = { delimiter: "delim" }
-          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-          subject.list_blobs container_name, options
+          local_call_options = { delimiter: "delim" }.merge options
+          subject.expects(:container_uri).with(container_name, query, local_call_options).returns(uri)
+          subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+          subject.list_blobs container_name, local_call_options
         end
 
         it "modifies the URI query parameters when provided a :marker value" do
           query["marker"] = "mark"
-          options = { marker: "mark" }
-          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-          subject.list_blobs container_name, options
+          local_call_options = { marker: "mark" }.merge options
+          subject.expects(:container_uri).with(container_name, query, local_call_options).returns(uri)
+          subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+          subject.list_blobs container_name, local_call_options
         end
 
         it "modifies the URI query parameters when provided a :max_results value" do
           query["maxresults"] = "5"
-          options = { max_results: 5 }
-          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-          subject.list_blobs container_name, options
+          local_call_options = { max_results: 5 }.merge options
+          subject.expects(:container_uri).with(container_name, query, local_call_options).returns(uri)
+          subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+          subject.list_blobs container_name, local_call_options
         end
 
         it "modifies the URI query parameters when provided a :metadata value" do
           query["include"] = "metadata"
-          options = { metadata: true }
-          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-          subject.list_blobs container_name, options
+          local_call_options = { metadata: true }.merge options
+          subject.expects(:container_uri).with(container_name, query, local_call_options).returns(uri)
+          subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+          subject.list_blobs container_name, local_call_options
         end
 
         it "modifies the URI query parameters when provided a :snapshots value" do
           query["include"] = "snapshots"
-          options = { snapshots: true }
-          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-          subject.list_blobs container_name, options
+          local_call_options = { snapshots: true }.merge options
+          subject.expects(:container_uri).with(container_name, query, local_call_options).returns(uri)
+          subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+          subject.list_blobs container_name, local_call_options
         end
 
         it "modifies the URI query parameters when provided a :uncommittedblobs value" do
           query["include"] = "uncommittedblobs"
-          options = { uncommittedblobs: true }
-          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-          subject.list_blobs container_name, options
+          local_call_options = { uncommittedblobs: true }.merge options
+          subject.expects(:container_uri).with(container_name, query, local_call_options).returns(uri)
+          subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+          subject.list_blobs container_name, local_call_options
         end
 
         it "modifies the URI query parameters when provided a :copy value" do
           query["include"] = "copy"
-          options = { copy: true }
-          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-          subject.list_blobs container_name, options
+          local_call_options = { copy: true }.merge options
+          subject.expects(:container_uri).with(container_name, query, local_call_options).returns(uri)
+          subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+          subject.list_blobs container_name, local_call_options
         end
 
         it "modifies the URI query parameters when provided more than one of :metadata, :snapshots, :uncommittedblobs or :copy values" do
           query["include"] = "metadata,snapshots,uncommittedblobs,copy"
-          options = {
+          local_call_options = {
             copy: true,
             metadata: true,
             snapshots: true,
             uncommittedblobs: true
-          }
-          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-          subject.list_blobs container_name, options
+          }.merge options
+          subject.expects(:container_uri).with(container_name, query, local_call_options).returns(uri)
+          subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+          subject.list_blobs container_name, local_call_options
         end
 
         it "modifies the URI query parameters when provided a :timeout value" do
           query["timeout"] = "37"
-          options = { timeout: 37 }
-          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-          subject.list_blobs container_name, options
+          local_call_options = { timeout: 37 }.merge options
+          subject.expects(:container_uri).with(container_name, query, local_call_options).returns(uri)
+          subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+          subject.list_blobs container_name, local_call_options
         end
 
         it "does not modify the URI query parameters when provided an unknown value" do
-          options = { unknown_key: "some_value" }
-          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-          subject.list_blobs container_name, options
+          local_call_options = { unknown_key: "some_value" }.merge options
+          subject.expects(:container_uri).with(container_name, query, local_call_options).returns(uri)
+          subject.expects(:call).with(:get, uri, nil, {}, local_call_options).returns(response)
+          subject.list_blobs container_name, local_call_options
         end
       end
     end
@@ -1219,30 +1234,38 @@ describe Azure::Storage::Blob::BlobService do
       describe "#list_blob_blocks" do
         let(:verb) { :get }
         let(:query) { { "comp" => "blocklist", "blocklisttype" => "all" } }
+        let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
         let(:blob_block_list) { [Azure::Storage::Blob::Block.new] }
 
         before {
-          subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, {}, { blocklist_type: :all }).returns(response)
+          subject.stubs(:blob_uri).with(container_name, blob_name, query, options).returns(uri)
+          subject.stubs(:call).with(verb, uri, nil, {}, { blocklist_type: :all }.merge(options)).returns(response)
           serialization.stubs(:block_list_from_xml).with(response_body).returns(blob_block_list)
         }
 
         it "assembles a URI for the request" do
-          subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          local_call_options = { blocklist_type: :all }.merge options
+          subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
           subject.list_blob_blocks container_name, blob_name
         end
 
         it "calls StorageService#call with the prepared request" do
-          subject.expects(:call).with(verb, uri, nil, {}, { blocklist_type: :all }).returns(response)
+          local_call_options = { blocklist_type: :all }.merge options
+          subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+          subject.expects(:call).with(verb, uri, nil, {}, local_call_options).returns(response)
           subject.list_blob_blocks container_name, blob_name
         end
 
         it "deserializes the response" do
+          local_call_options = { blocklist_type: :all }.merge options
+          subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
           serialization.expects(:block_list_from_xml).with(response_body).returns(blob_block_list)
           subject.list_blob_blocks container_name, blob_name
         end
 
         it "returns a list of blocks for the block blob" do
+          local_call_options = { blocklist_type: :all }.merge options
+          subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
           result = subject.list_blob_blocks container_name, blob_name
           result.must_be_kind_of Array
           result.first.must_be_kind_of Azure::Storage::Blob::Block
@@ -1251,32 +1274,36 @@ describe Azure::Storage::Blob::BlobService do
         describe "when blocklist_type is provided" do
           it "modifies the request query when the value is :all" do
             query["blocklisttype"] = "all"
-            options = { blocklist_type: :all }
-            subject.stubs(:call).with(verb, uri, nil, {}, options).returns(response)
-            subject.list_blob_blocks container_name, blob_name, options
+            local_call_options = { blocklist_type: :all }.merge options
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.stubs(:call).with(verb, uri, nil, {}, local_call_options).returns(response)
+            subject.list_blob_blocks container_name, blob_name, local_call_options
           end
 
           it "modifies the request query when the value is :uncommitted" do
             query["blocklisttype"] = "uncommitted"
-            options = { blocklist_type: :uncommitted }
-            subject.stubs(:call).with(verb, uri, nil, {}, options).returns(response)
-            subject.list_blob_blocks container_name, blob_name, options
+            local_call_options = { blocklist_type: :uncommitted }.merge options
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.stubs(:call).with(verb, uri, nil, {}, local_call_options).returns(response)
+            subject.list_blob_blocks container_name, blob_name, local_call_options
           end
 
           it "modifies the request query when the value is :committed" do
             query["blocklisttype"] = "committed"
-            options = { blocklist_type: :committed }
-            subject.stubs(:call).with(verb, uri, nil, {}, options).returns(response)
-            subject.list_blob_blocks container_name, blob_name, options
+            local_call_options = { blocklist_type: :committed }.merge options
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.stubs(:call).with(verb, uri, nil, {}, local_call_options).returns(response)
+            subject.list_blob_blocks container_name, blob_name, local_call_options
           end
         end
 
         describe "when snapshot is provided" do
           it "modifies the request query with the provided value" do
             query["snapshot"] = "snapshot-id"
-            options = { snapshot: "snapshot-id" }
-            subject.stubs(:call).with(verb, uri, nil, {}, options).returns(response)
-            subject.list_blob_blocks container_name, blob_name, options
+            local_call_options = { snapshot: "snapshot-id" }.merge options
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.stubs(:call).with(verb, uri, nil, {}, local_call_options).returns(response)
+            subject.list_blob_blocks container_name, blob_name, local_call_options
           end
         end
       end
@@ -1284,25 +1311,27 @@ describe Azure::Storage::Blob::BlobService do
       describe "#list_page_blob_ranges" do
         let(:verb) { :get }
         let(:query) { { "comp" => "pagelist" } }
+        let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
         let(:page_list) { [[0, 511], [512, 1023]] }
 
         before {
-          subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+          subject.stubs(:blob_uri).with(container_name, blob_name, query, options).returns(uri)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           serialization.stubs(:page_list_from_xml).with(response_body).returns(page_list)
         }
 
         it "assembles a URI for the request" do
-          subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          subject.expects(:blob_uri).with(container_name, blob_name, query, options).returns(uri)
           subject.list_page_blob_ranges container_name, blob_name
         end
 
         it "calls StorageService#call with the prepared request" do
-          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.list_page_blob_ranges container_name, blob_name
         end
 
         it "deserializes the response" do
+          subject.stubs(:blob_uri).with(container_name, blob_name, query, options).returns(uri)
           serialization.expects(:page_list_from_xml).with(response_body).returns(page_list)
           subject.list_page_blob_ranges container_name, blob_name
         end
@@ -1342,48 +1371,54 @@ describe Azure::Storage::Blob::BlobService do
 
           it "modifies the request headers with the desired range" do
             request_headers["x-ms-range"] = "bytes=#{start_range}-#{end_range}"
-            options = { start_range: start_range, end_range: end_range }
-            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            subject.list_page_blob_ranges container_name, blob_name, options
+            local_call_options = { start_range: start_range, end_range: end_range }.merge options
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.expects(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
+            subject.list_page_blob_ranges container_name, blob_name, local_call_options
           end
         end
 
         describe "when snapshot is provided" do
           it "modifies the request query with the provided value" do
             query["snapshot"] = "snapshot-id"
-            options = { snapshot: "snapshot-id" }
-            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            subject.list_page_blob_ranges container_name, blob_name, options
+            local_call_options = { snapshot: "snapshot-id" }.merge options
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.stubs(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
+            subject.list_page_blob_ranges container_name, blob_name, local_call_options
           end
         end
 
         describe "when the option hash is used" do
           it "modifies the request headers when provided a :if_modified_since value" do
             request_headers["If-Modified-Since"] = "ims-value"
-            options = { if_modified_since: "ims-value" }
-            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            subject.list_page_blob_ranges container_name, blob_name, options
+            local_call_options = { if_modified_since: "ims-value" }.merge options
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.stubs(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
+            subject.list_page_blob_ranges container_name, blob_name, local_call_options
           end
 
           it "modifies the request headers when provided a :if_unmodified_since value" do
             request_headers["If-Unmodified-Since"] = "iums-value"
-            options = { if_unmodified_since: "iums-value" }
-            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            subject.list_page_blob_ranges container_name, blob_name, options
+            local_call_options = { if_unmodified_since: "iums-value" }.merge options
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.stubs(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
+            subject.list_page_blob_ranges container_name, blob_name, local_call_options
           end
 
           it "modifies the request headers when provided a :if_match value" do
             request_headers["If-Match"] = "im-value"
-            options = { if_match: "im-value" }
-            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            subject.list_page_blob_ranges container_name, blob_name, options
+            local_call_options = { if_match: "im-value" }.merge options
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.stubs(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
+            subject.list_page_blob_ranges container_name, blob_name, local_call_options
           end
 
           it "modifies the request headers when provided a :if_none_match value" do
             request_headers["If-None-Match"] = "inm-value"
-            options = { if_none_match: "inm-value" }
-            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            subject.list_page_blob_ranges container_name, blob_name, options
+            local_call_options = { if_none_match: "inm-value" }.merge options
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.stubs(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
+            subject.list_page_blob_ranges container_name, blob_name, local_call_options
           end
         end
       end
@@ -1864,21 +1899,22 @@ describe Azure::Storage::Blob::BlobService do
 
       describe "#get_blob_properties" do
         let(:verb) { :head }
+        let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
         let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
 
         before {
-          subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          subject.stubs(:blob_uri).with(container_name, blob_name, query, options).returns(uri)
           subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
           serialization.stubs(:blob_from_headers).with(response_headers).returns(blob)
         }
 
         it "assembles a URI for the request" do
-          subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          subject.expects(:blob_uri).with(container_name, blob_name, query, options).returns(uri)
           subject.get_blob_properties container_name, blob_name
         end
 
         it "calls StorageService#call with the prepared request" do
-          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.get_blob_properties container_name, blob_name
         end
 
@@ -1895,16 +1931,17 @@ describe Azure::Storage::Blob::BlobService do
           before { query["snapshot"] = snapshot }
 
           it "modifies the blob uri query string with the snapshot" do
-            options = { snapshot: snapshot }
-            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
-            subject.get_blob_properties container_name, blob_name, options
+            local_call_options = { snapshot: snapshot }.merge options
+            subject.stubs(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.get_blob_properties container_name, blob_name, local_call_options
           end
 
           it "sets the snapshot value on the returned blob" do
-            options = { snapshot: snapshot }
-            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            result = subject.get_blob_properties container_name, blob_name, options
+            local_call_options = { snapshot: snapshot }.merge options
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.stubs(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
+            result = subject.get_blob_properties container_name, blob_name, local_call_options
             result.snapshot.must_equal snapshot
           end
         end
@@ -1912,23 +1949,24 @@ describe Azure::Storage::Blob::BlobService do
 
       describe "#get_blob_metadata" do
         let(:verb) { :get }
+        let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
         let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
 
         before {
           query["comp"] = "metadata"
 
-          subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+          subject.stubs(:blob_uri).with(container_name, blob_name, query, options).returns(uri)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           serialization.stubs(:blob_from_headers).with(response_headers).returns(blob)
         }
 
         it "assembles a URI for the request" do
-          subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          subject.expects(:blob_uri).with(container_name, blob_name, query, options).returns(uri)
           subject.get_blob_metadata container_name, blob_name
         end
 
         it "calls StorageService#call with the prepared request" do
-          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.get_blob_metadata container_name, blob_name
         end
 
@@ -1948,16 +1986,17 @@ describe Azure::Storage::Blob::BlobService do
           }
 
           it "modifies the blob uri query string with the snapshot" do
-            subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
-            options = { snapshot: snapshot }
-            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            subject.get_blob_metadata container_name, blob_name, options
+            local_call_options = { snapshot: snapshot }.merge options
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.stubs(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
+            subject.get_blob_metadata container_name, blob_name, local_call_options
           end
 
           it "sets the snapshot value on the returned blob" do
-            options = { snapshot: snapshot }
-            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            result = subject.get_blob_metadata container_name, blob_name, options
+            local_call_options = { snapshot: snapshot }.merge options
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.stubs(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
+            result = subject.get_blob_metadata container_name, blob_name, local_call_options
             result.snapshot.must_equal snapshot
           end
         end
@@ -1965,23 +2004,23 @@ describe Azure::Storage::Blob::BlobService do
 
       describe "#get_blob" do
         let(:verb) { :get }
+        let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
 
         before {
           response.stubs(:success?).returns(true)
-          response_body = "body-contents"
 
-          subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+          subject.stubs(:blob_uri).with(container_name, blob_name, query, options).returns(uri)
+          subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           serialization.stubs(:blob_from_headers).with(response_headers).returns(blob)
         }
 
         it "assembles a URI for the request" do
-          subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
+          subject.expects(:blob_uri).with(container_name, blob_name, query, options).returns(uri)
           subject.get_blob container_name, blob_name
         end
 
         it "calls StorageService#call with the prepared request" do
-          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+          subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.get_blob container_name, blob_name
         end
 
@@ -1999,10 +2038,10 @@ describe Azure::Storage::Blob::BlobService do
           before { query["snapshot"] = source_snapshot }
 
           it "modifies the blob uri query string with the snapshot" do
-            subject.expects(:blob_uri).with(container_name, blob_name, query).returns(uri)
-            options = { snapshot: source_snapshot }
-            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            subject.get_blob container_name, blob_name, options
+            local_call_options = { snapshot: source_snapshot }.merge options
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.stubs(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
+            subject.get_blob container_name, blob_name, local_call_options
           end
         end
 
@@ -2034,9 +2073,10 @@ describe Azure::Storage::Blob::BlobService do
           }
 
           it "modifies the request headers with the desired range" do
-            options = { start_range: start_range, end_range: end_range }
-            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            subject.get_blob container_name, blob_name, options
+            local_call_options = { start_range: start_range, end_range: end_range }.merge options
+            subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+            subject.expects(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
+            subject.get_blob container_name, blob_name, local_call_options
           end
         end
 
@@ -2052,17 +2092,19 @@ describe Azure::Storage::Blob::BlobService do
             }
 
             it "modifies the request headers to include the x-ms-range-get-content-md5 header" do
-              options = { start_range: start_range, end_range: end_range, get_content_md5: true }
-              subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-              subject.get_blob container_name, blob_name, options
+              local_call_options = { start_range: start_range, end_range: end_range, get_content_md5: true }.merge options
+              subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+              subject.expects(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
+              subject.get_blob container_name, blob_name, local_call_options
             end
           end
 
           describe "and a range is NOT specified" do
             it "does not modify the request headers" do
-              options = { get_content_md5: true }
-              subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-              subject.get_blob container_name, blob_name, options
+              local_call_options = { get_content_md5: true }.merge options
+              subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
+              subject.expects(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
+              subject.get_blob container_name, blob_name, local_call_options
             end
           end
         end
@@ -2716,7 +2758,7 @@ describe Azure::Storage::Blob::BlobService do
     let(:host_uri) { "http://dummy.uri" }
 
     before {
-      subject.host = host_uri
+      subject.storage_service_host[:primary] = host_uri
     }
 
     describe "#containers_uri" do

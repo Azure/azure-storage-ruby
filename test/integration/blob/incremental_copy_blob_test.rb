@@ -29,15 +29,15 @@ require "securerandom"
 require "time"
 
 class MockBlobService < Azure::Storage::Blob::BlobService
-  def containers_uri(query = {})
+  def containers_uri(query = {}, options = {})
     super
   end
 
-  def container_uri(name, query = {})
+  def container_uri(name, query = {}, options = {})
     super
   end
 
-  def blob_uri(container_name, blob_name, query = {})
+  def blob_uri(container_name, blob_name, query = {}, options = {})
     super
   end
 end

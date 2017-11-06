@@ -44,7 +44,8 @@ module Azure::Storage
         client_config = options[:client] || Azure::Storage
         signer = options[:signer] || client_config.signer || Azure::Storage::Core::Auth::SharedKey.new(client_config.storage_account_name, client_config.storage_access_key)
         super(signer, client_config.storage_account_name, options, &block)
-        @host = client.storage_blob_host
+        @storage_service_host[:primary] = client.storage_blob_host
+        @storage_service_host[:secondary] = client.storage_blob_host true
       end
 
       def call(method, uri, body = nil, headers = {}, options = {})
@@ -103,6 +104,9 @@ module Azure::Storage
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
       #
+      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+      #                                which location the request should be sent to.
+      #
       # See: https://msdn.microsoft.com/en-us/library/azure/dd179352.aspx
       #
       # NOTE: Metadata requested with the :metadata parameter must have been stored in
@@ -126,7 +130,8 @@ module Azure::Storage
           StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
         end
 
-        uri = containers_uri(query)
+        options[:request_location_mode] = RequestLocationMode::PRIMARY_OR_SECONDARY
+        uri = containers_uri(query, options)
         response = call(:get, uri, nil, {}, options)
 
         Serialization.container_enumeration_results_from_xml(response.body)
@@ -450,9 +455,9 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-        def containers_uri(query = {})
+        def containers_uri(query = {}, options = {})
           query = { "comp" => "list" }.merge(query)
-          generate_uri("", query)
+          generate_uri("", query, options)
         end
 
       # Protected: Generate the URI for a specific container.
@@ -465,10 +470,10 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-        def container_uri(name, query = {})
+        def container_uri(name, query = {}, options = {})
           return name if name.kind_of? ::URI
           query = { "restype" => "container" }.merge(query)
-          generate_uri(name, query)
+          generate_uri(name, query, options)
         end
 
       # Protected: Generate the URI for a specific Blob.
@@ -482,13 +487,14 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-        def blob_uri(container_name, blob_name, query = {})
+        def blob_uri(container_name, blob_name, query = {}, options = {})
           if container_name.nil? || container_name.empty?
             path = blob_name
           else
             path = ::File.join(container_name, blob_name)
           end
-          generate_uri(path, query, true)
+          options = { encode: true }.merge(options)
+          generate_uri(path, query, options)
         end
 
       # Adds conditional header with required condition

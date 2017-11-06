@@ -61,6 +61,8 @@ module Azure::Storage
     # * +:timeout+                   - Integer. A timeout in seconds.
     # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
+    # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+    #                                  which location the request should be sent to.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to get the blob
     #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
@@ -87,7 +89,9 @@ module Azure::Storage
       query = {}
       StorageService.with_query query, "snapshot", options[:snapshot]
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
-      uri = blob_uri(container, blob, query)
+      
+      options[:request_location_mode] = RequestLocationMode::PRIMARY_OR_SECONDARY
+      uri = blob_uri(container, blob, query, options)
 
       headers = StorageService.common_headers
       options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
@@ -121,6 +125,8 @@ module Azure::Storage
     # * +:timeout+                   - Integer. A timeout in seconds.
     # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
+    # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+    #                                  which location the request should be sent to.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to get the blob properties
     #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
@@ -156,7 +162,8 @@ module Azure::Storage
       end
       headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 
-      uri = blob_uri(container, blob, query)
+      options[:request_location_mode] = RequestLocationMode::PRIMARY_OR_SECONDARY
+      uri = blob_uri(container, blob, query, options)
 
       response = call(:head, uri, nil, headers, options)
 
@@ -312,6 +319,8 @@ module Azure::Storage
     # * +:timeout+                   - Integer. A timeout in seconds.
     # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
+    # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+    #                                  which location the request should be sent to.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to get the blob metadata
     #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
@@ -347,7 +356,8 @@ module Azure::Storage
         headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
       end
 
-      uri = blob_uri(container, blob, query)
+      options[:request_location_mode] = RequestLocationMode::PRIMARY_OR_SECONDARY
+      uri = blob_uri(container, blob, query, options)
       response = call(:get, uri, nil, headers, options)
       result = Serialization.blob_from_headers(response.headers)
 

@@ -263,7 +263,9 @@ module Azure::Storage
     # * +:timeout+                   - Integer. A timeout in seconds.
     # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
-    # * +:if_modified_since+        - String. A DateTime value. Specify this conditional header to list the pages only if
+    # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+    #                                  which location the request should be sent to.
+    # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to list the pages only if
     #                                  the blob has been modified since the specified date/time. If the blob has not been modified,
     #                                  the Blob service returns status code 412 (Precondition Failed).
     # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to list the pages only if
@@ -298,7 +300,8 @@ module Azure::Storage
       query.update("prevsnapshot" => options[:previous_snapshot]) if options[:previous_snapshot]
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-      uri = blob_uri(container, blob, query)
+      options[:request_location_mode] = RequestLocationMode::PRIMARY_OR_SECONDARY
+      uri = blob_uri(container, blob, query, options)
 
       options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
 

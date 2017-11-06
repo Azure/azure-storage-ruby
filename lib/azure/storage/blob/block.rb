@@ -260,6 +260,8 @@ module Azure::Storage
     # * +:timeout+                  - Integer. A timeout in seconds.
     # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
+    # * +:location_mode+            - LocationMode. Specifies the location mode used to decide 
+    #                                 which location the request should be sent to.
     # * +:lease_id+                 - String. If this header is specified, the operation will be performed only if both of the
     #                                 following conditions are met:
     #                                   - The blob's lease is currently active.
@@ -280,7 +282,8 @@ module Azure::Storage
 
       headers = options[:lease_id] ? { "x-ms-lease-id" => options[:lease_id] } : {}
 
-      uri = blob_uri(container, blob, query)
+      options[:request_location_mode] = RequestLocationMode::PRIMARY_OR_SECONDARY
+      uri = blob_uri(container, blob, query, options)
 
       response = call(:get, uri, nil, headers, options)
 

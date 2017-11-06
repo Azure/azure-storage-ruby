@@ -60,16 +60,17 @@ describe Azure::Storage::File::FileService do
 
   describe "#list_shares" do
     let(:verb) { :get }
+    let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
     let(:shares_enumeration_result) { Azure::Service::EnumerationResults.new }
 
     before {
-      subject.stubs(:shares_uri).with({}).returns(uri)
+      subject.stubs(:shares_uri).with({}, options).returns(uri)
       subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
       serialization.stubs(:share_enumeration_results_from_xml).with(response_body).returns(shares_enumeration_result)
     }
 
     it "assembles a URI for the request" do
-      subject.expects(:shares_uri).with({}).returns(uri)
+      subject.expects(:shares_uri).with({}, options).returns(uri)
       subject.list_shares
     end
 
@@ -94,55 +95,55 @@ describe Azure::Storage::File::FileService do
 
       it "modifies the URI query parameters when provided a :prefix value" do
         query = { "prefix" => "pre" }
-        subject.expects(:shares_uri).with(query).returns(uri)
+        local_options = { prefix: "pre" }.merge options
 
-        options = { prefix: "pre" }
-        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-        subject.list_shares options
+        subject.expects(:shares_uri).with(query, local_options).returns(uri)
+        subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
+        subject.list_shares local_options
       end
 
       it "modifies the URI query parameters when provided a :marker value" do
         query = { "marker" => "mark" }
-        subject.expects(:shares_uri).with(query).returns(uri)
+        local_options = { marker: "mark" }.merge options
 
-        options = { marker: "mark" }
-        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-        subject.list_shares options
+        subject.expects(:shares_uri).with(query, local_options).returns(uri)
+        subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
+        subject.list_shares local_options
       end
 
       it "modifies the URI query parameters when provided a :max_results value" do
         query = { "maxresults" => "5" }
-        subject.expects(:shares_uri).with(query).returns(uri)
+        local_options = { max_results: 5 }.merge options
 
-        options = { max_results: 5 }
-        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-        subject.list_shares options
+        subject.expects(:shares_uri).with(query, local_options).returns(uri)
+        subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
+        subject.list_shares local_options
       end
 
       it "modifies the URI query parameters when provided a :metadata value" do
         query = { "include" => "metadata" }
-        subject.expects(:shares_uri).with(query).returns(uri)
+        local_options = { metadata: true }.merge options
 
-        options = { metadata: true }
-        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-        subject.list_shares options
+        subject.expects(:shares_uri).with(query, local_options).returns(uri)
+        subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
+        subject.list_shares local_options
       end
 
       it "modifies the URI query parameters when provided a :timeout value" do
         query = { "timeout" => "37" }
-        subject.expects(:shares_uri).with(query).returns(uri)
+        local_options = { timeout: 37 }.merge options
 
-        options = { timeout: 37 }
-        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-        subject.list_shares options
+        subject.expects(:shares_uri).with(query, local_options).returns(uri)
+        subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
+        subject.list_shares local_options
       end
 
       it "does not modify the URI query parameters when provided an unknown value" do
-        subject.expects(:shares_uri).with({}).returns(uri)
+        local_options = { unknown_key: "some_value" }.merge options
 
-        options = { unknown_key: "some_value" }
-        subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-        subject.list_shares options
+        subject.expects(:shares_uri).with(query, local_options).returns(uri)
+        subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
+        subject.list_shares local_options
       end
     end
   end
@@ -284,27 +285,29 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_share_properties" do
       let(:verb) { :get }
+      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:share_properties) { {} }
 
       before {
         share.properties = share_properties
         response_headers = {}
-        subject.stubs(:share_uri).with(share_name, {}).returns(uri)
+        subject.stubs(:share_uri).with(share_name, {}, options).returns(uri)
         subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
         serialization.stubs(:share_from_headers).with(response_headers).returns(share)
       }
 
       it "assembles a URI for the request" do
-        subject.expects(:share_uri).with(share_name, {}).returns(uri)
+        subject.expects(:share_uri).with(share_name, {}, options).returns(uri)
         subject.get_share_properties share_name
       end
 
       it "calls StorageService#call with the prepared request" do
-        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.expects(:call).with(verb, uri, nil, {}, options).returns(response)
         subject.get_share_properties share_name
       end
 
       it "deserializes the response" do
+        subject.expects(:call).with(verb, uri, nil, {}, options).returns(response)
         serialization.expects(:share_from_headers).with(response_headers).returns(share)
         subject.get_share_properties share_name
       end
@@ -319,13 +322,14 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_share_metadata" do
       let(:verb) { :get }
+      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:share_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
       let(:response_headers) { { "x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1" } }
 
       before {
         query.update("comp" => "metadata")
         response.stubs(:headers).returns(response_headers)
-        subject.stubs(:share_uri).with(share_name, query).returns(uri)
+        subject.stubs(:share_uri).with(share_name, query, options).returns(uri)
         subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
 
         share.metadata = share_metadata
@@ -333,16 +337,17 @@ describe Azure::Storage::File::FileService do
       }
 
       it "assembles a URI for the request" do
-        subject.expects(:share_uri).with(share_name, query).returns(uri)
+        subject.expects(:share_uri).with(share_name, query, options).returns(uri)
         subject.get_share_metadata share_name
       end
 
       it "calls StorageService#call with the prepared request" do
-        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.expects(:call).with(verb, uri, nil, {}, options).returns(response)
         subject.get_share_metadata share_name
       end
 
       it "deserializes the response" do
+        subject.expects(:share_uri).with(share_name, query, options).returns(uri)
         serialization.expects(:share_from_headers).with(response_headers).returns(share)
         subject.get_share_metadata share_name
       end
@@ -391,6 +396,7 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_share_acl" do
       let(:verb) { :get }
+      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:signed_identifier) { Azure::Storage::Service::SignedIdentifier.new }
       let(:signed_identifiers) { [signed_identifier] }
 
@@ -398,7 +404,7 @@ describe Azure::Storage::File::FileService do
         query.update("comp" => "acl")
         response.stubs(:headers).returns({})
         response_body.stubs(:length).returns(37)
-        subject.stubs(:share_uri).with(share_name, query).returns(uri)
+        subject.stubs(:share_uri).with(share_name, query, options).returns(uri)
         subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
 
         serialization.stubs(:share_from_headers).with(response_headers).returns(share)
@@ -406,16 +412,18 @@ describe Azure::Storage::File::FileService do
       }
 
       it "assembles a URI for the request" do
-        subject.expects(:share_uri).with(share_name, query).returns(uri)
+        subject.expects(:share_uri).with(share_name, query, options).returns(uri)
         subject.get_share_acl share_name
       end
 
       it "calls StorageService#call with the prepared request" do
-        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.expects(:share_uri).with(share_name, query, options).returns(uri)
+        subject.expects(:call).with(verb, uri, nil, {}, options).returns(response)
         subject.get_share_acl share_name
       end
 
       it "deserializes the response" do
+        subject.expects(:share_uri).with(share_name, query, options).returns(uri)
         serialization.expects(:share_from_headers).with(response_headers).returns(share)
         serialization.expects(:signed_identifiers_from_xml).with(response_body).returns(signed_identifiers)
         subject.get_share_acl share_name
@@ -500,33 +508,36 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_share_stats" do
       let(:verb) { :get }
+      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:share_stats) { 10 }
 
       before {
         response_headers = {}
         query.update("comp" => "stats")
-        subject.stubs(:share_uri).with(share_name, query).returns(uri)
+        subject.stubs(:share_uri).with(share_name, query, options).returns(uri)
         subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
         serialization.stubs(:share_from_headers).with(response_headers).returns(share)
         serialization.stubs(:share_stats_from_xml).with(response_body).returns(share_stats)
       }
 
       it "assembles a URI for the request" do
-        subject.expects(:share_uri).with(share_name, query).returns(uri)
+        subject.expects(:share_uri).with(share_name, query, options).returns(uri)
         subject.get_share_stats share_name
       end
 
       it "calls StorageService#call with the prepared request" do
-        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.expects(:call).with(verb, uri, nil, {}, options).returns(response)
         subject.get_share_stats share_name
       end
 
       it "deserializes the response" do
+        subject.expects(:share_uri).with(share_name, query, options).returns(uri)
         serialization.expects(:share_from_headers).with(response_headers).returns(share)
         subject.get_share_stats share_name
       end
 
       it "returns a share, with it's properties attribute populated" do
+        subject.expects(:share_uri).with(share_name, query, options).returns(uri)
         serialization.expects(:share_stats_from_xml).with(response_body).returns(share_stats)
         result = subject.get_share_stats share_name
         result.must_be_kind_of Azure::Storage::File::Share::Share
@@ -542,22 +553,24 @@ describe Azure::Storage::File::FileService do
     describe "#list_directories_and_files" do
       let(:verb) { :get }
       let(:query) { { "comp" => "list" } }
+      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:directories_and_files_enumeration_results) { Azure::Service::EnumerationResults.new }
 
       before {
-        subject.stubs(:directory_uri).with(share_name, directory_path, query).returns(uri)
-        subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.stubs(:directory_uri).with(share_name, directory_path, query, options).returns(uri)
+        subject.stubs(:call).with(verb, uri, nil, {}, options).returns(response)
         response.stubs(:success?).returns(true)
         serialization.stubs(:directories_and_files_enumeration_results_from_xml).with(response_body).returns(directories_and_files_enumeration_results)
       }
 
       it "assembles a URI for the request" do
-        subject.expects(:directory_uri).with(share_name, directory_path, query).returns(uri)
+        subject.expects(:directory_uri).with(share_name, directory_path, query, options).returns(uri)
         subject.list_directories_and_files share_name, directory_path
       end
 
       it "calls StorageService#call with the prepared request" do
-        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.expects(:directory_uri).with(share_name, directory_path, query, options).returns(uri)
+        subject.expects(:call).with(verb, uri, nil, {}, options).returns(response)
         subject.list_directories_and_files share_name, directory_path
       end
 
@@ -567,6 +580,7 @@ describe Azure::Storage::File::FileService do
       end
 
       it "returns a list of containers for the account" do
+        subject.expects(:directory_uri).with(share_name, directory_path, query, options).returns(uri)
         result = subject.list_directories_and_files share_name, directory_path
         result.must_be_kind_of Azure::Service::EnumerationResults
       end
@@ -575,61 +589,72 @@ describe Azure::Storage::File::FileService do
         before {
           response.expects(:success?).returns(true)
           serialization.expects(:directories_and_files_enumeration_results_from_xml).with(response_body).returns(directories_and_files_enumeration_results)
-          subject.expects(:directory_uri).with(share_name, directory_path, query).returns(uri)
         }
 
         it "modifies the URI query parameters when provided a :marker value" do
           query["marker"] = "mark"
-          options = { marker: "mark" }
-          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-          subject.list_directories_and_files share_name, directory_path, options
+          local_options = { marker: "mark" }.merge(options)
+
+          subject.expects(:directory_uri).with(share_name, directory_path, query, local_options).returns(uri)
+          subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
+          subject.list_directories_and_files share_name, directory_path, local_options
         end
 
         it "modifies the URI query parameters when provided a :max_results value" do
           query["maxresults"] = "5"
-          options = { max_results: 5 }
-          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-          subject.list_directories_and_files share_name, directory_path, options
+          local_options = { max_results: 5 }.merge options
+
+          subject.expects(:directory_uri).with(share_name, directory_path, query, local_options).returns(uri)
+          subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
+          subject.list_directories_and_files share_name, directory_path, local_options
         end
 
         it "modifies the URI query parameters when provided a :timeout value" do
           query["timeout"] = "37"
-          options = { timeout: 37 }
-          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-          subject.list_directories_and_files share_name, directory_path, options
+          local_options = { timeout: 37 }.merge options
+
+          subject.expects(:directory_uri).with(share_name, directory_path, query, local_options).returns(uri)
+          subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
+          subject.list_directories_and_files share_name, directory_path, local_options
         end
 
         it "does not modify the URI query parameters when provided an unknown value" do
-          options = { unknown_key: "some_value" }
-          subject.expects(:call).with(:get, uri, nil, {}, options).returns(response)
-          subject.list_directories_and_files share_name, directory_path, options
+          local_options = { unknown_key: "some_value" }.merge options
+
+          subject.expects(:directory_uri).with(share_name, directory_path, query, local_options).returns(uri)
+          subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
+          subject.list_directories_and_files share_name, directory_path, local_options
         end
       end
     end
 
     describe "#get_directory_properties" do
       let(:verb) { :get }
+      let(:query) { {} }
+      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:directory_properties) { {} }
 
       before {
         directory.properties = directory_properties
         response_headers = {}
-        subject.stubs(:directory_uri).with(share_name, directory_path, {}).returns(uri)
-        subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.stubs(:directory_uri).with(share_name, directory_path, query, options).returns(uri)
+        subject.stubs(:call).with(verb, uri, nil, {}, options).returns(response)
         serialization.stubs(:directory_from_headers).with(response_headers).returns(directory)
       }
 
       it "assembles a URI for the request" do
-        subject.expects(:directory_uri).with(share_name, directory_path, {}).returns(uri)
+        subject.expects(:directory_uri).with(share_name, directory_path, query, options).returns(uri)
         subject.get_directory_properties share_name, directory_path
       end
 
       it "calls StorageService#call with the prepared request" do
-        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.expects(:directory_uri).with(share_name, directory_path, query, options).returns(uri)
+        subject.expects(:call).with(verb, uri, nil, {}, options).returns(response)
         subject.get_directory_properties share_name, directory_path
       end
 
       it "deserializes the response" do
+        subject.expects(:directory_uri).with(share_name, directory_path, query, options).returns(uri)
         serialization.expects(:directory_from_headers).with(response_headers).returns(directory)
         subject.get_directory_properties share_name, directory_path
       end
@@ -644,26 +669,27 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_directory_metadata" do
       let(:verb) { :get }
+      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:directory_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
       let(:response_headers) { { "x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1" } }
 
       before {
         query.update("comp" => "metadata")
         response.stubs(:headers).returns(response_headers)
-        subject.stubs(:directory_uri).with(share_name, directory_path, query).returns(uri)
-        subject.stubs(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.stubs(:directory_uri).with(share_name, directory_path, query, options).returns(uri)
+        subject.stubs(:call).with(verb, uri, nil, {}, options).returns(response)
 
         directory.metadata = directory_metadata
         serialization.stubs(:directory_from_headers).with(response_headers).returns(directory)
       }
 
       it "assembles a URI for the request" do
-        subject.expects(:directory_uri).with(share_name, directory_path, query).returns(uri)
+        subject.expects(:directory_uri).with(share_name, directory_path, query, options).returns(uri)
         subject.get_directory_metadata share_name, directory_path
       end
 
       it "calls StorageService#call with the prepared request" do
-        subject.expects(:call).with(verb, uri, nil, {}, {}).returns(response)
+        subject.expects(:call).with(verb, uri, nil, {}, options).returns(response)
         subject.get_directory_metadata share_name, directory_path
       end
 
@@ -924,20 +950,21 @@ describe Azure::Storage::File::FileService do
       let(:verb) { :get }
       let(:query) { { "comp" => "rangelist" } }
       let(:range_list) { [[0, 511], [512, 1023]] }
+      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
 
       before {
-        subject.stubs(:file_uri).with(share_name, directory_path, file_name, query).returns(uri)
+        subject.stubs(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
         subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
         serialization.stubs(:range_list_from_xml).with(response_body).returns(range_list)
       }
 
       it "assembles a URI for the request" do
-        subject.expects(:file_uri).with(share_name, directory_path, file_name, query).returns(uri)
+        subject.expects(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
         subject.list_file_ranges share_name, directory_path, file_name
       end
 
       it "calls StorageService#call with the prepared request" do
-        subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+        subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
         subject.list_file_ranges share_name, directory_path, file_name
       end
 
@@ -959,7 +986,9 @@ describe Azure::Storage::File::FileService do
         before { request_headers["x-ms-range"] = "bytes=#{start_range}-" }
 
         it "modifies the request headers with the desired range" do
-          subject.expects(:call).with(verb, uri, nil, request_headers, start_range: "#{start_range}".to_i).returns(response)
+          local_call_options = { start_range: "#{start_range}".to_i }.merge options
+          subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_call_options).returns(uri)
+          subject.expects(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
           subject.list_file_ranges share_name, directory_path, file_name, start_range: start_range
         end
       end
@@ -969,7 +998,11 @@ describe Azure::Storage::File::FileService do
         before { request_headers["x-ms-range"] = "bytes=0-#{end_range}" }
 
         it "modifies the request headers with the desired range" do
-          subject.expects(:call).with(verb, uri, nil, request_headers, start_range: 0, end_range: "#{end_range}".to_i).returns(response)
+          local_call_options = { start_range: 0, end_range: "#{end_range}".to_i }.merge options
+          local_uri_options = { start_range: nil, end_range: "#{end_range}".to_i }.merge options
+
+          subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_uri_options).returns(uri)
+          subject.expects(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
           subject.list_file_ranges share_name, directory_path, file_name, start_range: nil, end_range: end_range
         end
       end
@@ -981,9 +1014,11 @@ describe Azure::Storage::File::FileService do
 
         it "modifies the request headers with the desired range" do
           request_headers["x-ms-range"] = "bytes=#{start_range}-#{end_range}"
-          options = { start_range: start_range, end_range: end_range }
-          subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-          subject.list_file_ranges share_name, directory_path, file_name, options
+          local_call_options = { start_range: start_range, end_range: end_range }.merge options
+
+          subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_call_options).returns(uri)
+          subject.expects(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
+          subject.list_file_ranges share_name, directory_path, file_name, local_call_options
         end
       end
     end
@@ -1091,25 +1126,28 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_file_properties" do
       let(:verb) { :head }
+      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
 
       before {
         subject.stubs(:file_uri).with(share_name, directory_path, file_name, query).returns(uri)
-        subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+        subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
         serialization.stubs(:file_from_headers).with(response_headers).returns(file)
       }
 
       it "assembles a URI for the request" do
-        subject.expects(:file_uri).with(share_name, directory_path, file_name, query).returns(uri)
+        subject.expects(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
         subject.get_file_properties share_name, directory_path, file_name
       end
 
       it "calls StorageService#call with the prepared request" do
-        subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+        subject.expects(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
+        subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
         subject.get_file_properties share_name, directory_path, file_name
       end
 
       it "returns the file on success" do
+        subject.expects(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
         result = subject.get_file_properties share_name, directory_path, file_name
 
         result.must_be_kind_of Azure::Storage::File::File
@@ -1148,28 +1186,30 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_file_metadata" do
       let(:verb) { :get }
+      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       # No header is added in the get_file_metadata. StorageService.call will add common headers.
       let(:request_headers) { {} }
 
       before {
         query["comp"] = "metadata"
 
-        subject.stubs(:file_uri).with(share_name, directory_path, file_name, query).returns(uri)
-        subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+        subject.stubs(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
+        subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
         serialization.stubs(:file_from_headers).with(response_headers).returns(file)
       }
 
       it "assembles a URI for the request" do
-        subject.expects(:file_uri).with(share_name, directory_path, file_name, query).returns(uri)
+        subject.expects(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
         subject.get_file_metadata share_name, directory_path, file_name
       end
 
       it "calls StorageService#call with the prepared request" do
-        subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+        subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
         subject.get_file_metadata share_name, directory_path, file_name
       end
 
       it "returns the file on success" do
+        subject.expects(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
         result = subject.get_file_metadata share_name, directory_path, file_name
 
         result.must_be_kind_of Azure::Storage::File::File
@@ -1179,24 +1219,25 @@ describe Azure::Storage::File::FileService do
     end
 
     describe "#get_file" do
+      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:verb) { :get }
 
       before {
         response.stubs(:success?).returns(true)
         response_body = "file-contents"
 
-        subject.stubs(:file_uri).with(share_name, directory_path, file_name, query).returns(uri)
-        subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+        subject.stubs(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
+        subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
         serialization.stubs(:file_from_headers).with(response_headers).returns(file)
       }
 
       it "assembles a URI for the request" do
-        subject.expects(:file_uri).with(share_name, directory_path, file_name, query).returns(uri)
+        subject.expects(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
         subject.get_file share_name, directory_path, file_name
       end
 
       it "calls StorageService#call with the prepared request" do
-        subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+        subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
         subject.get_file share_name, directory_path, file_name
       end
 
@@ -1213,7 +1254,9 @@ describe Azure::Storage::File::FileService do
         before { request_headers["x-ms-range"] = "bytes=#{start_range}-" }
 
         it "modifies the request headers with the desired range" do
-          subject.expects(:call).with(verb, uri, nil, request_headers, start_range: 255).returns(response)
+          local_options = { start_range: 255 }.merge(options)
+          subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_options).returns(uri)
+          subject.expects(:call).with(verb, uri, nil, request_headers, local_options).returns(response)
           subject.get_file share_name, directory_path, file_name, start_range: start_range
         end
       end
@@ -1223,7 +1266,11 @@ describe Azure::Storage::File::FileService do
         before { request_headers["x-ms-range"] = "bytes=0-#{end_range}" }
 
         it "modifies the request headers with the desired range" do
-          subject.expects(:call).with(verb, uri, nil, request_headers, start_range: 0, end_range: end_range).returns(response)
+          local_url_options = { start_range: nil, end_range: end_range }.merge(options)
+          subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_url_options).returns(uri)
+
+          local_call_options = { start_range: 0, end_range: end_range }.merge(options)
+          subject.expects(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
           subject.get_file share_name, directory_path, file_name, start_range: nil, end_range: end_range
         end
       end
@@ -1236,9 +1283,10 @@ describe Azure::Storage::File::FileService do
         }
 
         it "modifies the request headers with the desired range" do
-          options = { start_range: start_range, end_range: end_range }
-          subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-          subject.get_file share_name, directory_path, file_name, options
+          local_options = { start_range: start_range, end_range: end_range }.merge(options)
+          subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_options).returns(uri)
+          subject.expects(:call).with(verb, uri, nil, request_headers, local_options).returns(response)
+          subject.get_file share_name, directory_path, file_name, local_options
         end
       end
 
@@ -1254,17 +1302,19 @@ describe Azure::Storage::File::FileService do
           }
 
           it "modifies the request headers to include the x-ms-range-get-content-md5 header" do
-            options = { start_range: start_range, end_range: end_range, get_content_md5: true }
-            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            subject.get_file share_name, directory_path, file_name, options
+            local_options = { start_range: start_range, end_range: end_range, get_content_md5: true }.merge(options)
+            subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_options).returns(uri)
+            subject.expects(:call).with(verb, uri, nil, request_headers, local_options).returns(response)
+            subject.get_file share_name, directory_path, file_name, local_options
           end
         end
 
         describe "and a range is NOT specified" do
           it "does not modify the request headers" do
-            options = { get_content_md5: true }
-            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            subject.get_file share_name, directory_path, file_name, options
+            local_options = { get_content_md5: true }.merge(options)
+            subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_options).returns(uri)
+            subject.expects(:call).with(verb, uri, nil, request_headers, local_options).returns(response)
+            subject.get_file share_name, directory_path, file_name, local_options
           end
         end
       end

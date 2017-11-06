@@ -36,7 +36,8 @@ describe Azure::Storage::Service::StorageService do
 
   subject do
     storage_service = Azure::Storage::Service::StorageService.new
-    storage_service.host = "http://dumyhost.uri"
+    storage_service.storage_service_host[:primary] = "http://dumyhost.uri"
+    storage_service.storage_service_host[:secondary] = "http://dumyhost-secondary.uri"
     storage_service
   end
 
@@ -58,10 +59,10 @@ describe Azure::Storage::Service::StorageService do
 
     it "adds a client request id" do
       Azure::Core::Http::HttpRequest.stubs(:new).with(verb,
-                                                        uri,
-                                                                                                                    body: nil,
-                                                            headers: { "x-ms-client-request-id" => "client-request-id" },
-                                                            client: nil).returns(mock_request)
+                                                      uri,
+                                                      body: nil,
+                                                      headers: { "x-ms-client-request-id" => "client-request-id" },
+                                                      client: nil).returns(mock_request)
       mock_request.expects(:with_filter).with(mock_signer_filter)
       subject.call(verb, uri, nil, {}, { request_id: "client-request-id" })
     end
@@ -75,9 +76,9 @@ describe Azure::Storage::Service::StorageService do
       before do
         Azure::Core::Http::HttpRequest.stubs(:new).with(verb,
                                                         uri,
-                                                                                                                    body: nil,
-                                                            headers: { "Custom-Header" => "CustomValue" },
-                                                            client: nil).returns(mock_request)
+                                                        body: nil,
+                                                        headers: { "Custom-Header" => "CustomValue" },
+                                                        client: nil).returns(mock_request)
         mock_request.expects(:with_filter).with(mock_signer_filter)
       end
 
@@ -298,13 +299,12 @@ describe Azure::Storage::Service::StorageService do
       end
 
       it "correctly joins the path if the host url contained a path" do
-        subject.host = "http://dummy.uri/host/path"
+        subject.storage_service_host[:primary] = "http://dummy.uri/host/path"
         subject.generate_uri("resource/entity/").path.must_equal "/host/path/resource/entity/"
       end
     end
 
     describe "when passed an Hash of query parameters" do
-
       it "encodes the keys" do
         subject.generate_uri("", "key !" => "value").query.must_include "key+%21=value"
       end
@@ -326,6 +326,34 @@ describe Azure::Storage::Service::StorageService do
       describe "when the query parameters are nil" do
         it "does not include any query parameters" do
           subject.generate_uri("", nil).query.must_equal nil
+        end
+      end
+    end
+
+    describe "when passed an optional location" do
+      it "default location should be primary" do
+        subject.generate_uri("", nil).to_s.must_equal "http://dumyhost.uri/"
+      end
+
+      it "primary location should work" do
+        subject.generate_uri("", nil, { location_mode: Azure::Storage::LocationMode::PRIMARY_ONLY}).to_s.must_equal "http://dumyhost.uri/"
+      end
+
+      it "secondary location should work" do
+        subject.generate_uri("", nil, 
+          { location_mode: Azure::Storage::LocationMode::SECONDARY_ONLY, 
+            request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY}).to_s.must_equal "http://dumyhost-secondary.uri/"
+      end
+
+      it "raise exception when primary only" do
+        assert_raises(Azure::Storage::InvalidOptionsError) do
+          subject.generate_uri "", nil, { location_mode: Azure::Storage::LocationMode::PRIMARY_ONLY, request_location_mode: Azure::Storage::RequestLocationMode::SECONDARY_ONLY }
+        end
+      end
+
+      it "raise exception when secondary only" do
+        assert_raises(Azure::Storage::InvalidOptionsError) do
+          subject.generate_uri "", nil, { location_mode: Azure::Storage::LocationMode::SECONDARY_ONLY, request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_ONLY }
         end
       end
     end

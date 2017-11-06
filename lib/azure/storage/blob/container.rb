@@ -23,7 +23,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require "azure/storage/blob/serialization"
 
 module Azure::Storage::Blob
   module Container
@@ -97,6 +96,8 @@ module Azure::Storage::Blob
     # * +:timeout+                  - Integer. A timeout in seconds.
     # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
+    # * +:location_mode+            - LocationMode. Specifies the location mode used to decide 
+    #                                 which location the request should be sent to.
     # * +:lease_id+                 - String. If specified, Get Container Properties only succeeds if the container’s lease is
     #                                 active and matches this ID. If there is no active lease or the ID does not match, 412
     #                                 (Precondition Failed) is returned.
@@ -112,7 +113,8 @@ module Azure::Storage::Blob
       headers = options[:lease_id] ? { "x-ms-lease-id" => options[:lease_id] } : {}
 
       # Call
-      response = call(:get, container_uri(name, query), nil, headers, options)
+      options[:request_location_mode] = Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
+      response = call(:get, container_uri(name, query, options), nil, headers, options)
 
       # result
       container = Serialization.container_from_headers(response.headers)
@@ -133,6 +135,8 @@ module Azure::Storage::Blob
     # * +:timeout+                  - Integer. A timeout in seconds.
     # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
+    # * +:location_mode+            - LocationMode. Specifies the location mode used to decide 
+    #                                 which location the request should be sent to.
     # * +:lease_id+                 - String. If specified, Get Container Metadata only succeeds if the container’s lease is
     #                                 active and matches this ID. If there is no active lease or the ID does not match, 412
     #                                 (Precondition Failed) is returned.
@@ -148,7 +152,8 @@ module Azure::Storage::Blob
       headers = options[:lease_id] ? { "x-ms-lease-id" => options[:lease_id] } : {}
 
       # Call
-      response = call(:get, container_uri(name, query), nil, headers, options)
+      options[:request_location_mode] = Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
+      response = call(:get, container_uri(name, query, options), nil, headers, options)
 
       # result
       container = Serialization.container_from_headers(response.headers)
@@ -208,6 +213,8 @@ module Azure::Storage::Blob
     # * +:timeout+                  - Integer. A timeout in seconds.
     # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
+    # * +:location_mode+            - LocationMode. Specifies the location mode used to decide 
+    #                                 which location the request should be sent to.
     # * +:lease_id+                 - String. If specified, Get Container ACL only succeeds if the container’s lease is
     #                                 active and matches this ID. If there is no active lease or the ID does not match, 412
     #                                 (Precondition Failed) is returned.
@@ -226,7 +233,8 @@ module Azure::Storage::Blob
       headers = options[:lease_id] ? { "x-ms-lease-id" => options[:lease_id] } : {}
 
       # Call
-      response = call(:get, container_uri(name, query), nil, headers, options)
+      options[:request_location_mode] = Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
+      response = call(:get, container_uri(name, query, options), nil, headers, options)
 
       # Result
       container = Serialization.container_from_headers(response.headers)
@@ -576,6 +584,8 @@ module Azure::Storage::Blob
     # * +:timeout+          - Integer. A timeout in seconds.
     # * +:request_id+       - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                         in the analytics logs when storage analytics logging is enabled.
+    # * +:location_mode+    - LocationMode. Specifies the location mode used to decide 
+    #                         which location the request should be sent to.
     #
     # NOTE: Metadata requested with the :metadata parameter must have been stored in
     # accordance with the naming restrictions imposed by the 2009-09-19 version of the Blob
@@ -607,7 +617,8 @@ module Azure::Storage::Blob
       query["include"] = included_datasets.join "," if included_datasets.length > 0
 
       # Scheme + path
-      uri = container_uri(name, query)
+      options[:request_location_mode] = Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
+      uri = container_uri(name, query, options)
 
       # Call
       response = call(:get, uri, nil, {}, options)

@@ -60,7 +60,11 @@ module Azure::Storage
     attr_writer :storage_table_host,
                 :storage_blob_host,
                 :storage_queue_host,
-                :storage_file_host
+                :storage_file_host,
+                :storage_table_host_secondary,
+                :storage_blob_host_secondary,
+                :storage_queue_host_secondary,
+                :storage_file_host_secondary
 
     attr_reader :signer
 
@@ -101,6 +105,11 @@ module Azure::Storage
             Azure::Storage.send(key)
           end
         instance_variable_set(:"@#{key}", options.fetch(key, value))
+
+        # Set the secondary endpoint if the primary one is given
+        if key.to_s.include? "host"
+          instance_variable_set(:"@#{key}_secondary", secondary_endpoint(options.fetch(key, value)))
+        end
       end
       self.send(:reset_agents!) if self.respond_to?(:reset_agents!)
       setup_signer_for_service
@@ -111,32 +120,48 @@ module Azure::Storage
 
     # Storage queue host
     # @return [String]
-    def storage_queue_host
-      @storage_queue_host || default_host(:queue)
+    def storage_queue_host(isSecondary = false)
+      if isSecondary
+        @storage_queue_host_secondary || default_host(:queue, true)
+      else
+        @storage_queue_host || default_host(:queue, false)
+      end
     end
 
     # Storage blob host
     # @return [String]
-    def storage_blob_host
-      @storage_blob_host || default_host(:blob)
+    def storage_blob_host(isSecondary = false)
+      if isSecondary
+        @storage_blob_host_secondary || default_host(:blob, true)
+      else
+        @storage_blob_host || default_host(:blob, false)
+      end
     end
 
     # Storage table host
     # @return [String]
-    def storage_table_host
-      @storage_table_host || default_host(:table)
+    def storage_table_host(isSecondary = false)
+      if isSecondary
+        @storage_table_host_secondary || default_host(:table, true)
+      else
+        @storage_table_host || default_host(:table, false)
+      end
     end
 
     # Storage file host
     # @return [String]
-    def storage_file_host
-      @storage_file_host || default_host(:file)
+    def storage_file_host(isSecondary = false)
+      if isSecondary
+        @storage_file_host_secondary || default_host(:file, true)
+      else
+        @storage_file_host || default_host(:file, false)
+      end
     end
 
     private
 
-      def default_host(service)
-        "https://#{storage_account_name}.#{service}.core.windows.net" if storage_account_name
+      def default_host(service, isSecondary = false)
+        "https://#{storage_account_name}#{isSecondary ? "-secondary" : ""}.#{service}.core.windows.net" if storage_account_name
       end
 
       def setup_options
@@ -152,6 +177,12 @@ module Azure::Storage
         uri = URI::parse endpoint
         fields = uri.host.split "."
         fields[0]
+      end
+
+      def secondary_endpoint(primary_endpoint)
+        return nil if primary_endpoint.nil?
+        account_name = account_name_from_endpoint primary_endpoint
+        primary_endpoint.sub account_name, account_name + "-secondary"
       end
 
       def determine_account_name
