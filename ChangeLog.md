@@ -2,6 +2,7 @@
 
 ALL
 * Added the support for the location mode in the API options.
+* Added the support for retrying according to the location mode.
 
 BLOB
 * Added support for anonymous read access of public containers.

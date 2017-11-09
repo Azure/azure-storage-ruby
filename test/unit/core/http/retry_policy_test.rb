@@ -23,6 +23,8 @@
 #--------------------------------------------------------------------------
 require "test_helper"
 require "azure/core/http/retry_policy"
+require "azure/core/http/http_request"
+require "azure/storage/default"
 require "azure/storage/core/filter/linear_retry_filter"
 require "azure/storage/core/filter/exponential_retry_filter"
 
@@ -42,5 +44,103 @@ describe Azure::Core::Http::RetryPolicy do
     retry_count = retry_interval = 1
     retry_policy = Azure::Storage::Core::Filter::ExponentialRetryPolicyFilter.new retry_count, retry_interval
     retry_policy.should_retry?(nil, error: "Errno::EPROTONOSUPPORT").must_equal false
+  end
+
+  describe "RetryPolicy retries with a new URL" do
+    let(:retry_count) { 1 } 
+    let(:retry_interval) { 1 }
+
+    subject { Azure::Storage::Core::Filter::LinearRetryPolicyFilter.new retry_count, retry_interval }
+
+    let(:verb) { :put }
+    let(:primary_uri) { URI.parse "http://primary.com" }
+    let(:secondary_uri) { URI.parse "http://secondary.com" }
+    let(:request) { Azure::Core::Http::HttpRequest.new verb, primary_uri, {} }
+    let(:response) { Azure::Core::Http::HttpResponse.new nil, primary_uri }
+    let(:retry_data) { { request_options: {} } }
+
+    before {
+      request.stubs(:call).returns(response)
+      response.stubs(:success?).returns(true)
+      response.stubs(:status_code).returns(500)
+    }
+
+    it "retries with a new URL: PRIMARY_THEN_SECONDARY" do
+      retry_data[:request_options] =
+        {
+          primary_uri: primary_uri,
+          secondary_uri: secondary_uri,
+          location_mode: Azure::Storage::LocationMode::PRIMARY_THEN_SECONDARY,
+          request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
+        }
+      subject.retry_data = retry_data
+      subject.call request, request
+      request.uri.must_equal secondary_uri
+    end
+
+    it "retries with a new URL: SECONDARY_THEN_PRIMARY" do
+      retry_data[:request_options] =
+        {
+          primary_uri: primary_uri,
+          secondary_uri: secondary_uri,
+          location_mode: Azure::Storage::LocationMode::SECONDARY_THEN_PRIMARY,
+          request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
+        }
+      subject.retry_data = retry_data
+      subject.call request, request
+      request.uri.must_equal primary_uri
+    end
+
+    it "retries with a new URL: PRIMARY_ONLY" do
+      retry_data[:request_options] =
+        {
+          primary_uri: primary_uri,
+          secondary_uri: secondary_uri,
+          location_mode: Azure::Storage::LocationMode::PRIMARY_ONLY,
+          request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
+        }
+      subject.retry_data = retry_data
+      subject.call request, request
+      request.uri.must_equal primary_uri
+    end
+
+    it "retries with a new URL: SECONDARY_ONLY" do
+      retry_data[:request_options] =
+        {
+          primary_uri: primary_uri,
+          secondary_uri: secondary_uri,
+          location_mode: Azure::Storage::LocationMode::SECONDARY_ONLY,
+          request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
+        }
+      subject.retry_data = retry_data
+      subject.call request, request
+      request.uri.must_equal secondary_uri
+    end
+
+    it "retries with a new URL: PRIMARY_THEN_SECONDARY, API: PRIMARY_ONLY" do
+      retry_data[:request_options] =
+        {
+          primary_uri: primary_uri,
+          secondary_uri: secondary_uri,
+          location_mode: Azure::Storage::LocationMode::PRIMARY_THEN_SECONDARY,
+          request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_ONLY
+        }
+      subject.retry_data = retry_data
+      subject.call request, request
+      request.uri.must_equal primary_uri
+    end
+
+    it "retries with a new URL: SECONDARY_THEN_PRIMARY, API: SECONDARY_ONLY" do
+      retry_data[:request_options] =
+        {
+          primary_uri: primary_uri,
+          secondary_uri: secondary_uri,
+          location_mode: Azure::Storage::LocationMode::SECONDARY_THEN_PRIMARY,
+          request_location_mode: Azure::Storage::RequestLocationMode::SECONDARY_ONLY
+        }
+      subject.retry_data = retry_data
+      subject.call request, request
+      request.uri.must_equal secondary_uri
+    end
   end
 end
