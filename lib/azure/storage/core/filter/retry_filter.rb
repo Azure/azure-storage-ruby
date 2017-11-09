@@ -31,6 +31,7 @@ module Azure::Storage::Core::Filter
     def initialize(retry_count = nil, retry_interval = nil)
       @retry_count = retry_count
       @retry_interval = retry_interval
+      @request_options = {}
 
       super &:should_retry?
     end
@@ -44,6 +45,9 @@ module Azure::Storage::Core::Filter
     # response - HttpResponse. The response from the active request
     # retry_data - Hash. Stores stateful retry data
     def should_retry?(response, retry_data)
+      # Fill necessary information
+      init_retry_data retry_data
+
       # Applies the logic when there is subclass overrides it
       apply_retry_policy retry_data
 
@@ -60,7 +64,12 @@ module Azure::Storage::Core::Filter
       should_retry_on_local_error? retry_data
       return false unless should_retry_on_error? response, retry_data
 
-      adjust_retry_parameter retry_data
+      # Determined that it needs to retry.
+      adjust_retry_request retry_data
+
+      wait_for_retry
+
+      retry_data[:retryable]
     end
 
     # Apply the retry policy to determine how the HTTP request should continue retrying
@@ -131,12 +140,82 @@ module Azure::Storage::Core::Filter
         return retry_data[:retryable]
       end
 
+      check_location(response, retry_data)
+
+      check_status_code(retry_data)
+
+      retry_data[:retryable]
+    end
+
+    # Adjust the retry parameter and wait for retry
+    def wait_for_retry
+      sleep @retry_interval
+    end
+
+    # Adjust the retry request
+    #
+    # retry_data - Hash. Stores stateful retry data
+    def adjust_retry_request(retry_data)
+      # Adjust the location first
+      next_location = @request_options[:target_location].nil? ? get_next_location(retry_data) : @request_options[:target_location]
+      retry_data[:current_location] = next_location
+
+      retry_data[:uri] =
+        if next_location == Azure::Storage::StorageLocation::PRIMARY
+          @request_options[:primary_uri]
+        else
+          @request_options[:secondary_uri]
+        end
+
+      # Now is the time to calculate the exact retry interval. ShouldRetry call above already
+      # returned back how long two requests to the same location should be apart from each other.
+      # However, for the reasons explained above, the time spent between the last attempt to
+      # the target location and current time must be subtracted from the total retry interval
+      # that ShouldRetry returned.
+      lastAttemptTime = 
+        if retry_data[:current_location] == Azure::Storage::StorageLocation::PRIMARY
+          retry_data[:last_primary_attempt]
+        else
+          retry_data[:last_secondary_attempt]
+        end
+
+      @retry_interval =
+        if lastAttemptTime.nil?
+          0
+        else
+          since_last_attempt = Time.now - lastAttemptTime
+          retry_data[:interval] - since_last_attempt
+        end
+    end
+
+    # Initialize the retry data
+    #
+    # retry_data - Hash. Stores stateful retry data
+    def init_retry_data(retry_data)
+      @request_options = retry_data[:request_options] unless retry_data[:request_options].nil?
+
+      if retry_data[:current_location].nil?
+        retry_data[:current_location] = Azure::Storage::Service::StorageService.get_location(@request_options[:location_mode], @request_options[:request_location_mode])
+      end
+      
+      if retry_data[:current_location] == Azure::Storage::StorageLocation::PRIMARY
+        retry_data[:last_primary_attempt] = Time.now
+      else
+        retry_data[:last_secondary_attempt] = Time.now
+      end
+
+    end
+
+    # Check the location
+    #
+    # retry_data - Hash. Stores stateful retry data
+    def check_location(response, retry_data)
       # If a request sent to the secondary location fails with 404 (Not Found), it is possible
       # that the resource replication is not finished yet. So, in case of 404 only in the secondary
       # location, the failure should still be retryable.
-      secondary_not_found = (retry_data[:current_location] === Azure::Storage::RequestLocationMode::SECONDARY_ONLY) && response.status_code === 404;
+      retry_data[:secondary_not_found] = (retry_data[:current_location] === Azure::Storage::StorageLocation::SECONDARY) && response.status_code === 404;
 
-      if secondary_not_found
+      if retry_data[:secondary_not_found]
         retry_data[:status_code] = 500
       else
         if (response.status_code)
@@ -145,20 +224,28 @@ module Azure::Storage::Core::Filter
           retry_data[:status_code] = nil
         end
       end
+    end
 
+    # Check the status code
+    #
+    # retry_data - Hash. Stores stateful retry data
+    def check_status_code(retry_data)
       if (retry_data[:status_code] < 400)
         retry_data[:retryable] = false;
-        return false;
       # Non-timeout Cases
       elsif (retry_data[:status_code] != 408)
         # Always no retry on "not implemented" and "version not supported"
         if (retry_data[:status_code] == 501 || retry_data[:status_code] == 505)
           retry_data[:retryable] = false;
-          return false;
+        end
+
+        if (retry_data[:status_code] == 404)
+          retry_data[:retryable] = true;
+          return true;
         end
 
         # When absorb_conditional_errors_on_retry is set (for append blob)
-        if (retry_data[:request_options] && retry_data[:request_options][:absorb_conditional_errors_on_retry])
+        if (@request_options[:absorb_conditional_errors_on_retry])
           if (retry_data[:status_code] == 412)
             # When appending block with precondition failure and their was a server error before, we ignore the error.
             if (retry_data[:last_server_error])
@@ -177,16 +264,40 @@ module Azure::Storage::Core::Filter
           retry_data[:retryable] = false;
         end
       end
-      retry_data[:retryable]
     end
 
-    # Adjust the retry parameter
+    # Get retry request destination
     #
     # retry_data - Hash. Stores stateful retry data
-    def adjust_retry_parameter(retry_data)
-      # TODO: Adjust the retry parameter according to the location and last attempt time
-      sleep retry_data[:interval] if retry_data[:retryable]
-      retry_data[:retryable]
+    def get_next_location(retry_data)
+      # In case of 404 when trying the secondary location, instead of retrying on the
+      # secondary, further requests should be sent only to the primary location, as it most
+      # probably has a higher chance of succeeding there.
+      if retry_data[:secondary_not_found] && @request_options[:location_mode] != Azure::Storage::LocationMode::SECONDARY_ONLY
+        @request_options[:location_mode] = Azure::Storage::LocationMode::PRIMARY_ONLY;
+        return Azure::Storage::StorageLocation::PRIMARY
+      end
+
+      case @request_options[:location_mode]
+      when Azure::Storage::LocationMode::PRIMARY_ONLY
+        Azure::Storage::StorageLocation::PRIMARY
+      when Azure::Storage::LocationMode::SECONDARY_ONLY
+        Azure::Storage::StorageLocation::SECONDARY
+      else
+        # request_location_mode cannot be SECONDARY_ONLY because it will be blocked at the first time
+        if @request_options[:request_location_mode] == Azure::Storage::RequestLocationMode::PRIMARY_ONLY
+          Azure::Storage::StorageLocation::PRIMARY
+        elsif @request_options[:request_location_mode] == Azure::Storage::RequestLocationMode::SECONDARY_ONLY
+          Azure::Storage::StorageLocation::SECONDARY
+        else
+          if retry_data[:current_location] === Azure::Storage::StorageLocation::PRIMARY
+            Azure::Storage::StorageLocation::SECONDARY
+          else
+            Azure::Storage::StorageLocation::PRIMARY
+          end
+        end
+      end
     end
+
   end
 end

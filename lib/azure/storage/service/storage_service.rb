@@ -58,7 +58,7 @@ module Azure::Storage
       end
 
       def call(method, uri, body = nil, headers = {}, options = {})
-        super(method, uri, body, StorageService.common_headers(options).merge(headers))
+        super(method, uri, body, StorageService.common_headers(options).merge(headers), options)
       end
 
       # Public: Get Storage Service properties
@@ -165,7 +165,19 @@ module Azure::Storage
           path = path.gsub(/\+/, "%20")
         end
 
-        super path, query
+        @host = storage_service_host[:primary]
+        options[:primary_uri] = super path, query
+
+        @host = storage_service_host[:secondary]
+        options[:secondary_uri] = super path, query
+
+        if location == StorageLocation::PRIMARY
+          @host = @storage_service_host[:primary]
+          return options[:primary_uri]
+        else
+          @host = @storage_service_host[:secondary]
+          return options[:secondary_uri]
+        end
       end
 
       # Get account path according to the location settings.
