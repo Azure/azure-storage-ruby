@@ -5,7 +5,8 @@ ALL
 * Added the support for retrying according to the location mode.
 
 BLOB
-* Added support for anonymous read access of public containers.
+* Added the support for retrieving statistics related to replication for the Blob service.
+* Added the support for anonymous read access of public containers.
 * Added full lease ID header support for following methods:
   - Azure::Storage::Blob::BlobService::get_container_properties
   - Azure::Storage::Blob::BlobService::get_container_metadata
@@ -32,6 +33,12 @@ BLOB
   - Azure::Storage::Blob::BlobService::list_page_blob_ranges
   - Azure::Storage::Blob::BlobService::incremental_copy_blob
   - Azure::Storage::Blob::BlobService::append_blob_block
+
+Queue
+* Added the support for retrieving statistics related to replication for the Queue service.
+
+Table
+* Added the support for retrieving statistics related to replication for the Table service.
 
 2017.09 - version 0.14.0-preview
 

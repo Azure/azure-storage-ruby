@@ -27,6 +27,7 @@
 require "azure/core/signed_service"
 require "azure/storage/core"
 require "azure/storage/service/storage_service_properties"
+require "azure/storage/service/storage_service_stats"
 
 module Azure::Storage
   module Service
@@ -104,6 +105,32 @@ module Azure::Storage
         nil
       end
 
+      # Public: Retrieves statistics related to replication for the service. 
+      # It is only available on the secondary location endpoint when read-access geo-redundant 
+      # replication is enabled for the storage account. 
+      #
+      # See https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats
+      # See https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-service-stats
+      # See https://docs.microsoft.com/en-us/rest/api/storageservices/get-table-service-stats
+      #
+      # ==== Options
+      #
+      # * +:timeout+                   - Integer. A timeout in seconds.
+      # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
+      #                                  in the analytics logs when storage analytics logging is enabled.
+      #
+      # Returns a Hash with the service statistics or nil if the operation failed
+      def get_service_stats(options = {})
+        query = {}
+        StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
+
+        options.update(
+          location_mode: LocationMode::SECONDARY_ONLY,
+          request_location_mode: RequestLocationMode::SECONDARY_ONLY)
+        response = call(:get, service_stats_uri(query, options), nil, {}, options)
+        Serialization.service_stats_from_xml response.body
+      end
+
       # Public: Generate the URI for the service properties
       #
       # * +:query+ - see Azure::Storage::Services::GetServiceProperties#call documentation.
@@ -112,6 +139,16 @@ module Azure::Storage
       def service_properties_uri(query = {})
         query.update(restype: "service", comp: "properties")
         generate_uri("", query)
+      end
+
+      # Public: Generate the URI for the service statistics
+      #
+      # * +:query+ - see Azure::Storage::Services::GetServiceStats#call documentation.
+      #
+      # Returns a URI.
+      def service_stats_uri(query = {}, options = {})
+        query.update(restype: "service", comp: "stats")
+        generate_uri("", query, options)
       end
 
       # Overrides the base class implementation to determine the request uri
@@ -131,7 +168,7 @@ module Azure::Storage
       # Returns the uri hash
       def generate_uri(path = "", query = {}, options = {})
         location_mode =
-          if options[:location_mode].nil?  
+          if options[:location_mode].nil?
             LocationMode::PRIMARY_ONLY
           else
             options[:location_mode]

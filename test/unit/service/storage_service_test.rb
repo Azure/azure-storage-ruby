@@ -247,7 +247,7 @@ describe Azure::Storage::Service::StorageService do
 
     it "returns nil on success" do
       result = subject.set_service_properties service_properties
-      result.must_equal nil
+      assert_nil result
     end
   end
 
@@ -264,6 +264,76 @@ describe Azure::Storage::Service::StorageService do
 
     it "sets a query string that specifies the storage service properties endpoint" do
       subject.service_properties_uri.query.must_include "restype=service&comp=properties"
+    end
+  end
+
+  describe "#get_service_stats" do
+    let(:query) { {} }
+    let(:service_stats_xml) { Fixtures["storage_service_stats"] }
+    let(:service_stats) { Azure::Storage::Service::StorageServiceStats.new }
+    let(:options) {
+      {
+        location_mode: Azure::Storage::LocationMode::SECONDARY_ONLY,
+        request_location_mode: Azure::Storage::RequestLocationMode::SECONDARY_ONLY
+      }
+    }
+    let(:response) {
+      response = mock()
+      response.stubs(:body).returns(service_stats_xml)
+      response
+    }
+
+    let(:service_stats_uri) { URI.parse "http://dummy.uri/service/stats" }
+
+    before do
+      Azure::Storage::Service::Serialization.stubs(:service_stats_from_xml).with(service_stats_xml).returns(service_stats)
+      subject.stubs(:service_stats_uri).with(query, options).returns(service_stats_uri)
+      subject.stubs(:call).with(:get, service_stats_uri, nil, {}, options).returns(response)
+    end
+
+    it "calls the service_stats_uri method to determine the correct uri" do
+      subject.expects(:service_stats_uri).with(query, options).returns(service_stats_uri)
+      subject.get_service_stats
+    end
+
+    it "gets the response from the HTTP API" do
+      subject.expects(:call).with(:get, service_stats_uri, nil, {}, options).returns(response)
+      subject.get_service_stats
+    end
+
+    it "deserializes the response from xml" do
+      Azure::Storage::Service::Serialization.expects(:service_stats_from_xml).with(service_stats_xml).returns(service_stats)
+      subject.get_service_stats
+    end
+
+    it "modifies the URI query parameters when provided a :timeout value" do
+      timeout_option = { timeout: 30 } 
+      query.update("timeout" => "30")
+      call_options = timeout_option.merge options
+      subject.expects(:service_stats_uri).with(query, call_options).returns(service_stats_uri)
+      subject.expects(:call).with(:get, service_stats_uri, nil, {}, call_options).returns(response)
+      subject.get_service_stats timeout_option
+    end
+
+    it "returns a StorageServiceStats instance" do
+      result = subject.get_service_stats
+      result.must_be_kind_of Azure::Storage::Service::StorageServiceStats
+    end
+  end
+
+  describe "service_stats_uri" do
+    it "returns an instance of URI" do
+      subject.service_stats_uri.must_be_kind_of URI
+    end
+
+    it "uses the value of the host property as the base of the url" do
+      subject.service_stats_uri.to_s.must_include subject.host
+      subject.host = "http://something.else"
+      subject.service_stats_uri.to_s.must_include subject.host
+    end
+
+    it "sets a query string that specifies the storage service stats endpoint" do
+      subject.service_stats_uri.query.must_include "restype=service&comp=stats"
     end
   end
 
@@ -325,7 +395,7 @@ describe Azure::Storage::Service::StorageService do
 
       describe "when the query parameters are nil" do
         it "does not include any query parameters" do
-          subject.generate_uri("", nil).query.must_equal nil
+          assert_nil subject.generate_uri("", nil).query
         end
       end
     end
