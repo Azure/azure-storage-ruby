@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<StorageServiceStats>  
+  <GeoReplication>  
+      <Status>live</Status>  
+      <LastSyncTime>Wed, 23 Oct 2013 22:05:54 GMT</LastSyncTime>
+  </GeoReplication>  
+</StorageServiceStats>  

@@ -493,7 +493,7 @@ module Azure::Storage
           else
             path = ::File.join(container_name, blob_name)
           end
-          options.merge(encode: true)
+          options = { encode: true }.merge(options)
           generate_uri(path, query, options)
         end
 

@@ -24,6 +24,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "nokogiri"
+require "time"
 
 require "azure/storage/service/enumeration_results"
 require "azure/storage/service/signed_identifier"
@@ -34,6 +35,7 @@ require "azure/storage/service/metrics"
 require "azure/storage/service/retention_policy"
 require "azure/storage/service/cors"
 require "azure/storage/service/cors_rule"
+require "azure/storage/service/storage_service_stats"
 
 module Azure::Storage
   module Service
@@ -253,6 +255,21 @@ module Azure::Storage
           end
         end
 
+        def geo_replication_from_xml(xml)
+          xml = slopify(xml)
+          expect_node("GeoReplication", xml)
+
+          GeoReplication.new do |geo_replication|
+            geo_replication.status = xml.Status.text if (xml > "Status").any?
+            geo_replication.last_sync_time =
+              begin
+                Time.parse(xml.LastSyncTime.text) if (xml > "LastSyncTime").any?
+              rescue
+                nil
+              end
+          end
+        end
+
         def ary_from_node(node)
           node.text.split(",").map { |s| s.strip }
         end
@@ -280,6 +297,15 @@ module Azure::Storage
             props.hour_metrics = metrics_from_xml(xml.HourMetrics)
             props.minute_metrics = metrics_from_xml(xml.MinuteMetrics)
             props.cors = cors_from_xml(xml.Cors)
+          end
+        end
+
+        def service_stats_from_xml(xml)
+          xml = slopify(xml)
+          expect_node("StorageServiceStats", xml)
+          
+          StorageServiceStats.new do |stats|
+            stats.geo_replication = geo_replication_from_xml(xml.GeoReplication)
           end
         end
 
