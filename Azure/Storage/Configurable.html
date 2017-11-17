@@ -193,7 +193,7 @@ Azure storage activities.</p>
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#storage_blob_host-instance_method" title="#storage_blob_host (instance method)">#<strong>storage_blob_host</strong>  &#x21d2; String </a>
+      <a href="#storage_blob_host-instance_method" title="#storage_blob_host (instance method)">#<strong>storage_blob_host</strong>(isSecondary = false)  &#x21d2; String </a>
     
 
     
@@ -212,6 +212,35 @@ Azure storage activities.</p>
   
     <span class="summary_desc"><div class='inline'>
 <p>Storage blob host.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#storage_blob_host_secondary=-instance_method" title="#storage_blob_host_secondary= (instance method)">#<strong>storage_blob_host_secondary</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+      <span class="note title writeonly">writeonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Sets the attribute storage_blob_host_secondary.</p>
 </div></span>
   
 </li>
@@ -247,7 +276,7 @@ Azure storage activities.</p>
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#storage_file_host-instance_method" title="#storage_file_host (instance method)">#<strong>storage_file_host</strong>  &#x21d2; String </a>
+      <a href="#storage_file_host-instance_method" title="#storage_file_host (instance method)">#<strong>storage_file_host</strong>(isSecondary = false)  &#x21d2; String </a>
     
 
     
@@ -274,7 +303,36 @@ Azure storage activities.</p>
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#storage_queue_host-instance_method" title="#storage_queue_host (instance method)">#<strong>storage_queue_host</strong>  &#x21d2; String </a>
+      <a href="#storage_file_host_secondary=-instance_method" title="#storage_file_host_secondary= (instance method)">#<strong>storage_file_host_secondary</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+      <span class="note title writeonly">writeonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Sets the attribute storage_file_host_secondary.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#storage_queue_host-instance_method" title="#storage_queue_host (instance method)">#<strong>storage_queue_host</strong>(isSecondary = false)  &#x21d2; String </a>
     
 
     
@@ -293,6 +351,35 @@ Azure storage activities.</p>
   
     <span class="summary_desc"><div class='inline'>
 <p>Storage queue host.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#storage_queue_host_secondary=-instance_method" title="#storage_queue_host_secondary= (instance method)">#<strong>storage_queue_host_secondary</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+      <span class="note title writeonly">writeonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Sets the attribute storage_queue_host_secondary.</p>
 </div></span>
   
 </li>
@@ -328,7 +415,7 @@ Azure storage activities.</p>
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#storage_table_host-instance_method" title="#storage_table_host (instance method)">#<strong>storage_table_host</strong>  &#x21d2; String </a>
+      <a href="#storage_table_host-instance_method" title="#storage_table_host (instance method)">#<strong>storage_table_host</strong>(isSecondary = false)  &#x21d2; String </a>
     
 
     
@@ -347,6 +434,35 @@ Azure storage activities.</p>
   
     <span class="summary_desc"><div class='inline'>
 <p>Storage table host.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#storage_table_host_secondary=-instance_method" title="#storage_table_host_secondary= (instance method)">#<strong>storage_table_host_secondary</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+      <span class="note title writeonly">writeonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Sets the attribute storage_table_host_secondary.</p>
 </div></span>
   
 </li>
@@ -505,12 +621,12 @@ Azure storage activities.</p>
       <pre class="lines">
 
 
-65
-66
-67</pre>
+69
+70
+71</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_signer'>signer</span>
   <span class='ivar'>@signer</span>
@@ -631,7 +747,7 @@ Azure storage activities.</p>
       <div class="method_details ">
   <h3 class="signature " id="storage_blob_host-instance_method">
   
-    #<strong>storage_blob_host</strong>  &#x21d2; <tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt> 
+    #<strong>storage_blob_host</strong>(isSecondary = false)  &#x21d2; <tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt> 
   
 
   
@@ -679,6 +795,69 @@ Azure storage activities.</p>
 <span class='symbol'>:storage_account_name</span><span class='comma'>,</span>
 <span class='symbol'>:storage_connection_string</span><span class='comma'>,</span>
 <span class='symbol'>:storage_sas_token</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="storage_blob_host_secondary=-instance_method">
+  
+    #<strong>storage_blob_host_secondary=</strong>(value)  &#x21d2; <tt>Object</tt>  <span class="extras">(writeonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Sets the attribute storage_blob_host_secondary</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the value to set the attribute storage_blob_host_secondary to.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_storage_blob_host_secondary='>storage_blob_host_secondary=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='ivar'>@storage_blob_host_secondary</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -752,7 +931,7 @@ Azure storage activities.</p>
       <div class="method_details ">
   <h3 class="signature " id="storage_file_host-instance_method">
   
-    #<strong>storage_file_host</strong>  &#x21d2; <tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt> 
+    #<strong>storage_file_host</strong>(isSecondary = false)  &#x21d2; <tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt> 
   
 
   
@@ -788,15 +967,86 @@ Azure storage activities.</p>
       <pre class="lines">
 
 
-130
-131
-132</pre>
+153
+154
+155
+156
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 153</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_storage_file_host'>storage_file_host</span>
-  <span class='ivar'>@storage_file_host</span> <span class='op'>||</span> <span class='id identifier rubyid_default_host'>default_host</span><span class='lparen'>(</span><span class='symbol'>:file</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_storage_file_host'>storage_file_host</span><span class='lparen'>(</span><span class='id identifier rubyid_isSecondary'>isSecondary</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_isSecondary'>isSecondary</span>
+    <span class='ivar'>@storage_file_host_secondary</span> <span class='op'>||</span> <span class='id identifier rubyid_default_host'>default_host</span><span class='lparen'>(</span><span class='symbol'>:file</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='ivar'>@storage_file_host</span> <span class='op'>||</span> <span class='id identifier rubyid_default_host'>default_host</span><span class='lparen'>(</span><span class='symbol'>:file</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="storage_file_host_secondary=-instance_method">
+  
+    #<strong>storage_file_host_secondary=</strong>(value)  &#x21d2; <tt>Object</tt>  <span class="extras">(writeonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Sets the attribute storage_file_host_secondary</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the value to set the attribute storage_file_host_secondary to.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_storage_file_host_secondary='>storage_file_host_secondary=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='ivar'>@storage_file_host_secondary</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -808,7 +1058,7 @@ Azure storage activities.</p>
       <div class="method_details ">
   <h3 class="signature " id="storage_queue_host-instance_method">
   
-    #<strong>storage_queue_host</strong>  &#x21d2; <tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt> 
+    #<strong>storage_queue_host</strong>(isSecondary = false)  &#x21d2; <tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt> 
   
 
   
@@ -862,6 +1112,69 @@ Azure storage activities.</p>
 </div>
     
       
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="storage_queue_host_secondary=-instance_method">
+  
+    #<strong>storage_queue_host_secondary=</strong>(value)  &#x21d2; <tt>Object</tt>  <span class="extras">(writeonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Sets the attribute storage_queue_host_secondary</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the value to set the attribute storage_queue_host_secondary to.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_storage_queue_host_secondary='>storage_queue_host_secondary=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='ivar'>@storage_queue_host_secondary</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
       <span id="storage_sas_token=-instance_method"></span>
       <div class="method_details ">
   <h3 class="signature " id="storage_sas_token-instance_method">
@@ -909,7 +1222,7 @@ Azure storage activities.</p>
       <div class="method_details ">
   <h3 class="signature " id="storage_table_host-instance_method">
   
-    #<strong>storage_table_host</strong>  &#x21d2; <tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt> 
+    #<strong>storage_table_host</strong>(isSecondary = false)  &#x21d2; <tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt> 
   
 
   
@@ -957,6 +1270,69 @@ Azure storage activities.</p>
 <span class='symbol'>:storage_account_name</span><span class='comma'>,</span>
 <span class='symbol'>:storage_connection_string</span><span class='comma'>,</span>
 <span class='symbol'>:storage_sas_token</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="storage_table_host_secondary=-instance_method">
+  
+    #<strong>storage_table_host_secondary=</strong>(value)  &#x21d2; <tt>Object</tt>  <span class="extras">(writeonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Sets the attribute storage_table_host_secondary</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the value to set the attribute storage_table_host_secondary to.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_storage_table_host_secondary='>storage_table_host_secondary=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='ivar'>@storage_table_host_secondary</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1013,10 +1389,6 @@ Azure storage activities.</p>
       <pre class="lines">
 
 
-70
-71
-72
-73
 74
 75
 76
@@ -1024,10 +1396,15 @@ Azure storage activities.</p>
 78
 79
 80
-81</pre>
+81
+82
+83
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_keys'>keys</span>
   <span class='ivar'>@keys</span> <span class='op'>||=</span> <span class='lbracket'>[</span>
@@ -1038,7 +1415,8 @@ Azure storage activities.</p>
     <span class='symbol'>:storage_table_host</span><span class='comma'>,</span>
     <span class='symbol'>:storage_blob_host</span><span class='comma'>,</span>
     <span class='symbol'>:storage_queue_host</span><span class='comma'>,</span>
-    <span class='symbol'>:storage_file_host</span>
+    <span class='symbol'>:storage_file_host</span><span class='comma'>,</span>
+    <span class='symbol'>:signer</span>
   <span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1067,12 +1445,12 @@ Azure storage activities.</p>
       <pre class="lines">
 
 
-89
-90
-91</pre>
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config'>config</span>
   <span class='kw'>self</span>
@@ -1141,12 +1519,12 @@ Azure storage activities.</p>
       <pre class="lines">
 
 
-85
-86
-87</pre>
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 90</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_configure'>configure</span>
   <span class='kw'>yield</span> <span class='kw'>self</span>
@@ -1186,11 +1564,6 @@ Azure storage activities.</p>
       <pre class="lines">
 
 
-94
-95
-96
-97
-98
 99
 100
 101
@@ -1198,19 +1571,36 @@ Azure storage activities.</p>
 103
 104
 105
-106</pre>
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/configurable.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reset_config!'>reset_config!</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Azure::Storage::Configurable (module)">Configurable</a></span></span><span class='period'>.</span><span class='id identifier rubyid_keys'><span class='object_link'><a href="#keys-class_method" title="Azure::Storage::Configurable.keys (method)">keys</a></span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
-    <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='kw'>self</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span>
-      <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::Default (module)">Default</a></span></span><span class='period'>.</span><span class='id identifier rubyid_options'><span class='object_link'><a href="Default.html#options-class_method" title="Azure::Storage::Default.options (method)">options</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
-            <span class='kw'>else</span>
-              <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
-            <span class='kw'>end</span>
+    <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span>
+      <span class='kw'>if</span> <span class='kw'>self</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span>
+        <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::Default (module)">Default</a></span></span><span class='period'>.</span><span class='id identifier rubyid_options'><span class='object_link'><a href="Default.html#options-class_method" title="Azure::Storage::Default.options (method)">options</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
+      <span class='kw'>else</span>
+        <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
     <span class='id identifier rubyid_instance_variable_set'>instance_variable_set</span><span class='lparen'>(</span><span class='symbol'>:@</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+    <span class='comment'># Set the secondary endpoint if the primary one is given
+</span>    <span class='kw'>if</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>host</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_instance_variable_set'>instance_variable_set</span><span class='lparen'>(</span><span class='symbol'>:@</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>_secondary</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_secondary_endpoint'>secondary_endpoint</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:reset_agents!</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:reset_agents!</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_setup_signer_for_service'>setup_signer_for_service</span>
@@ -1226,7 +1616,7 @@ Azure storage activities.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 28 15:32:13 2017 by
+  Generated on Fri Nov 17 12:03:05 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

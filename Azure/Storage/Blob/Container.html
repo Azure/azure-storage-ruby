@@ -514,6 +514,12 @@ ETag value for this conditional header to acquire the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container&#39;s ETag value does not match the value specified. If the values are identical,
 the Blob service returns status code 412 (Precondition Failed).</code></pre>
+</li><li>
+<p><code>:origin</code>                    - String. Optional. Specifies the
+origin from which the request is issued. The presence of this header
+results</p>
+
+<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -535,12 +541,12 @@ or release the lease.</p>
       <pre class="lines">
 
 
-338
-339
-340</pre>
+378
+379
+380</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 338</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 378</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_acquire_container_lease'>acquire_container_lease</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_acquire_lease'>acquire_lease</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
@@ -625,6 +631,12 @@ ETag value for this conditional header to break the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container&#39;s ETag value does not match the value specified. If the values are identical,
 the Blob service returns status code 412 (Precondition Failed).</code></pre>
+</li><li>
+<p><code>:origin</code>                    - String. Optional. Specifies the
+origin from which the request is issued. The presence of this header
+results</p>
+
+<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -647,12 +659,12 @@ immediate, 0 is returned.</p>
       <pre class="lines">
 
 
-493
-494
-495</pre>
+541
+542
+543</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 493</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 541</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_break_container_lease'>break_container_lease</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_break_lease'>break_lease</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
@@ -724,6 +736,12 @@ ETag value for this conditional header to change the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container&#39;s ETag value does not match the value specified. If the values are identical,
 the Blob service returns status code 412 (Precondition Failed).</code></pre>
+</li><li>
+<p><code>:origin</code>                    - String. Optional. Specifies the
+origin from which the request is issued. The presence of this header
+results</p>
+
+<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -743,12 +761,12 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx">msdn.microsof
       <pre class="lines">
 
 
-409
-410
-411</pre>
+453
+454
+455</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 409</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 453</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_change_container_lease'>change_container_lease</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_proposed_lease'>proposed_lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_change_lease'>change_lease</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_proposed_lease'>proposed_lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
@@ -814,6 +832,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179468.aspx">msdn.microsof
       <pre class="lines">
 
 
+63
 64
 65
 66
@@ -834,11 +853,10 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179468.aspx">msdn.microsof
 81
 82
 83
-84
-85</pre>
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_container'>create_container</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -898,6 +916,14 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179468.aspx">msdn.microsof
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
 <pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li><li>
+<p><code>:lease_id</code>                 - String. Required for version
+2012-02-12 and newer if the container has an active lease. To call</p>
+
+<pre class="code ruby"><code class="ruby">Delete Container on a container that has an active lease, specify the lease ID in this header.
+If this header is not specified when there is an active lease, Delete Container will return 409
+(Conflict). If you specify the wrong lease ID, or a lease ID on a container that does not have
+an active lease, Delete Container will return 412 (Precondition failed).</code></pre>
 </li></ul>
 
 <p>See <a
@@ -917,28 +943,32 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179408.aspx">msdn.microsof
       <pre class="lines">
 
 
-290
-291
-292
-293
-294
-295
-296
-297
-298
-299
-300</pre>
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 290</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 326</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_container'>delete_container</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
 </span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='rbrace'>}</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
   <span class='comment'># Call
-</span>  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:delete</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:delete</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># result
 </span>  <span class='kw'>nil</span>
@@ -980,6 +1010,17 @@ policies for the container.</p>
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
 <pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li><li>
+<p><code>:location_mode</code>            - LocationMode. Specifies the
+location mode used to decide</p>
+
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+</li><li>
+<p><code>:lease_id</code>                 - String. If specified, Get
+Container ACL only succeeds if the container’s lease is</p>
+
+<pre class="code ruby"><code class="ruby">active and matches this ID. If there is no active lease or the ID does not match, 412
+(Precondition Failed) is returned.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1002,34 +1043,40 @@ signed_identifiers  - A list of Azure::Storage::Entity::SignedIdentifier instanc
       <pre class="lines">
 
 
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220</pre>
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 204</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_container_acl'>get_container_acl</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
 </span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>acl</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='rbrace'>}</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
   <span class='comment'># Call
-</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># Result
 </span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'>container_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
@@ -1076,6 +1123,17 @@ signed_identifiers  - A list of Azure::Storage::Entity::SignedIdentifier instanc
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
 <pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li><li>
+<p><code>:location_mode</code>            - LocationMode. Specifies the
+location mode used to decide</p>
+
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+</li><li>
+<p><code>:lease_id</code>                 - String. If specified, Get
+Container Metadata only succeeds if the container’s lease is</p>
+
+<pre class="code ruby"><code class="ruby">active and matches this ID. If there is no active lease or the ID does not match, 412
+(Precondition Failed) is returned.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1095,30 +1153,36 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691976.aspx">msdn.microsof
       <pre class="lines">
 
 
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147</pre>
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_container_metadata'>get_container_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
 </span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>metadata</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='rbrace'>}</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
   <span class='comment'># Call
-</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># result
 </span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'>container_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
@@ -1161,6 +1225,17 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691976.aspx">msdn.microsof
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
 <pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li><li>
+<p><code>:location_mode</code>            - LocationMode. Specifies the
+location mode used to decide</p>
+
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+</li><li>
+<p><code>:lease_id</code>                 - String. If specified, Get
+Container Properties only succeeds if the container’s lease is</p>
+
+<pre class="code ruby"><code class="ruby">active and matches this ID. If there is no active lease or the ID does not match, 412
+(Precondition Failed) is returned.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1180,10 +1255,6 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179370.aspx">msdn.microsof
       <pre class="lines">
 
 
-104
-105
-106
-107
 108
 109
 110
@@ -1192,18 +1263,28 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179370.aspx">msdn.microsof
 113
 114
 115
-116</pre>
+116
+117
+118
+119
+120
+121
+122
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_container_properties'>get_container_properties</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
 </span>  <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='rbrace'>}</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
   <span class='comment'># Call
-</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># result
 </span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'>container_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
@@ -1302,6 +1383,11 @@ to any current or previous</p>
 opaque value with a 1 KB character limit that is recorded</p>
 
 <pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li><li>
+<p><code>:location_mode</code>    - LocationMode. Specifies the location mode
+used to decide</p>
+
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
 </li></ul>
 
 <p>NOTE: Metadata requested with the :metadata parameter must have been stored
@@ -1331,39 +1417,40 @@ single value).</p>
       <pre class="lines">
 
 
-552
-553
-554
-555
-556
-557
-558
-559
-560
-561
-562
-563
-564
-565
-566
-567
-568
-569
-570
-571
-572
-573
-574
-575
-576
-577
-578
-579
-580
-581</pre>
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 552</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 602</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list_blobs'>list_blobs</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1383,7 +1470,8 @@ single value).</p>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>include</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_included_datasets'>included_datasets</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>,</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_included_datasets'>included_datasets</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
 
   <span class='comment'># Scheme + path
-</span>  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># Call
 </span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -1460,6 +1548,12 @@ ETag value for this conditional header to release the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container&#39;s ETag value does not match the value specified. If the values are identical,
 the Blob service returns status code 412 (Precondition Failed).</code></pre>
+</li><li>
+<p><code>:origin</code>                    - String. Optional. Specifies the
+origin from which the request is issued. The presence of this header
+results</p>
+
+<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1479,12 +1573,12 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx">msdn.microsof
       <pre class="lines">
 
 
-444
-445
-446</pre>
+490
+491
+492</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 444</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 490</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_release_container_lease'>release_container_lease</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_release_lease'>release_lease</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
@@ -1555,6 +1649,12 @@ ETag value for this conditional header to renew the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container&#39;s ETag value does not match the value specified. If the values are identical,
 the Blob service returns status code 412 (Precondition Failed).</code></pre>
+</li><li>
+<p><code>:origin</code>                    - String. Optional. Specifies the
+origin from which the request is issued. The presence of this header
+results</p>
+
+<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1574,12 +1674,12 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx">msdn.microsof
       <pre class="lines">
 
 
-374
-375
-376</pre>
+416
+417
+418</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 374</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 416</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_renew_container_lease'>renew_container_lease</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_renew_lease'>renew_lease</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
@@ -1628,6 +1728,12 @@ Azure::Storage::Entity::SignedIdentifier instances (optional)</p>
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
 <pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li><li>
+<p><code>:lease_id</code>                    - String. If specified, Set
+Container ACL only succeeds if the container’s lease is</p>
+
+<pre class="code ruby"><code class="ruby">active and matches this ID. If there is no active lease or the ID does not match, 412
+(Precondition Failed) is returned.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1654,37 +1760,38 @@ Azure::Storage::Entity::SignedIdentifier instances</p>
       <pre class="lines">
 
 
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270
-271</pre>
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 244</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 274</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_container_acl'>set_container_acl</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_public_access_level'>public_access_level</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1697,6 +1804,7 @@ Azure::Storage::Entity::SignedIdentifier instances</p>
   <span class='comment'># Headers + body
 </span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_common_headers'><span class='object_link'><a href="../Service/StorageService.html#common_headers-class_method" title="Azure::Storage::Service::StorageService.common_headers (method)">common_headers</a></span></span>
   <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-public-access</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_public_access_level'>public_access_level</span> <span class='kw'>if</span> <span class='id identifier rubyid_public_access_level'>public_access_level</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_public_access_level'>public_access_level</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+  <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span>
@@ -1753,6 +1861,12 @@ values</p>
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
 <pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li><li>
+<p><code>:lease_id</code>                 - String. If specified, Set
+Container Metadata only succeeds if the container’s lease is</p>
+
+<pre class="code ruby"><code class="ruby">active and matches this ID. If there is no active lease or the ID does not match, 412
+(Precondition Failed) is returned.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1772,24 +1886,25 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179362.aspx">msdn.microsof
       <pre class="lines">
 
 
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181</pre>
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 167</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 185</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_container_metadata'>set_container_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1799,6 +1914,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179362.aspx">msdn.microsof
   <span class='comment'># Headers
 </span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_common_headers'><span class='object_link'><a href="../Service/StorageService.html#common_headers-class_method" title="Azure::Storage::Service::StorageService.common_headers (method)">common_headers</a></span></span>
   <span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'><span class='object_link'><a href="../Service/StorageService.html#add_metadata_to_headers-class_method" title="Azure::Storage::Service::StorageService.add_metadata_to_headers (method)">add_metadata_to_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_metadata'>metadata</span>
+  <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span>
 
   <span class='comment'># Call
 </span>  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -1816,7 +1932,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179362.aspx">msdn.microsof
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 28 15:32:13 2017 by
+  Generated on Fri Nov 17 12:03:05 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

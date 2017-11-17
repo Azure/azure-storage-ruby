@@ -118,7 +118,7 @@
   
   
   <h3 class="inherited">Attributes included from <span class='object_link'><a href="Configurable.html" title="Azure::Storage::Configurable (module)">Configurable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Configurable.html#signer-instance_method" title="Azure::Storage::Configurable#signer (method)">#signer</a></span>, <span class='object_link'><a href="Configurable.html#storage_access_key-instance_method" title="Azure::Storage::Configurable#storage_access_key (method)">#storage_access_key</a></span>, <span class='object_link'><a href="Configurable.html#storage_account_name-instance_method" title="Azure::Storage::Configurable#storage_account_name (method)">#storage_account_name</a></span>, <span class='object_link'><a href="Configurable.html#storage_blob_host-instance_method" title="Azure::Storage::Configurable#storage_blob_host (method)">#storage_blob_host</a></span>, <span class='object_link'><a href="Configurable.html#storage_connection_string-instance_method" title="Azure::Storage::Configurable#storage_connection_string (method)">#storage_connection_string</a></span>, <span class='object_link'><a href="Configurable.html#storage_file_host-instance_method" title="Azure::Storage::Configurable#storage_file_host (method)">#storage_file_host</a></span>, <span class='object_link'><a href="Configurable.html#storage_queue_host-instance_method" title="Azure::Storage::Configurable#storage_queue_host (method)">#storage_queue_host</a></span>, <span class='object_link'><a href="Configurable.html#storage_sas_token-instance_method" title="Azure::Storage::Configurable#storage_sas_token (method)">#storage_sas_token</a></span>, <span class='object_link'><a href="Configurable.html#storage_table_host-instance_method" title="Azure::Storage::Configurable#storage_table_host (method)">#storage_table_host</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Configurable.html#signer-instance_method" title="Azure::Storage::Configurable#signer (method)">#signer</a></span>, <span class='object_link'><a href="Configurable.html#storage_access_key-instance_method" title="Azure::Storage::Configurable#storage_access_key (method)">#storage_access_key</a></span>, <span class='object_link'><a href="Configurable.html#storage_account_name-instance_method" title="Azure::Storage::Configurable#storage_account_name (method)">#storage_account_name</a></span>, <span class='object_link'><a href="Configurable.html#storage_blob_host-instance_method" title="Azure::Storage::Configurable#storage_blob_host (method)">#storage_blob_host</a></span>, <span class='object_link'><a href="Configurable.html#storage_blob_host_secondary=-instance_method" title="Azure::Storage::Configurable#storage_blob_host_secondary= (method)">#storage_blob_host_secondary</a></span>, <span class='object_link'><a href="Configurable.html#storage_connection_string-instance_method" title="Azure::Storage::Configurable#storage_connection_string (method)">#storage_connection_string</a></span>, <span class='object_link'><a href="Configurable.html#storage_file_host-instance_method" title="Azure::Storage::Configurable#storage_file_host (method)">#storage_file_host</a></span>, <span class='object_link'><a href="Configurable.html#storage_file_host_secondary=-instance_method" title="Azure::Storage::Configurable#storage_file_host_secondary= (method)">#storage_file_host_secondary</a></span>, <span class='object_link'><a href="Configurable.html#storage_queue_host-instance_method" title="Azure::Storage::Configurable#storage_queue_host (method)">#storage_queue_host</a></span>, <span class='object_link'><a href="Configurable.html#storage_queue_host_secondary=-instance_method" title="Azure::Storage::Configurable#storage_queue_host_secondary= (method)">#storage_queue_host_secondary</a></span>, <span class='object_link'><a href="Configurable.html#storage_sas_token-instance_method" title="Azure::Storage::Configurable#storage_sas_token (method)">#storage_sas_token</a></span>, <span class='object_link'><a href="Configurable.html#storage_table_host-instance_method" title="Azure::Storage::Configurable#storage_table_host (method)">#storage_table_host</a></span>, <span class='object_link'><a href="Configurable.html#storage_table_host_secondary=-instance_method" title="Azure::Storage::Configurable#storage_table_host_secondary= (method)">#storage_table_host_secondary</a></span></p>
 
 
   
@@ -442,7 +442,7 @@ storage account.</p>
 key of the storage account.</p>
 </li><li>
 <p><code>:storage_sas_token</code>              - String. The signed access
-signiture for the storage account or one of its service.</p>
+signature for the storage account or one of its service.</p>
 </li><li>
 <p><code>:storage_blob_host</code>              - String. Specified Blob
 serivce endpoint or hostname</p>
@@ -468,7 +468,7 @@ file if having issue with SSL</p>
 prefix that can identify the application calls the library</p>
 </li></ul>
 
-<p>The valid set of options inlcude:</p>
+<p>The valid set of options include:</p>
 <ul><li>
 <p>Storage Emulator: <code>:use_development_storage</code> required,
 <code>:development_storage_proxy_uri</code> optionally</p>
@@ -535,7 +535,7 @@ the mapping relationship</p>
     <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Service.html" title="Azure::Storage::Service (module)">Service</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_user_agent_prefix'><span class='object_link'><a href="Service/StorageService.html#user_agent_prefix-class_method" title="Azure::Storage::Service::StorageService.user_agent_prefix (method)">user_agent_prefix</a></span></span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:user_agent_prefix</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='symbol'>:user_agent_prefix</span>
   <span class='kw'>end</span>
-  <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Service.html" title="Azure::Storage::Service (module)">Service</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_register_request_callback'><span class='object_link'><a href="Service/StorageService.html#register_request_callback-class_method" title="Azure::Storage::Service::StorageService.register_request_callback (method)">register_request_callback</a></span></span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+  <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Service.html" title="Azure::Storage::Service (module)">Service</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_register_request_callback'><span class='object_link'><a href="Service/StorageService.html#register_request_callback-class_method" title="Azure::Storage::Service::StorageService.register_request_callback (method)">register_request_callback</a></span></span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
   <span class='id identifier rubyid_reset!'>reset!</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -597,19 +597,19 @@ storage account.</p>
 key of the storage account.</p>
 </li><li>
 <p><code>:storage_sas_token</code>              - String. The signed access
-signiture for the storage account or one of its service.</p>
+signature for the storage account or one of its service.</p>
 </li><li>
 <p><code>:storage_blob_host</code>              - String. Specified Blob
-serivce endpoint or hostname</p>
+service endpoint or hostname</p>
 </li><li>
 <p><code>:storage_table_host</code>             - String. Specified Table
-serivce endpoint or hostname</p>
+service endpoint or hostname</p>
 </li><li>
 <p><code>:storage_queue_host</code>             - String. Specified Queue
-serivce endpoint or hostname</p>
+service endpoint or hostname</p>
 </li><li>
 <p><code>:storage_dns_suffix</code>             - String. The suffix of a
-regional Storage Serivce, to</p>
+regional Storage Service, to</p>
 </li><li>
 <p><code>:default_endpoints_protocol</code>     - String. http or https</p>
 </li><li>
@@ -623,7 +623,7 @@ file if having issue with SSL</p>
 prefix that can identify the application calls the library</p>
 </li></ul>
 
-<p>The valid set of options inlcude:</p>
+<p>The valid set of options include:</p>
 <ul><li>
 <p>Storage Emulator: <code>:use_development_storage</code> required,
 <code>:development_storage_proxy_uri</code> optionally</p>
@@ -874,7 +874,7 @@ Variables</p>
       <pre class="code"><span class="info file"># File 'lib/azure/storage/client.rb', line 178</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_from_env'>create_from_env</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_create'>create</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
+  <span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1112,7 +1112,7 @@ instance</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 28 15:32:14 2017 by
+  Generated on Fri Nov 17 12:03:06 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

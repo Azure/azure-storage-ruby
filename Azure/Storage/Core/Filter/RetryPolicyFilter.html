@@ -186,7 +186,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#adjust_retry_parameter-instance_method" title="#adjust_retry_parameter (instance method)">#<strong>adjust_retry_parameter</strong>(retry_data)  &#x21d2; Object </a>
+      <a href="#adjust_retry_request-instance_method" title="#adjust_retry_request (instance method)">#<strong>adjust_retry_request</strong>(retry_data)  &#x21d2; Object </a>
     
 
     
@@ -201,7 +201,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Adjust the retry parameter.</p>
+<p>Adjust the retry request.</p>
 </div></span>
   
 </li>
@@ -227,6 +227,102 @@
     <span class="summary_desc"><div class='inline'>
 <p>Apply the retry policy to determine how the HTTP request should continue
 retrying.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#check_location-instance_method" title="#check_location (instance method)">#<strong>check_location</strong>(response, retry_data)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Check the location.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#check_status_code-instance_method" title="#check_status_code (instance method)">#<strong>check_status_code</strong>(retry_data)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Check the status code.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_next_location-instance_method" title="#get_next_location (instance method)">#<strong>get_next_location</strong>(retry_data)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get retry request destination.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#init_retry_data-instance_method" title="#init_retry_data (instance method)">#<strong>init_retry_data</strong>(retry_data)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Initialize the retry data.</p>
 </div></span>
   
 </li>
@@ -331,6 +427,30 @@ retry the operation.</p>
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#wait_for_retry-instance_method" title="#wait_for_retry (instance method)">#<strong>wait_for_retry</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Adjust the retry parameter and wait for retry.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -369,7 +489,8 @@ retry the operation.</p>
 33
 34
 35
-36</pre>
+36
+37</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 31</span>
@@ -377,6 +498,7 @@ retry the operation.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_count'>retry_count</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_interval'>retry_interval</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@retry_count</span> <span class='op'>=</span> <span class='id identifier rubyid_retry_count'>retry_count</span>
   <span class='ivar'>@retry_interval</span> <span class='op'>=</span> <span class='id identifier rubyid_retry_interval'>retry_interval</span>
+  <span class='ivar'>@request_options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
 
   <span class='kw'>super</span> <span class='op'>&amp;</span><span class='symbol'>:should_retry?</span>
 <span class='kw'>end</span></pre>
@@ -418,12 +540,12 @@ retry the operation.</p>
       <pre class="lines">
 
 
-38
 39
-40</pre>
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_retry_count'>retry_count</span>
   <span class='ivar'>@retry_count</span>
@@ -461,12 +583,12 @@ retry the operation.</p>
       <pre class="lines">
 
 
-38
 39
-40</pre>
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_retry_interval'>retry_interval</span>
   <span class='ivar'>@retry_interval</span>
@@ -484,9 +606,9 @@ retry the operation.</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="adjust_retry_parameter-instance_method">
+  <h3 class="signature first" id="adjust_retry_request-instance_method">
   
-    #<strong>adjust_retry_parameter</strong>(retry_data)  &#x21d2; <tt>Object</tt> 
+    #<strong>adjust_retry_request</strong>(retry_data)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -495,7 +617,7 @@ retry the operation.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Adjust the retry parameter</p>
+<p>Adjust the retry request</p>
 
 <p>retry_data - Hash. Stores stateful retry data</p>
 
@@ -511,19 +633,73 @@ retry the operation.</p>
       <pre class="lines">
 
 
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
 186
 187
 188
-189
-190</pre>
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 186</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 158</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_adjust_retry_parameter'>adjust_retry_parameter</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
-  <span class='comment'># TODO: Adjust the retry parameter according to the location and last attempt time
-</span>  <span class='id identifier rubyid_sleep'>sleep</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:interval</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_adjust_retry_request'>adjust_retry_request</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
+  <span class='comment'># Adjust the location first
+</span>  <span class='id identifier rubyid_next_location'>next_location</span> <span class='op'>=</span> <span class='ivar'>@request_options</span><span class='lbracket'>[</span><span class='symbol'>:target_location</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='id identifier rubyid_get_next_location'>get_next_location</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='ivar'>@request_options</span><span class='lbracket'>[</span><span class='symbol'>:target_location</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:current_location</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_next_location'>next_location</span>
+
+  <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:uri</span><span class='rbracket'>]</span> <span class='op'>=</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_next_location'>next_location</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html" title="Azure::Storage::StorageLocation (module)">StorageLocation</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html#PRIMARY-constant" title="Azure::Storage::StorageLocation::PRIMARY (constant)">PRIMARY</a></span></span>
+      <span class='ivar'>@request_options</span><span class='lbracket'>[</span><span class='symbol'>:primary_uri</span><span class='rbracket'>]</span>
+    <span class='kw'>else</span>
+      <span class='ivar'>@request_options</span><span class='lbracket'>[</span><span class='symbol'>:secondary_uri</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
+
+  <span class='comment'># Now is the time to calculate the exact retry interval. ShouldRetry call above already
+</span>  <span class='comment'># returned back how long two requests to the same location should be apart from each other.
+</span>  <span class='comment'># However, for the reasons explained above, the time spent between the last attempt to
+</span>  <span class='comment'># the target location and current time must be subtracted from the total retry interval
+</span>  <span class='comment'># that ShouldRetry returned.
+</span>  <span class='id identifier rubyid_lastAttemptTime'>lastAttemptTime</span> <span class='op'>=</span> 
+    <span class='kw'>if</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:current_location</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html" title="Azure::Storage::StorageLocation (module)">StorageLocation</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html#PRIMARY-constant" title="Azure::Storage::StorageLocation::PRIMARY (constant)">PRIMARY</a></span></span>
+      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:last_primary_attempt</span><span class='rbracket'>]</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:last_secondary_attempt</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
+
+  <span class='ivar'>@retry_interval</span> <span class='op'>=</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_lastAttemptTime'>lastAttemptTime</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+      <span class='int'>0</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_since_last_attempt'>since_last_attempt</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span> <span class='op'>-</span> <span class='id identifier rubyid_lastAttemptTime'>lastAttemptTime</span>
+      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:interval</span><span class='rbracket'>]</span> <span class='op'>-</span> <span class='id identifier rubyid_since_last_attempt'>since_last_attempt</span>
+    <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -566,13 +742,351 @@ lifetime of the request</p>
       <pre class="lines">
 
 
-76
-77</pre>
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_apply_retry_policy'>apply_retry_policy</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="check_location-instance_method">
+  
+    #<strong>check_location</strong>(response, retry_data)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Check the location</p>
+
+<p>retry_data - Hash. Stores stateful retry data</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 212</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_check_location'>check_location</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
+  <span class='comment'># If a request sent to the secondary location fails with 404 (Not Found), it is possible
+</span>  <span class='comment'># that the resource replication is not finished yet. So, in case of 404 only in the secondary
+</span>  <span class='comment'># location, the failure should still be retryable.
+</span>  <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:secondary_not_found</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:current_location</span><span class='rbracket'>]</span> <span class='op'>===</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html" title="Azure::Storage::StorageLocation (module)">StorageLocation</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html#SECONDARY-constant" title="Azure::Storage::StorageLocation::SECONDARY (constant)">SECONDARY</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status_code'>status_code</span> <span class='op'>===</span> <span class='int'>404</span><span class='semicolon'>;</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:secondary_not_found</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>500</span>
+  <span class='kw'>else</span>
+    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status_code'>status_code</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status_code'>status_code</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="check_status_code-instance_method">
+  
+    #<strong>check_status_code</strong>(retry_data)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Check the status code</p>
+
+<p>retry_data - Hash. Stores stateful retry data</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 232</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_check_status_code'>check_status_code</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='int'>400</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
+  <span class='comment'># Non-timeout Cases
+</span>  <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='int'>408</span><span class='rparen'>)</span>
+    <span class='comment'># Always no retry on &quot;not implemented&quot; and &quot;version not supported&quot;
+</span>    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>501</span> <span class='op'>||</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>505</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>404</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+      <span class='kw'>return</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+    <span class='kw'>end</span>
+
+    <span class='comment'># When absorb_conditional_errors_on_retry is set (for append blob)
+</span>    <span class='kw'>if</span> <span class='lparen'>(</span><span class='ivar'>@request_options</span><span class='lbracket'>[</span><span class='symbol'>:absorb_conditional_errors_on_retry</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>412</span><span class='rparen'>)</span>
+        <span class='comment'># When appending block with precondition failure and their was a server error before, we ignore the error.
+</span>        <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:last_server_error</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='semicolon'>;</span>
+          <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
+        <span class='kw'>end</span>
+      <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&gt;=</span> <span class='int'>500</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='int'>600</span><span class='rparen'>)</span>
+        <span class='comment'># Retry on the server error
+</span>        <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+        <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:last_server_error</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+      <span class='kw'>end</span>
+    <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='int'>500</span><span class='rparen'>)</span>
+      <span class='comment'># No retry on the client error
+</span>      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_next_location-instance_method">
+  
+    #<strong>get_next_location</strong>(retry_data)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get retry request destination</p>
+
+<p>retry_data - Hash. Stores stateful retry data</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 272</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_next_location'>get_next_location</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
+  <span class='comment'># In case of 404 when trying the secondary location, instead of retrying on the
+</span>  <span class='comment'># secondary, further requests should be sent only to the primary location, as it most
+</span>  <span class='comment'># probably has a higher chance of succeeding there.
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:secondary_not_found</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@request_options</span><span class='lbracket'>[</span><span class='symbol'>:location_mode</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../LocationMode.html" title="Azure::Storage::LocationMode (module)">LocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../LocationMode.html#SECONDARY_ONLY-constant" title="Azure::Storage::LocationMode::SECONDARY_ONLY (constant)">SECONDARY_ONLY</a></span></span>
+    <span class='ivar'>@request_options</span><span class='lbracket'>[</span><span class='symbol'>:location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../LocationMode.html" title="Azure::Storage::LocationMode (module)">LocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../LocationMode.html#PRIMARY_ONLY-constant" title="Azure::Storage::LocationMode::PRIMARY_ONLY (constant)">PRIMARY_ONLY</a></span></span><span class='semicolon'>;</span>
+    <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html" title="Azure::Storage::StorageLocation (module)">StorageLocation</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html#PRIMARY-constant" title="Azure::Storage::StorageLocation::PRIMARY (constant)">PRIMARY</a></span></span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>case</span> <span class='ivar'>@request_options</span><span class='lbracket'>[</span><span class='symbol'>:location_mode</span><span class='rbracket'>]</span>
+  <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../LocationMode.html" title="Azure::Storage::LocationMode (module)">LocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../LocationMode.html#PRIMARY_ONLY-constant" title="Azure::Storage::LocationMode::PRIMARY_ONLY (constant)">PRIMARY_ONLY</a></span></span>
+    <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html" title="Azure::Storage::StorageLocation (module)">StorageLocation</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html#PRIMARY-constant" title="Azure::Storage::StorageLocation::PRIMARY (constant)">PRIMARY</a></span></span>
+  <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../LocationMode.html" title="Azure::Storage::LocationMode (module)">LocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../LocationMode.html#SECONDARY_ONLY-constant" title="Azure::Storage::LocationMode::SECONDARY_ONLY (constant)">SECONDARY_ONLY</a></span></span>
+    <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html" title="Azure::Storage::StorageLocation (module)">StorageLocation</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html#SECONDARY-constant" title="Azure::Storage::StorageLocation::SECONDARY (constant)">SECONDARY</a></span></span>
+  <span class='kw'>else</span>
+    <span class='comment'># request_location_mode cannot be SECONDARY_ONLY because it will be blocked at the first time
+</span>    <span class='kw'>if</span> <span class='ivar'>@request_options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RequestLocationMode.html#PRIMARY_ONLY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_ONLY (constant)">PRIMARY_ONLY</a></span></span>
+      <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html" title="Azure::Storage::StorageLocation (module)">StorageLocation</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html#PRIMARY-constant" title="Azure::Storage::StorageLocation::PRIMARY (constant)">PRIMARY</a></span></span>
+    <span class='kw'>elsif</span> <span class='ivar'>@request_options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RequestLocationMode.html#SECONDARY_ONLY-constant" title="Azure::Storage::RequestLocationMode::SECONDARY_ONLY (constant)">SECONDARY_ONLY</a></span></span>
+      <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html" title="Azure::Storage::StorageLocation (module)">StorageLocation</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html#SECONDARY-constant" title="Azure::Storage::StorageLocation::SECONDARY (constant)">SECONDARY</a></span></span>
+    <span class='kw'>else</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:current_location</span><span class='rbracket'>]</span> <span class='op'>===</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html" title="Azure::Storage::StorageLocation (module)">StorageLocation</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html#PRIMARY-constant" title="Azure::Storage::StorageLocation::PRIMARY (constant)">PRIMARY</a></span></span>
+        <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html" title="Azure::Storage::StorageLocation (module)">StorageLocation</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html#SECONDARY-constant" title="Azure::Storage::StorageLocation::SECONDARY (constant)">SECONDARY</a></span></span>
+      <span class='kw'>else</span>
+        <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html" title="Azure::Storage::StorageLocation (module)">StorageLocation</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html#PRIMARY-constant" title="Azure::Storage::StorageLocation::PRIMARY (constant)">PRIMARY</a></span></span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="init_retry_data-instance_method">
+  
+    #<strong>init_retry_data</strong>(retry_data)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Initialize the retry data</p>
+
+<p>retry_data - Hash. Stores stateful retry data</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 194</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_init_retry_data'>init_retry_data</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
+  <span class='ivar'>@request_options</span> <span class='op'>=</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:request_options</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:request_options</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:current_location</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:current_location</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Service.html" title="Azure::Storage::Service (module)">Service</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_get_location'><span class='object_link'><a href="../../Service/StorageService.html#get_location-class_method" title="Azure::Storage::Service::StorageService.get_location (method)">get_location</a></span></span><span class='lparen'>(</span><span class='ivar'>@request_options</span><span class='lbracket'>[</span><span class='symbol'>:location_mode</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='ivar'>@request_options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  
+  <span class='kw'>if</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:current_location</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html" title="Azure::Storage::StorageLocation (module)">StorageLocation</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../StorageLocation.html#PRIMARY-constant" title="Azure::Storage::StorageLocation::PRIMARY (constant)">PRIMARY</a></span></span>
+    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:last_primary_attempt</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:last_secondary_attempt</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span>
+  <span class='kw'>end</span>
+
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -622,7 +1136,6 @@ Hash. Stores stateful retry data</p>
       <pre class="lines">
 
 
-46
 47
 48
 49
@@ -640,12 +1153,24 @@ Hash. Stores stateful retry data</p>
 61
 62
 63
-64</pre>
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_should_retry?'>should_retry?</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
+  <span class='comment'># Fill necessary information
+</span>  <span class='id identifier rubyid_init_retry_data'>init_retry_data</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
+
   <span class='comment'># Applies the logic when there is subclass overrides it
 </span>  <span class='id identifier rubyid_apply_retry_policy'>apply_retry_policy</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
 
@@ -662,7 +1187,12 @@ Hash. Stores stateful retry data</p>
 </span>  <span class='id identifier rubyid_should_retry_on_local_error?'>should_retry_on_local_error?</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_should_retry_on_error?'>should_retry_on_error?</span> <span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
 
-  <span class='id identifier rubyid_adjust_retry_parameter'>adjust_retry_parameter</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
+  <span class='comment'># Determined that it needs to retry.
+</span>  <span class='id identifier rubyid_adjust_retry_request'>adjust_retry_request</span> <span class='id identifier rubyid_retry_data'>retry_data</span>
+
+  <span class='id identifier rubyid_wait_for_retry'>wait_for_retry</span>
+
+  <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -716,15 +1246,6 @@ lifetime of the request.</p>
       <pre class="lines">
 
 
-127
-128
-129
-130
-131
-132
-133
-134
-135
 136
 137
 138
@@ -737,43 +1258,10 @@ lifetime of the request.</p>
 145
 146
 147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181</pre>
+148</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 136</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_should_retry_on_error?'>should_retry_on_error?</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span> <span class='op'>||</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_http_response'>http_response</span> <span class='kw'>if</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http_response</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -782,52 +1270,10 @@ lifetime of the request.</p>
     <span class='kw'>return</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
 
-  <span class='comment'># If a request sent to the secondary location fails with 404 (Not Found), it is possible
-</span>  <span class='comment'># that the resource replication is not finished yet. So, in case of 404 only in the secondary
-</span>  <span class='comment'># location, the failure should still be retryable.
-</span>  <span class='id identifier rubyid_secondary_not_found'>secondary_not_found</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:current_location</span><span class='rbracket'>]</span> <span class='op'>===</span> <span class='const'><span class='object_link'><a href="../../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RequestLocationMode.html#SECONDARY_ONLY-constant" title="Azure::Storage::RequestLocationMode::SECONDARY_ONLY (constant)">SECONDARY_ONLY</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status_code'>status_code</span> <span class='op'>===</span> <span class='int'>404</span><span class='semicolon'>;</span>
+  <span class='id identifier rubyid_check_location'>check_location</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_secondary_not_found'>secondary_not_found</span>
-    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>500</span>
-  <span class='kw'>else</span>
-    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status_code'>status_code</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status_code'>status_code</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_check_status_code'>check_status_code</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
 
-  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='int'>400</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
-    <span class='kw'>return</span> <span class='kw'>false</span><span class='semicolon'>;</span>
-  <span class='comment'># Non-timeout Cases
-</span>  <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='int'>408</span><span class='rparen'>)</span>
-    <span class='comment'># Always no retry on &quot;not implemented&quot; and &quot;version not supported&quot;
-</span>    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>501</span> <span class='op'>||</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>505</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
-      <span class='kw'>return</span> <span class='kw'>false</span><span class='semicolon'>;</span>
-    <span class='kw'>end</span>
-
-    <span class='comment'># When absorb_conditional_errors_on_retry is set (for append blob)
-</span>    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:request_options</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:request_options</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:absorb_conditional_errors_on_retry</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-      <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>412</span><span class='rparen'>)</span>
-        <span class='comment'># When appending block with precondition failure and their was a server error before, we ignore the error.
-</span>        <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:last_server_error</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-          <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='semicolon'>;</span>
-          <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
-        <span class='kw'>else</span>
-          <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
-        <span class='kw'>end</span>
-      <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&gt;=</span> <span class='int'>500</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='int'>600</span><span class='rparen'>)</span>
-        <span class='comment'># Retry on the server error
-</span>        <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
-        <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:last_server_error</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
-      <span class='kw'>end</span>
-    <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='int'>500</span><span class='rparen'>)</span>
-      <span class='comment'># No retry on the client error
-</span>      <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
   <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:retryable</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -881,15 +1327,6 @@ lifetime of the request.</p>
       <pre class="lines">
 
 
-87
-88
-89
-90
-91
-92
-93
-94
-95
 96
 97
 98
@@ -910,10 +1347,19 @@ lifetime of the request.</p>
 113
 114
 115
-116</pre>
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_should_retry_on_local_error?'>should_retry_on_local_error?</span><span class='lparen'>(</span><span class='id identifier rubyid_retry_data'>retry_data</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_retry_data'>retry_data</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span>
@@ -950,12 +1396,53 @@ lifetime of the request.</p>
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="wait_for_retry-instance_method">
+  
+    #<strong>wait_for_retry</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Adjust the retry parameter and wait for retry</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+151
+152
+153</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/core/filter/retry_filter.rb', line 151</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_wait_for_retry'>wait_for_retry</span>
+  <span class='id identifier rubyid_sleep'>sleep</span> <span class='ivar'>@retry_interval</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 28 15:32:17 2017 by
+  Generated on Fri Nov 17 12:03:09 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

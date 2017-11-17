@@ -684,21 +684,21 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/abo
       <pre class="lines">
 
 
-593
-594
-595
-596
-597
-598
-599
-600
-601
-602
-603
-604</pre>
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 593</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 606</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_abort_copy_file'>abort_copy_file</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_copy_id'>copy_id</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>copy</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -779,13 +779,6 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/put
       <pre class="lines">
 
 
-329
-330
-331
-332
-333
-334
-335
 336
 337
 338
@@ -795,10 +788,17 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/put
 342
 343
 344
-345</pre>
+345
+346
+347
+348
+349
+350
+351
+352</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 329</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 336</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear_file_range'>clear_file_range</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_start_range'>start_range</span><span class='comma'>,</span> <span class='id identifier rubyid_end_range'>end_range</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>range</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -908,14 +908,14 @@ operation, with these values:</p>
       <pre class="lines">
 
 
-567
-568
-569
-570
-571</pre>
+580
+581
+582
+583
+584</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 567</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 580</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_file'>copy_file</span><span class='lparen'>(</span><span class='id identifier rubyid_destination_share'>destination_share</span><span class='comma'>,</span> <span class='id identifier rubyid_destination_directory_path'>destination_directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_destination_file'>destination_file</span><span class='comma'>,</span> <span class='id identifier rubyid_source_share'>source_share</span><span class='comma'>,</span> <span class='id identifier rubyid_source_directory_path'>source_directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_source_file'>source_file</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_source_file_uri'>source_file_uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_source_share'>source_share</span><span class='comma'>,</span> <span class='id identifier rubyid_source_directory_path'>source_directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_source_file'>source_file</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -1007,21 +1007,21 @@ operation, with these values:</p>
       <pre class="lines">
 
 
-521
-522
-523
-524
-525
-526
-527
-528
-529
-530
-531
-532</pre>
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 521</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 534</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_file_from_uri'>copy_file_from_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_destination_share'>destination_share</span><span class='comma'>,</span> <span class='id identifier rubyid_destination_directory_path'>destination_directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_destination_file'>destination_file</span><span class='comma'>,</span> <span class='id identifier rubyid_source_uri'>source_uri</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1096,10 +1096,6 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/cre
       <pre class="lines">
 
 
-121
-122
-123
-124
 125
 126
 127
@@ -1116,10 +1112,14 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/cre
 138
 139
 140
-141</pre>
+141
+142
+143
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 121</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_directory'>create_directory</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1367,20 +1367,20 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/del
       <pre class="lines">
 
 
-195
-196
-197
-198
-199
-200
-201
 202
 203
 204
-205</pre>
+205
+206
+207
+208
+209
+210
+211
+212</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 195</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 202</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_directory'>delete_directory</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1453,20 +1453,20 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/del
       <pre class="lines">
 
 
-478
-479
-480
-481
-482
-483
-484
-485
-486
-487
-488</pre>
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 478</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 491</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_file'>delete_file</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1518,6 +1518,11 @@ share.</p>
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
 <pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li><li>
+<p><code>:location_mode</code>            - LocationMode. Specifies the
+location mode used to decide</p>
+
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1537,22 +1542,23 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
       <pre class="lines">
 
 
-225
-226
-227
-228
-229
-230
-231
-232
-233
 234
 235
 236
-237</pre>
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 225</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 234</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_directory_metadata'>get_directory_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1560,7 +1566,8 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
   <span class='comment'># Call
-</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_uri'>directory_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_uri'>directory_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># result
 </span>  <span class='id identifier rubyid_directory'>directory</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="File/Serialization.html" title="Azure::Storage::File::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_directory_from_headers'><span class='object_link'><a href="File/Serialization.html#directory_from_headers-class_method" title="Azure::Storage::File::Serialization.directory_from_headers (method)">directory_from_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
@@ -1609,6 +1616,11 @@ share.</p>
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
 <pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li><li>
+<p><code>:location_mode</code>            - LocationMode. Specifies the
+location mode used to decide</p>
+
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1628,22 +1640,23 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
       <pre class="lines">
 
 
-163
-164
-165
-166
-167
-168
 169
 170
 171
 172
 173
 174
-175</pre>
+175
+176
+177
+178
+179
+180
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 163</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 169</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_directory_properties'>get_directory_properties</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1651,7 +1664,8 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
   <span class='comment'># Call
-</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_uri'>directory_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_uri'>directory_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># result
 </span>  <span class='id identifier rubyid_directory'>directory</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="File/Serialization.html" title="Azure::Storage::File::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_directory_from_headers'><span class='object_link'><a href="File/Serialization.html#directory_from_headers-class_method" title="Azure::Storage::File::Serialization.directory_from_headers (method)">directory_from_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
@@ -1713,6 +1727,11 @@ the range. This option only valid if</p>
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
 <pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li><li>
+<p><code>:location_mode</code>             - LocationMode. Specifies the
+location mode used to decide</p>
+
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1732,8 +1751,6 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
       <pre class="lines">
 
 
-136
-137
 138
 139
 140
@@ -1749,15 +1766,21 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
 150
 151
 152
-153</pre>
+153
+154
+155
+156
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 138</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_file'>get_file</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='const'><span class='object_link'><a href="Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_common_headers'><span class='object_link'><a href="Service/StorageService.html#common_headers-class_method" title="Azure::Storage::Service::StorageService.common_headers (method)">common_headers</a></span></span>
   <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:start_range</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>0</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:end_range</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='kw'>not</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:start_range</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -1813,6 +1836,11 @@ share.</p>
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
 <pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li><li>
+<p><code>:location_mode</code>            - LocationMode. Specifies the
+location mode used to decide</p>
+
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1832,22 +1860,23 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
       <pre class="lines">
 
 
-409
-410
-411
-412
-413
-414
-415
-416
-417
-418
-419
-420
-421</pre>
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 409</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 421</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_file_metadata'>get_file_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1855,7 +1884,8 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
   <span class='comment'># Call
-</span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># result
 </span>  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="File/Serialization.html" title="Azure::Storage::File::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_file_from_headers'><span class='object_link'><a href="File/Serialization.html#file_from_headers-class_method" title="Azure::Storage::File::Serialization.file_from_headers (method)">file_from_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
@@ -1904,6 +1934,11 @@ directory.</p>
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
 <pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li><li>
+<p><code>:location_mode</code>             - LocationMode. Specifies the
+location mode used to decide</p>
+
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1923,12 +1958,6 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
       <pre class="lines">
 
 
-174
-175
-176
-177
-178
-179
 180
 181
 182
@@ -1936,10 +1965,17 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
 184
 185
 186
-187</pre>
+187
+188
+189
+190
+191
+192
+193
+194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 174</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 180</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_file_properties'>get_file_properties</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1947,7 +1983,8 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
 
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_common_headers'><span class='object_link'><a href="Service/StorageService.html#common_headers-class_method" title="Azure::Storage::Service::StorageService.common_headers (method)">common_headers</a></span></span>
 
-  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:head</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
@@ -2020,6 +2057,11 @@ status code 400 (Bad Request). (optional)</code></pre>
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
 <pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li><li>
+<p><code>:location_mode</code>           - LocationMode. Specifies the
+location mode used to decide</p>
+
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
 </li></ul>
 
 <p>See: <a
@@ -2039,9 +2081,6 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/lis
       <pre class="lines">
 
 
-82
-83
-84
 85
 86
 87
@@ -2057,10 +2096,14 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/lis
 97
 98
 99
-100</pre>
+100
+101
+102
+103
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list_directories_and_files'>list_directories_and_files</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>list</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -2071,7 +2114,8 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/lis
     <span class='const'><span class='object_link'><a href="Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>prefix</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:prefix</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:prefix</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_directory_uri'>directory_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_directory_uri'>directory_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># Result
@@ -2129,6 +2173,11 @@ of the range.</p>
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
 <pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+</li><li>
+<p><code>:location_mode</code>             - LocationMode. Specifies the
+location mode used to decide</p>
+
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2151,15 +2200,6 @@ end], [start, end], … ]</p>
       <pre class="lines">
 
 
-371
-372
-373
-374
-375
-376
-377
-378
-379
 380
 381
 382
@@ -2168,16 +2208,27 @@ end], [start, end], … ]</p>
 385
 386
 387
-388</pre>
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 371</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 380</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list_file_ranges'>list_file_ranges</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rangelist</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
   <span class='const'><span class='object_link'><a href="Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_with_query'>with_query</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_file_uri'>file_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:start_range</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>0</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:end_range</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='kw'>not</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:start_range</span><span class='rbracket'>]</span><span class='rparen'>)</span>
 
@@ -2266,13 +2317,6 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/put
       <pre class="lines">
 
 
-291
-292
-293
-294
-295
-296
-297
 298
 299
 300
@@ -2281,10 +2325,17 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/put
 303
 304
 305
-306</pre>
+306
+307
+308
+309
+310
+311
+312
+313</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 291</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 298</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_put_file_range'>put_file_range</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_start_range'>start_range</span><span class='comma'>,</span> <span class='id identifier rubyid_end_range'>end_range</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>range</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -2369,13 +2420,13 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set
       <pre class="lines">
 
 
-261
-262
-263
-264</pre>
+268
+269
+270
+271</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 261</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 268</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resize_file'>resize_file</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_size'>size</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>content_length:</span> <span class='id identifier rubyid_size'>size</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -2442,24 +2493,24 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set
       <pre class="lines">
 
 
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
 268
 269
 270
 271
-272</pre>
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 258</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/directory.rb', line 268</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_directory_metadata'>set_directory_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -2539,24 +2590,24 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set
       <pre class="lines">
 
 
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
 456
-457</pre>
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 443</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 456</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_file_metadata'>set_file_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -2660,13 +2711,6 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set
       <pre class="lines">
 
 
-218
-219
-220
-221
-222
-223
-224
 225
 226
 227
@@ -2679,10 +2723,17 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set
 234
 235
 236
-237</pre>
+237
+238
+239
+240
+241
+242
+243
+244</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 218</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/file.rb', line 225</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_file_properties'>set_file_properties</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_directory_path'>directory_path</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>properties</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -2714,7 +2765,7 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 28 15:32:12 2017 by
+  Generated on Fri Nov 17 12:03:05 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>
