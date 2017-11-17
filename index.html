@@ -83,6 +83,8 @@ manage Microsoft Azure Storage Services.</p>
 <p><a href="#tables">Tables</a></p>
 </li><li>
 <p><a href="#queues">Queues</a></p>
+</li><li>
+<p><a href="#files">Files</a></p>
 </li></ul>
 
 <h1 id="label-Supported+Ruby+Versions">Supported Ruby Versions</h1>
@@ -147,7 +149,7 @@ cloud, or against the local Storage Emulator if you are on Windows.</p>
 
 <pre class="code ruby"><code class="ruby">
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>azure/storage</span><span class='tstring_end'>&#39;</span></span>
-  <span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Azure/Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Azure/Storage/Client.html" title="Azure::Storage::Client (class)">Client</a></span></span><span class='period'>.</span><span class='id identifier rubyid_create_develpoment'>create_develpoment</span>
+  <span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Azure/Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Azure/Storage/Client.html" title="Azure::Storage::Client (class)">Client</a></span></span><span class='period'>.</span><span class='id identifier rubyid_create_development'><span class='object_link'><a href="Azure/Storage/Client.html#create_development-class_method" title="Azure::Storage::Client.create_development (method)">create_development</a></span></span>
 
   <span class='comment'># Or create by options and provide your own proxy_uri
 </span>  <span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Azure/Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Azure/Storage/Client.html" title="Azure::Storage::Client (class)">Client</a></span></span><span class='period'>.</span><span class='id identifier rubyid_create'><span class='object_link'><a href="Azure/Storage/Client.html#create-class_method" title="Azure::Storage::Client.create (method)">create</a></span></span><span class='lparen'>(</span><span class='symbol'>:use_development_storage</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:development_storage_proxy_uri</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>your proxy uri</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -181,6 +183,9 @@ if having issues with ssl peer verification</p>
 
 <span class='comment'># Setup a specific instance of an Azure::Storage::Client
 </span><span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Azure/Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Azure/Storage/Client.html" title="Azure::Storage::Client (class)">Client</a></span></span><span class='period'>.</span><span class='id identifier rubyid_create'><span class='object_link'><a href="Azure/Storage/Client.html#create-class_method" title="Azure::Storage::Client.create (method)">create</a></span></span><span class='lparen'>(</span><span class='symbol'>:storage_account_name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>your account name</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='symbol'>:storage_access_key</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>your access key</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+
+<span class='comment'># Alternatively, create a client that can anonymously access public containers for read operations
+</span><span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Azure/Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Azure/Storage/Client.html" title="Azure::Storage::Client (class)">Client</a></span></span><span class='period'>.</span><span class='id identifier rubyid_create'><span class='object_link'><a href="Azure/Storage/Client.html#create-class_method" title="Azure::Storage::Client.create (method)">create</a></span></span><span class='lparen'>(</span><span class='label'>storage_blob_host:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://youraccountname.blob.core.windows.net</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
 <span class='comment'># Get an azure storage blob service object from a specific instance of an Azure::Storage::Client
 </span><span class='id identifier rubyid_blobs'>blobs</span> <span class='op'>=</span> <span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_blob_client'>blob_client</span>
@@ -419,7 +424,7 @@ additional questions or comments.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Thu Sep 28 15:32:09 2017 by
+  Generated on Fri Nov 17 12:03:01 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

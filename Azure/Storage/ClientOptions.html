@@ -313,13 +313,13 @@
       <pre class="lines">
 
 
-164
 165
 166
-167</pre>
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 164</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 165</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>super</span> <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='id identifier rubyid_method_name'>method_name</span>
@@ -363,12 +363,12 @@
       <pre class="lines">
 
 
-32
 33
-34</pre>
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ca_file'>ca_file</span>
   <span class='ivar'>@ca_file</span>
@@ -424,7 +424,6 @@
       <pre class="lines">
 
 
-146
 147
 148
 149
@@ -438,10 +437,11 @@
 157
 158
 159
-160</pre>
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 146</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_connection_string_mapping'>connection_string_mapping</span>
   <span class='ivar'>@connection_string_mapping</span> <span class='op'>||=</span> <span class='lbrace'>{</span>
@@ -502,7 +502,6 @@
       <pre class="lines">
 
 
-128
 129
 130
 131
@@ -515,10 +514,11 @@
 138
 139
 140
-141</pre>
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 128</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 129</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_env_vars_mapping'>env_vars_mapping</span>
   <span class='ivar'>@env_vars_mapping</span> <span class='op'>||=</span> <span class='lbrace'>{</span>
@@ -578,7 +578,6 @@
       <pre class="lines">
 
 
-107
 108
 109
 110
@@ -594,10 +593,11 @@
 120
 121
 122
-123</pre>
+123
+124</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_valid_options'>valid_options</span>
   <span class='ivar'>@valid_options</span> <span class='op'>||=</span> <span class='lbracket'>[</span>
@@ -666,12 +666,12 @@
       <pre class="lines">
 
 
-100
 101
-102</pre>
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options'>options</span>
   <span class='ivar'>@options</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -722,7 +722,7 @@ storage account.</p>
 key of the storage account.</p>
 </li><li>
 <p><code>:storage_sas_token</code>              - String. The signed access
-signiture for the storage account or one of its service.</p>
+signature for the storage account or one of its service.</p>
 </li><li>
 <p><code>:storage_blob_host</code>              - String. Specified Blob
 serivce endpoint or hostname</p>
@@ -745,7 +745,7 @@ style URI for specified endpoints</p>
 file if having issue with SSL</p>
 </li></ul>
 
-<p>The valid set of options inlcude:</p>
+<p>The valid set of options include:</p>
 <ul><li>
 <p>Storage Emulator: <code>:use_development_storage</code> required,
 <code>:development_storage_proxy_uri</code> optionally</p>
@@ -806,7 +806,6 @@ the mapping relationship</p>
       <pre class="lines">
 
 
-73
 74
 75
 76
@@ -823,16 +822,17 @@ the mapping relationship</p>
 87
 88
 89
-90</pre>
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reset!'>reset!</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></span>
     <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_connection_string'>parse_connection_string</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Hash</span>
-    <span class='comment'># When the options are provided via singlton setup: Azure::Storage.setup()
+    <span class='comment'># When the options are provided via singleton setup: Azure::Storage.setup()
 </span>    <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_setup_options'>setup_options</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>0</span>
 
     <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_connection_string'>parse_connection_string</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:storage_connection_string</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:storage_connection_string</span><span class='rbracket'>]</span>
@@ -890,12 +890,12 @@ the mapping relationship</p>
       <pre class="lines">
 
 
-93
 94
-95</pre>
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 93</span>
+      <pre class="code"><span class="info file"># File 'lib/azure/storage/client_options.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_same_options?'>same_options?</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_opts'>opts</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>0</span> <span class='op'>||</span> <span class='id identifier rubyid_opts'>opts</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span> <span class='op'>==</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
@@ -910,7 +910,7 @@ the mapping relationship</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 28 15:32:13 2017 by
+  Generated on Fri Nov 17 12:03:05 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>
