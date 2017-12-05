@@ -88,7 +88,7 @@ module Azure::Storage
     def get_blob(container, blob, options = {})
       query = {}
       StorageService.with_query query, "snapshot", options[:snapshot]
-      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
+      StorageService.with_query query, "timeout", options[:timeout] if options[:timeout]
       
       options[:request_location_mode] = RequestLocationMode::PRIMARY_OR_SECONDARY
       uri = blob_uri(container, blob, query, options)
@@ -284,21 +284,20 @@ module Azure::Storage
         StorageService.with_header headers, "x-ms-blob-content-language", options[:content_language]
         StorageService.with_header headers, "x-ms-blob-content-md5", options[:content_md5]
         StorageService.with_header headers, "x-ms-blob-cache-control", options[:cache_control]
-        StorageService.with_header headers, "x-ms-blob-content-length", options[:content_length].to_s if options[:content_length]
+        StorageService.with_header headers, "x-ms-blob-content-length", options[:content_length] if options[:content_length]
         StorageService.with_header headers, "x-ms-blob-content-disposition", options[:content_disposition]
 
         if options[:sequence_number_action]
-          StorageService.with_header headers, "x-ms-blob-sequence-number-action", options[:sequence_number_action].to_s
+          StorageService.with_header headers, "x-ms-sequence-number-action", options[:sequence_number_action]
 
           if options[:sequence_number_action] != :increment
-            StorageService.with_header headers, "x-ms-blob-sequence-number", options[:sequence_number].to_s if options[:sequence_number]
+            StorageService.with_header headers, "x-ms-blob-sequence-number", options[:sequence_number] if options[:sequence_number]
           end
         end
 
         add_blob_conditional_headers options, headers
         headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
       end
-
       call(:put, uri, nil, headers, options)
       nil
     end

@@ -615,4 +615,57 @@ module Azure::Storage::File
     call(:put, uri, nil, headers, options)
     nil
   end
+
+  # Public: Creates a new file or replaces a file with content
+  #
+  # Updating an existing file overwrites any existing metadata on the file
+  # Partial updates are not supported with create_file. The content of the
+  # existing file is overwritten with the content of the new file. To perform a
+  # partial update of the content of a file, use the put_range method.
+  #
+  # Note that the default content type is application/octet-stream.
+  #
+  # ==== Attributes
+  #
+  # * +share+                      - String. The name of the file share.
+  # * +directory_path+             - String. The path to the directory.
+  # * +file+                       - String. The name of the file.
+  # * +length+                     - Integer. Specifies the maximum byte value for the file, up to 1 TB.
+  # * +content+                    - String or IO. The content to put in the file.
+  # * +options+                    - Hash. Optional parameters.
+  #
+  # ==== Options
+  #
+  # Accepted key/value pairs in options parameter are:
+  # * +:content_type+              - String. Content type for the file. Will be saved with file.
+  # * +:content_encoding+          - String. Content encoding for the file. Will be saved with file.
+  # * +:content_language+          - String. Content language for the file. Will be saved with file.
+  # * +:content_md5+               - String. Content MD5 for the file. Will be saved with file.
+  # * +:cache_control+             - String. Cache control for the file. Will be saved with file.
+  # * +:content_disposition+       - String. Conveys additional information about how to process the response payload,
+  #                                  and also can be used to attach additional metadata
+  # * +:metadata+                  - Hash. Custom metadata values to store with the file.
+  # * +:timeout+                   - Integer. A timeout in seconds.
+  # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
+  #                                  in the analytics logs when storage analytics logging is enabled.
+  #
+  # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/create-file
+  #
+  # Returns a File
+  def create_file_with_content(share, directory_path, file, length, content, options = {})
+    create_file(share, directory_path, file, length, options)
+
+    content = StringIO.new(content) if content.is_a? String
+    upload_count = (Float(length) / Float(Azure::Storage::FileConstants::DEFAULT_WRITE_SIZE_IN_BYTES)).ceil
+
+    for idx in 0...upload_count
+      start_range = idx * Azure::Storage::FileConstants::DEFAULT_WRITE_SIZE_IN_BYTES
+      end_range = start_range + Azure::Storage::FileConstants::DEFAULT_WRITE_SIZE_IN_BYTES - 1
+      end_range = (length - 1) if end_range > (length - 1)
+      put_file_range(share, directory_path, file, start_range, end_range, content.read(Azure::Storage::FileConstants::DEFAULT_WRITE_SIZE_IN_BYTES))
+    end
+
+    # Get the file properties
+    get_file_properties(share, directory_path, file)
+  end
 end

@@ -1485,7 +1485,7 @@ describe Azure::Storage::Blob::BlobService do
         it 'set the page blob\'s sequence number' do
           options = { sequence_number_action: action, sequence_number: number }
           subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-          request_headers["x-ms-blob-sequence-number-action"] = action.to_s
+          request_headers["x-ms-sequence-number-action"] = action.to_s
           request_headers["x-ms-blob-sequence-number"] = number.to_s
           subject.set_sequence_number container_name, blob_name, action, number
         end
@@ -1494,7 +1494,7 @@ describe Azure::Storage::Blob::BlobService do
           action = :max
           options = { sequence_number_action: action, sequence_number: number }
           subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-          request_headers["x-ms-blob-sequence-number-action"] = action.to_s
+          request_headers["x-ms-sequence-number-action"] = action.to_s
           request_headers["x-ms-blob-sequence-number"] = number.to_s
           subject.set_sequence_number container_name, blob_name, action, number
         end
@@ -1503,7 +1503,7 @@ describe Azure::Storage::Blob::BlobService do
           action = :increment
           options = { sequence_number_action: action, sequence_number: nil }
           subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-          request_headers["x-ms-blob-sequence-number-action"] = action.to_s
+          request_headers["x-ms-sequence-number-action"] = action.to_s
           subject.set_sequence_number container_name, blob_name, action, nil
         end
 
@@ -1511,13 +1511,13 @@ describe Azure::Storage::Blob::BlobService do
           action = :increment
           options = { sequence_number_action: action, sequence_number: number }
           subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-          request_headers["x-ms-blob-sequence-number-action"] = action.to_s
+          request_headers["x-ms-sequence-number-action"] = action.to_s
           subject.set_sequence_number container_name, blob_name, action, number
         end
 
         describe "when the option hash is used" do
           before {
-            request_headers["x-ms-blob-sequence-number-action"] = action.to_s
+            request_headers["x-ms-sequence-number-action"] = action.to_s
             request_headers["x-ms-blob-sequence-number"] = number.to_s
           }
 
@@ -1847,14 +1847,14 @@ describe Azure::Storage::Blob::BlobService do
           end
 
           it "modifies the request headers when provided a :sequence_number_action value" do
-            request_headers["x-ms-blob-sequence-number-action"] = "anyvalue"
+            request_headers["x-ms-sequence-number-action"] = "anyvalue"
             options = { sequence_number_action: :anyvalue }
             subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
             subject.set_blob_properties container_name, blob_name, options
           end
 
           it "modifies the request headers when provided a :sequence_number value" do
-            request_headers["x-ms-blob-sequence-number-action"] = :max.to_s
+            request_headers["x-ms-sequence-number-action"] = :max.to_s
             request_headers["x-ms-blob-sequence-number"] = "37"
             options = { sequence_number_action: :max, sequence_number: 37 }
             subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)

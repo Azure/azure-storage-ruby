@@ -33,3 +33,21 @@ end
 def is_boolean(value)
   (value == true || value == false) == true
 end
+
+require "azure/core/http/http_filter"
+
+module Azure::Storage
+  class DuplicateRequestFilter < Azure::Core::Http::HttpFilter
+    def initialize(callable = nil)
+      @callable = callable
+    end
+    def call(req, _next)
+      begin
+        r = _next.call
+      rescue Azure::Core::Http::HTTPError => e
+      end
+      @callable.call(req, r) if @callable
+      r = _next.call
+    end
+  end
+end

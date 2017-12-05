@@ -294,7 +294,7 @@ module Azure::Storage
         # * +:key+        - The key name
         # * +:value+      - The value
         def with_value(object, key, value)
-          object[key] = value if value
+          object[key] = value.to_s if value
         end
 
         # Adds a header with the value

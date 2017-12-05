@@ -263,7 +263,7 @@ module Azure::Storage
     # * +:timeout+                   - Integer. A timeout in seconds.
     # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                  in the analytics logs when storage analytics logging is enabled.
-    # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+    # * +:location_mode+             - LocationMode. Specifies the location mode used to decide
     #                                  which location the request should be sent to.
     # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to list the pages only if
     #                                  the blob has been modified since the specified date/time. If the blob has not been modified,
@@ -497,6 +497,70 @@ module Azure::Storage
     def set_sequence_number(container, blob, action, number, options = {})
       options = { sequence_number_action: action, sequence_number: number }.merge(options)
       set_blob_properties container, blob, options
+    end
+
+    # Public: Creates a new page blob filled with given content.
+    #
+    # ==== Attributes
+    #
+    # * +container+                  - String. The container name.
+    # * +blob+                       - String. The blob name.
+    # * +length+                     - Integer. Specifies the maximum size for the page blob, up to 1 TB.
+    #                                  The page blob size must be aligned to a 512-byte boundary.
+    # * +content+                    - String or IO. The content to put in the page blob.
+    # * +options+                    - Hash. Optional parameters.
+    #
+    # ==== Options
+    #
+    # Accepted key/value pairs in options parameter are:
+    # * +:content_type+              - String. Content type for the blob. Will be saved with blob.
+    # * +:content_encoding+          - String. Content encoding for the blob. Will be saved with blob.
+    # * +:content_language+          - String. Content language for the blob. Will be saved with blob.
+    # * +:content_md5+               - String. Content MD5 for the blob. Will be saved with blob.
+    # * +:cache_control+             - String. Cache control for the blob. Will be saved with blob.
+    # * +:content_disposition+       - String. Conveys additional information about how to process the response payload,
+    #                                  and also can be used to attach additional metadata
+    # * +:metadata+                  - Hash. Custom metadata values to store with the blob.
+    # * +:sequence_number+           - Integer. The sequence number is a user-controlled value that you can use to track requests.
+    #                                  The value of the sequence number must be between 0 and 2^63 - 1.The default value is 0.
+    # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
+    #                                  in the analytics logs when storage analytics logging is enabled.
+    # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to create a new blob
+    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
+    #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to create a new blob
+    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified,
+    #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to create a new blob
+    #                                  only if the blob's ETag value matches the value specified. If the values do not match,
+    #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to create a new blob
+    #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
+    #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:lease_id+                  - String. Required if the blob has an active lease. To perform this operation on a blob with an active lease,
+    #                                  specify the valid lease ID for this header.
+    #
+    # See http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx
+    #
+    # Returns a Blob
+    def create_page_blob_with_content(container, blob, length, content, options = {})
+      create_page_blob(container, blob, length, options)
+
+      content = StringIO.new(content) if content.is_a? String
+      upload_count = (Float(length) / Float(Azure::Storage::BlobConstants::DEFAULT_WRITE_PAGE_SIZE_IN_BYTES)).ceil
+
+      for idx in 0...upload_count
+        start_range = idx * Azure::Storage::BlobConstants::DEFAULT_WRITE_PAGE_SIZE_IN_BYTES
+        end_range = start_range + Azure::Storage::BlobConstants::DEFAULT_WRITE_PAGE_SIZE_IN_BYTES - 1
+        end_range = (length - 1) if end_range > (length - 1)
+        put_blob_pages(container, blob, start_range, end_range, content.read(Azure::Storage::BlobConstants::DEFAULT_WRITE_PAGE_SIZE_IN_BYTES), lease_id: options[:lease_id])
+      end
+
+      get_properties_options = {}
+      get_properties_options[:lease_id] = options[:lease_id] if options[:lease_id]
+      # Get the blob properties
+      get_blob_properties(container, blob, get_properties_options)
     end
   end
 end

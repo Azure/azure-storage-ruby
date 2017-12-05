@@ -273,16 +273,25 @@ module Azure::Storage
     MIN_WRITE_PAGE_SIZE_IN_BYTES = 2 * 1024 * 1024
 
     # The default maximum size, in bytes, of a blob before it must be separated into blocks.
-    DEFAULT_SINGLE_BLOB_PUT_THRESHOLD_IN_BYTES = 32 * 1024 * 1024
+    DEFAULT_SINGLE_BLOB_PUT_THRESHOLD_IN_BYTES = 128 * 1024 * 1024
 
     # The default write block size, in bytes, used by blob streams.
     DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES = 4 * 1024 * 1024
 
     # The maximum size of a single block.
-    MAX_BLOCK_SIZE = 4 * 1024 * 1024
+    MAX_BLOCK_SIZE = 100 * 1024 * 1024
+
+    # The maximum count of blocks for a block blob
+    MAX_BLOCK_COUNT = 50000
+
+    # The maximum size of block blob
+    MAX_BLOCK_BLOB_SIZE = 50000 * 100 * 1024 * 1024
+
+    # The maximum size of block blob
+    MAX_APPEND_BLOB_SIZE = 1024 * 1024 * 1024 * 1024
 
     # The maximum size, in bytes, of a blob before it must be separated into blocks.
-    MAX_SINGLE_UPLOAD_BLOB_SIZE_IN_BYTES = 64 * 1024 * 1024
+    MAX_SINGLE_UPLOAD_BLOB_SIZE_IN_BYTES = 256 * 1024 * 1024
 
     # The maximum range get size when requesting for a contentMD5
     MAX_RANGE_GET_SIZE_WITH_MD5 = 4 * 1024 * 1024
@@ -969,6 +978,8 @@ module Azure::Storage
     CONTAINER_NOT_FOUND = "ContainerNotFound"
     INVALID_BLOB_OR_BLOCK = "InvalidBlobOrBlock"
     INVALID_BLOCK_LIST = "InvalidBlockList"
+    MAX_BLOB_SIZE_CONDITION_NOT_MET = "MaxBlobSizeConditionNotMet"
+    APPEND_POSITION_CONDITION_NOT_MET = "AppendPositionConditionNotMet"
   end
 
   module FileErrorCodeStrings

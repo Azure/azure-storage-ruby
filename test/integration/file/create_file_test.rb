@@ -28,6 +28,70 @@ describe Azure::Storage::File::FileService do
   subject { Azure::Storage::File::FileService.new }
   after { ShareNameHelper.clean }
 
+  describe "#create_file_with_content" do
+    let(:share_name) { ShareNameHelper.name }
+    let(:directory_name) { FileNameHelper.name }
+    let(:file_name) { FileNameHelper.name }
+    before {
+      subject.create_share share_name
+      subject.create_directory share_name, directory_name
+    }
+
+    it "1MB string payload works" do
+      length = 1 * 1024 * 1024
+      content = SecureRandom.random_bytes(length)
+      file_name = FileNameHelper.name
+      subject.create_file_with_content share_name, directory_name, file_name, length, content
+      file, body = subject.get_file(share_name, directory_name, file_name)
+      file.name.must_equal file_name
+      file.properties[:content_length].must_equal length
+      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+    end
+
+    it "4MB string payload works" do
+      length = 4 * 1024 * 1024
+      content = SecureRandom.random_bytes(length)
+      file_name = FileNameHelper.name
+      subject.create_file_with_content share_name, directory_name, file_name, length, content
+      file, body = subject.get_file(share_name, directory_name, file_name)
+      file.name.must_equal file_name
+      file.properties[:content_length].must_equal length
+      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+    end
+
+    it "5MB string payload works" do
+      length = 5 * 1024 * 1024
+      content = SecureRandom.random_bytes(length)
+      file_name = FileNameHelper.name
+      subject.create_file_with_content share_name, directory_name, file_name, length, content
+      file, body = subject.get_file(share_name, directory_name, file_name)
+      file.name.must_equal file_name
+      file.properties[:content_length].must_equal length
+      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+    end
+
+    it "IO payload works" do
+      begin
+        content = SecureRandom.hex(3 * 1024 * 1024)
+        length = content.size
+        file_name = FileNameHelper.name
+        local_file = File.open file_name, "w+"
+        local_file.write content
+        local_file.seek 0
+        subject.create_file_with_content share_name, directory_name, file_name, length, local_file
+        file, body = subject.get_file(share_name, directory_name, file_name)
+        file.name.must_equal file_name
+        file.properties[:content_length].must_equal length
+        Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+      ensure
+        unless local_file.nil?
+          local_file.close
+          File.delete file_name
+        end
+      end
+    end
+  end
+
   describe "#create_file" do
     let(:share_name) { ShareNameHelper.name }
     let(:directory_name) { FileNameHelper.name }

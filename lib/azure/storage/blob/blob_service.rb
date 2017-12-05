@@ -523,9 +523,9 @@ module Azure::Storage
           Service::StorageService.with_header headers, "x-ms-source-if-none-match", options[:source_if_none_match]
 
           # Conditional headers for page blob
-          Service::StorageService.with_header headers, "x-ms-if-sequence-number-le", options[:if_sequence_number_le]
-          Service::StorageService.with_header headers, "x-ms-if-sequence-number-lt", options[:if_sequence_number_lt]
-          Service::StorageService.with_header headers, "x-ms-if-sequence-number-eq", options[:if_sequence_number_eq]
+          Service::StorageService.with_header headers, "x-ms-if-sequence-number-le", options[:if_sequence_number_le] if options[:if_sequence_number_le]
+          Service::StorageService.with_header headers, "x-ms-if-sequence-number-lt", options[:if_sequence_number_lt] if options[:if_sequence_number_lt]
+          Service::StorageService.with_header headers, "x-ms-if-sequence-number-eq", options[:if_sequence_number_eq] if options[:if_sequence_number_eq]
 
           # Conditional headers for append blob
           Service::StorageService.with_header headers, "x-ms-blob-condition-maxsize", options[:max_size]

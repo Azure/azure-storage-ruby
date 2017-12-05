@@ -1,3 +1,14 @@
+2017.12 - version 1.0.0
+
+BLOB
+* Added following convenience APIs to support large payload upload from local to append or page blob.
+  - Azure::Storage::Blob::BlobService::create_page_blob_with_content
+  - Azure::Storage::Blob::BlobService::create_append_blob_from_content
+* Added the support for `Azure::Storage::Blob::BlobService::create_block_blob` to handle large payload that used to require making multiple `Azure::Storage::Blob::BlobService::put_blob_block` calls and calling `Azure::Storage::Blob::BlobService::commit_blob_blocks`.
+
+File
+* Added convenience API `Azure::Storage::File::FileService::create_file_with_content` to support large payload upload from local to file.
+
 2017.11 - version 0.15.0-preview
 
 ALL

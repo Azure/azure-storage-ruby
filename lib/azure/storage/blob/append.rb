@@ -37,9 +37,6 @@ module Azure::Storage
     # ==== Options
     #
     # Accepted key/value pairs in options parameter are:
-    # * +:transactional_md5+         - String. An MD5 hash of the blob content. This hash is used to verify the integrity of the blob during transport.
-    #                                  When this header is specified, the storage service checks the hash that has arrived with the one that was sent.
-    #                                  If the two hashes do not match, the operation will fail with error code 400 (Bad Request).
     # * +:content_type+              - String. Content type for the blob. Will be saved with blob.
     # * +:content_encoding+          - String. Content encoding for the blob. Will be saved with blob.
     # * +:content_language+          - String. Content language for the blob. Will be saved with blob.
@@ -71,7 +68,7 @@ module Azure::Storage
     # Returns a Blob
     def create_append_blob(container, blob, options = {})
       query = {}
-      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
+      StorageService.with_query query, "timeout", options[:timeout] if options[:timeout]
 
       uri = blob_uri(container, blob, query)
 
@@ -81,10 +78,9 @@ module Azure::Storage
       StorageService.with_header headers, "x-ms-blob-type", "AppendBlob"
 
       # ensure content-length is 0
-      StorageService.with_header headers, "Content-Length", 0.to_s
+      StorageService.with_header headers, "Content-Length", 0
 
       # set the rest of the optional headers
-      StorageService.with_header headers, "Content-MD5", options[:transactional_md5]
       StorageService.with_header headers, "x-ms-blob-content-type", options[:content_type]
       StorageService.with_header headers, "x-ms-blob-content-encoding", options[:content_encoding]
       StorageService.with_header headers, "x-ms-blob-content-language", options[:content_language]
@@ -120,7 +116,6 @@ module Azure::Storage
     #
     # Accepted key/value pairs in options parameter are:
     # * +:content_md5+               - String. Content MD5 for the request contents.
-    # * +:lease_id+                  - String. The lease id if the blob has an active lease
     # * +:max_size+                  - Integer. The max length in bytes permitted for the append blob
     # * +:append_position+           - Integer. A number indicating the byte offset to compare. It will succeed only if the append position is equal to this number
     # * +:timeout+                   - Integer. A timeout in seconds.
@@ -153,6 +148,8 @@ module Azure::Storage
       headers = StorageService.common_headers
       StorageService.with_header headers, "Content-MD5", options[:content_md5]
       StorageService.with_header headers, "x-ms-lease-id", options[:lease_id]
+      StorageService.with_header headers, "x-ms-blob-condition-maxsize", options[:max_size]
+      StorageService.with_header headers, "x-ms-blob-condition-appendpos", options[:append_position]
 
       add_blob_conditional_headers options, headers
       headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
@@ -162,6 +159,83 @@ module Azure::Storage
       result.name = blob
 
       result
+    end
+
+    # Public: Creates a new append blob with given content
+    #
+    # ==== Attributes
+    #
+    # * +container+                  - String. The container name.
+    # * +blob+                       - String. The blob name.
+    # * +content+                    - IO or String. Content to write.
+    # * +options+                    - Hash. Optional parameters.
+    #
+    # ==== Options
+    #
+    # Accepted key/value pairs in options parameter are:
+    # * +:content_type+              - String. Content type for the blob. Will be saved with blob.
+    # * +:content_encoding+          - String. Content encoding for the blob. Will be saved with blob.
+    # * +:content_language+          - String. Content language for the blob. Will be saved with blob.
+    # * +:content_md5+               - String. Content MD5 for the blob. Will be saved with blob.
+    # * +:cache_control+             - String. Cache control for the blob. Will be saved with blob.
+    # * +:content_disposition+       - String. Conveys additional information about how to process the response payload,
+    #                                  and also can be used to attach additional metadata
+    # * +:max_size+                  - Integer. The max length in bytes permitted for the append blob.
+    # * +:metadata+                  - Hash. Custom metadata values to store with the blob.
+    # * +:timeout+                   - Integer. A timeout in seconds.
+    # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
+    #                                  in the analytics logs when storage analytics logging is enabled.
+    # * +:if_modified_since+         - String. A DateTime value. Specify this conditional header to create a new blob
+    #                                  only if the blob has been modified since the specified date/time. If the blob has not been modified,
+    #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:if_unmodified_since+       - String. A DateTime value. Specify this conditional header to create a new blob
+    #                                  only if the blob has not been modified since the specified date/time. If the blob has been modified,
+    #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:if_match+                  - String. An ETag value. Specify an ETag value for this conditional header to create a new blob
+    #                                  only if the blob's ETag value matches the value specified. If the values do not match,
+    #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:if_none_match+             - String. An ETag value. Specify an ETag value for this conditional header to create a new blob
+    #                                  only if the blob's ETag value does not match the value specified. If the values are identical,
+    #                                  the Blob service returns status code 412 (Precondition Failed).
+    # * +:lease_id+                  - String. Required if the blob has an active lease. To perform this operation on a blob with an active lease,
+    #                                  specify the valid lease ID for this header.
+    #
+    # See http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx
+    #
+    # Returns a Blob
+    def create_append_blob_from_content(container, blob, content, options = {})
+      # Fail fast if content has larger size than max_size
+      max_size = options.delete :max_size
+      if max_size
+        if content.respond_to?(:size) && max_size < content.size
+          raise Azure::Storage::Core::StorageError.new("Given content has exceeded the specified maximum size for the blob.")
+        end
+      end
+      create_append_blob(container, blob, options)
+      content = StringIO.new(content) if content.is_a? String
+      # initialize the append block options.
+      append_block_options = {}
+      append_block_options[:if_modified_since] = options[:if_modified_since] if options[:if_modified_since]
+      append_block_options[:if_unmodified_since] = options[:if_unmodified_since] if options[:if_unmodified_since]
+      append_block_options[:if_match] = options[:if_match] if options[:if_match]
+      append_block_options[:if_none_match] = options[:if_none_match] if options[:if_none_match]
+      append_block_options[:lease_id] = options[:lease_id] if options[:lease_id]
+      append_block_options[:max_size] = max_size if max_size
+      position = 0
+      while !content.eof?
+        payload = content.read(Azure::Storage::BlobConstants::DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES)
+        # set the append position to make sure that each append is going to the correct offset.
+        append_block_options[:append_position] = position
+        append_blob_block(container, blob, payload, append_block_options)
+        # calculate the position after the append.
+        position += payload.size
+      end
+
+      get_properties_options = {}
+      get_properties_options[:lease_id] = options[:lease_id] if options[:lease_id]
+
+      # Get the blob properties
+      get_blob_properties(container, blob, get_properties_options)
     end
   end
 end

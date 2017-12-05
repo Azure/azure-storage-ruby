@@ -62,6 +62,17 @@ describe Azure::Storage::Blob::BlobService do
       end
     end
 
+    it "creates a block that is larger than single upload" do
+      options = {}
+      options[:single_upload_threshold] = Azure::Storage::BlobConstants::DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES
+      content_50_mb = SecureRandom.random_bytes(50 * 1024 * 1024)
+      blob_name = BlobNameHelper.name
+      blob = subject.create_block_blob container_name, blob_name, content_50_mb, options
+      blob.name.must_equal blob_name
+      # No content length if single upload
+      blob.properties[:content_length].must_equal 50 * 1024 * 1024
+    end
+
     it "should create a block blob with spaces in name" do
       blob_name = "blob with spaces"
       blob = subject.create_block_blob container_name, blob_name, "content"
