@@ -293,10 +293,10 @@ module Azure::Storage
 
           StorageServiceProperties.new do |props|
             props.default_service_version = xml.DefaultServiceVersion.text if (xml > "DefaultServiceVersion").any?
-            props.logging = logging_from_xml(xml.Logging)
-            props.hour_metrics = metrics_from_xml(xml.HourMetrics)
-            props.minute_metrics = metrics_from_xml(xml.MinuteMetrics)
-            props.cors = cors_from_xml(xml.Cors)
+            props.logging = logging_from_xml(xml.Logging) if (xml > "Logging").any?
+            props.hour_metrics = metrics_from_xml(xml.HourMetrics) if (xml > "HourMetrics").any?
+            props.minute_metrics = metrics_from_xml(xml.MinuteMetrics) if (xml > "MinuteMetrics").any?
+            props.cors = cors_from_xml(xml.Cors) if (xml > "Cors").any?
           end
         end
 
