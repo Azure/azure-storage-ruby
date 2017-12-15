@@ -81,7 +81,7 @@ module Azure::Storage
 
       uri = blob_uri(container, blob, query)
 
-      headers = StorageService.common_headers
+      headers = {}
 
       # set x-ms-blob-type to PageBlob
       StorageService.with_header headers, "x-ms-blob-type", "PageBlob"
@@ -105,6 +105,7 @@ module Azure::Storage
       StorageService.add_metadata_to_headers options[:metadata], headers
       add_blob_conditional_headers options, headers
       headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
+      headers["x-ms-blob-content-type"] = Azure::Storage::Default::CONTENT_TYPE_VALUE unless headers["x-ms-blob-content-type"]
 
       # call PutBlob with empty body
       response = call(:put, uri, nil, headers, options)
@@ -164,7 +165,7 @@ module Azure::Storage
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
-      headers = StorageService.common_headers
+      headers = {}
       StorageService.with_header headers, "Content-MD5", options[:transactional_md5]
       StorageService.with_header headers, "x-ms-range", "bytes=#{start_range}-#{end_range}"
       StorageService.with_header headers, "x-ms-page-write", "update"
@@ -224,7 +225,7 @@ module Azure::Storage
 
       uri = blob_uri(container, blob, query)
 
-      headers = StorageService.common_headers
+      headers = {}
       StorageService.with_header headers, "x-ms-range", "bytes=#{start_range}-#{end_range}"
       StorageService.with_header headers, "x-ms-page-write", "clear"
 
@@ -305,7 +306,7 @@ module Azure::Storage
 
       options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
 
-      headers = StorageService.common_headers
+      headers = {}
       StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}" if options[:start_range]
       add_blob_conditional_headers options, headers
       headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
@@ -425,7 +426,7 @@ module Azure::Storage
       uri = blob_uri(destination_container, destination_blob, query)
 
       # headers
-      headers = StorageService.common_headers
+      headers = {}
       StorageService.with_header headers, "x-ms-copy-source", source_uri
       unless options.empty?
         add_blob_conditional_headers options, headers
@@ -545,6 +546,7 @@ module Azure::Storage
     #
     # Returns a Blob
     def create_page_blob_with_content(container, blob, length, content, options = {})
+      options[:content_type] = get_or_apply_content_type(content, options[:content_type])
       create_page_blob(container, blob, length, options)
 
       content = StringIO.new(content) if content.is_a? String

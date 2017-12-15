@@ -56,6 +56,9 @@ module Azure::Storage
     # Marker for atom value.
     XML_VALUE_MARKER = "_"
 
+    # Default value for Content-Type if request has body.
+    CONTENT_TYPE_VALUE = "application/octet-stream"
+
     def os
       host_os = RbConfig::CONFIG["host_os"]
       case host_os

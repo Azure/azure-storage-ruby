@@ -69,7 +69,7 @@ module Azure::Storage::Blob
       uri = container_uri(name, query)
 
       # Headers
-      headers = StorageService.common_headers
+      headers = {}
       StorageService.add_metadata_to_headers(options[:metadata], headers) if options[:metadata]
       headers["x-ms-blob-public-access"] = options[:public_access_level].to_s if options[:public_access_level]
 
@@ -188,7 +188,7 @@ module Azure::Storage::Blob
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Headers
-      headers = StorageService.common_headers
+      headers = {}
       StorageService.add_metadata_to_headers(metadata, headers) if metadata
       headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 
@@ -280,7 +280,7 @@ module Azure::Storage::Blob
       uri = container_uri(name, query)
 
       # Headers + body
-      headers = StorageService.common_headers
+      headers = {}
       headers["x-ms-blob-public-access"] = public_access_level if public_access_level && public_access_level.to_s.length > 0
       headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 

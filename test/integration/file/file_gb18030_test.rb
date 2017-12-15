@@ -161,7 +161,8 @@ describe "File GB-18030" do
       subject.create_file share_name, directory_name, file_name, content.bytesize
       subject.put_file_range share_name, directory_name, file_name, 0, content.bytesize - 1, content
       file, returned_content = subject.get_file share_name, directory_name, file_name
-      returned_content.must_equal content
+      file.properties[:content_type].must_equal "application/octet-stream"
+      returned_content.force_encoding("UTF-8").must_equal content
     }
   end
 

@@ -40,11 +40,13 @@ describe Azure::Storage::File::FileService do
     it "1MB string payload works" do
       length = 1 * 1024 * 1024
       content = SecureRandom.random_bytes(length)
+      content.force_encoding "utf-8"
       file_name = FileNameHelper.name
       subject.create_file_with_content share_name, directory_name, file_name, length, content
       file, body = subject.get_file(share_name, directory_name, file_name)
       file.name.must_equal file_name
       file.properties[:content_length].must_equal length
+      file.properties[:content_type].must_equal "text/plain; charset=UTF-8"
       Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
     end
 
@@ -56,6 +58,7 @@ describe Azure::Storage::File::FileService do
       file, body = subject.get_file(share_name, directory_name, file_name)
       file.name.must_equal file_name
       file.properties[:content_length].must_equal length
+      file.properties[:content_type].must_equal "text/plain; charset=ASCII-8BIT"
       Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
     end
 
@@ -108,6 +111,7 @@ describe Azure::Storage::File::FileService do
 
       file = subject.get_file_properties share_name, directory_name, file_name
       file.properties[:content_length].must_equal file_length
+      file.properties[:content_type].must_equal "application/octet-stream"
     end
 
     it "creates the file with custom metadata" do

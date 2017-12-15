@@ -59,7 +59,7 @@ module Azure::Storage
       end
 
       def call(method, uri, body = nil, headers = {}, options = {})
-        super(method, uri, body, StorageService.common_headers(options).merge(headers), options)
+        super(method, uri, body, StorageService.common_headers(options, body).merge(headers), options)
       end
 
       # Public: Get Storage Service properties
@@ -312,7 +312,7 @@ module Azure::Storage
         alias with_query with_value
 
         # Declares a default hash object for request headers
-        def common_headers(options = {})
+        def common_headers(options = {}, body = nil)
           headers = {
             "x-ms-version" => Azure::Storage::Default::STG_VERSION,
             "User-Agent" => user_agent_prefix ? "#{user_agent_prefix}; #{Azure::Storage::Default::USER_AGENT}" : Azure::Storage::Default::USER_AGENT

@@ -49,15 +49,8 @@ module Azure::Storage
       end
 
       def call(method, uri, body = nil, headers = {}, options = {})
-        # Force the request.body to the content encoding of specified in the header
-        if headers && !body.nil? && (body.is_a? String) && ((body.encoding.to_s <=> "ASCII_8BIT") != 0)
-          if headers["x-ms-blob-content-type"].nil?
-            Service::StorageService.with_header headers, "x-ms-blob-content-type", "text/plain; charset=#{body.encoding}"
-          else
-            charset = parse_charset_from_content_type(headers["x-ms-blob-content-type"])
-            body.force_encoding(charset) if charset
-          end
-        end
+        content_type = get_or_apply_content_type(body, headers[HeaderConstants::BLOB_CONTENT_TYPE])
+        headers[HeaderConstants::BLOB_CONTENT_TYPE] = content_type if content_type
 
         response = super
 
@@ -190,7 +183,7 @@ module Azure::Storage
           duration = -1
           duration = options[:duration] if options[:duration]
 
-          headers = Service::StorageService.common_headers
+          headers = {}
           Service::StorageService.with_header headers, "x-ms-lease-action", "acquire"
           Service::StorageService.with_header headers, "x-ms-lease-duration", duration.to_s if duration
           Service::StorageService.with_header headers, "x-ms-proposed-lease-id", options[:proposed_lease_id]
@@ -249,7 +242,7 @@ module Azure::Storage
             uri = container_uri(container, query)
           end
 
-          headers = Service::StorageService.common_headers
+          headers = {}
           Service::StorageService.with_header headers, "x-ms-lease-action", "renew"
           Service::StorageService.with_header headers, "x-ms-lease-id", lease
           Service::StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
@@ -307,7 +300,7 @@ module Azure::Storage
             uri = container_uri(container, query)
           end
 
-          headers = Service::StorageService.common_headers
+          headers = {}
           Service::StorageService.with_header headers, "x-ms-lease-action", "change"
           Service::StorageService.with_header headers, "x-ms-lease-id", lease
           Service::StorageService.with_header headers, "x-ms-proposed-lease-id", proposed_lease
@@ -365,7 +358,7 @@ module Azure::Storage
             uri = container_uri(container, query)
           end
 
-          headers = Service::StorageService.common_headers
+          headers = {}
           Service::StorageService.with_header headers, "x-ms-lease-action", "release"
           Service::StorageService.with_header headers, "x-ms-lease-id", lease
           Service::StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
@@ -436,7 +429,7 @@ module Azure::Storage
             uri = container_uri(container, query)
           end
 
-          headers = Service::StorageService.common_headers
+          headers = {}
           Service::StorageService.with_header headers, "x-ms-lease-action", "break"
           Service::StorageService.with_header headers, "x-ms-lease-break-period", options[:break_period].to_s if options[:break_period]
           Service::StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
@@ -530,6 +523,30 @@ module Azure::Storage
           # Conditional headers for append blob
           Service::StorageService.with_header headers, "x-ms-blob-condition-maxsize", options[:max_size]
           Service::StorageService.with_header headers, "x-ms-blob-condition-appendpos", options[:append_position]
+        end
+
+      # Get the content type according to the blob content type header and request body.
+      #
+      # headers      - The request body
+      # content_type - The request content type
+      protected
+        def get_or_apply_content_type(body, content_type = nil)
+          unless body.nil?
+            if (body.is_a? String) && body.encoding.to_s != "ASCII_8BIT" && !body.empty?
+              if content_type.nil?
+                content_type = "text/plain; charset=#{body.encoding}"
+              else
+                # Force the request.body to the content encoding of specified in the header
+                charset = parse_charset_from_content_type(content_type)
+                body.force_encoding(charset) if charset
+              end
+            else
+              # It is either that the body is not a string, or that the body's encoding is ASCII_8BIT, which is a binary
+              # In this case, set the content type to be default content-type
+              content_type = Default::CONTENT_TYPE_VALUE unless content_type
+            end
+          end
+          content_type
         end
     end
   end

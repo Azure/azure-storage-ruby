@@ -44,15 +44,8 @@ module Azure::Storage
       end
 
       def call(method, uri, body = nil, headers = {}, options = {})
-        # Force the request.body to the content encoding of specified in the header
-        if headers && !body.nil? && (body.is_a? String) && ((body.encoding.to_s <=> "ASCII_8BIT") != 0)
-          if headers["x-ms-content-type"].nil?
-            Service::StorageService.with_header headers, "x-ms-content-type", "text/plain; charset=#{body.encoding}"
-          else
-            charset = parse_charset_from_content_type(headers["x-ms-content-type"])
-            body.force_encoding(charset) if charset
-          end
-        end
+        content_type = get_or_apply_content_type(body, headers[HeaderConstants::FILE_CONTENT_TYPE])
+        headers[HeaderConstants::FILE_CONTENT_TYPE] = content_type if content_type
 
         response = super
 
@@ -192,6 +185,30 @@ module Azure::Storage
           end
           options = { encode: true }.merge(options)
           generate_uri(path, query, options)
+        end
+
+      # Get the content type according to the content type header and request body.
+      #
+      # headers      - The request body
+      # content_type - The request content type
+      protected
+        def get_or_apply_content_type(body, content_type = nil)
+          unless body.nil?
+            if (body.is_a? String) && body.encoding.to_s != "ASCII_8BIT" && !body.empty?
+              if content_type.nil?
+                content_type = "text/plain; charset=#{body.encoding}"
+              else
+                # Force the request.body to the content encoding of specified in the header
+                charset = parse_charset_from_content_type(content_type)
+                body.force_encoding(charset) if charset
+              end
+            else
+              # It is either that the body is not a string, or that the body's encoding is ASCII_8BIT, which is a binary
+              # In this case, set the content type to be default content-type
+              content_type = Azure::Storage::Default::CONTENT_TYPE_VALUE unless content_type
+            end
+          end
+          content_type
         end
     end
   end

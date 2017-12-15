@@ -142,7 +142,7 @@ module Azure::Storage
 
       uri = blob_uri(container, blob, query)
 
-      headers = StorageService.common_headers
+      headers = {}
       StorageService.with_header headers, "Content-MD5", options[:content_md5]
       headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 
@@ -203,7 +203,7 @@ module Azure::Storage
 
       uri = blob_uri(container, blob, query)
 
-      headers = StorageService.common_headers
+      headers = {}
       unless options.empty?
         StorageService.with_header headers, "Content-MD5", options[:transactional_md5]
         StorageService.with_header headers, "x-ms-blob-content-type", options[:content_type]
@@ -217,7 +217,7 @@ module Azure::Storage
         add_blob_conditional_headers(options, headers)
         headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
       end
-
+      headers["x-ms-blob-content-type"] = Default::CONTENT_TYPE_VALUE unless headers["x-ms-blob-content-type"]
       body = Serialization.block_list_to_xml(block_list)
       call(:put, uri, body, headers, options)
       nil
@@ -395,7 +395,7 @@ module Azure::Storage
 
         uri = blob_uri(container, blob, query)
 
-        headers = StorageService.common_headers
+        headers = {}
 
         # set x-ms-blob-type to BlockBlob
         StorageService.with_header headers, "x-ms-blob-type", "BlockBlob"
@@ -403,7 +403,6 @@ module Azure::Storage
         # set the rest of the optional headers
         StorageService.with_header headers, "Content-MD5", options[:transactional_md5]
         StorageService.with_header headers, "Content-Length", options[:content_length]
-        StorageService.with_header headers, "x-ms-blob-content-type", options[:content_type]
         StorageService.with_header headers, "x-ms-blob-content-encoding", options[:content_encoding]
         StorageService.with_header headers, "x-ms-blob-content-language", options[:content_language]
         StorageService.with_header headers, "x-ms-blob-content-md5", options[:content_md5]
@@ -413,7 +412,7 @@ module Azure::Storage
 
         StorageService.add_metadata_to_headers options[:metadata], headers
         add_blob_conditional_headers options, headers
-
+        headers["x-ms-blob-content-type"] = get_or_apply_content_type(content, options[:content_type])
         # call PutBlob
         response = call(:put, uri, content, headers, options)
 
@@ -464,6 +463,7 @@ module Azure::Storage
     # Returns a Blob
     protected
       def create_block_blob_multiple_put(container, blob, content, size, options = {})
+        content_type = get_or_apply_content_type(content, options[:content_type])
         content = StringIO.new(content) if content.is_a? String
         block_size = get_block_size(size)
         # Get the number of blocks
@@ -477,7 +477,7 @@ module Azure::Storage
 
         # Commit the blocks put
         commit_options = {}
-        commit_options[:content_type] = options[:content_type] if options[:content_type]
+        commit_options[:content_type] = content_type
         commit_options[:content_encoding] = options[:content_encoding] if options[:content_encoding]
         commit_options[:content_language] = options[:content_language] if options[:content_language]
         commit_options[:content_md5] = options[:content_md5] if options[:content_md5]

@@ -82,7 +82,7 @@ module Azure::Storage::File
 
     uri = file_uri(share, directory_path, file, query)
 
-    headers = StorageService.common_headers
+    headers = {}
 
     # set x-ms-type to file
     StorageService.with_header headers, "x-ms-type", "file"
@@ -100,6 +100,7 @@ module Azure::Storage::File
     StorageService.with_header headers, "x-ms-content-disposition", options[:content_disposition]
 
     StorageService.add_metadata_to_headers options[:metadata], headers
+    headers["x-ms-content-type"] = Azure::Storage::Default::CONTENT_TYPE_VALUE unless headers["x-ms-content-type"]
 
     response = call(:put, uri, nil, headers, options)
 
@@ -142,7 +143,7 @@ module Azure::Storage::File
     options[:request_location_mode] = Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
     uri = file_uri(share, directory_path, file, query, options)
 
-    headers = StorageService.common_headers
+    headers = {}
     options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
     if options[:start_range]
       StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}"
@@ -181,7 +182,7 @@ module Azure::Storage::File
     query = {}
     StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-    headers = StorageService.common_headers
+    headers = {}
 
     options[:request_location_mode] = Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
     uri = file_uri(share, directory_path, file, query, options)
@@ -227,7 +228,7 @@ module Azure::Storage::File
     StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
     uri = file_uri(share, directory_path, file, query)
 
-    headers = StorageService.common_headers
+    headers = {}
 
     unless options.empty?
       StorageService.with_header headers, "x-ms-content-type", options[:content_type]
@@ -300,7 +301,7 @@ module Azure::Storage::File
     StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
     uri = file_uri(share, directory_path, file, query)
-    headers = StorageService.common_headers
+    headers = {}
     StorageService.with_header headers, "Content-MD5", options[:transactional_md5]
     StorageService.with_header headers, "x-ms-range", "bytes=#{start_range}-#{end_range}"
     StorageService.with_header headers, "x-ms-write", "update"
@@ -340,7 +341,7 @@ module Azure::Storage::File
     uri = file_uri(share, directory_path, file, query)
     start_range = 0 if !end_range.nil? && start_range.nil?
 
-    headers = StorageService.common_headers
+    headers = {}
     StorageService.with_header headers, "x-ms-range", "bytes=#{start_range}-#{end_range}"
     StorageService.with_header headers, "x-ms-write", "clear"
 
@@ -386,7 +387,7 @@ module Azure::Storage::File
 
     options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
 
-    headers = StorageService.common_headers
+    headers = {}
     StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}" if options[:start_range]
 
     response = call(:get, uri, nil, headers, options)
@@ -459,7 +460,7 @@ module Azure::Storage::File
     query["timeout"] = options[:timeout].to_s if options[:timeout]
 
     # Headers
-    headers = StorageService.common_headers
+    headers = {}
     StorageService.add_metadata_to_headers(metadata, headers) if metadata
 
     # Call
@@ -536,7 +537,7 @@ module Azure::Storage::File
     StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
     uri = file_uri(destination_share, destination_directory_path, destination_file, query)
-    headers = StorageService.common_headers
+    headers = {}
     StorageService.with_header headers, "x-ms-copy-source", source_uri
     StorageService.add_metadata_to_headers options[:metadata], headers unless options.empty?
 
@@ -609,7 +610,7 @@ module Azure::Storage::File
     StorageService.with_query query, "copyid", copy_id
 
     uri = file_uri(share, directory_path, file, query);
-    headers = StorageService.common_headers
+    headers = {}
     StorageService.with_header headers, "x-ms-copy-action", "abort";
 
     call(:put, uri, nil, headers, options)
@@ -653,6 +654,7 @@ module Azure::Storage::File
   #
   # Returns a File
   def create_file_with_content(share, directory_path, file, length, content, options = {})
+    options[:content_type] = get_or_apply_content_type(content, options[:content_type])
     create_file(share, directory_path, file, length, options)
 
     content = StringIO.new(content) if content.is_a? String

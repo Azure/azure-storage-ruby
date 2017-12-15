@@ -72,7 +72,7 @@ module Azure::Storage::File
       uri = share_uri(name, query)
 
       # Headers
-      headers = StorageService.common_headers
+      headers = {}
       StorageService.add_metadata_to_headers(options[:metadata], headers) if options[:metadata]
       headers["x-ms-share-quota"] = options[:quota].to_s if options[:quota]
 
@@ -146,7 +146,7 @@ module Azure::Storage::File
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Headers
-      headers = StorageService.common_headers
+      headers = {}
       headers["x-ms-share-quota"] = options[:quota].to_s if options[:quota]
 
       # Call
@@ -214,7 +214,7 @@ module Azure::Storage::File
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Headers
-      headers = StorageService.common_headers
+      headers = {}
       StorageService.add_metadata_to_headers(metadata, headers) if metadata
 
       # Call
@@ -324,7 +324,7 @@ module Azure::Storage::File
       uri = share_uri(name, query)
 
       # Headers + body
-      headers = StorageService.common_headers
+      headers = {}
 
       signed_identifiers = options[:signed_identifiers] ? options[:signed_identifiers] : nil
       body = signed_identifiers ? Serialization.signed_identifiers_to_xml(signed_identifiers) : nil

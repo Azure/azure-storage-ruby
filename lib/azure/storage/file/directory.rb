@@ -131,7 +131,7 @@ module Azure::Storage::File
     uri = directory_uri(share, directory_path, query)
 
     # Headers
-    headers = StorageService.common_headers
+    headers = {}
     StorageService.add_metadata_to_headers(options[:metadata], headers) if options[:metadata]
 
     # Call
@@ -271,7 +271,7 @@ module Azure::Storage::File
     query["timeout"] = options[:timeout].to_s if options[:timeout]
 
     # Headers
-    headers = StorageService.common_headers
+    headers = {}
     StorageService.add_metadata_to_headers(metadata, headers) if metadata
 
     # Call

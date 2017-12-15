@@ -46,11 +46,13 @@ describe Azure::Storage::Blob::BlobService do
     it "1MB string payload works" do
       length = 1 * 1024 * 1024
       content = SecureRandom.random_bytes(length)
+      content.force_encoding "utf-8"
       blob_name = BlobNameHelper.name
       subject.create_page_blob_with_content container_name, blob_name, length, content
       blob, body = subject.get_blob(container_name, blob_name)
       blob.name.must_equal blob_name
       blob.properties[:content_length].must_equal length
+      blob.properties[:content_type].must_equal "text/plain; charset=UTF-8"
       Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
     end
 
@@ -62,6 +64,7 @@ describe Azure::Storage::Blob::BlobService do
       blob, body = subject.get_blob(container_name, blob_name)
       blob.name.must_equal blob_name
       blob.properties[:content_length].must_equal length
+      blob.properties[:content_type].must_equal "text/plain; charset=ASCII-8BIT"
       Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
     end
 

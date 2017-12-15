@@ -93,7 +93,7 @@ module Azure::Storage
       options[:request_location_mode] = RequestLocationMode::PRIMARY_OR_SECONDARY
       uri = blob_uri(container, blob, query, options)
 
-      headers = StorageService.common_headers
+      headers = {}
       options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
       if options[:start_range]
         StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}"
@@ -156,7 +156,7 @@ module Azure::Storage
       StorageService.with_query query, "snapshot", options[:snapshot]
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-      headers = StorageService.common_headers
+      headers = {}
       unless options.empty?
         add_blob_conditional_headers options, headers
       end
@@ -276,7 +276,7 @@ module Azure::Storage
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
       uri = blob_uri(container, blob, query)
 
-      headers = StorageService.common_headers
+      headers = {}
 
       unless options.empty?
         StorageService.with_header headers, "x-ms-blob-content-type", options[:content_type]
@@ -349,7 +349,7 @@ module Azure::Storage
       StorageService.with_query query, "snapshot", options[:snapshot]
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-      headers = StorageService.common_headers
+      headers = {}
       unless options.empty?
         add_blob_conditional_headers options, headers
         headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
@@ -405,7 +405,7 @@ module Azure::Storage
 
       uri = blob_uri(container, blob, query)
 
-      headers = StorageService.common_headers
+      headers = {}
       StorageService.add_metadata_to_headers metadata, headers
       unless options.empty?
         add_blob_conditional_headers options, headers
@@ -669,7 +669,7 @@ module Azure::Storage
 
       uri = blob_uri(container, blob, query)
 
-      headers = StorageService.common_headers
+      headers = {}
       unless options.empty?
         StorageService.add_metadata_to_headers(options[:metadata], headers)
         add_blob_conditional_headers(options, headers)
@@ -748,7 +748,7 @@ module Azure::Storage
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(destination_container, destination_blob, query)
-      headers = StorageService.common_headers
+      headers = {}
       StorageService.with_header headers, "x-ms-copy-source", source_uri
 
       unless options.empty?
@@ -856,7 +856,7 @@ module Azure::Storage
       StorageService.with_query query, "copyid", copy_id
 
       uri = blob_uri(container, blob, query);
-      headers = StorageService.common_headers
+      headers = {}
       StorageService.with_header headers, "x-ms-copy-action", "abort";
 
       unless options.empty?
@@ -918,7 +918,7 @@ module Azure::Storage
 
       options[:delete_snapshots] = :include unless options[:delete_snapshots]
 
-      headers = StorageService.common_headers
+      headers = {}
       StorageService.with_header headers, "x-ms-delete-snapshots", options[:delete_snapshots].to_s if options[:delete_snapshots] && options[:snapshot] == nil
       add_blob_conditional_headers options, headers
       headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
