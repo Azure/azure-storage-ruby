@@ -318,6 +318,7 @@ module Azure::Storage
             "User-Agent" => user_agent_prefix ? "#{user_agent_prefix}; #{Azure::Storage::Default::USER_AGENT}" : Azure::Storage::Default::USER_AGENT
           }
           headers.merge!("x-ms-client-request-id" => options[:request_id]) if options[:request_id]
+          headers["Content-Type"] = Azure::Storage::Default::CONTENT_TYPE_VALUE if body
           @request_callback.call(headers) if @request_callback
           headers
         end
