@@ -64,7 +64,7 @@ module Azure::Storage
           msg.time_next_visible = xml.TimeNextVisible.text if (xml > "TimeNextVisible").any?
           msg.pop_receipt = xml.PopReceipt.text if (xml > "PopReceipt").any?
 
-          msg.message_text = Base64.decode64(msg.message_text) if decode
+          msg.message_text = Base64.decode64(msg.message_text) if msg.message_text && decode
         end
       end
 
