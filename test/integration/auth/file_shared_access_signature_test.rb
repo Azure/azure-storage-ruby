@@ -22,11 +22,11 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/core/auth/shared_access_signature"
+require "azure/storage/common/core/auth/shared_access_signature"
 
-describe Azure::Storage::Core::Auth::SharedAccessSignature do
-  subject { Azure::Storage::File::FileService.new }
-  let(:generator) { Azure::Storage::Core::Auth::SharedAccessSignature.new }
+describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
+  subject { Azure::Storage::File::FileService.create(SERVICE_CREATE_OPTIONS()) }
+  let(:generator) { Azure::Storage::Common::Core::Auth::SharedAccessSignature.new(SERVICE_CREATE_OPTIONS()[:storage_account_name], SERVICE_CREATE_OPTIONS()[:storage_access_key]) }
 
   describe "#file_service_sas_for_share" do
     let(:share_name) { ShareNameHelper.name }
@@ -45,8 +45,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
     it "create a file with SAS in connection string" do
       sas_token = generator.generate_service_sas_token "#{share_name}", service: "f", resource: "s", permissions: "c", protocol: "https"
       connection_string = "FileEndpoint=https://#{ENV['AZURE_STORAGE_ACCOUNT']}.file.core.windows.net;SharedAccessSignature=#{sas_token}"
-      sas_client = Azure::Storage::Client::create_from_connection_string connection_string
-      client = sas_client.file_client
+      client = Azure::Storage::File::FileService::create_from_connection_string connection_string
 
       new_file_name = FileNameHelper.name
       new_file = subject.create_file share_name, directory_name, new_file_name, file_length
@@ -59,8 +58,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "create a file with share permission" do
       sas_token = generator.generate_service_sas_token "#{share_name}", service: "f", resource: "s", permissions: "c", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
 
       new_file_name = FileNameHelper.name
       new_file = subject.create_file share_name, directory_name, new_file_name, file_length
@@ -73,16 +71,14 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "write a file with share permission" do
       sas_token = generator.generate_service_sas_token "#{share_name}", service: "f", resource: "s", permissions: "c", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
 
       new_file_name = FileNameHelper.name
       new_file = subject.create_file share_name, directory_name, new_file_name, file_length
       new_file.wont_be_nil
 
       sas_token = generator.generate_service_sas_token "#{share_name}", service: "f", resource: "s", permissions: "w", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
 
       file = subject.put_file_range share_name, directory_name, new_file_name, 0, file_length - 1, content
       file.wont_be_nil
@@ -91,8 +87,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "reads a file property with share permission" do
       sas_token = generator.generate_service_sas_token "#{share_name}", service: "f", resource: "s", permissions: "r", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
 
       file_properties = client.get_file_properties share_name, directory_name, file_name
       file_properties.wont_be_nil
@@ -105,8 +100,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "list a file with share permission" do
       sas_token = generator.generate_service_sas_token "#{share_name}", service: "f", resource: "s", permissions: "l", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       files = client.list_directories_and_files share_name, nil
       files.wont_be_nil
       assert files.length > 0
@@ -114,16 +108,14 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "deletes a file with share permission" do
       sas_token = generator.generate_service_sas_token "#{share_name}", service: "f", resource: "s", permissions: "d", protocol: "https,http"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       result = client.delete_file share_name, directory_name, file_name
       result.must_be_nil
     end
 
     it "create a file with file permission" do
       sas_token = generator.generate_service_sas_token "#{share_name}/#{directory_name}/#{file_name}", service: "f", resource: "f", permissions: "c", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
 
       new_file_name = FileNameHelper.name
       new_file = subject.create_file share_name, directory_name, new_file_name, file_length
@@ -136,16 +128,14 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "write a file with file permission" do
       sas_token = generator.generate_service_sas_token "#{share_name}/#{directory_name}/#{file_name}", service: "f", resource: "f", permissions: "c", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
 
       new_file_name = FileNameHelper.name
       new_file = subject.create_file share_name, directory_name, new_file_name, file_length
       new_file.wont_be_nil
 
       sas_token = generator.generate_service_sas_token "#{share_name}/#{directory_name}/#{file_name}", service: "f", resource: "f", permissions: "w", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
 
       file = subject.put_file_range share_name, directory_name, new_file_name, 0, file_length - 1, content
       file.wont_be_nil
@@ -154,8 +144,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "reads a file property with file permission" do
       sas_token = generator.generate_service_sas_token "#{share_name}/#{directory_name}/#{file_name}", service: "f", resource: "f", permissions: "r", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       file_properties = client.get_file_properties share_name, directory_name, file_name
       file_properties.wont_be_nil
       file_properties.name.must_equal file_name
@@ -167,8 +156,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "deletes a file with file permission" do
       sas_token = generator.generate_service_sas_token "#{share_name}/#{directory_name}/#{file_name}", service: "f", resource: "f", permissions: "d", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       result = client.delete_file share_name, directory_name, file_name
       result.must_be_nil
     end

@@ -23,7 +23,6 @@
 #--------------------------------------------------------------------------
 require "integration/test_helper"
 require "azure/storage/blob/blob_service"
-require "azure/storage/core/utility"
 require "azure/core/http/http_error"
 require "securerandom"
 require "time"
@@ -43,7 +42,7 @@ class MockBlobService < Azure::Storage::Blob::BlobService
 end
 
 describe Azure::Storage::Blob::BlobService do
-  subject { MockBlobService.new }
+  subject { MockBlobService.new(SERVICE_CREATE_OPTIONS()) }
 
   let(:container_name) { ContainerNameHelper.name }
   let(:source_page_blob) { BlobNameHelper.name }

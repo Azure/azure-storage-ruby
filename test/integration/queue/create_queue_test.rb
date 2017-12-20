@@ -22,13 +22,12 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/queue/queue_service"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Queue::QueueService do
   let(:user_agent_prefix) { "azure_storage_ruby_integration_test" }
   subject {
-    Azure::Storage::Queue::QueueService.new { |headers|
+    Azure::Storage::Queue::QueueService.create(SERVICE_CREATE_OPTIONS()) { |headers|
       headers["User-Agent"] = "#{user_agent_prefix}; #{headers['User-Agent']}"
     }
   }

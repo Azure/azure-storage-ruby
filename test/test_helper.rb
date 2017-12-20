@@ -27,8 +27,7 @@ Coveralls.wear!
 require "dotenv"
 Dotenv.load
 
-ENV["AZURE_STORAGE_ACCOUNT"] = "mockaccount" unless ENV["AZURE_STORAGE_ACCOUNT"]
-ENV["AZURE_STORAGE_ACCESS_KEY"] = "YWNjZXNzLWtleQ==" unless ENV["AZURE_STORAGE_ACCESS_KEY"]
+ENV["AZURE_STORAGE_CONNECTION_STRING"] = "DefaultEndpointsProtocol=https;AccountName=mockaccount;AccountKey=bW9ja2tleQ==" unless ENV["AZURE_STORAGE_CONNECTION_STRING"]
 
 require "minitest/autorun"
 require "mocha/mini_test"
@@ -50,9 +49,3 @@ module Kernel
 end
 
 Dir["./test/support/**/*.rb"].each { |dep| require dep }
-
-# mock configuration setup
-require "azure/storage"
-
-Azure::Storage.config.storage_account_name = "mockaccount"
-Azure::Storage.config.storage_access_key = "YWNjZXNzLWtleQ=="

@@ -21,18 +21,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require "test_helper"
-require "azure/storage/blob/blob_service"
-require "azure/storage/blob/container"
-require "azure/storage/blob/blob"
-require "azure/storage/client"
-require "azure/storage/core/auth/anonymous_signer"
+require "integration/test_helper"
+require "azure/storage/blob"
+require "azure/storage/common"
 
 describe Azure::Storage::Blob::BlobService do
-  subject { Azure::Storage::Client.create(
-    storage_account_name: ENV["AZURE_STORAGE_ACCOUNT"],
-    storage_access_key: ENV["AZURE_STORAGE_ACCESS_KEY"]
-  ).blob_client }
+  subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
 
   let(:public_access_level) { :container.to_s }
   let(:content) { content = ""; 512.times.each { |i| content << "@" }; content }
@@ -44,17 +38,8 @@ describe Azure::Storage::Blob::BlobService do
   after { ContainerNameHelper.clean }
 
   describe "test anonymous access" do
-    before {
-      Azure::Storage.config.storage_account_name = nil
-      Azure::Storage.config.storage_access_key = nil
-    }
-    after {
-      Azure::Storage.config.storage_account_name = ENV["AZURE_STORAGE_ACCOUNT"]
-      Azure::Storage.config.storage_access_key = ENV["AZURE_STORAGE_ACCESS_KEY"]
-    }
-
     let(:blob_host) { schema + "://" + subject.account_name + "." + blob_endpoint }
-    let(:anonymous_blob_client) { Azure::Storage::Client.create(storage_blob_host: blob_host).blob_client }
+    let(:anonymous_blob_client) { Azure::Storage::Blob::BlobService.create(storage_blob_host: blob_host) }
 
     it "test anonymous access for public container works" do
       container_name = ContainerNameHelper.name
@@ -67,8 +52,6 @@ describe Azure::Storage::Blob::BlobService do
       blob, body = anonymous_blob_client.get_blob container_name, blob_name
       blob.name.must_equal blob_name
       body.must_equal content
-      Azure::Storage.config.storage_account_name = nil
-      Azure::Storage.config.storage_access_key = nil
     end
 
     it "test anonymous access for private container does not work" do

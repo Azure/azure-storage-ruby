@@ -22,27 +22,27 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/core/auth/shared_access_signature"
+require "azure/storage/common/core/auth/shared_access_signature"
 
-describe Azure::Storage::Core::Auth::SharedAccessSignature do
-  subject { Azure::Storage::Client.create }
-  let(:generator) { Azure::Storage::Core::Auth::SharedAccessSignature.new }
+describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
+  let(:generator) { Azure::Storage::Common::Core::Auth::SharedAccessSignature.new(SERVICE_CREATE_OPTIONS()[:storage_account_name], SERVICE_CREATE_OPTIONS()[:storage_access_key]) }
 
   describe "#account_sas for blob service" do
+    subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
     let(:container_name) { ContainerNameHelper.name }
     let(:blob_name) { BlobNameHelper.name }
+    let(:api_ver) { Azure::Storage::Blob::Default::STG_VERSION }
     let(:content) { content = ""; 512.times.each { |i| content << "@" }; content }
     before {
-      subject.blob_client.create_container container_name
-      subject.blob_client.create_block_blob container_name, blob_name, content
+      subject.create_container container_name
+      subject.create_block_blob container_name, blob_name, content
     }
     after { ContainerNameHelper.clean }
 
     it "reads the blob properties with an object level SAS in connection string" do
       sas_token = generator.generate_account_sas_token service: "b", resource: "o", permissions: "r"
-      connection_string = "BlobEndpoint=https://#{ENV['AZURE_STORAGE_ACCOUNT']}.blob.core.windows.net;SharedAccessSignature=#{sas_token}"
-      sas_client = Azure::Storage::Client::create_from_connection_string connection_string
-      client = sas_client.blob_client
+      connection_string = "BlobEndpoint=https://#{SERVICE_CREATE_OPTIONS()[:storage_account_name]}.blob.core.windows.net;SharedAccessSignature=#{sas_token}"
+      client = Azure::Storage::Blob::BlobService::create_from_connection_string connection_string
       blob_properties = client.get_blob_properties container_name, blob_name
       blob_properties.wont_be_nil
       blob_properties.name.must_equal blob_name
@@ -54,8 +54,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "reads the blob properties with an object level SAS" do
       sas_token = generator.generate_account_sas_token service: "b", resource: "o", permissions: "r"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       blob_properties = client.get_blob_properties container_name, blob_name
       blob_properties.wont_be_nil
       blob_properties.name.must_equal blob_name
@@ -67,8 +66,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "fails to read the blob properties using an object level SAS without permission" do
       sas_token = generator.generate_account_sas_token service: "b", resource: "o", permissions: "l"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       assert_raises(Azure::Core::Http::HTTPError) do
         client.get_blob_properties container_name, blob_name
       end
@@ -76,8 +74,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "lists the blobs with a container level SAS" do
       sas_token = generator.generate_account_sas_token service: "b", resource: "c", permissions: "l"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       blobs = client.list_blobs container_name
       blobs.wont_be_nil
       assert blobs.length > 0
@@ -85,8 +82,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "fails to list the blobs using a container level SAS without permission" do
       sas_token = generator.generate_account_sas_token service: "b", resource: "c", permissions: "rwd"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       assert_raises(Azure::Core::Http::HTTPError) do
         client.list_blobs container_name
       end
@@ -94,8 +90,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "lists the containers with a service level SAS" do
       sas_token = generator.generate_account_sas_token service: "b", resource: "s", permissions: "l"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       containers = client.list_containers
       containers.wont_be_nil
       assert containers.length > 0
@@ -103,8 +98,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "fails to list the containers using a service level SAS without permission" do
       sas_token = generator.generate_account_sas_token service: "b", resource: "s", permissions: "rw"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       assert_raises(Azure::Core::Http::HTTPError) do
         client.list_containers
       end
@@ -112,23 +106,24 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
   end
 
   describe "#account_sas for file service" do
+    subject { Azure::Storage::File::FileService.create(SERVICE_CREATE_OPTIONS()) }
     let(:share_name) { ShareNameHelper.name }
     let(:directory_name) { FileNameHelper.name }
+    let(:api_ver) { Azure::Storage::File::Default::STG_VERSION }
     let(:file_name) { FileNameHelper.name }
     let(:file_length) { 1024 }
     let(:content) { content = ""; file_length.times.each { |i| content << "@" }; content }
     before {
-      subject.file_client.create_share share_name
-      subject.file_client.create_directory share_name, directory_name
-      subject.file_client.create_file share_name, directory_name, file_name, file_length
+      subject.create_share share_name
+      subject.create_directory share_name, directory_name
+      subject.create_file share_name, directory_name, file_name, file_length
     }
     after { ShareNameHelper.clean }
 
     it "reads the file properties with an object level SAS in connection string" do
       sas_token = generator.generate_account_sas_token service: "f", resource: "o", permissions: "r"
-      connection_string = "FileEndpoint=https://#{ENV['AZURE_STORAGE_ACCOUNT']}.file.core.windows.net;SharedAccessSignature=#{sas_token}"
-      sas_client = Azure::Storage::Client::create_from_connection_string connection_string
-      client = sas_client.file_client
+      connection_string = "FileEndpoint=https://#{SERVICE_CREATE_OPTIONS()[:storage_account_name]}.file.core.windows.net;SharedAccessSignature=#{sas_token}"
+      client = Azure::Storage::File::FileService::create_from_connection_string connection_string
       file_properties = client.get_file_properties share_name, directory_name, file_name
       file_properties.wont_be_nil
       file_properties.name.must_equal file_name
@@ -140,8 +135,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "reads the file properties with an object level SAS" do
       sas_token = generator.generate_account_sas_token service: "f", resource: "o", permissions: "r"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       file_properties = client.get_file_properties share_name, directory_name, file_name
       file_properties.wont_be_nil
       file_properties.name.must_equal file_name
@@ -153,8 +147,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "fails to read the file properties using an object level SAS without permission" do
       sas_token = generator.generate_account_sas_token service: "f", resource: "o", permissions: "l"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       assert_raises(Azure::Core::Http::HTTPError) do
         client.get_file_properties share_name, directory_name, file_name
       end
@@ -162,8 +155,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "lists the directories with a share level SAS" do
       sas_token = generator.generate_account_sas_token service: "f", resource: "c", permissions: "l"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       directories = client.list_directories_and_files share_name, nil
       directories.wont_be_nil
       assert directories.length > 0
@@ -171,8 +163,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "fails to list the directories using a share level SAS without permission" do
       sas_token = generator.generate_account_sas_token service: "f", resource: "c", permissions: "rwd"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       assert_raises(Azure::Core::Http::HTTPError) do
         client.list_directories_and_files share_name, nil
       end
@@ -180,8 +171,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "lists the shares with a service level SAS" do
       sas_token = generator.generate_account_sas_token service: "f", resource: "s", permissions: "l"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       shares = client.list_shares
       shares.wont_be_nil
       assert shares.length > 0
@@ -189,8 +179,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "fails to list the shares using a service level SAS without permission" do
       sas_token = generator.generate_account_sas_token service: "f", resource: "s", permissions: "rw"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::File::FileService.new(signer: signer)
+      client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       assert_raises(Azure::Core::Http::HTTPError) do
         client.list_shares
       end
@@ -201,8 +190,8 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
     it "throws when no account name can be identified in connection string" do
       sas_token = generator.generate_account_sas_token service: "b", resource: "o", permissions: "r"
       connection_string = "SharedAccessSignature=#{sas_token}"
-      assert_raises(Azure::Storage::InvalidOptionsError) do
-        Azure::Storage::Client::create_from_connection_string connection_string
+      assert_raises(Azure::Storage::Common::InvalidOptionsError) do
+        Azure::Storage::Blob::BlobService::create_from_connection_string connection_string
       end
     end
   end

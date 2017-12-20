@@ -22,20 +22,17 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "unit/test_helper"
-require "azure/storage/service/storage_service"
+require "azure/storage/common"
 require "azure/core/http/http_request"
 require "azure/core/http/signer_filter"
-require "azure/storage/service/storage_service_properties"
 
-describe Azure::Storage::Service::StorageService do
+describe Azure::Storage::Common::Service::StorageService do
 
   let(:uri) { URI.parse "http://dummy.uri/resource" }
   let(:verb) { :get }
-  let(:x_ms_version) { Azure::Storage::Default::STG_VERSION }
-  let(:user_agent) { Azure::Storage::Default::USER_AGENT }
 
   subject do
-    storage_service = Azure::Storage::Service::StorageService.new
+    storage_service = Azure::Storage::Common::Service::StorageService.new(nil, nil, { client: Azure::Storage::Common::Client.create_from_connection_string(ENV["AZURE_STORAGE_CONNECTION_STRING"]) })
     storage_service.storage_service_host[:primary] = "http://dumyhost.uri"
     storage_service.storage_service_host[:secondary] = "http://dumyhost-secondary.uri"
     storage_service
@@ -158,7 +155,7 @@ describe Azure::Storage::Service::StorageService do
   describe "#get_service_properties" do
     let(:query) { {} }
     let(:service_properties_xml) { Fixtures["storage_service_properties"] }
-    let(:service_properties) { Azure::Storage::Service::StorageServiceProperties.new }
+    let(:service_properties) { Azure::Storage::Common::Service::StorageServiceProperties.new }
     let(:response) {
       response = mock()
       response.stubs(:body).returns(service_properties_xml)
@@ -168,7 +165,7 @@ describe Azure::Storage::Service::StorageService do
     let(:service_properties_uri) { URI.parse "http://dummy.uri/service/properties" }
 
     before do
-      Azure::Storage::Service::Serialization.stubs(:service_properties_from_xml).with(service_properties_xml).returns(service_properties)
+      Azure::Storage::Common::Service::Serialization.stubs(:service_properties_from_xml).with(service_properties_xml).returns(service_properties)
       subject.stubs(:service_properties_uri).with(query).returns(service_properties_uri)
       subject.stubs(:call).with(:get, service_properties_uri, nil, {}, {}).returns(response)
     end
@@ -184,7 +181,7 @@ describe Azure::Storage::Service::StorageService do
     end
 
     it "deserializes the response from xml" do
-      Azure::Storage::Service::Serialization.expects(:service_properties_from_xml).with(service_properties_xml).returns(service_properties)
+      Azure::Storage::Common::Service::Serialization.expects(:service_properties_from_xml).with(service_properties_xml).returns(service_properties)
       subject.get_service_properties
     end
 
@@ -199,14 +196,14 @@ describe Azure::Storage::Service::StorageService do
 
     it "returns a StorageServiceProperties instance" do
       result = subject.get_service_properties
-      result.must_be_kind_of Azure::Storage::Service::StorageServiceProperties
+      result.must_be_kind_of Azure::Storage::Common::Service::StorageServiceProperties
     end
   end
 
   describe "#set_service_properties" do
     let(:query) { {} }
     let(:service_properties_xml) { Fixtures["storage_service_properties"] }
-    let(:service_properties) { Azure::Storage::Service::StorageServiceProperties.new }
+    let(:service_properties) { Azure::Storage::Common::Service::StorageServiceProperties.new }
     let(:response) {
       response = mock()
       response.stubs(:success?).returns(true)
@@ -216,7 +213,7 @@ describe Azure::Storage::Service::StorageService do
     let(:service_properties_uri) { URI.parse "http://dummy.uri/service/properties" }
 
     before do
-      Azure::Storage::Service::Serialization.stubs(:service_properties_to_xml).with(service_properties).returns(service_properties_xml)
+      Azure::Storage::Common::Service::Serialization.stubs(:service_properties_to_xml).with(service_properties).returns(service_properties_xml)
       subject.stubs(:service_properties_uri).with(query).returns(service_properties_uri)
       subject.stubs(:call).with(:put, service_properties_uri, service_properties_xml, {}, {}).returns(response)
     end
@@ -241,7 +238,7 @@ describe Azure::Storage::Service::StorageService do
     end
 
     it "serializes the StorageServiceProperties object to xml" do
-      Azure::Storage::Service::Serialization.expects(:service_properties_to_xml).with(service_properties).returns(service_properties_xml)
+      Azure::Storage::Common::Service::Serialization.expects(:service_properties_to_xml).with(service_properties).returns(service_properties_xml)
       subject.set_service_properties service_properties
     end
 
@@ -270,11 +267,11 @@ describe Azure::Storage::Service::StorageService do
   describe "#get_service_stats" do
     let(:query) { {} }
     let(:service_stats_xml) { Fixtures["storage_service_stats"] }
-    let(:service_stats) { Azure::Storage::Service::StorageServiceStats.new }
+    let(:service_stats) { Azure::Storage::Common::Service::StorageServiceStats.new }
     let(:options) {
       {
-        location_mode: Azure::Storage::LocationMode::SECONDARY_ONLY,
-        request_location_mode: Azure::Storage::RequestLocationMode::SECONDARY_ONLY
+        location_mode: Azure::Storage::Common::LocationMode::SECONDARY_ONLY,
+        request_location_mode: Azure::Storage::Common::RequestLocationMode::SECONDARY_ONLY
       }
     }
     let(:response) {
@@ -286,7 +283,7 @@ describe Azure::Storage::Service::StorageService do
     let(:service_stats_uri) { URI.parse "http://dummy.uri/service/stats" }
 
     before do
-      Azure::Storage::Service::Serialization.stubs(:service_stats_from_xml).with(service_stats_xml).returns(service_stats)
+      Azure::Storage::Common::Service::Serialization.stubs(:service_stats_from_xml).with(service_stats_xml).returns(service_stats)
       subject.stubs(:service_stats_uri).with(query, options).returns(service_stats_uri)
       subject.stubs(:call).with(:get, service_stats_uri, nil, {}, options).returns(response)
     end
@@ -302,7 +299,7 @@ describe Azure::Storage::Service::StorageService do
     end
 
     it "deserializes the response from xml" do
-      Azure::Storage::Service::Serialization.expects(:service_stats_from_xml).with(service_stats_xml).returns(service_stats)
+      Azure::Storage::Common::Service::Serialization.expects(:service_stats_from_xml).with(service_stats_xml).returns(service_stats)
       subject.get_service_stats
     end
 
@@ -317,7 +314,7 @@ describe Azure::Storage::Service::StorageService do
 
     it "returns a StorageServiceStats instance" do
       result = subject.get_service_stats
-      result.must_be_kind_of Azure::Storage::Service::StorageServiceStats
+      result.must_be_kind_of Azure::Storage::Common::Service::StorageServiceStats
     end
   end
 
@@ -340,14 +337,14 @@ describe Azure::Storage::Service::StorageService do
   describe "#add_metadata_to_headers" do
     it "prefixes header names with x-ms-meta- but does not modify the values" do
       headers = {}
-      Azure::Storage::Service::StorageService.add_metadata_to_headers({ "Foo" => "Bar" }, headers)
+      Azure::Storage::Common::Service::StorageService.add_metadata_to_headers({ "Foo" => "Bar" }, headers)
       headers.keys.must_include "x-ms-meta-Foo"
       headers["x-ms-meta-Foo"].must_equal "Bar"
     end
 
     it "updates any existing x-ms-meta-* headers with the new values" do
       headers = { "x-ms-meta-Foo" => "Foo" }
-      Azure::Storage::Service::StorageService.add_metadata_to_headers({ "Foo" => "Bar" }, headers)
+      Azure::Storage::Common::Service::StorageService.add_metadata_to_headers({ "Foo" => "Bar" }, headers)
       headers["x-ms-meta-Foo"].must_equal "Bar"
     end
   end
@@ -406,24 +403,24 @@ describe Azure::Storage::Service::StorageService do
       end
 
       it "primary location should work" do
-        subject.generate_uri("", nil, { location_mode: Azure::Storage::LocationMode::PRIMARY_ONLY}).to_s.must_equal "http://dumyhost.uri/"
+        subject.generate_uri("", nil, { location_mode: Azure::Storage::Common::LocationMode::PRIMARY_ONLY}).to_s.must_equal "http://dumyhost.uri/"
       end
 
       it "secondary location should work" do
         subject.generate_uri("", nil, 
-          { location_mode: Azure::Storage::LocationMode::SECONDARY_ONLY, 
-            request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY}).to_s.must_equal "http://dumyhost-secondary.uri/"
+          { location_mode: Azure::Storage::Common::LocationMode::SECONDARY_ONLY, 
+            request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY}).to_s.must_equal "http://dumyhost-secondary.uri/"
       end
 
       it "raise exception when primary only" do
-        assert_raises(Azure::Storage::InvalidOptionsError) do
-          subject.generate_uri "", nil, { location_mode: Azure::Storage::LocationMode::PRIMARY_ONLY, request_location_mode: Azure::Storage::RequestLocationMode::SECONDARY_ONLY }
+        assert_raises(Azure::Storage::Common::InvalidOptionsError) do
+          subject.generate_uri "", nil, { location_mode: Azure::Storage::Common::LocationMode::PRIMARY_ONLY, request_location_mode: Azure::Storage::Common::RequestLocationMode::SECONDARY_ONLY }
         end
       end
 
       it "raise exception when secondary only" do
-        assert_raises(Azure::Storage::InvalidOptionsError) do
-          subject.generate_uri "", nil, { location_mode: Azure::Storage::LocationMode::SECONDARY_ONLY, request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_ONLY }
+        assert_raises(Azure::Storage::Common::InvalidOptionsError) do
+          subject.generate_uri "", nil, { location_mode: Azure::Storage::Common::LocationMode::SECONDARY_ONLY, request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_ONLY }
         end
       end
     end

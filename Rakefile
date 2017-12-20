@@ -28,17 +28,53 @@ require "rubygems/package_task"
 require "dotenv/tasks"
 require "yard"
 
-namespace :storage do
-  gem_spec = eval(File.read("./azure-storage.gemspec"))
+namespace :storage_common do
+  gem_spec = eval(File.read("./common/azure-storage-common.gemspec"))
   Gem::PackageTask.new(gem_spec) do |pkg|
     pkg.need_zip = false
     pkg.need_tar = false
-    pkg.package_dir = "pkg_azure_storage"
+    pkg.package_dir = "pkg_azure_storage_common"
+  end
+end
+
+namespace :storage_blob do
+  gem_spec = eval(File.read("./blob/azure-storage-blob.gemspec"))
+  Gem::PackageTask.new(gem_spec) do |pkg|
+    pkg.need_zip = false
+    pkg.need_tar = false
+    pkg.package_dir = "pkg_azure_storage_blob"
+  end
+end
+
+namespace :storage_file do
+  gem_spec = eval(File.read("./file/azure-storage-file.gemspec"))
+  Gem::PackageTask.new(gem_spec) do |pkg|
+    pkg.need_zip = false
+    pkg.need_tar = false
+    pkg.package_dir = "pkg_azure_storage_file"
+  end
+end
+
+namespace :storage_table do
+  gem_spec = eval(File.read("./table/azure-storage-table.gemspec"))
+  Gem::PackageTask.new(gem_spec) do |pkg|
+    pkg.need_zip = false
+    pkg.need_tar = false
+    pkg.package_dir = "pkg_azure_storage_table"
+  end
+end
+
+namespace :storage_queue do
+  gem_spec = eval(File.read("./queue/azure-storage-queue.gemspec"))
+  Gem::PackageTask.new(gem_spec) do |pkg|
+    pkg.need_zip = false
+    pkg.need_tar = false
+    pkg.package_dir = "pkg_azure_storage_queue"
   end
 end
 
 YARD::Rake::YardocTask.new do |t|
-  t.files   = ["lib/**/*.rb"]
+  t.files   = ["blob/lib/**/*.rb", "table/lib/**/*.rb", "file/lib/**/*.rb", "queue/lib/**/*.rb"]
   t.options = [""]
   t.stats_options = ["--list-undoc"]
 end
@@ -88,7 +124,7 @@ namespace :test do
   Rake::TestTask.new :unit do |t|
     t.pattern = "test/unit/**/*_test.rb"
     t.verbose = true
-    t.libs = %w(lib test)
+    t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
   end
 
   namespace :unit do
@@ -96,7 +132,7 @@ namespace :test do
       Rake::TestTask.new component do |t|
         t.pattern = "test/unit/#{component}/**/*_test.rb"
         t.verbose = true
-        t.libs = %w(lib test)
+        t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
       end
     end
 
@@ -108,7 +144,7 @@ namespace :test do
       path.include?("database")
     end
     t.verbose = true
-    t.libs = %w(lib test)
+    t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
   end
 
   task integration: :require_environment
@@ -118,7 +154,7 @@ namespace :test do
       Rake::TestTask.new component do |t|
         t.pattern = "test/integration/#{component}/**/*_test.rb"
         t.verbose = true
-        t.libs = %w(lib test)
+        t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
       end
 
       task component => "test:require_environment"
@@ -132,7 +168,7 @@ namespace :test do
     Rake::TestTask.new :unit do |t|
       t.pattern = "test/unit/storage/**/*_test.rb"
       t.verbose = true
-      t.libs = %w(lib test)
+      t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
     end
 
     task require_storage_env: :dotenv do
@@ -149,7 +185,7 @@ namespace :test do
     Rake::TestTask.new :integration do |t|
       t.pattern = "test/integration/storage/**/*_test.rb"
       t.verbose = true
-      t.libs = %w(lib test)
+      t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
     end
 
     task integration: :require_storage_env

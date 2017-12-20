@@ -22,10 +22,9 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/queue/queue_service"
 
 describe Azure::Storage::Queue::QueueService do
-  subject { Azure::Storage::Queue::QueueService.new }
+  subject { Azure::Storage::Queue::QueueService.create(SERVICE_CREATE_OPTIONS()) }
 
   describe "#list_queues" do
     let(:queue_names) { [QueueNameHelper.name, QueueNameHelper.name] }

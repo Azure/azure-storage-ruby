@@ -22,12 +22,11 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/table/table_service"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Table::TableService do
   describe "#query_tables" do
-    subject { Azure::Storage::Table::TableService.new }
+    subject { Azure::Storage::Table::TableService.create(SERVICE_CREATE_OPTIONS()) }
     let(:tables) { [TableNameHelper.name, TableNameHelper.name] }
     before { tables.each { |t| subject.create_table t } }
     after { TableNameHelper.clean }

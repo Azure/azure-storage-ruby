@@ -27,7 +27,7 @@ require "base64"
 require "securerandom"
 
 describe Azure::Storage::Blob::BlobService do
-  subject { Azure::Storage::Blob::BlobService.new }
+  subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
   after { ContainerNameHelper.clean }
 
   let(:container_name) { ContainerNameHelper.name }
@@ -76,7 +76,7 @@ describe Azure::Storage::Blob::BlobService do
 
     it "creates a block that is larger than single upload" do
       options = {}
-      options[:single_upload_threshold] = Azure::Storage::BlobConstants::DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES
+      options[:single_upload_threshold] = Azure::Storage::Blob::BlobConstants::DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES
       content_50_mb = SecureRandom.random_bytes(50 * 1024 * 1024)
       content_50_mb.force_encoding "utf-8"
       blob_name = BlobNameHelper.name

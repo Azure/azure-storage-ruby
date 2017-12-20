@@ -25,7 +25,7 @@ require "azure/core/http/http_error"
 require "integration/test_helper"
 
 describe Azure::Storage::File::FileService do
-  subject { Azure::Storage::File::FileService.new }
+  subject { Azure::Storage::File::FileService.create(SERVICE_CREATE_OPTIONS()) }
   after { ShareNameHelper.clean }
 
   describe "#create_directory" do

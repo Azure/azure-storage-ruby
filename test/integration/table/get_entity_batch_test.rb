@@ -22,14 +22,11 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/table/batch"
-require "azure/storage/table/table_service"
-require "azure/storage/core/error"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Table::TableService do
   describe "#get_entity_batch" do
-    subject { Azure::Storage::Table::TableService.new }
+    subject { Azure::Storage::Table::TableService.create(SERVICE_CREATE_OPTIONS()) }
     let(:table_name) { TableNameHelper.name }
 
     let(:entity_properties) {
@@ -109,7 +106,7 @@ describe Azure::Storage::Table::TableService do
     end
 
     it "errors on more than one query operation" do
-      assert_raises(Azure::Storage::Core::StorageError) do
+      assert_raises(Azure::Storage::Common::Core::StorageError) do
         entity1 = entity_properties.dup
         entity2 = entity_properties.dup
         entity1["RowKey"] = "abcd123"
@@ -129,7 +126,7 @@ describe Azure::Storage::Table::TableService do
         batch.get entity["RowKey"]
       end
 
-      assert_raises(Azure::Storage::Core::StorageError) do
+      assert_raises(Azure::Storage::Common::Core::StorageError) do
         entity1 = entity_properties.dup
         entity2 = entity_properties.dup
         entity1["RowKey"] = "abcd123"

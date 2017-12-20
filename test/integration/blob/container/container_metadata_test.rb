@@ -27,7 +27,7 @@ require "azure/storage/blob/blob_service"
 describe Azure::Storage::Blob::BlobService do
   let(:user_agent_prefix) { "azure_storage_ruby_integration_test" }
   subject {
-    Azure::Storage::Blob::BlobService.new { |headers|
+    Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) { |headers|
       headers["User-Agent"] = "#{user_agent_prefix}; #{headers['User-Agent']}"
     }
   }

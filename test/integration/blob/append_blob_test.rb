@@ -22,11 +22,9 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/blob/blob_service"
-require "azure/storage/core/error"
 
 describe Azure::Storage::Blob::BlobService do
-  subject { Azure::Storage::Blob::BlobService.new }
+  subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
   after { ContainerNameHelper.clean }
 
   let(:container_name) { ContainerNameHelper.name }
@@ -42,7 +40,7 @@ describe Azure::Storage::Blob::BlobService do
       maxSize = 512 * 1024
       content = SecureRandom.random_bytes(length)
       blob_name = BlobNameHelper.name
-      exception = assert_raises(Azure::Storage::Core::StorageError) do
+      exception = assert_raises(Azure::Storage::Common::Core::StorageError) do
         subject.create_append_blob_from_content container_name, blob_name, content, max_size: maxSize
       end
       exception.message.must_include("Given content has exceeded the specified maximum size for the blob.")

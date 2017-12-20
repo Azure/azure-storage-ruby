@@ -24,13 +24,13 @@
 require "integration/test_helper"
 
 describe Azure::Storage::File::FileService do
-  subject { Azure::Storage::File::FileService.new }
+  subject { Azure::Storage::File::FileService.create(SERVICE_CREATE_OPTIONS()) }
   after { ShareNameHelper.clean }
   describe "#copy_file" do
     let(:source_share_name) { ShareNameHelper.name }
     let(:source_directory_name) { FileNameHelper.name }
     let(:source_file_name) { "audio+video%25.mp4" }
-    let(:source_file_uri) { "https://#{Azure::Storage.storage_account_name}.file.core.windows.net/#{source_share_name}/#{source_directory_name}/#{CGI.escape(source_file_name).encode('UTF-8')}" }
+    let(:source_file_uri) { "https://#{SERVICE_CREATE_OPTIONS()[:storage_account_name]}.file.core.windows.net/#{source_share_name}/#{source_directory_name}/#{CGI.escape(source_file_name).encode('UTF-8')}" }
     let(:file_length) { 1024 }
     let(:content) { content = ""; file_length.times.each { |i| content << "@" }; content }
     let(:metadata) { { "custommetadata" => "CustomMetadataValue" } }

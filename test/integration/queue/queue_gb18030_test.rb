@@ -25,7 +25,7 @@ require "integration/test_helper"
 require "azure/storage/blob/blob_service"
 
 describe "Queue GB-18030" do
-  subject { Azure::Storage::Queue::QueueService.new }
+  subject { Azure::Storage::Queue::QueueService.create(SERVICE_CREATE_OPTIONS()) }
 
   let(:queue_name) { QueueNameHelper.name }
 

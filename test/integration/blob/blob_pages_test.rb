@@ -27,7 +27,7 @@ require "securerandom"
 require 'digest/md5'
 
 describe Azure::Storage::Blob::BlobService do
-  subject { Azure::Storage::Blob::BlobService.new }
+  subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
   after { ContainerNameHelper.clean }
 
   let(:container_name) { ContainerNameHelper.name }

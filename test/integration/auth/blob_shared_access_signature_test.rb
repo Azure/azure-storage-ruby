@@ -22,11 +22,11 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/core/auth/shared_access_signature"
+require "azure/storage/common/core/auth/shared_access_signature"
 
-describe Azure::Storage::Core::Auth::SharedAccessSignature do
-  subject { Azure::Storage::Blob::BlobService.new }
-  let(:generator) { Azure::Storage::Core::Auth::SharedAccessSignature.new }
+describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
+  subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
+  let(:generator) { Azure::Storage::Common::Core::Auth::SharedAccessSignature.new(SERVICE_CREATE_OPTIONS()[:storage_account_name], SERVICE_CREATE_OPTIONS()[:storage_access_key]) }
 
   describe "#blob_service_sas_for_container" do
     let(:container_name) { ContainerNameHelper.name }
@@ -44,9 +44,8 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "reads a blob property with SAS in connection string" do
       sas_token = generator.generate_service_sas_token "#{container_name}", service: "b", resource: "c", permissions: "r", protocol: "https"
-      connection_string = "BlobEndpoint=https://#{ENV['AZURE_STORAGE_ACCOUNT']}.blob.core.windows.net;SharedAccessSignature=#{sas_token}"
-      sas_client = Azure::Storage::Client::create_from_connection_string connection_string
-      client = sas_client.blob_client
+      connection_string = "BlobEndpoint=https://#{SERVICE_CREATE_OPTIONS()[:storage_account_name]}.blob.core.windows.net;SharedAccessSignature=#{sas_token}"
+      client = Azure::Storage::Blob::BlobService::create_from_connection_string connection_string
       blob_properties = client.get_blob_properties container_name, block_blob_name
       blob_properties.wont_be_nil
       blob_properties.name.must_equal block_blob_name
@@ -58,8 +57,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "reads a blob property with container permission" do
       sas_token = generator.generate_service_sas_token "#{container_name}", service: "b", resource: "c", permissions: "r", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       blob_properties = client.get_blob_properties container_name, block_blob_name
       blob_properties.wont_be_nil
       blob_properties.name.must_equal block_blob_name
@@ -71,8 +69,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "appends a blob with container permission" do
       sas_token = generator.generate_service_sas_token "#{container_name}", service: "b", resource: "c", permissions: "a", protocol: "https,http"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       blob = client.append_blob_block container_name, append_blob_name, content
       blob.wont_be_nil
       blob.name.must_equal append_blob_name
@@ -84,24 +81,21 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "snapshots a blob with container permission" do
       sas_token = generator.generate_service_sas_token "#{container_name}", service: "b", resource: "c", permissions: "c", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       snapshot_id = client.create_blob_snapshot container_name, block_blob_name
       snapshot_id.wont_be_nil
     end
 
     it "leases a blob with container permission" do
       sas_token = generator.generate_service_sas_token "#{container_name}", service: "b", resource: "c", permissions: "w", protocol: "https,http"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       lease_id = client.acquire_blob_lease container_name, block_blob_name
       lease_id.wont_be_nil
     end
 
     it "list a blob with container permission" do
       sas_token = generator.generate_service_sas_token "#{container_name}", service: "b", resource: "c", permissions: "l", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       blobs = client.list_blobs container_name
       blobs.wont_be_nil
       assert blobs.length > 0
@@ -109,16 +103,14 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "deletes a blob with container permission" do
       sas_token = generator.generate_service_sas_token "#{container_name}", service: "b", resource: "c", permissions: "d", protocol: "https,http"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       result = client.delete_blob container_name, page_blob_name
       result.must_be_nil
     end
 
     it "reads a blob property with blob permission" do
       sas_token = generator.generate_service_sas_token "#{container_name}/#{block_blob_name}", service: "b", resource: "b", permissions: "r", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       blob_properties = client.get_blob_properties container_name, block_blob_name
       blob_properties.wont_be_nil
       blob_properties.name.must_equal block_blob_name
@@ -130,8 +122,7 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "appends a blob with blob permission" do
       sas_token = generator.generate_service_sas_token "#{container_name}/#{append_blob_name}", service: "b", resource: "b", permissions: "a", protocol: "https,http"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       blob = client.append_blob_block container_name, append_blob_name, content
       blob.wont_be_nil
       blob.name.must_equal append_blob_name
@@ -143,24 +134,21 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
 
     it "snapshots a blob with blob permission" do
       sas_token = generator.generate_service_sas_token "#{container_name}/#{block_blob_name}", service: "b", resource: "b", permissions: "c", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       snapshot_id = client.create_blob_snapshot container_name, block_blob_name
       snapshot_id.wont_be_nil
     end
 
     it "leases a blob with blob permission" do
       sas_token = generator.generate_service_sas_token "#{container_name}/#{block_blob_name}", service: "b", resource: "b", permissions: "w", protocol: "https,http"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       lease_id = client.acquire_blob_lease container_name, block_blob_name
       lease_id.wont_be_nil
     end
 
     it "deletes a blob with blob permission" do
       sas_token = generator.generate_service_sas_token "#{container_name}/#{page_blob_name}", service: "b", resource: "b", permissions: "d", protocol: "https"
-      signer = Azure::Storage::Core::Auth::SharedAccessSignatureSigner.new Azure::Storage.storage_account_name, sas_token
-      client = Azure::Storage::Blob::BlobService.new(signer: signer)
+      client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       result = client.delete_blob container_name, page_blob_name
       result.must_be_nil
     end

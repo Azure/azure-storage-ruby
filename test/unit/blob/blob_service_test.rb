@@ -21,24 +21,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require "test_helper"
 require "unit/test_helper"
-require "azure/storage/blob/blob_service"
-require "azure/storage/blob/serialization"
-require "azure/storage/blob/container"
-require "azure/storage/blob/blob"
-require "azure/storage/service/signed_identifier"
+require "azure/storage/blob"
 
 describe Azure::Storage::Blob::BlobService do
   let(:user_agent_prefix) { "azure_storage_ruby_unit_test" }
   subject {
-    Azure::Storage::Blob::BlobService.new {}
+    Azure::Storage::Blob::BlobService::create({ storage_account_name: "mockaccount", storage_access_key: "YWNjZXNzLWtleQ==" })
   }
   let(:serialization) { Azure::Storage::Blob::Serialization }
   let(:uri) { URI.parse "http://foo.com" }
   let(:query) { {} }
-  let(:x_ms_version) { Azure::Storage::Default::STG_VERSION }
-  let(:user_agent) { Azure::Storage::Default::USER_AGENT }
+  let(:x_ms_version) { Azure::Storage::Blob::Default::STG_VERSION }
+  let(:user_agent) { Azure::Storage::Blob::Default::USER_AGENT }
   let(:request_headers) { {} }
   let(:request_body) { "request-body" }
 
@@ -54,8 +49,8 @@ describe Azure::Storage::Blob::BlobService do
 
   describe "#list_containers" do
     let(:verb) { :get }
-    let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
-    let(:container_enumeration_result) { Azure::Service::EnumerationResults.new }
+    let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+    let(:container_enumeration_result) { Azure::Storage::Common::Service::EnumerationResults.new }
 
     before {
       subject.stubs(:containers_uri).with({}, options).returns(uri)
@@ -79,7 +74,7 @@ describe Azure::Storage::Blob::BlobService do
 
     it "returns a list of containers for the account" do
       result = subject.list_containers
-      result.must_be_kind_of Azure::Service::EnumerationResults
+      result.must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
     end
 
     describe "when the options Hash is used" do
@@ -244,7 +239,7 @@ describe Azure::Storage::Blob::BlobService do
 
     describe "#get_container_properties" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:container_properties) { {} }
 
       before {
@@ -280,7 +275,7 @@ describe Azure::Storage::Blob::BlobService do
 
     describe "#get_container_metadata" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:container_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
       let(:response_headers) { { "x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1" } }
 
@@ -319,8 +314,8 @@ describe Azure::Storage::Blob::BlobService do
 
     describe "#get_container_acl" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
-      let(:signed_identifier) { Azure::Storage::Service::SignedIdentifier.new }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:signed_identifier) { Azure::Storage::Common::Service::SignedIdentifier.new }
       let(:signed_identifiers) { [signed_identifier] }
 
       before {
@@ -357,7 +352,7 @@ describe Azure::Storage::Blob::BlobService do
         returned_container.name.must_equal container_name
 
         returned_acl.must_be_kind_of Array
-        returned_acl[0].must_be_kind_of Azure::Storage::Service::SignedIdentifier
+        returned_acl[0].must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
       end
     end
 
@@ -413,7 +408,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         describe "when a signed_identifiers value is provided" do
-          let(:signed_identifier) { Azure::Storage::Service::SignedIdentifier.new }
+          let(:signed_identifier) { Azure::Storage::Common::Service::SignedIdentifier.new }
           let(:signed_identifiers) { [signed_identifier] }
           before {
             subject.stubs(:call).with(verb, uri, request_body, request_headers, {}).returns(response)
@@ -437,7 +432,7 @@ describe Azure::Storage::Blob::BlobService do
             returned_container.public_access_level.must_equal public_access_level
 
             returned_acl.must_be_kind_of Array
-            returned_acl[0].must_be_kind_of Azure::Storage::Service::SignedIdentifier
+            returned_acl[0].must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
           end
         end
       end
@@ -502,8 +497,8 @@ describe Azure::Storage::Blob::BlobService do
     describe "#list_blobs" do
       let(:verb) { :get }
       let(:query) { { "comp" => "list" } }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
-      let(:blob_enumeration_results) { Azure::Service::EnumerationResults.new }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:blob_enumeration_results) { Azure::Storage::Common::Service::EnumerationResults.new }
 
       before {
         subject.stubs(:container_uri).with(container_name, query, options).returns(uri)
@@ -529,7 +524,7 @@ describe Azure::Storage::Blob::BlobService do
 
       it "returns a list of blobs for the container" do
         result = subject.list_blobs container_name
-        result.must_be_kind_of Azure::Service::EnumerationResults
+        result.must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
       end
 
       describe "when the options Hash is used" do
@@ -1220,7 +1215,7 @@ describe Azure::Storage::Blob::BlobService do
       describe "#list_blob_blocks" do
         let(:verb) { :get }
         let(:query) { { "comp" => "blocklist", "blocklisttype" => "all" } }
-        let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+        let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
         let(:blob_block_list) { [Azure::Storage::Blob::Block.new] }
 
         before {
@@ -1297,7 +1292,7 @@ describe Azure::Storage::Blob::BlobService do
       describe "#list_page_blob_ranges" do
         let(:verb) { :get }
         let(:query) { { "comp" => "pagelist" } }
-        let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+        let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
         let(:page_list) { [[0, 511], [512, 1023]] }
 
         before {
@@ -1884,7 +1879,7 @@ describe Azure::Storage::Blob::BlobService do
 
       describe "#get_blob_properties" do
         let(:verb) { :head }
-        let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+        let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
         let(:request_headers) { {} }
 
         before {
@@ -1934,7 +1929,7 @@ describe Azure::Storage::Blob::BlobService do
 
       describe "#get_blob_metadata" do
         let(:verb) { :get }
-        let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+        let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
         let(:request_headers) { {} }
 
         before {
@@ -1989,7 +1984,7 @@ describe Azure::Storage::Blob::BlobService do
 
       describe "#get_blob" do
         let(:verb) { :get }
-        let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+        let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
 
         before {
           response.stubs(:success?).returns(true)
@@ -2734,7 +2729,7 @@ describe Azure::Storage::Blob::BlobService do
   end
 
   describe "uri functions" do
-    subject { MockBlobService.new }
+    subject { MockBlobService.new({ storage_account_name: "mockaccount", storage_access_key: "YWNjZXNzLWtleQ==" }) }
 
     let(:container_name) { "container" }
     let(:blob_name) { "blob" }

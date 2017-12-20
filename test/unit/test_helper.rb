@@ -23,12 +23,16 @@
 #--------------------------------------------------------------------------
 
 require "test_helper"
-require "azure/storage"
+require "azure/storage/blob"
+require "azure/storage/queue"
+require "azure/storage/file"
+require "azure/storage/table"
+require "azure/storage/common"
 
 module Kernel
   def clear_storage_envs
     removed = {}
-    Azure::Storage::ClientOptions.env_vars_mapping.keys.each do |k|
+    Azure::Storage::Common::ClientOptions.env_vars_mapping.keys.each do |k|
       if ENV.include? k
         removed[k] = ENV[k]
         ENV.delete(k)
@@ -39,10 +43,10 @@ module Kernel
 
   def clear_storage_instance_variables
     removed = {}
-    Azure::Storage::Configurable.keys.each do |key|
-      if Azure::Storage.instance_variables.include? :"@#{key}"
+    Azure::Storage::Common::Configurable.keys.each do |key|
+      if Azure::Storage::Common::Client::instance_variables.include? :"@#{key}"
         removed[key] = Azure::Storage.send(key)
-        Azure::Storage.instance_variable_set(:"@#{key}", nil)
+        Azure::Storage::Common::Client::instance_variable_set(:"@#{key}", nil)
       end
     end
     removed
@@ -56,17 +60,17 @@ module Kernel
 
   def restore_storage_instance_variables(removed)
     removed.each do |k, v|
-      Azure::Storage.instance_variable_set(:"@#{k}", v)
+      Azure::Storage::Common::Client::instance_variable_set(:"@#{k}", v)
     end
   end
 
   def vars_env_mapping
-    @vars_env = Azure::Storage::ClientOptions.env_vars_mapping.invert unless defined? @vars_env
+    @vars_env = Azure::Storage::Common::ClientOptions.env_vars_mapping.invert unless defined? @vars_env
     @vars_env
   end
 
   def vars_cs_mapping
-    @vars_cs = Azure::Storage::ClientOptions.connection_string_mapping.invert unless defined? @vars_cs
+    @vars_cs = Azure::Storage::Common::ClientOptions.connection_string_mapping.invert unless defined? @vars_cs
     @vars_cs
   end
 
@@ -80,6 +84,3 @@ module Kernel
     vals.map { |k, v| "#{vars_cs_mapping[k]}=#{v}" if vars_cs_mapping.key?(k) }.join(";")
   end
 end
-
-# mock configuration setup
-Azure::Storage.client(storage_account_name: "mockaccount", storage_access_key: "YWNjZXNzLWtleQ==")

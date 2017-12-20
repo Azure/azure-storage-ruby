@@ -26,7 +26,7 @@ require "integration/test_helper"
 describe Azure::Storage::File::FileService do
   let(:user_agent_prefix) { "azure_storage_ruby_integration_test" }
   subject {
-    Azure::Storage::File::FileService.new { |headers|
+    Azure::Storage::File::FileService.create(SERVICE_CREATE_OPTIONS()) { |headers|
       headers["User-Agent"] = "#{user_agent_prefix}; #{headers['User-Agent']}"
     }
   }

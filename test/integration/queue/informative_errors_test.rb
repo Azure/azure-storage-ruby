@@ -22,11 +22,10 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/queue/queue_service"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Queue::QueueService do
-  subject { Azure::Storage::Queue::QueueService.new }
+  subject { Azure::Storage::Queue::QueueService.create(SERVICE_CREATE_OPTIONS()) }
 
   describe "#informative_errors_queue" do
     let(:queue_name) { QueueNameHelper.name }

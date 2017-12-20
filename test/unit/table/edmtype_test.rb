@@ -22,9 +22,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "unit/test_helper"
-require "azure/storage/table/edmtype"
-
-require "azure/storage/table/guid"
+require "azure/storage/table"
 
 describe Azure::Storage::Table::EdmType do
   describe "#serialize_query_value" do

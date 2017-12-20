@@ -22,12 +22,11 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/table/table_service"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Table::TableService do
   describe "#insert_entity" do
-    subject { Azure::Storage::Table::TableService.new }
+    subject { Azure::Storage::Table::TableService.create(SERVICE_CREATE_OPTIONS()) }
     let(:table_name) { TableNameHelper.name }
 
     let(:entity_properties) {

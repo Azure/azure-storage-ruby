@@ -22,14 +22,13 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/table/table_service"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Table::TableService do
   describe "#create_table" do
     let(:user_agent_prefix) { "azure_storage_ruby_integration_test" }
     subject {
-      Azure::Storage::Table::TableService.new { |headers|
+      Azure::Storage::Table::TableService.create(SERVICE_CREATE_OPTIONS()) { |headers|
         headers["User-Agent"] = "#{user_agent_prefix}; #{headers['User-Agent']}"
       }
     }

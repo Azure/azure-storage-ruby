@@ -25,7 +25,7 @@ require "integration/test_helper"
 require "azure/storage/queue/queue_service"
 
 describe Azure::Storage::Queue::QueueService do
-  subject { Azure::Storage::Queue::QueueService.new }
+  subject { Azure::Storage::Queue::QueueService.create(SERVICE_CREATE_OPTIONS()) }
 
   describe "#peek_messages" do
     let(:queue_name) { QueueNameHelper.name }

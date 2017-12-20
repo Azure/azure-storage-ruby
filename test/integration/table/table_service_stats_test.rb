@@ -26,12 +26,12 @@ require "azure/storage/table/table_service"
 
 describe Azure::Storage::Table::TableService do
   # The storage account should have read-access geo-redundant replication enabled for this case
-  subject { Azure::Storage::Table::TableService.new }
+  subject { Azure::Storage::Table::TableService.create(SERVICE_CREATE_OPTIONS()) }
 
   describe "#get_service_stats" do
     it "gets service stats" do
       stats = subject.get_service_stats
-      stats.geo_replication.must_be_kind_of Azure::Storage::Service::GeoReplication
+      stats.geo_replication.must_be_kind_of Azure::Storage::Common::Service::GeoReplication
       stats.geo_replication.status.must_equal "live"
       stats.geo_replication.last_sync_time.must_be_kind_of Time
     end

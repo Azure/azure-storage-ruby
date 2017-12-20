@@ -24,7 +24,7 @@
 require "integration/test_helper"
 
 describe "File GB-18030" do
-  subject { Azure::Storage::File::FileService.new }
+  subject { Azure::Storage::File::FileService.create(SERVICE_CREATE_OPTIONS()) }
   after { ShareNameHelper.clean }
 
   let(:share_name) { ShareNameHelper.name }

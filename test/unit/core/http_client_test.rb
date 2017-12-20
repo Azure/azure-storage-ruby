@@ -1,6 +1,6 @@
-require "test_helper"
+require "unit/test_helper"
 
-describe Azure::Storage::Core::HttpClient do
+describe Azure::Storage::Common::Core::HttpClient do
   subject { Azure::Storage }
 
   let :uri do
@@ -11,11 +11,11 @@ describe Azure::Storage::Core::HttpClient do
 
     describe "ssl vs non ssl uris" do
       it "should set verify true if using ssl" do
-        Azure::Storage.client.agents(uri).ssl[:verify].must_equal true
+        Azure::Storage::Common::Client::create.agents(uri).ssl[:verify].must_equal true
       end
 
       it "should not set ssl if not using ssl" do
-        Azure::Storage.client.agents("http://localhost").ssl.must_be_empty
+        Azure::Storage::Common::Client::create.agents("http://localhost").ssl.must_be_empty
       end
     end
 
@@ -31,7 +31,7 @@ describe Azure::Storage::Core::HttpClient do
       end
 
       it "should set the proxy configuration information on the http connection" do
-        Azure::Storage::Client.create().agents(uri).proxy.uri.must_equal http_proxy_uri
+        Azure::Storage::Common::Client::create.agents(uri).proxy.uri.must_equal http_proxy_uri
       end
     end
 
@@ -47,7 +47,7 @@ describe Azure::Storage::Core::HttpClient do
       end
 
       it "should set the proxy configuration information on the https connection" do
-        Azure::Storage::Client.create().agents(uri).proxy.uri.must_equal https_proxy_uri
+        Azure::Storage::Common::Client::create.agents(uri).proxy.uri.must_equal https_proxy_uri
       end
     end
   end

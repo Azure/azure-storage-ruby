@@ -22,16 +22,15 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/queue/queue_service"
 
 describe Azure::Storage::Queue::QueueService do
   # The storage account should have read-access geo-redundant replication enabled for this case
-  subject { Azure::Storage::Queue::QueueService.new }
+  subject { Azure::Storage::Queue::QueueService.create(SERVICE_CREATE_OPTIONS()) }
 
   describe "#get_service_stats" do
     it "gets service stats" do
       stats = subject.get_service_stats
-      stats.geo_replication.must_be_kind_of Azure::Storage::Service::GeoReplication
+      stats.geo_replication.must_be_kind_of Azure::Storage::Common::Service::GeoReplication
       stats.geo_replication.status.must_equal "live"
       stats.geo_replication.last_sync_time.must_be_kind_of Time
     end
