@@ -511,7 +511,7 @@ module Azure::Storage
           "Accept-Charset" => "UTF-8"
         }
 
-        body = batch.to_body
+        body = batch.to_body(self)
         options[:request_location_mode] = RequestLocationMode::PRIMARY_OR_SECONDARY
         response = call(:post, generate_uri("/$batch", new_query(options), options), body, headers, options, true)
         batch.parse_response(response)

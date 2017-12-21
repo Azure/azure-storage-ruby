@@ -25,28 +25,13 @@ require "securerandom"
 
 require "azure/core/http/http_error"
 require "azure/storage/table/serialization"
-require "azure/storage/table/table_service"
 require "azure/storage/table/batch_response"
 
 module Azure::Storage
   module Table
     # Represents a batch of table operations.
     #
-    # Example usage (block syntax):
-    #
-    # results = Batch.new "table", "partition" do
-    #      insert "row1", {"meta"=>"data"}
-    #      insert "row2", {"meta"=>"data"}
-    #    end.execute
-    #
-    # which is equivalent to (fluent syntax):
-    #
-    # results = Batch.new("table", "partition")
-    #           .insert("row1", {"meta"=>"data"})
-    #           .insert("row2", {"meta"=>"data"})
-    #           .execute
-    #
-    # which is equivalent to (as class):
+    # Example usage:
     #
     # svc = TableSerice.new
     #
@@ -62,7 +47,6 @@ module Azure::Storage
         @partition = partition
         @operations = []
         @entity_keys = []
-        @table_service = Azure::Storage::Table::TableService.new
         @batch_id = "batch_" + SecureRandom.uuid
         @changeset_id = "changeset_" + SecureRandom.uuid
 
@@ -72,7 +56,6 @@ module Azure::Storage
       private
         attr_reader :table
         attr_reader :partition
-        attr_reader :table_service
 
         attr_accessor :operations
         attr_accessor :entity_keys
@@ -80,11 +63,6 @@ module Azure::Storage
 
       public
       attr_accessor :batch_id
-
-      protected
-        def execute
-          @table_service.execute_batch(self)
-        end
 
       protected
         class ResponseWrapper
@@ -106,10 +84,10 @@ module Azure::Storage
         end
 
       protected
-        def add_operation(method, uri, body = nil, headers = nil)
+        def add_operation(method, row_key = nil, body = nil, headers = nil)
           op = {
             method: method,
-            uri: uri,
+            row_key: row_key,
             body: body,
             headers: headers.merge(
               HeaderConstants::CONTENT_TYPE => HeaderConstants::JSON_CONTENT_TYPE_VALUE,
@@ -163,7 +141,7 @@ module Azure::Storage
       end
 
       public
-      def to_body
+      def to_body(table_service)
         body = ""
         body.define_singleton_method(:add_line) do |a| self << (a || nil) + "\n" end
 
@@ -172,11 +150,12 @@ module Azure::Storage
         body.add_line ""
 
         operations.each { |op|
+          uri = table_service.entities_uri(@table, @partition, op[:row_key])
           body.add_line "--#{changeset_id}"
           body.add_line "Content-Type: application/http"
           body.add_line "Content-Transfer-Encoding: binary"
           body.add_line ""
-          body.add_line "#{op[:method].to_s.upcase} #{op[:uri]} HTTP/1.1"
+          body.add_line "#{op[:method].to_s.upcase} #{uri} HTTP/1.1"
 
           if op[:headers]
             op[:headers].each { |k, v|
@@ -230,7 +209,7 @@ module Azure::Storage
           }.merge(entity_values)
         )
 
-        add_operation(:post, @table_service.entities_uri(table), body, headers)
+        add_operation(:post, nil, body, headers)
         self
       end
 
@@ -259,14 +238,12 @@ module Azure::Storage
       def update(row_key, entity_values, options = {})
         check_entity_key(row_key)
 
-        uri = @table_service.entities_uri(table, partition, row_key)
-
         headers = { HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(options[:accept]) }
         headers["If-Match"] = options[:if_match] || "*" unless options[:create_if_not_exists]
 
         body = Azure::Storage::Table::Serialization.hash_to_json(entity_values)
 
-        add_operation(:put, uri, body, headers)
+        add_operation(:put, row_key, body, headers)
         self
       end
 
@@ -295,14 +272,12 @@ module Azure::Storage
       def merge(row_key, entity_values, options = {})
         check_entity_key(row_key)
 
-        uri = @table_service.entities_uri(table, partition, row_key)
-
         headers = { HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(options[:accept]) }
         headers["If-Match"] = options[:if_match] || "*" unless options[:create_if_not_exists]
 
         body = Azure::Storage::Table::Serialization.hash_to_json(entity_values)
 
-        add_operation(:merge, uri, body, headers)
+        add_operation(:merge, row_key, body, headers)
         self
       end
 
@@ -357,7 +332,7 @@ module Azure::Storage
           HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(options[:accept]),
           "If-Match" => options[:if_match] || "*"
         }
-        add_operation(:delete, @table_service.entities_uri(table, partition, row_key), nil, headers)
+        add_operation(:delete, row_key, nil, headers)
         self
       end
     end
