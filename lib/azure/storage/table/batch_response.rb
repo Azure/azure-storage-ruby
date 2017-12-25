@@ -24,7 +24,7 @@
 module Azure::Storage
   module Table
     module BatchResponse
-      def self.parse(data)
+      def self.parse(data, is_get)
         context = {
           lines: data.lines.to_a,
           index: 0,
@@ -34,11 +34,17 @@ module Azure::Storage
         find(context) { |c| batch_boundary c }
         find(context) { |c| batch_headers c }
 
-        while (find(context) { |c| changeset_boundary_or_end c } == :boundary)
-          find(context) { |c| changeset_headers c }
+        if is_get
           find(context) { |c| response c }
           find(context) { |c| response_headers c }
           find(context) { |c| response_body c }
+        else
+          while (find(context) { |c| changeset_boundary_or_end c } == :boundary)
+            find(context) { |c| changeset_headers c }
+            find(context) { |c| response c }
+            find(context) { |c| response_headers c }
+            find(context) { |c| response_body c }
+          end
         end
 
         context[:responses]
@@ -95,7 +101,7 @@ module Azure::Storage
 
       def self.changeset_boundary_or_end(context)
         match_boundary = /--changesetresponse_(.*)/.match(current_line(context))
-        match_end = /--changesetresponse_(.*)--/.match(current_line(context))
+        match_end = /--changesetresponse_(.*)--/.match(current_line(context)) || /--batchresponse_(.*)--/.match(current_line(context))
 
         (match_boundary && (not match_end)) ? :boundary : (match_end ? :end : nil)
       end

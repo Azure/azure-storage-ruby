@@ -94,6 +94,7 @@ module Azure
             entity.etag = h.delete(TableConstants::ODATA_ETAG)
             properties = {}
             h.each do |k, v|
+              next if k.end_with? TableConstants::ODATA_TYPE_SUFFIX
               type = h[k + TableConstants::ODATA_TYPE_SUFFIX]
               properties[k] = EdmType::deserialize_value(v, type.nil? ? EdmType::property_type(v) : type)
             end

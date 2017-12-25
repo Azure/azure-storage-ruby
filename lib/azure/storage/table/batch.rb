@@ -85,6 +85,7 @@ module Azure::Storage
 
       protected
         def add_operation(method, row_key = nil, body = nil, headers = nil)
+          raise Azure::Storage::Core::StorageError.new("Get operation should be the only operation in the batch.") if operations.length > 0 && (method == :get || operations[0][:method] == :get)
           op = {
             method: method,
             row_key: row_key,
@@ -105,7 +106,7 @@ module Azure::Storage
 
       public
       def parse_response(response)
-        responses = BatchResponse.parse response.body
+        responses = BatchResponse.parse response.body, (!operations.empty? && operations[0][:method] == :get)
         new_responses = []
 
         (0..responses.length - 1).each { |index|
@@ -120,7 +121,7 @@ module Azure::Storage
           else
             # success
             case operation[:method]
-            when :post
+            when :post, :get
               # entity from body
               entity = Azure::Storage::Table::Serialization.entity_from_json(response[:body])
 
@@ -145,13 +146,15 @@ module Azure::Storage
         body = ""
         body.define_singleton_method(:add_line) do |a| self << (a || nil) + "\n" end
 
+        is_get = true if !operations.empty? && operations[0][:method] == :get
+
         body.add_line "--#{batch_id}"
-        body.add_line "Content-Type: multipart/mixed; boundary=#{changeset_id}"
-        body.add_line ""
+        body.add_line "Content-Type: multipart/mixed; boundary=#{changeset_id}" unless is_get
+        body.add_line "" unless is_get
 
         operations.each { |op|
           uri = table_service.entities_uri(@table, @partition, op[:row_key])
-          body.add_line "--#{changeset_id}"
+          body.add_line "--#{changeset_id}" unless is_get
           body.add_line "Content-Type: application/http"
           body.add_line "Content-Transfer-Encoding: binary"
           body.add_line ""
@@ -172,7 +175,7 @@ module Azure::Storage
           end
 
         }
-        body.add_line "--#{changeset_id}--"
+        body.add_line "--#{changeset_id}--" unless is_get
         body.add_line "--#{batch_id}--"
       end
 
@@ -210,6 +213,32 @@ module Azure::Storage
         )
 
         add_operation(:post, nil, body, headers)
+        self
+      end
+
+      # Public: Gets entity from the table.
+      #
+      # ==== Attributes
+      #
+      # * +row_key+       - String. The row key
+      # * +options+       - Hash. Optional parameters.
+      #
+      # ==== Options
+      #
+      # Accepted key/value pairs in options parameter are:
+      # * +:accept+              - String. Specifies the accepted content-type of the response payload. Possible values are:
+      #                             :no_meta
+      #                             :min_meta
+      #                             :full_meta
+      #
+      # See http://msdn.microsoft.com/en-us/library/azure/dd179433
+      public
+      def get(row_key, options = {})
+        check_entity_key(row_key)
+
+        headers = { HeaderConstants::ACCEPT => Table::Serialization.get_accept_string(options[:accept]) }
+
+        add_operation(:get, row_key, nil, headers)
         self
       end
 
