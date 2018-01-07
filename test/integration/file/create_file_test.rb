@@ -28,7 +28,7 @@ describe Azure::Storage::File::FileService do
   subject { Azure::Storage::File::FileService.create(SERVICE_CREATE_OPTIONS()) }
   after { ShareNameHelper.clean }
 
-  describe "#create_file_with_content" do
+  describe "#create_file_from_content" do
     let(:share_name) { ShareNameHelper.name }
     let(:directory_name) { FileNameHelper.name }
     let(:file_name) { FileNameHelper.name }
@@ -42,7 +42,7 @@ describe Azure::Storage::File::FileService do
       content = SecureRandom.random_bytes(length)
       content.force_encoding "utf-8"
       file_name = FileNameHelper.name
-      subject.create_file_with_content share_name, directory_name, file_name, length, content
+      subject.create_file_from_content share_name, directory_name, file_name, length, content
       file, body = subject.get_file(share_name, directory_name, file_name)
       file.name.must_equal file_name
       file.properties[:content_length].must_equal length
@@ -54,7 +54,7 @@ describe Azure::Storage::File::FileService do
       length = 4 * 1024 * 1024
       content = SecureRandom.random_bytes(length)
       file_name = FileNameHelper.name
-      subject.create_file_with_content share_name, directory_name, file_name, length, content
+      subject.create_file_from_content share_name, directory_name, file_name, length, content
       file, body = subject.get_file(share_name, directory_name, file_name)
       file.name.must_equal file_name
       file.properties[:content_length].must_equal length
@@ -66,7 +66,7 @@ describe Azure::Storage::File::FileService do
       length = 5 * 1024 * 1024
       content = SecureRandom.random_bytes(length)
       file_name = FileNameHelper.name
-      subject.create_file_with_content share_name, directory_name, file_name, length, content
+      subject.create_file_from_content share_name, directory_name, file_name, length, content
       file, body = subject.get_file(share_name, directory_name, file_name)
       file.name.must_equal file_name
       file.properties[:content_length].must_equal length
@@ -81,7 +81,7 @@ describe Azure::Storage::File::FileService do
         local_file = File.open file_name, "w+"
         local_file.write content
         local_file.seek 0
-        subject.create_file_with_content share_name, directory_name, file_name, length, local_file
+        subject.create_file_from_content share_name, directory_name, file_name, length, local_file
         file, body = subject.get_file(share_name, directory_name, file_name)
         file.name.must_equal file_name
         file.properties[:content_length].must_equal length

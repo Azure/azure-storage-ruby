@@ -543,7 +543,7 @@ module Azure::Storage
     # See http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx
     #
     # Returns a Blob
-    def create_page_blob_with_content(container, blob, length, content, options = {})
+    def create_page_blob_from_content(container, blob, length, content, options = {})
       options[:content_type] = get_or_apply_content_type(content, options[:content_type])
       create_page_blob(container, blob, length, options)
 

@@ -138,12 +138,14 @@ module Azure::Storage
       # * +:use_path_style_uri+             - String. Whether use path style URI for specified endpoints
       # * +:ca_file+                        - String. File path of the CA file if having issue with SSL
       # * +:user_agent_prefix+              - String. The user agent prefix that can identify the application calls the library
+      # * +:client+                         - Azure::Storage::Common::Client. The common client used to initalize the service.
       #
       # The valid set of options include:
       # * Storage Emulator: +:use_development_storage+ required, +:development_storage_proxy_uri+ optionally
       # * Storage account name and key: +:storage_account_name+ and +:storage_access_key+ required, set +:storage_dns_suffix+ necessarily
       # * Storage account name and SAS token: +:storage_account_name+ and +:storage_sas_token+ required, set +:storage_dns_suffix+ necessarily
       # * Specified hosts and SAS token: At least one of the service host and SAS token. It's up to user to ensure the SAS token is suitable for the serivce
+      # * Azure::Storage::Common::Client: The common client used to initalize the service. This client can be initalized and used repeatedly.
       # * Anonymous File: only +:storage_file_host+, if it is to only access files within a container
       #
       # Additional notes:

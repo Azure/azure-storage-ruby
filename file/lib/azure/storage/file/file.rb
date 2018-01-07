@@ -653,7 +653,7 @@ module Azure::Storage::File
   # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/create-file
   #
   # Returns a File
-  def create_file_with_content(share, directory_path, file, length, content, options = {})
+  def create_file_from_content(share, directory_path, file, length, content, options = {})
     options[:content_type] = get_or_apply_content_type(content, options[:content_type])
     create_file(share, directory_path, file, length, options)
 

@@ -42,13 +42,13 @@ describe Azure::Storage::Blob::BlobService do
     subject.create_page_blob container_name, blob_name3, length
   }
 
-  describe "#create_page_blob_with_content" do
+  describe "#create_page_blob_from_content" do
     it "1MB string payload works" do
       length = 1 * 1024 * 1024
       content = SecureRandom.random_bytes(length)
       content.force_encoding "utf-8"
       blob_name = BlobNameHelper.name
-      subject.create_page_blob_with_content container_name, blob_name, length, content
+      subject.create_page_blob_from_content container_name, blob_name, length, content
       blob, body = subject.get_blob(container_name, blob_name)
       blob.name.must_equal blob_name
       blob.properties[:content_length].must_equal length
@@ -60,7 +60,7 @@ describe Azure::Storage::Blob::BlobService do
       length = 4 * 1024 * 1024
       content = SecureRandom.random_bytes(length)
       blob_name = BlobNameHelper.name
-      subject.create_page_blob_with_content container_name, blob_name, length, content
+      subject.create_page_blob_from_content container_name, blob_name, length, content
       blob, body = subject.get_blob(container_name, blob_name)
       blob.name.must_equal blob_name
       blob.properties[:content_length].must_equal length
@@ -72,7 +72,7 @@ describe Azure::Storage::Blob::BlobService do
       length = 5 * 1024 * 1024
       content = SecureRandom.random_bytes(length)
       blob_name = BlobNameHelper.name
-      subject.create_page_blob_with_content container_name, blob_name, length, content
+      subject.create_page_blob_from_content container_name, blob_name, length, content
       blob, body = subject.get_blob(container_name, blob_name)
       blob.name.must_equal blob_name
       blob.properties[:content_length].must_equal length
@@ -87,7 +87,7 @@ describe Azure::Storage::Blob::BlobService do
         file = File.open blob_name, "w+"
         file.write content
         file.seek 0
-        subject.create_page_blob_with_content container_name, blob_name, length, file
+        subject.create_page_blob_from_content container_name, blob_name, length, file
         blob, body = subject.get_blob(container_name, blob_name)
         blob.name.must_equal blob_name
         blob.properties[:content_length].must_equal length
