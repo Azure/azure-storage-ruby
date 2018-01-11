@@ -126,6 +126,11 @@ module Azure::Storage::Common
       def storage_file_host
         ENV["AZURE_STORAGE_FILE_HOST"]
       end
+
+      # A placeholder to map with the Azure::Storage::Common::Configurable.keys
+      # @return nil
+      def signer
+      end
     end
   end
 

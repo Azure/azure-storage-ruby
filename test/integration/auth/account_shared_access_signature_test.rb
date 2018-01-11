@@ -52,6 +52,10 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
       blob_properties.properties[:blob_type].must_equal "BlockBlob"
     end
 
+    it "access default signer would not throw exception"  do
+      Azure::Storage::Common::Default::signer.must_be_nil
+    end
+
     it "reads the blob properties with an object level SAS" do
       sas_token = generator.generate_account_sas_token service: "b", resource: "o", permissions: "r"
       client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })

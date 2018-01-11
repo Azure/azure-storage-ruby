@@ -203,6 +203,13 @@ describe Azure::Storage::Common::Client do
       restore_storage_instance_variables removed
     end
 
+    it "calls default options to see if valid"  do
+      options = Azure::Storage::Common::Default.options
+      for key in Azure::Storage::Common::Configurable::keys
+        options[key].must_be_nil
+      end
+    end
+
     it "should succeed if env vars are set and match the settings" do
       set_storage_envs(@account_key_options)
 
