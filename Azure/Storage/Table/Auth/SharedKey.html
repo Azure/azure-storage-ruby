@@ -6,7 +6,7 @@
 <title>
   Class: Azure::Storage::Table::Auth::SharedKey
   
-    &mdash; Documentation by YARD 0.9.9
+    &mdash; Documentation by YARD 0.9.12
   
 </title>
 
@@ -69,14 +69,12 @@
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName"><span class='object_link'><a href="../../Core/Auth/SharedKey.html" title="Azure::Storage::Core::Auth::SharedKey (class)">Core::Auth::SharedKey</a></span></span>
+      <span class="inheritName">Common::Core::Auth::SharedKey</span>
       
         <ul class="fullTree">
           <li>Object</li>
           
-            <li class="next">Core::Auth::SharedKey</li>
-          
-            <li class="next"><span class='object_link'><a href="../../Core/Auth/SharedKey.html" title="Azure::Storage::Core::Auth::SharedKey (class)">Core::Auth::SharedKey</a></span></li>
+            <li class="next">Common::Core::Auth::SharedKey</li>
           
             <li class="next">Azure::Storage::Table::Auth::SharedKey</li>
           
@@ -98,7 +96,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/azure/storage/table/auth/shared_key.rb</dd>
+    <dd>table/lib/azure/storage/table/auth/shared_key.rb</dd>
   </dl>
   
 </div>
@@ -205,12 +203,6 @@
 
 
   
-  
-  
-  
-  
-  
-  
   <div id="instance_attr_details" class="attr_details">
     <h2>Instance Attribute Details</h2>
     
@@ -247,7 +239,7 @@
 36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/auth/shared_key.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/auth/shared_key.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_account_name'>account_name</span>
   <span class='ivar'>@account_name</span>
@@ -267,7 +259,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="canonicalized_resource-instance_method">
   
-    #<strong>canonicalized_resource</strong>(uri)  &#x21d2; <tt><span class='object_link'><a href="../../../../String.html" title="String (class)">String</a></span></tt> 
+    #<strong>canonicalized_resource</strong>(uri)  &#x21d2; <tt>String</tt> 
   
 
   
@@ -309,7 +301,7 @@
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../../String.html" title="String (class)">String</a></span></tt>)</span>
+        <span class='type'>(<tt>String</tt>)</span>
       
       
       
@@ -338,7 +330,7 @@
 65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/auth/shared_key.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/auth/shared_key.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_canonicalized_resource'>canonicalized_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_resource'>resource</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_account_name'>account_name</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -444,7 +436,7 @@
 51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/auth/shared_key.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/auth/shared_key.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_signable_string'>signable_string</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='lbracket'>[</span>
@@ -465,9 +457,9 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Nov 17 12:03:09 2017 by
+  Generated on Thu Jan 11 16:12:04 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.4.1).
+  0.9.12 (ruby-2.4.1).
 </div>
 
     </div>

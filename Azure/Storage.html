@@ -6,7 +6,7 @@
 <title>
   Module: Azure::Storage
   
-    &mdash; Documentation by YARD 0.9.9
+    &mdash; Documentation by YARD 0.9.12
   
 </title>
 
@@ -69,16 +69,11 @@
 
   
   
-  <dl>
-      <dt>Extended by:</dt>
-      <dd><span class='object_link'><a href="Storage/Configurable.html" title="Azure::Storage::Configurable (module)">Configurable</a></span></dd>
-  </dl>
-  
   
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="Storage/Service.html" title="Azure::Storage::Service (module)">Service</a></span></dd>
+      <dd>Common::Service</dd>
   </dl>
   
   
@@ -88,8 +83,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/azure/storage/blob/blob.rb<span class="defines">,<br />
-  lib/azure/storage.rb,<br /> lib/azure/storage/core.rb,<br /> lib/azure/storage/client.rb,<br /> lib/azure/storage/core/sr.rb,<br /> lib/azure/storage/default.rb,<br /> lib/azure/storage/version.rb,<br /> lib/azure/storage/autoload.rb,<br /> lib/azure/storage/blob/page.rb,<br /> lib/azure/storage/blob/block.rb,<br /> lib/azure/storage/table/guid.rb,<br /> lib/azure/storage/blob/append.rb,<br /> lib/azure/storage/queue/queue.rb,<br /> lib/azure/storage/table/batch.rb,<br /> lib/azure/storage/table/query.rb,<br /> lib/azure/storage/configurable.rb,<br /> lib/azure/storage/core/utility.rb,<br /> lib/azure/storage/service/cors.rb,<br /> lib/azure/storage/table/entity.rb,<br /> lib/azure/storage/core/autoload.rb,<br /> lib/azure/storage/queue/message.rb,<br /> lib/azure/storage/table/edmtype.rb,<br /> lib/azure/storage/client_options.rb,<br /> lib/azure/storage/service/logging.rb,<br /> lib/azure/storage/service/metrics.rb,<br /> lib/azure/storage/blob/blob_service.rb,<br /> lib/azure/storage/file/file_service.rb,<br /> lib/azure/storage/service/cors_rule.rb,<br /> lib/azure/storage/blob/serialization.rb,<br /> lib/azure/storage/file/serialization.rb,<br /> lib/azure/storage/queue/queue_service.rb,<br /> lib/azure/storage/queue/serialization.rb,<br /> lib/azure/storage/table/serialization.rb,<br /> lib/azure/storage/table/table_service.rb,<br /> lib/azure/storage/client_options_error.rb,<br /> lib/azure/storage/table/batch_response.rb,<br /> lib/azure/storage/service/access_policy.rb,<br /> lib/azure/storage/service/serialization.rb,<br /> lib/azure/storage/table/auth/shared_key.rb,<br /> lib/azure/storage/service/geo_replication.rb,<br /> lib/azure/storage/service/storage_service.rb,<br /> lib/azure/storage/service/retention_policy.rb,<br /> lib/azure/storage/service/signed_identifier.rb,<br /> lib/azure/storage/service/storage_service_stats.rb,<br /> lib/azure/storage/service/storage_service_properties.rb</span>
+    <dd>table/lib/azure/storage/table/entity.rb<span class="defines">,<br />
+  blob/lib/azure/storage/blob/version.rb,<br /> blob/lib/azure/storage/blob/autoload.rb,<br /> blob/lib/azure/storage/blob/blob_service.rb,<br /> blob/lib/azure/storage/blob/serialization.rb,<br /> table/lib/azure/storage/table/guid.rb,<br /> table/lib/azure/storage/table/batch.rb,<br /> table/lib/azure/storage/table/query.rb,<br /> table/lib/azure/storage/table/edmtype.rb,<br /> table/lib/azure/storage/table/version.rb,<br /> table/lib/azure/storage/table/autoload.rb,<br /> table/lib/azure/storage/table/serialization.rb,<br /> table/lib/azure/storage/table/table_service.rb,<br /> table/lib/azure/storage/table/batch_response.rb,<br /> table/lib/azure/storage/table/auth/shared_key.rb,<br /> file/lib/azure/storage/file/version.rb,<br /> file/lib/azure/storage/file/autoload.rb,<br /> file/lib/azure/storage/file/file_service.rb,<br /> file/lib/azure/storage/file/serialization.rb,<br /> queue/lib/azure/storage/queue/queue.rb,<br /> queue/lib/azure/storage/queue/message.rb,<br /> queue/lib/azure/storage/queue/version.rb,<br /> queue/lib/azure/storage/queue/autoload.rb,<br /> queue/lib/azure/storage/queue/queue_service.rb,<br /> queue/lib/azure/storage/queue/serialization.rb,<br /> blob/lib/azure/storage/blob/append.rb,<br /> blob/lib/azure/storage/blob/block.rb,<br /> blob/lib/azure/storage/blob/page.rb,<br /> blob/lib/azure/storage/blob/blob.rb</span>
 </dd>
   </dl>
   
@@ -117,11 +112,9 @@ DEALINGS IN THE SOFTWARE.</p>
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Storage/AclConstants.html" title="Azure::Storage::AclConstants (module)">AclConstants</a></span>, <span class='object_link'><a href="Storage/Auth.html" title="Azure::Storage::Auth (module)">Auth</a></span>, <span class='object_link'><a href="Storage/Blob.html" title="Azure::Storage::Blob (module)">Blob</a></span>, <span class='object_link'><a href="Storage/BlobConstants.html" title="Azure::Storage::BlobConstants (module)">BlobConstants</a></span>, <span class='object_link'><a href="Storage/BlobErrorCodeStrings.html" title="Azure::Storage::BlobErrorCodeStrings (module)">BlobErrorCodeStrings</a></span>, <span class='object_link'><a href="Storage/ClientOptions.html" title="Azure::Storage::ClientOptions (module)">ClientOptions</a></span>, <span class='object_link'><a href="Storage/Configurable.html" title="Azure::Storage::Configurable (module)">Configurable</a></span>, <span class='object_link'><a href="Storage/Core.html" title="Azure::Storage::Core (module)">Core</a></span>, <span class='object_link'><a href="Storage/Default.html" title="Azure::Storage::Default (module)">Default</a></span>, <span class='object_link'><a href="Storage/Error.html" title="Azure::Storage::Error (module)">Error</a></span>, <span class='object_link'><a href="Storage/File.html" title="Azure::Storage::File (module)">File</a></span>, <span class='object_link'><a href="Storage/FileConstants.html" title="Azure::Storage::FileConstants (module)">FileConstants</a></span>, <span class='object_link'><a href="Storage/FileErrorCodeStrings.html" title="Azure::Storage::FileErrorCodeStrings (module)">FileErrorCodeStrings</a></span>, <span class='object_link'><a href="Storage/HeaderConstants.html" title="Azure::Storage::HeaderConstants (module)">HeaderConstants</a></span>, <span class='object_link'><a href="Storage/HttpConstants.html" title="Azure::Storage::HttpConstants (module)">HttpConstants</a></span>, <span class='object_link'><a href="Storage/LocationMode.html" title="Azure::Storage::LocationMode (module)">LocationMode</a></span>, <span class='object_link'><a href="Storage/QueryStringConstants.html" title="Azure::Storage::QueryStringConstants (module)">QueryStringConstants</a></span>, <span class='object_link'><a href="Storage/Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span>, <span class='object_link'><a href="Storage/QueueConstants.html" title="Azure::Storage::QueueConstants (module)">QueueConstants</a></span>, <span class='object_link'><a href="Storage/QueueErrorCodeStrings.html" title="Azure::Storage::QueueErrorCodeStrings (module)">QueueErrorCodeStrings</a></span>, <span class='object_link'><a href="Storage/RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span>, <span class='object_link'><a href="Storage/SR.html" title="Azure::Storage::SR (module)">SR</a></span>, <span class='object_link'><a href="Storage/Service.html" title="Azure::Storage::Service (module)">Service</a></span>, <span class='object_link'><a href="Storage/ServicePropertiesConstants.html" title="Azure::Storage::ServicePropertiesConstants (module)">ServicePropertiesConstants</a></span>, <span class='object_link'><a href="Storage/ServiceType.html" title="Azure::Storage::ServiceType (module)">ServiceType</a></span>, <span class='object_link'><a href="Storage/StorageErrorCodeStrings.html" title="Azure::Storage::StorageErrorCodeStrings (module)">StorageErrorCodeStrings</a></span>, <span class='object_link'><a href="Storage/StorageLocation.html" title="Azure::Storage::StorageLocation (module)">StorageLocation</a></span>, <span class='object_link'><a href="Storage/StorageServiceClientConstants.html" title="Azure::Storage::StorageServiceClientConstants (module)">StorageServiceClientConstants</a></span>, <span class='object_link'><a href="Storage/Table.html" title="Azure::Storage::Table (module)">Table</a></span>, <span class='object_link'><a href="Storage/TableConstants.html" title="Azure::Storage::TableConstants (module)">TableConstants</a></span>, <span class='object_link'><a href="Storage/TableErrorCodeStrings.html" title="Azure::Storage::TableErrorCodeStrings (module)">TableErrorCodeStrings</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Storage/Blob.html" title="Azure::Storage::Blob (module)">Blob</a></span>, <span class='object_link'><a href="Storage/File.html" title="Azure::Storage::File (module)">File</a></span>, <span class='object_link'><a href="Storage/Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span>, <span class='object_link'><a href="Storage/Table.html" title="Azure::Storage::Table (module)">Table</a></span>
     
   
-    
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Storage/Client.html" title="Azure::Storage::Client (class)">Client</a></span>, <span class='object_link'><a href="Storage/InvalidConnectionStringError.html" title="Azure::Storage::InvalidConnectionStringError (class)">InvalidConnectionStringError</a></span>, <span class='object_link'><a href="Storage/InvalidOptionsError.html" title="Azure::Storage::InvalidOptionsError (class)">InvalidOptionsError</a></span>, <span class='object_link'><a href="Storage/Version.html" title="Azure::Storage::Version (class)">Version</a></span>
     
   
 </p>
@@ -129,10 +122,20 @@ DEALINGS IN THE SOFTWARE.</p>
   <h2>Constant Summary</h2>
   <dl class="constants">
     
+      <dt id="StorageService-constant" class="">StorageService =
+        
+      </dt>
+      <dd><pre class="code"><span class='const'><span class='object_link'><a href="../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Service</span><span class='op'>::</span><span class='const'>StorageService</span></pre></dd>
+    
       <dt id="BlobService-constant" class="">BlobService =
         
       </dt>
       <dd><pre class="code"><span class='const'><span class='object_link'><a href="../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Blob.html" title="Azure::Storage::Blob (module)">Blob</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Blob/BlobService.html" title="Azure::Storage::Blob::BlobService (class)">BlobService</a></span></span></pre></dd>
+    
+      <dt id="TableService-constant" class="">TableService =
+        
+      </dt>
+      <dd><pre class="code"><span class='const'><span class='object_link'><a href="../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Table.html" title="Azure::Storage::Table (module)">Table</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Table/TableService.html" title="Azure::Storage::Table::TableService (class)">TableService</a></span></span></pre></dd>
     
       <dt id="FileService-constant" class="">FileService =
         
@@ -144,11 +147,6 @@ DEALINGS IN THE SOFTWARE.</p>
       </dt>
       <dd><pre class="code"><span class='const'><span class='object_link'><a href="../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Queue/QueueService.html" title="Azure::Storage::Queue::QueueService (class)">QueueService</a></span></span></pre></dd>
     
-      <dt id="TableService-constant" class="">TableService =
-        
-      </dt>
-      <dd><pre class="code"><span class='const'><span class='object_link'><a href="../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'>Storage</span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Table.html" title="Azure::Storage::Table (module)">Table</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Table/TableService.html" title="Azure::Storage::Table::TableService (class)">TableService</a></span></span></pre></dd>
-    
   </dl>
 
 
@@ -156,108 +154,16 @@ DEALINGS IN THE SOFTWARE.</p>
 
 
 
-  <h2>Instance Attribute Summary</h2>
-  
-  <h3 class="inherited">Attributes included from <span class='object_link'><a href="Storage/Configurable.html" title="Azure::Storage::Configurable (module)">Configurable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Storage/Configurable.html#signer-instance_method" title="Azure::Storage::Configurable#signer (method)">#signer</a></span>, <span class='object_link'><a href="Storage/Configurable.html#storage_access_key-instance_method" title="Azure::Storage::Configurable#storage_access_key (method)">#storage_access_key</a></span>, <span class='object_link'><a href="Storage/Configurable.html#storage_account_name-instance_method" title="Azure::Storage::Configurable#storage_account_name (method)">#storage_account_name</a></span>, <span class='object_link'><a href="Storage/Configurable.html#storage_blob_host-instance_method" title="Azure::Storage::Configurable#storage_blob_host (method)">#storage_blob_host</a></span>, <span class='object_link'><a href="Storage/Configurable.html#storage_blob_host_secondary=-instance_method" title="Azure::Storage::Configurable#storage_blob_host_secondary= (method)">#storage_blob_host_secondary</a></span>, <span class='object_link'><a href="Storage/Configurable.html#storage_connection_string-instance_method" title="Azure::Storage::Configurable#storage_connection_string (method)">#storage_connection_string</a></span>, <span class='object_link'><a href="Storage/Configurable.html#storage_file_host-instance_method" title="Azure::Storage::Configurable#storage_file_host (method)">#storage_file_host</a></span>, <span class='object_link'><a href="Storage/Configurable.html#storage_file_host_secondary=-instance_method" title="Azure::Storage::Configurable#storage_file_host_secondary= (method)">#storage_file_host_secondary</a></span>, <span class='object_link'><a href="Storage/Configurable.html#storage_queue_host-instance_method" title="Azure::Storage::Configurable#storage_queue_host (method)">#storage_queue_host</a></span>, <span class='object_link'><a href="Storage/Configurable.html#storage_queue_host_secondary=-instance_method" title="Azure::Storage::Configurable#storage_queue_host_secondary= (method)">#storage_queue_host_secondary</a></span>, <span class='object_link'><a href="Storage/Configurable.html#storage_sas_token-instance_method" title="Azure::Storage::Configurable#storage_sas_token (method)">#storage_sas_token</a></span>, <span class='object_link'><a href="Storage/Configurable.html#storage_table_host-instance_method" title="Azure::Storage::Configurable#storage_table_host (method)">#storage_table_host</a></span>, <span class='object_link'><a href="Storage/Configurable.html#storage_table_host_secondary=-instance_method" title="Azure::Storage::Configurable#storage_table_host_secondary= (method)">#storage_table_host_secondary</a></span></p>
 
 
   
-    <h2>
-      Class Method Summary
-      <small><a href="#" class="summary_toggle">collapse</a></small>
-    </h2>
-
-    <ul class="summary">
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#client-class_method" title="client (class method)">.<strong>client</strong>(options = {})  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-    </ul>
-  
-
-
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="Storage/Configurable.html" title="Azure::Storage::Configurable (module)">Configurable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Storage/Configurable.html#config-instance_method" title="Azure::Storage::Configurable#config (method)">config</a></span>, <span class='object_link'><a href="Storage/Configurable.html#configure-instance_method" title="Azure::Storage::Configurable#configure (method)">configure</a></span>, <span class='object_link'><a href="Storage/Configurable.html#keys-class_method" title="Azure::Storage::Configurable.keys (method)">keys</a></span>, <span class='object_link'><a href="Storage/Configurable.html#reset_config!-instance_method" title="Azure::Storage::Configurable#reset_config! (method)">reset_config!</a></span></p>
-
-  
-  
-  
-  
-  
-  
-
-  <div id="class_method_details" class="method_details_list">
-    <h2>Class Method Details</h2>
-
-    
-      <div class="method_details first">
-  <h3 class="signature first" id="client-class_method">
-  
-    .<strong>client</strong>(options = {})  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-42
-43
-44
-45</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage.rb', line 42</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_client'>client</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='ivar'>@client</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Client.html" title="Azure::Storage::Client (class)">Client</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Storage/Client.html#initialize-instance_method" title="Azure::Storage::Client#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@client</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@client</span><span class='period'>.</span><span class='id identifier rubyid_same_options?'>same_options?</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
-  <span class='ivar'>@client</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
 
 </div>
 
       <div id="footer">
-  Generated on Fri Nov 17 12:03:02 2017 by
+  Generated on Thu Jan 11 16:11:58 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.4.1).
+  0.9.12 (ruby-2.4.1).
 </div>
 
     </div>

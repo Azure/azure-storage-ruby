@@ -6,7 +6,7 @@
 <title>
   Module: Azure::Storage::File::Share
   
-    &mdash; Documentation by YARD 0.9.9
+    &mdash; Documentation by YARD 0.9.12
   
 </title>
 
@@ -73,7 +73,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="../Service.html" title="Azure::Storage::Service (module)">Service</a></span></dd>
+      <dd>Common::Service</dd>
   </dl>
   
   
@@ -88,7 +88,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/azure/storage/file/share.rb</dd>
+    <dd>file/lib/azure/storage/file/share.rb</dd>
   </dl>
   
 </div>
@@ -339,11 +339,6 @@
 
 
   
-  
-  
-  
-  
-  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -432,7 +427,7 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/cre
 88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/share.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/share.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_share'>create_share</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -443,15 +438,15 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/cre
 </span>  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_share_uri'>share_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
 
   <span class='comment'># Headers
-</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_common_headers'><span class='object_link'><a href="../Service/StorageService.html#common_headers-class_method" title="Azure::Storage::Service::StorageService.common_headers (method)">common_headers</a></span></span>
-  <span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'><span class='object_link'><a href="../Service/StorageService.html#add_metadata_to_headers-class_method" title="Azure::Storage::Service::StorageService.add_metadata_to_headers (method)">add_metadata_to_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='const'><span class='object_link'><a href="../File.html#StorageService-constant" title="Azure::Storage::File::StorageService (constant)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'>add_metadata_to_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-share-quota</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:quota</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:quota</span><span class='rbracket'>]</span>
 
   <span class='comment'># Call
 </span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># result
-</span>  <span class='id identifier rubyid_share'>share</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_share_from_headers'>share_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_share'>share</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::File::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_share_from_headers'><span class='object_link'><a href="Serialization.html#share_from_headers-class_method" title="Azure::Storage::File::Serialization.share_from_headers (method)">share_from_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
   <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_quota'>quota</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:quota</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:quota</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
@@ -525,7 +520,7 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/del
 254</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/share.rb', line 244</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/share.rb', line 244</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_share'>delete_share</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -621,7 +616,7 @@ signed_identifiers          - A list of Azure::Storage::Service::SignedIdentifie
 295</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/share.rb', line 278</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/share.rb', line 278</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_share_acl'>get_share_acl</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -629,15 +624,15 @@ signed_identifiers          - A list of Azure::Storage::Service::SignedIdentifie
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
   <span class='comment'># Call
-</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>RequestLocationMode</span><span class='op'>::</span><span class='const'>PRIMARY_OR_SECONDARY</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_share_uri'>share_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># Result
-</span>  <span class='id identifier rubyid_share'>share</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_share_from_headers'>share_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_share'>share</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::File::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_share_from_headers'><span class='object_link'><a href="Serialization.html#share_from_headers-class_method" title="Azure::Storage::File::Serialization.share_from_headers (method)">share_from_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
 
   <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='kw'>nil</span>
-  <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_from_xml'><span class='object_link'><a href="../Service/Serialization/ClassMethods.html#signed_identifiers_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#signed_identifiers_from_xml (method)">signed_identifiers_from_xml</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>!=</span> <span class='kw'>nil</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+  <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::File::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_from_xml'>signed_identifiers_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>!=</span> <span class='kw'>nil</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
 
   <span class='kw'>return</span> <span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span>
 <span class='kw'>end</span></pre>
@@ -717,7 +712,7 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
 191</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/share.rb', line 178</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/share.rb', line 178</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_share_metadata'>get_share_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -725,11 +720,11 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
   <span class='comment'># Call
-</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>RequestLocationMode</span><span class='op'>::</span><span class='const'>PRIMARY_OR_SECONDARY</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_share_uri'>share_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># result
-</span>  <span class='id identifier rubyid_share'>share</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_share_from_headers'>share_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_share'>share</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::File::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_share_from_headers'><span class='object_link'><a href="Serialization.html#share_from_headers-class_method" title="Azure::Storage::File::Serialization.share_from_headers (method)">share_from_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
   <span class='id identifier rubyid_share'>share</span>
 <span class='kw'>end</span></pre>
@@ -809,7 +804,7 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
 122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/share.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/share.rb', line 109</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_share_properties'>get_share_properties</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -817,11 +812,11 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
   <span class='comment'># Call
-</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>RequestLocationMode</span><span class='op'>::</span><span class='const'>PRIMARY_OR_SECONDARY</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_share_uri'>share_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># result
-</span>  <span class='id identifier rubyid_share'>share</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_share_from_headers'>share_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_share'>share</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::File::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_share_from_headers'><span class='object_link'><a href="Serialization.html#share_from_headers-class_method" title="Azure::Storage::File::Serialization.share_from_headers (method)">share_from_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
   <span class='id identifier rubyid_share'>share</span>
 <span class='kw'>end</span></pre>
@@ -902,7 +897,7 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
 375</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/share.rb', line 361</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/share.rb', line 361</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_share_stats'>get_share_stats</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -910,13 +905,13 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
   <span class='comment'># Call
-</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>RequestLocationMode</span><span class='op'>::</span><span class='const'>PRIMARY_OR_SECONDARY</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_share_uri'>share_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># result
-</span>  <span class='id identifier rubyid_share'>share</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_share_from_headers'>share_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_share'>share</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::File::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_share_from_headers'><span class='object_link'><a href="Serialization.html#share_from_headers-class_method" title="Azure::Storage::File::Serialization.share_from_headers (method)">share_from_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
-  <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_usage'>usage</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_share_stats_from_xml'>share_stats_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_usage'>usage</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::File::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_share_stats_from_xml'><span class='object_link'><a href="Serialization.html#share_stats_from_xml-class_method" title="Azure::Storage::File::Serialization.share_stats_from_xml (method)">share_stats_from_xml</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_share'>share</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1009,7 +1004,7 @@ Azure::Storage::Service::SignedIdentifier instances</p>
 340</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/share.rb', line 318</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/share.rb', line 318</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_share_acl'>set_share_acl</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1020,16 +1015,16 @@ Azure::Storage::Service::SignedIdentifier instances</p>
 </span>  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_share_uri'>share_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
 
   <span class='comment'># Headers + body
-</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_common_headers'><span class='object_link'><a href="../Service/StorageService.html#common_headers-class_method" title="Azure::Storage::Service::StorageService.common_headers (method)">common_headers</a></span></span>
+</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='kw'>nil</span>
-  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>?</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_to_xml'><span class='object_link'><a href="../Service/Serialization/ClassMethods.html#signed_identifiers_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#signed_identifiers_to_xml (method)">signed_identifiers_to_xml</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='kw'>nil</span>
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>?</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::File::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_to_xml'>signed_identifiers_to_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='kw'>nil</span>
 
   <span class='comment'># Call
 </span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># Result
-</span>  <span class='id identifier rubyid_share'>share</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_share_from_headers'>share_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_share'>share</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::File::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_share_from_headers'><span class='object_link'><a href="Serialization.html#share_from_headers-class_method" title="Azure::Storage::File::Serialization.share_from_headers (method)">share_from_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_share'>share</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
 
   <span class='kw'>return</span> <span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1109,7 +1104,7 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set
 225</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/share.rb', line 211</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/share.rb', line 211</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_share_metadata'>set_share_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1117,8 +1112,8 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
   <span class='comment'># Headers
-</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_common_headers'><span class='object_link'><a href="../Service/StorageService.html#common_headers-class_method" title="Azure::Storage::Service::StorageService.common_headers (method)">common_headers</a></span></span>
-  <span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'><span class='object_link'><a href="../Service/StorageService.html#add_metadata_to_headers-class_method" title="Azure::Storage::Service::StorageService.add_metadata_to_headers (method)">add_metadata_to_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_metadata'>metadata</span>
+</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='const'><span class='object_link'><a href="../File.html#StorageService-constant" title="Azure::Storage::File::StorageService (constant)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'>add_metadata_to_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_metadata'>metadata</span>
 
   <span class='comment'># Call
 </span>  <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_share_uri'>share_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -1203,7 +1198,7 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set
 157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/file/share.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/share.rb', line 143</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_share_properties'>set_share_properties</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1211,7 +1206,7 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
   <span class='comment'># Headers
-</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_common_headers'><span class='object_link'><a href="../Service/StorageService.html#common_headers-class_method" title="Azure::Storage::Service::StorageService.common_headers (method)">common_headers</a></span></span>
+</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-share-quota</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:quota</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:quota</span><span class='rbracket'>]</span>
 
   <span class='comment'># Call
@@ -1230,9 +1225,9 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set
 </div>
 
       <div id="footer">
-  Generated on Fri Nov 17 12:03:05 2017 by
+  Generated on Thu Jan 11 16:12:01 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.4.1).
+  0.9.12 (ruby-2.4.1).
 </div>
 
     </div>

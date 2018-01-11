@@ -6,7 +6,7 @@
 <title>
   Module: Azure::Storage::Blob::Container
   
-    &mdash; Documentation by YARD 0.9.9
+    &mdash; Documentation by YARD 0.9.12
   
 </title>
 
@@ -73,7 +73,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="../Service.html" title="Azure::Storage::Service (module)">Service</a></span></dd>
+      <dd>Common::Service</dd>
   </dl>
   
   
@@ -88,7 +88,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/azure/storage/blob/container.rb</dd>
+    <dd>blob/lib/azure/storage/blob/container.rb</dd>
   </dl>
   
 </div>
@@ -437,11 +437,6 @@ container.</p>
 
 
   
-  
-  
-  
-  
-  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -546,7 +541,7 @@ or release the lease.</p>
 380</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 378</span>
+      <pre class="code"><span class="info file"># File 'blob/lib/azure/storage/blob/container.rb', line 378</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_acquire_container_lease'>acquire_container_lease</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_acquire_lease'>acquire_lease</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
@@ -664,7 +659,7 @@ immediate, 0 is returned.</p>
 543</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 541</span>
+      <pre class="code"><span class="info file"># File 'blob/lib/azure/storage/blob/container.rb', line 541</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_break_container_lease'>break_container_lease</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_break_lease'>break_lease</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
@@ -766,7 +761,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx">msdn.microsof
 455</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 453</span>
+      <pre class="code"><span class="info file"># File 'blob/lib/azure/storage/blob/container.rb', line 453</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_change_container_lease'>change_container_lease</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_proposed_lease'>proposed_lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_change_lease'>change_lease</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_proposed_lease'>proposed_lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
@@ -856,7 +851,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179468.aspx">msdn.microsof
 84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'blob/lib/azure/storage/blob/container.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_container'>create_container</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -867,15 +862,15 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179468.aspx">msdn.microsof
 </span>  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
 
   <span class='comment'># Headers
-</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_common_headers'><span class='object_link'><a href="../Service/StorageService.html#common_headers-class_method" title="Azure::Storage::Service::StorageService.common_headers (method)">common_headers</a></span></span>
-  <span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'><span class='object_link'><a href="../Service/StorageService.html#add_metadata_to_headers-class_method" title="Azure::Storage::Service::StorageService.add_metadata_to_headers (method)">add_metadata_to_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='const'><span class='object_link'><a href="../../Storage.html#StorageService-constant" title="Azure::Storage::StorageService (constant)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'>add_metadata_to_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-public-access</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:public_access_level</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:public_access_level</span><span class='rbracket'>]</span>
 
   <span class='comment'># Call
 </span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># result
-</span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'>container_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Blob::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'><span class='object_link'><a href="Serialization.html#container_from_headers-class_method" title="Azure::Storage::Blob::Serialization.container_from_headers (method)">container_from_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
   <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_container'>container</span>
@@ -958,7 +953,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179408.aspx">msdn.microsof
 338</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 326</span>
+      <pre class="code"><span class="info file"># File 'blob/lib/azure/storage/blob/container.rb', line 326</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_container'>delete_container</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1065,7 +1060,7 @@ signed_identifiers  - A list of Azure::Storage::Entity::SignedIdentifier instanc
 247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 228</span>
+      <pre class="code"><span class="info file"># File 'blob/lib/azure/storage/blob/container.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_container_acl'>get_container_acl</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1075,15 +1070,15 @@ signed_identifiers  - A list of Azure::Storage::Entity::SignedIdentifier instanc
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='rbrace'>}</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
 
   <span class='comment'># Call
-</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>RequestLocationMode</span><span class='op'>::</span><span class='const'>PRIMARY_OR_SECONDARY</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># Result
-</span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'>container_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Blob::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'><span class='object_link'><a href="Serialization.html#container_from_headers-class_method" title="Azure::Storage::Blob::Serialization.container_from_headers (method)">container_from_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
 
   <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='kw'>nil</span>
-  <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_from_xml'><span class='object_link'><a href="../Service/Serialization/ClassMethods.html#signed_identifiers_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#signed_identifiers_from_xml (method)">signed_identifiers_from_xml</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>!=</span> <span class='kw'>nil</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+  <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Blob::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_from_xml'>signed_identifiers_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>!=</span> <span class='kw'>nil</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
 
   <span class='kw'>return</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span>
 <span class='kw'>end</span></pre>
@@ -1171,7 +1166,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691976.aspx">msdn.microsof
 162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'blob/lib/azure/storage/blob/container.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_container_metadata'>get_container_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1181,11 +1176,11 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691976.aspx">msdn.microsof
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='rbrace'>}</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
 
   <span class='comment'># Call
-</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>RequestLocationMode</span><span class='op'>::</span><span class='const'>PRIMARY_OR_SECONDARY</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># result
-</span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'>container_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Blob::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'><span class='object_link'><a href="Serialization.html#container_from_headers-class_method" title="Azure::Storage::Blob::Serialization.container_from_headers (method)">container_from_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
   <span class='id identifier rubyid_container'>container</span>
 <span class='kw'>end</span></pre>
@@ -1273,7 +1268,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179370.aspx">msdn.microsof
 123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'blob/lib/azure/storage/blob/container.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_container_properties'>get_container_properties</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1283,11 +1278,11 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179370.aspx">msdn.microsof
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='rbrace'>}</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
 
   <span class='comment'># Call
-</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>RequestLocationMode</span><span class='op'>::</span><span class='const'>PRIMARY_OR_SECONDARY</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># result
-</span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'>container_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Blob::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'><span class='object_link'><a href="Serialization.html#container_from_headers-class_method" title="Azure::Storage::Blob::Serialization.container_from_headers (method)">container_from_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
   <span class='id identifier rubyid_container'>container</span>
 <span class='kw'>end</span></pre>
@@ -1340,7 +1335,7 @@ be a single character or a string.</code></pre>
 portion of the</p>
 
 <pre class="code ruby"><code class="ruby">list to be returned. This value comes from the property
-Azure::Service::EnumerationResults.continuation_token when
+Azure::Storage::Common::EnumerationResults.continuation_token when
 there are more blobs available than were returned. The
 marker value may then be used here to request the next set
 of list items. (optional)</code></pre>
@@ -1356,7 +1351,7 @@ status code 400 (Bad Request). (optional)</code></pre>
 <p><code>:metadata</code>         - Boolean. Specifies whether or not to
 return the blob metadata.</p>
 
-<pre class="code ruby"><code class="ruby"><span class='lparen'>(</span><span class='id identifier rubyid_optional'>optional</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Default.html" title="Azure::Storage::Default (module)">Default</a></span></span><span class='op'>=</span><span class='kw'>false</span><span class='rparen'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='lparen'>(</span><span class='id identifier rubyid_optional'>optional</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::Blob::Default (module)">Default</a></span></span><span class='op'>=</span><span class='kw'>false</span><span class='rparen'>)</span>
 </code></pre>
 </li><li>
 <p><code>:snapshots</code>        - Boolean. Specifies that snapshots should
@@ -1403,7 +1398,7 @@ returned with the key “x-ms-invalid-name” in the metadata hash. This may
 contain multiple values and be an Array (vs a String if it only contains a
 single value).</p>
 
-<p>Returns an Azure::Service::EnumerationResults</p>
+<p>Returns an Azure::Storage::Common::EnumerationResults</p>
 
 
   </div>
@@ -1450,7 +1445,7 @@ single value).</p>
 632</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 602</span>
+      <pre class="code"><span class="info file"># File 'blob/lib/azure/storage/blob/container.rb', line 602</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list_blobs'>list_blobs</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1470,7 +1465,7 @@ single value).</p>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>include</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_included_datasets'>included_datasets</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>,</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_included_datasets'>included_datasets</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
 
   <span class='comment'># Scheme + path
-</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>RequestLocationMode</span><span class='op'>::</span><span class='const'>PRIMARY_OR_SECONDARY</span>
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># Call
@@ -1478,7 +1473,7 @@ single value).</p>
 
   <span class='comment'># Result
 </span>  <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
-    <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_blob_enumeration_results_from_xml'>blob_enumeration_results_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Blob::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_blob_enumeration_results_from_xml'><span class='object_link'><a href="Serialization.html#blob_enumeration_results_from_xml-class_method" title="Azure::Storage::Blob::Serialization.blob_enumeration_results_from_xml (method)">blob_enumeration_results_from_xml</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_exception'>exception</span>
   <span class='kw'>end</span>
@@ -1578,7 +1573,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx">msdn.microsof
 492</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 490</span>
+      <pre class="code"><span class="info file"># File 'blob/lib/azure/storage/blob/container.rb', line 490</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_release_container_lease'>release_container_lease</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_release_lease'>release_lease</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
@@ -1679,7 +1674,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx">msdn.microsof
 418</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 416</span>
+      <pre class="code"><span class="info file"># File 'blob/lib/azure/storage/blob/container.rb', line 416</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_renew_container_lease'>renew_container_lease</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_renew_lease'>renew_lease</span> <span class='id identifier rubyid_container'>container</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_lease'>lease</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
@@ -1791,7 +1786,7 @@ Azure::Storage::Entity::SignedIdentifier instances</p>
 302</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 274</span>
+      <pre class="code"><span class="info file"># File 'blob/lib/azure/storage/blob/container.rb', line 274</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_container_acl'>set_container_acl</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_public_access_level'>public_access_level</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1802,7 +1797,7 @@ Azure::Storage::Entity::SignedIdentifier instances</p>
 </span>  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_container_uri'>container_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
 
   <span class='comment'># Headers + body
-</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_common_headers'><span class='object_link'><a href="../Service/StorageService.html#common_headers-class_method" title="Azure::Storage::Service::StorageService.common_headers (method)">common_headers</a></span></span>
+</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-blob-public-access</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_public_access_level'>public_access_level</span> <span class='kw'>if</span> <span class='id identifier rubyid_public_access_level'>public_access_level</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_public_access_level'>public_access_level</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
   <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span>
 
@@ -1810,13 +1805,13 @@ Azure::Storage::Entity::SignedIdentifier instances</p>
   <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='kw'>nil</span>
-  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_to_xml'><span class='object_link'><a href="../Service/Serialization/ClassMethods.html#signed_identifiers_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#signed_identifiers_to_xml (method)">signed_identifiers_to_xml</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span>
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Blob::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_to_xml'>signed_identifiers_to_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span>
 
   <span class='comment'># Call
 </span>  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='comment'># Result
-</span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/Serialization.html" title="Azure::Storage::Service::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'>container_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_container'>container</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Blob::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_container_from_headers'><span class='object_link'><a href="Serialization.html#container_from_headers-class_method" title="Azure::Storage::Blob::Serialization.container_from_headers (method)">container_from_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
   <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_public_access_level'>public_access_level</span> <span class='op'>=</span> <span class='id identifier rubyid_public_access_level'>public_access_level</span>
 
@@ -1904,7 +1899,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179362.aspx">msdn.microsof
 200</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/blob/container.rb', line 185</span>
+      <pre class="code"><span class="info file"># File 'blob/lib/azure/storage/blob/container.rb', line 185</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_container_metadata'>set_container_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># Query
@@ -1912,8 +1907,8 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179362.aspx">msdn.microsof
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
   <span class='comment'># Headers
-</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_common_headers'><span class='object_link'><a href="../Service/StorageService.html#common_headers-class_method" title="Azure::Storage::Service::StorageService.common_headers (method)">common_headers</a></span></span>
-  <span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'><span class='object_link'><a href="../Service/StorageService.html#add_metadata_to_headers-class_method" title="Azure::Storage::Service::StorageService.add_metadata_to_headers (method)">add_metadata_to_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_metadata'>metadata</span>
+</span>  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='const'><span class='object_link'><a href="../../Storage.html#StorageService-constant" title="Azure::Storage::StorageService (constant)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'>add_metadata_to_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_metadata'>metadata</span>
   <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-lease-id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lease_id</span><span class='rbracket'>]</span>
 
   <span class='comment'># Call
@@ -1932,9 +1927,9 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179362.aspx">msdn.microsof
 </div>
 
       <div id="footer">
-  Generated on Fri Nov 17 12:03:05 2017 by
+  Generated on Thu Jan 11 16:12:00 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.4.1).
+  0.9.12 (ruby-2.4.1).
 </div>
 
     </div>

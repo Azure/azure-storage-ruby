@@ -6,7 +6,7 @@
 <title>
   Module: Azure::Storage::Table::BatchResponse
   
-    &mdash; Documentation by YARD 0.9.9
+    &mdash; Documentation by YARD 0.9.12
   
 </title>
 
@@ -78,7 +78,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/azure/storage/table/batch_response.rb</dd>
+    <dd>table/lib/azure/storage/table/batch_response.rb</dd>
   </dl>
   
 </div>
@@ -233,7 +233,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#parse-class_method" title="parse (class method)">.<strong>parse</strong>(data)  &#x21d2; Object </a>
+      <a href="#parse-class_method" title="parse (class method)">.<strong>parse</strong>(data, is_get)  &#x21d2; Object </a>
     
 
     
@@ -342,13 +342,13 @@
       <pre class="lines">
 
 
-117
-118
-119
-120</pre>
+123
+124
+125
+126</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch_response.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/batch_response.rb', line 123</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_batch_boundary'>batch_boundary</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>--batchresponse_(.*)</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_current_line'>current_line</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -374,22 +374,22 @@
       <pre class="lines">
 
 
-103
-104
-105
-106
-107
-108
 109
 110
 111
 112
 113
 114
-115</pre>
+115
+116
+117
+118
+119
+120
+121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch_response.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/batch_response.rb', line 109</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_batch_headers'>batch_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(.*): (.*)</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_current_line'>current_line</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -424,19 +424,19 @@
       <pre class="lines">
 
 
-96
-97
-98
-99
-100
-101</pre>
+102
+103
+104
+105
+106
+107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch_response.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/batch_response.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_changeset_boundary_or_end'>changeset_boundary_or_end</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_match_boundary'>match_boundary</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>--changesetresponse_(.*)</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_current_line'>current_line</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_match_end'>match_end</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>--changesetresponse_(.*)--</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_current_line'>current_line</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_match_end'>match_end</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>--changesetresponse_(.*)--</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_current_line'>current_line</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>--batchresponse_(.*)--</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_current_line'>current_line</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span><span class='rparen'>)</span>
 
   <span class='lparen'>(</span><span class='id identifier rubyid_match_boundary'>match_boundary</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='kw'>not</span> <span class='id identifier rubyid_match_end'>match_end</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='symbol'>:boundary</span> <span class='op'>:</span> <span class='lparen'>(</span><span class='id identifier rubyid_match_end'>match_end</span> <span class='op'>?</span> <span class='symbol'>:end</span> <span class='op'>:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -460,12 +460,12 @@
       <pre class="lines">
 
 
-92
-93
-94</pre>
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch_response.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/batch_response.rb', line 98</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_changeset_headers'>changeset_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_current_line'>current_line</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
@@ -490,12 +490,12 @@
       <pre class="lines">
 
 
-122
-123
-124</pre>
+128
+129
+130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch_response.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/batch_response.rb', line 128</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_line'>current_line</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_context'>context</span><span class='lbracket'>[</span><span class='symbol'>:lines</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_context'>context</span><span class='lbracket'>[</span><span class='symbol'>:index</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
@@ -520,16 +520,16 @@
       <pre class="lines">
 
 
-47
-48
-49
-50
-51
-52
-53</pre>
+53
+54
+55
+56
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch_response.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/batch_response.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>while</span> <span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='lbracket'>[</span><span class='symbol'>:index</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_context'>context</span><span class='lbracket'>[</span><span class='symbol'>:lines</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='rparen'>)</span>
@@ -546,7 +546,7 @@
       <div class="method_details ">
   <h3 class="signature " id="parse-class_method">
   
-    .<strong>parse</strong>(data)  &#x21d2; <tt>Object</tt> 
+    .<strong>parse</strong>(data, is_get)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -576,12 +576,18 @@
 42
 43
 44
-45</pre>
+45
+46
+47
+48
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch_response.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/batch_response.rb', line 27</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_is_get'>is_get</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='lbrace'>{</span>
     <span class='label'>lines:</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_lines'>lines</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='comma'>,</span>
     <span class='label'>index:</span> <span class='int'>0</span><span class='comma'>,</span>
@@ -591,11 +597,17 @@
   <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_batch_boundary'>batch_boundary</span> <span class='id identifier rubyid_c'>c</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_batch_headers'>batch_headers</span> <span class='id identifier rubyid_c'>c</span> <span class='rbrace'>}</span>
 
-  <span class='kw'>while</span> <span class='lparen'>(</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_changeset_boundary_or_end'>changeset_boundary_or_end</span> <span class='id identifier rubyid_c'>c</span> <span class='rbrace'>}</span> <span class='op'>==</span> <span class='symbol'>:boundary</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_changeset_headers'>changeset_headers</span> <span class='id identifier rubyid_c'>c</span> <span class='rbrace'>}</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_is_get'>is_get</span>
     <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_response'>response</span> <span class='id identifier rubyid_c'>c</span> <span class='rbrace'>}</span>
     <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_response_headers'>response_headers</span> <span class='id identifier rubyid_c'>c</span> <span class='rbrace'>}</span>
     <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_response_body'>response_body</span> <span class='id identifier rubyid_c'>c</span> <span class='rbrace'>}</span>
+  <span class='kw'>else</span>
+    <span class='kw'>while</span> <span class='lparen'>(</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_changeset_boundary_or_end'>changeset_boundary_or_end</span> <span class='id identifier rubyid_c'>c</span> <span class='rbrace'>}</span> <span class='op'>==</span> <span class='symbol'>:boundary</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_changeset_headers'>changeset_headers</span> <span class='id identifier rubyid_c'>c</span> <span class='rbrace'>}</span>
+      <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_response'>response</span> <span class='id identifier rubyid_c'>c</span> <span class='rbrace'>}</span>
+      <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_response_headers'>response_headers</span> <span class='id identifier rubyid_c'>c</span> <span class='rbrace'>}</span>
+      <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_response_body'>response_body</span> <span class='id identifier rubyid_c'>c</span> <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_context'>context</span><span class='lbracket'>[</span><span class='symbol'>:responses</span><span class='rbracket'>]</span>
@@ -620,15 +632,15 @@
       <pre class="lines">
 
 
-85
-86
-87
-88
-89
-90</pre>
+91
+92
+93
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch_response.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/batch_response.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_response'>response</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>HTTP\/1.1 (\d*) (.*)</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_current_line'>current_line</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -656,12 +668,6 @@
       <pre class="lines">
 
 
-55
-56
-57
-58
-59
-60
 61
 62
 63
@@ -669,10 +675,16 @@
 65
 66
 67
-68</pre>
+68
+69
+70
+71
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch_response.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/batch_response.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_response_body'>response_body</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_end_of_body'>end_of_body</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -708,12 +720,6 @@
       <pre class="lines">
 
 
-70
-71
-72
-73
-74
-75
 76
 77
 78
@@ -721,10 +727,16 @@
 80
 81
 82
-83</pre>
+83
+84
+85
+86
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/batch_response.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/batch_response.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_response_headers'>response_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(.*): (.*)</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_current_line'>current_line</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -750,9 +762,9 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Nov 17 12:03:06 2017 by
+  Generated on Thu Jan 11 16:12:00 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.4.1).
+  0.9.12 (ruby-2.4.1).
 </div>
 
     </div>

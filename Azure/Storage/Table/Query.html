@@ -6,7 +6,7 @@
 <title>
   Class: Azure::Storage::Table::Query
   
-    &mdash; Documentation by YARD 0.9.9
+    &mdash; Documentation by YARD 0.9.12
   
 </title>
 
@@ -94,7 +94,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/azure/storage/table/query.rb</dd>
+    <dd>table/lib/azure/storage/table/query.rb</dd>
   </dl>
   
 </div>
@@ -658,6 +658,7 @@
       <pre class="lines">
 
 
+29
 30
 31
 32
@@ -666,11 +667,10 @@
 35
 36
 37
-38
-39</pre>
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_partition'>partition</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@table</span> <span class='op'>=</span> <span class='id identifier rubyid_table'>table</span>
@@ -679,7 +679,7 @@
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='ivar'>@filters</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='ivar'>@top_n</span> <span class='op'>=</span> <span class='kw'>nil</span>
-  <span class='ivar'>@table_service</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Table.html" title="Azure::Storage::Table (module)">Table</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="TableService.html" title="Azure::Storage::Table::TableService (class)">TableService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="TableService.html#initialize-instance_method" title="Azure::Storage::Table::TableService#initialize (method)">new</a></span></span>
+  <span class='ivar'>@table_service</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Table.html" title="Azure::Storage::Table (module)">Table</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="TableService.html" title="Azure::Storage::Table::TableService (class)">TableService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_create_from_env'><span class='object_link'><a href="TableService.html#create_from_env-class_method" title="Azure::Storage::Table::TableService.create_from_env (method)">create_from_env</a></span></span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -720,12 +720,12 @@
       <pre class="lines">
 
 
+44
 45
-46
-47</pre>
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fields'>fields</span>
   <span class='ivar'>@fields</span>
@@ -763,12 +763,12 @@
       <pre class="lines">
 
 
+45
 46
-47
-48</pre>
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_filters'>filters</span>
   <span class='ivar'>@filters</span>
@@ -806,12 +806,12 @@
       <pre class="lines">
 
 
+48
 49
-50
-51</pre>
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_next_partition_key'>next_partition_key</span>
   <span class='ivar'>@next_partition_key</span>
@@ -849,12 +849,12 @@
       <pre class="lines">
 
 
+49
 50
-51
-52</pre>
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_next_row_key'>next_row_key</span>
   <span class='ivar'>@next_row_key</span>
@@ -892,12 +892,12 @@
       <pre class="lines">
 
 
+41
 42
-43
-44</pre>
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_partition_key'>partition_key</span>
   <span class='ivar'>@partition_key</span>
@@ -935,12 +935,12 @@
       <pre class="lines">
 
 
+42
 43
-44
-45</pre>
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_row_key'>row_key</span>
   <span class='ivar'>@row_key</span>
@@ -978,12 +978,12 @@
       <pre class="lines">
 
 
+40
 41
-42
-43</pre>
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_table'>table</span>
   <span class='ivar'>@table</span>
@@ -1021,12 +1021,12 @@
       <pre class="lines">
 
 
+51
 52
-53
-54</pre>
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_table_service'>table_service</span>
   <span class='ivar'>@table_service</span>
@@ -1064,12 +1064,12 @@
       <pre class="lines">
 
 
+46
 47
-48
-49</pre>
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_top_n'>top_n</span>
   <span class='ivar'>@top_n</span>
@@ -1101,6 +1101,7 @@
       <pre class="lines">
 
 
+105
 106
 107
 108
@@ -1110,11 +1111,10 @@
 112
 113
 114
-115
-116</pre>
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 105</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid__build_filter_string'>_build_filter_string</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
@@ -1147,6 +1147,7 @@
       <pre class="lines">
 
 
+93
 94
 95
 96
@@ -1156,11 +1157,10 @@
 100
 101
 102
-103
-104</pre>
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 93</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_execute'>execute</span>
   <span class='ivar'>@table_service</span><span class='period'>.</span><span class='id identifier rubyid_query_entities'>query_entities</span><span class='lparen'>(</span><span class='ivar'>@table</span><span class='comma'>,</span>           <span class='label'>partition_key:</span> <span class='ivar'>@partition_key</span><span class='comma'>,</span>
@@ -1193,13 +1193,13 @@
       <pre class="lines">
 
 
+53
 54
 55
-56
-57</pre>
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from'>from</span><span class='lparen'>(</span><span class='id identifier rubyid_table_name'>table_name</span><span class='rparen'>)</span>
   <span class='ivar'>@table</span> <span class='op'>=</span> <span class='id identifier rubyid_table_name'>table_name</span>
@@ -1225,13 +1225,13 @@
       <pre class="lines">
 
 
+83
 84
 85
-86
-87</pre>
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_next_partition'>next_partition</span><span class='lparen'>(</span><span class='id identifier rubyid_next_partition_key'>next_partition_key</span><span class='rparen'>)</span>
   <span class='ivar'>@next_partition_key</span> <span class='op'>=</span> <span class='id identifier rubyid_next_partition_key'>next_partition_key</span>
@@ -1257,13 +1257,13 @@
       <pre class="lines">
 
 
+88
 89
 90
-91
-92</pre>
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_next_row'>next_row</span><span class='lparen'>(</span><span class='id identifier rubyid_next_row_key'>next_row_key</span><span class='rparen'>)</span>
   <span class='ivar'>@next_row_key</span> <span class='op'>=</span> <span class='id identifier rubyid_next_row_key'>next_row_key</span>
@@ -1289,13 +1289,13 @@
       <pre class="lines">
 
 
+58
 59
 60
-61
-62</pre>
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_partition'>partition</span><span class='lparen'>(</span><span class='id identifier rubyid_partition_key'>partition_key</span><span class='rparen'>)</span>
   <span class='ivar'>@partition_key</span> <span class='op'>=</span> <span class='id identifier rubyid_partition_key'>partition_key</span>
@@ -1321,13 +1321,13 @@
       <pre class="lines">
 
 
+63
 64
 65
-66
-67</pre>
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_row'>row</span><span class='lparen'>(</span><span class='id identifier rubyid_row_key'>row_key</span><span class='rparen'>)</span>
   <span class='ivar'>@row_key</span> <span class='op'>=</span> <span class='id identifier rubyid_row_key'>row_key</span>
@@ -1353,13 +1353,13 @@
       <pre class="lines">
 
 
+68
 69
 70
-71
-72</pre>
+71</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_p'>p</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_p'>p</span><span class='rparen'>)</span>
@@ -1385,13 +1385,13 @@
       <pre class="lines">
 
 
+78
 79
 80
-81
-82</pre>
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 78</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_top'>top</span><span class='lparen'>(</span><span class='id identifier rubyid_n'>n</span><span class='rparen'>)</span>
   <span class='ivar'>@top_n</span> <span class='op'>=</span> <span class='id identifier rubyid_n'>n</span>
@@ -1417,13 +1417,13 @@
       <pre class="lines">
 
 
+73
 74
 75
-76
-77</pre>
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/table/query.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'table/lib/azure/storage/table/query.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_p'>p</span><span class='rparen'>)</span>
   <span class='ivar'>@filters</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_p'>p</span><span class='rparen'>)</span>
@@ -1439,9 +1439,9 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Nov 17 12:03:07 2017 by
+  Generated on Thu Jan 11 16:12:03 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.4.1).
+  0.9.12 (ruby-2.4.1).
 </div>
 
     </div>
