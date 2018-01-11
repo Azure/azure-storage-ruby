@@ -33,6 +33,6 @@ source "https://rubygems.org" do
   gem "mocha",               "~> 1.0", :require => false
   gem "rake",                "~> 10.0", :require => false
   gem "timecop",             "~> 0.7", :require => false
-  gem "yard",                "~> 0.8", :require => false
+  gem "yard",                "~> 0.9", ">= 0.9.11", :require => false
   gem "coveralls",           require: false
 end
