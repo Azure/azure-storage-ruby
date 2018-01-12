@@ -6,7 +6,7 @@
 <title>
   Class: Azure::Storage::Queue::QueueService
   
-    &mdash; Documentation by YARD 0.9.9
+    &mdash; Documentation by YARD 0.9.12
   
 </title>
 
@@ -69,12 +69,10 @@
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName">StorageService</span>
+      <span class="inheritName"><span class='object_link'><a href="../../Storage.html#StorageService-constant" title="Azure::Storage::StorageService (constant)">StorageService</a></span></span>
       
         <ul class="fullTree">
           <li>Object</li>
-          
-            <li class="next">StorageService</li>
           
             <li class="next">Azure::Storage::Queue::QueueService</li>
           
@@ -96,7 +94,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/azure/storage/queue/queue_service.rb</dd>
+    <dd>queue/lib/azure/storage/queue/queue_service.rb</dd>
   </dl>
   
 </div>
@@ -108,6 +106,114 @@
 
 
 
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create-class_method" title="create (class method)">.<strong>create</strong>(options = {}, &amp;block)  &#x21d2; Azure::Storage::Queue::QueueService </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Creates an instance of [Azure::Storage::Queue::QueueService].</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_development-class_method" title="create_development (class method)">.<strong>create_development</strong>(proxy_uri = nil, &amp;block)  &#x21d2; Azure::Storage::Queue::QueueService </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Creates an instance of [Azure::Storage::Queue::QueueService] with
+Storage Emulator.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_from_connection_string-class_method" title="create_from_connection_string (class method)">.<strong>create_from_connection_string</strong>(connection_string, &amp;block)  &#x21d2; Azure::Storage::Queue::QueueService </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Creates an instance of [Azure::Storage::Queue::QueueService] from
+Environment Variables.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_from_env-class_method" title="create_from_env (class method)">.<strong>create_from_env</strong>(&amp;block)  &#x21d2; Azure::Storage::Queue::QueueService </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Creates an instance of [Azure::Storage::Queue::QueueService] from
+Environment Variables.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
   
     <h2>
       Instance Method Summary
@@ -305,7 +411,7 @@ timeout for the message.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>A new instance of QueueService.</p>
+<p>Public: Initializes an instance of [Azure::Storage::Queue::QueueService].</p>
 </div></span>
   
 </li>
@@ -460,8 +566,7 @@ timeout for the message.</p>
     </ul>
   
 
-
-  <div id="constructor_details" class="method_details_list">
+<div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
@@ -476,7 +581,99 @@ timeout for the message.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns a new instance of QueueService</p>
+<p>Public: Initializes an instance of [Azure::Storage::Queue::QueueService]</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>options</code>    - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:use_development_storage</code>        - TrueClass|FalseClass.
+Whether to use storage emulator.</p>
+</li><li>
+<p><code>:development_storage_proxy_uri</code>  - String. Used with
+<code>:use_development_storage</code> if emulator is hosted other than
+localhost.</p>
+</li><li>
+<p><code>:storage_connection_string</code>      - String. The storage
+connection string.</p>
+</li><li>
+<p><code>:storage_account_name</code>           - String. The name of the
+storage account.</p>
+</li><li>
+<p><code>:storage_access_key</code>             - Base64 String. The access
+key of the storage account.</p>
+</li><li>
+<p><code>:storage_sas_token</code>              - String. The signed access
+signature for the storage account or one of its service.</p>
+</li><li>
+<p><code>:storage_queue_host</code>              - String. Specified Queue
+serivce endpoint or hostname</p>
+</li><li>
+<p><code>:storage_dns_suffix</code>             - String. The suffix of a
+regional Storage Serivce, to</p>
+</li><li>
+<p><code>:default_endpoints_protocol</code>     - String. http or https</p>
+</li><li>
+<p><code>:use_path_style_uri</code>             - String. Whether use path
+style URI for specified endpoints</p>
+</li><li>
+<p><code>:ca_file</code>                        - String. File path of the CA
+file if having issue with SSL</p>
+</li><li>
+<p><code>:user_agent_prefix</code>              - String. The user agent
+prefix that can identify the application calls the library</p>
+</li><li>
+<p><code>:client</code>                         -
+Azure::Storage::Common::Client. The common client used to initalize the
+service.</p>
+</li></ul>
+
+<p>The valid set of options include:</p>
+<ul><li>
+<p>Storage Emulator: <code>:use_development_storage</code> required,
+<code>:development_storage_proxy_uri</code> optionally</p>
+</li><li>
+<p>Storage account name and key: <code>:storage_account_name</code> and
+<code>:storage_access_key</code> required, set
+<code>:storage_dns_suffix</code> necessarily</p>
+</li><li>
+<p>Storage account name and SAS token: <code>:storage_account_name</code> and
+<code>:storage_sas_token</code> required, set
+<code>:storage_dns_suffix</code> necessarily</p>
+</li><li>
+<p>Specified hosts and SAS token: At least one of the service host and SAS
+token. It&#39;s up to user to ensure the SAS token is suitable for the
+serivce</p>
+</li><li>
+<p>Azure::Storage::Common::Client: The common client used to initalize the
+service. This client can be initalized and used repeatedly.</p>
+</li><li>
+<p>Anonymous Queue: only <code>:storage_queue_host</code>, if it is to only
+access queues within a container</p>
+</li></ul>
+
+<p>Additional notes:</p>
+<ul><li>
+<p>Specified hosts can be set when use account name with access key or sas
+token</p>
+</li><li>
+<p><code>:default_endpoints_protocol</code> can be set if the scheme is not
+specified in hosts</p>
+</li><li>
+<p>Storage emulator always use path style URI</p>
+</li><li>
+<p><code>:ca_file</code> is independent.</p>
+</li></ul>
+
+<p>When empty options are given, it will try to read settings from Environment
+Variables. Refer to
+[Azure::Storage::Common::ClientOptions.env_vars_mapping] for the mapping
+relationship</p>
 
 
   </div>
@@ -490,21 +687,29 @@ timeout for the message.</p>
       <pre class="lines">
 
 
-34
-35
-36
-37
-38
-39
-40</pre>
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/queue/queue_service.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_client_config'>client_config</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:client</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span>
-  <span class='id identifier rubyid_signer'>signer</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signer</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_client_config'>client_config</span><span class='period'>.</span><span class='id identifier rubyid_signer'>signer</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Core.html" title="Azure::Storage::Core (module)">Core</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Core/Auth.html" title="Azure::Storage::Core::Auth (module)">Auth</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Core/Auth/SharedKey.html" title="Azure::Storage::Core::Auth::SharedKey (class)">SharedKey</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_client_config'>client_config</span><span class='period'>.</span><span class='id identifier rubyid_storage_account_name'>storage_account_name</span><span class='comma'>,</span> <span class='id identifier rubyid_client_config'>client_config</span><span class='period'>.</span><span class='id identifier rubyid_storage_access_key'>storage_access_key</span><span class='rparen'>)</span>
-  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_signer'>signer</span><span class='comma'>,</span> <span class='id identifier rubyid_client_config'>client_config</span><span class='period'>.</span><span class='id identifier rubyid_storage_account_name'>storage_account_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_service_options'>service_options</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_clone'>clone</span>
+  <span class='id identifier rubyid_client_config'>client_config</span> <span class='op'>=</span> <span class='id identifier rubyid_service_options'>service_options</span><span class='lbracket'>[</span><span class='symbol'>:client</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Client</span><span class='op'>::</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='id identifier rubyid_service_options'>service_options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='ivar'>@user_agent_prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_service_options'>service_options</span><span class='lbracket'>[</span><span class='symbol'>:user_agent_prefix</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_service_options'>service_options</span><span class='lbracket'>[</span><span class='symbol'>:user_agent_prefix</span><span class='rbracket'>]</span>
+  <span class='ivar'>@api_version</span> <span class='op'>=</span> <span class='id identifier rubyid_service_options'>service_options</span><span class='lbracket'>[</span><span class='symbol'>:api_version</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::Queue::Default (module)">Default</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html#STG_VERSION-constant" title="Azure::Storage::Queue::Default::STG_VERSION (constant)">STG_VERSION</a></span></span>
+  <span class='id identifier rubyid_signer'>signer</span> <span class='op'>=</span> <span class='id identifier rubyid_service_options'>service_options</span><span class='lbracket'>[</span><span class='symbol'>:signer</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_client_config'>client_config</span><span class='period'>.</span><span class='id identifier rubyid_signer'>signer</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Auth</span><span class='op'>::</span><span class='const'>SharedKey</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_client_config'>client_config</span><span class='period'>.</span><span class='id identifier rubyid_storage_account_name'>storage_account_name</span><span class='comma'>,</span> <span class='id identifier rubyid_client_config'>client_config</span><span class='period'>.</span><span class='id identifier rubyid_storage_access_key'>storage_access_key</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_signer'>signer</span><span class='period'>.</span><span class='id identifier rubyid_api_ver'>api_ver</span> <span class='op'>=</span> <span class='ivar'>@api_version</span> <span class='kw'>if</span> <span class='id identifier rubyid_signer'>signer</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Auth</span><span class='op'>::</span><span class='const'>SharedAccessSignatureSigner</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_signer'>signer</span><span class='comma'>,</span> <span class='id identifier rubyid_client_config'>client_config</span><span class='period'>.</span><span class='id identifier rubyid_storage_account_name'>storage_account_name</span><span class='comma'>,</span> <span class='id identifier rubyid_service_options'>service_options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@storage_service_host</span><span class='lbracket'>[</span><span class='symbol'>:primary</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_storage_queue_host'>storage_queue_host</span>
   <span class='ivar'>@storage_service_host</span><span class='lbracket'>[</span><span class='symbol'>:secondary</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_storage_queue_host'>storage_queue_host</span> <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
@@ -515,6 +720,336 @@ timeout for the message.</p>
   
 </div>
 
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="create-class_method">
+  
+    .<strong>create</strong>(options = {}, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Queue::QueueService (class)">Azure::Storage::Queue::QueueService</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Creates an instance of [Azure::Storage::Queue::QueueService]</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>options</code>    - Hash. Optional parameters.</p>
+</li></ul>
+
+<h4 id="label-Options">Options</h4>
+
+<p>Accepted key/value pairs in options parameter are:</p>
+<ul><li>
+<p><code>:use_development_storage</code>        - TrueClass|FalseClass.
+Whether to use storage emulator.</p>
+</li><li>
+<p><code>:development_storage_proxy_uri</code>  - String. Used with
+<code>:use_development_storage</code> if emulator is hosted other than
+localhost.</p>
+</li><li>
+<p><code>:storage_account_name</code>           - String. The name of the
+storage account.</p>
+</li><li>
+<p><code>:storage_access_key</code>             - Base64 String. The access
+key of the storage account.</p>
+</li><li>
+<p><code>:storage_sas_token</code>              - String. The signed access
+signature for the storage account or one of its service.</p>
+</li><li>
+<p><code>:storage_queue_host</code>             - String. Specified Queue
+service endpoint or hostname</p>
+</li><li>
+<p><code>:storage_dns_suffix</code>             - String. The suffix of a
+regional Storage Service, to</p>
+</li><li>
+<p><code>:default_endpoints_protocol</code>     - String. http or https</p>
+</li><li>
+<p><code>:use_path_style_uri</code>             - String. Whether use path
+style URI for specified endpoints</p>
+</li><li>
+<p><code>:ca_file</code>                        - String. File path of the CA
+file if having issue with SSL</p>
+</li><li>
+<p><code>:user_agent_prefix</code>              - String. The user agent
+prefix that can identify the application calls the library</p>
+</li></ul>
+
+<p>The valid set of options include:</p>
+<ul><li>
+<p>Storage Emulator: <code>:use_development_storage</code> required,
+<code>:development_storage_proxy_uri</code> optionally</p>
+</li><li>
+<p>Storage account name and key: <code>:storage_account_name</code> and
+<code>:storage_access_key</code> required, set
+<code>:storage_dns_suffix</code> necessarily</p>
+</li><li>
+<p>Storage account name and SAS token: <code>:storage_account_name</code> and
+<code>:storage_sas_token</code> required, set
+<code>:storage_dns_suffix</code> necessarily</p>
+</li><li>
+<p>Specified hosts and SAS token: At least one of the service host and SAS
+token. It&#39;s up to user to ensure the SAS token is suitable for the
+serivce</p>
+</li><li>
+<p>Anonymous Queue: only <code>:storage_queue_host</code>, if it is to only
+access queues within a container</p>
+</li></ul>
+
+<p>Additional notes:</p>
+<ul><li>
+<p>Specified hosts can be set when use account name with access key or sas
+token</p>
+</li><li>
+<p><code>:default_endpoints_protocol</code> can be set if the scheme is not
+specified in hosts</p>
+</li><li>
+<p>Storage emulator always use path style URI</p>
+</li><li>
+<p><code>:ca_file</code> is independent.</p>
+</li></ul>
+
+<p>When empty options are given, it will try to read settings from Environment
+Variables. Refer to
+[Azure::Storage::Common::ClientOptions.env_vars_mapping] for the mapping
+relationship</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Azure::Storage::Queue::QueueService (class)">Azure::Storage::Queue::QueueService</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+71
+72
+73
+74
+75</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 71</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_service_options'>service_options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>client:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Client</span><span class='op'>::</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>api_version:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::Queue::Default (module)">Default</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html#STG_VERSION-constant" title="Azure::Storage::Queue::Default::STG_VERSION (constant)">STG_VERSION</a></span></span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_service_options'>service_options</span><span class='lbracket'>[</span><span class='symbol'>:user_agent_prefix</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:user_agent_prefix</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:user_agent_prefix</span><span class='rbracket'>]</span>
+  <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Azure::Storage::Queue::QueueService (class)">QueueService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Azure::Storage::Queue::QueueService#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_service_options'>service_options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create_development-class_method">
+  
+    .<strong>create_development</strong>(proxy_uri = nil, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Queue::QueueService (class)">Azure::Storage::Queue::QueueService</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Creates an instance of [Azure::Storage::Queue::QueueService] with
+Storage Emulator</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>proxy_uri</code>    - String. Used with
+<code>:use_development_storage</code> if emulator is hosted other than
+localhost.</p>
+</li></ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Azure::Storage::Queue::QueueService (class)">Azure::Storage::Queue::QueueService</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+84
+85
+86
+87</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 84</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_create_development'>create_development</span><span class='lparen'>(</span><span class='id identifier rubyid_proxy_uri'>proxy_uri</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_service_options'>service_options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>client:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Client</span><span class='op'>::</span><span class='id identifier rubyid_create_development'>create_development</span><span class='lparen'>(</span><span class='id identifier rubyid_proxy_uri'>proxy_uri</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>api_version:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::Queue::Default (module)">Default</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html#STG_VERSION-constant" title="Azure::Storage::Queue::Default::STG_VERSION (constant)">STG_VERSION</a></span></span> <span class='rbrace'>}</span>
+  <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Azure::Storage::Queue::QueueService (class)">QueueService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Azure::Storage::Queue::QueueService#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_service_options'>service_options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create_from_connection_string-class_method">
+  
+    .<strong>create_from_connection_string</strong>(connection_string, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Queue::QueueService (class)">Azure::Storage::Queue::QueueService</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Creates an instance of [Azure::Storage::Queue::QueueService] from
+Environment Variables</p>
+
+<h4 id="label-Attributes">Attributes</h4>
+<ul><li>
+<p><code>connection_string</code>    - String. Please refer to <a
+href="https://azure.microsoft.com/en-us/documentation/articles/storage-configure-connection-string">azure.microsoft.com/en-us/documentation/articles/storage-configure-connection-string</a>/.</p>
+</li></ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Azure::Storage::Queue::QueueService (class)">Azure::Storage::Queue::QueueService</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+104
+105
+106
+107</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 104</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_create_from_connection_string'>create_from_connection_string</span><span class='lparen'>(</span><span class='id identifier rubyid_connection_string'>connection_string</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_service_options'>service_options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>client:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Client</span><span class='op'>::</span><span class='id identifier rubyid_create_from_connection_string'>create_from_connection_string</span><span class='lparen'>(</span><span class='id identifier rubyid_connection_string'>connection_string</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>api_version:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::Queue::Default (module)">Default</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html#STG_VERSION-constant" title="Azure::Storage::Queue::Default::STG_VERSION (constant)">STG_VERSION</a></span></span> <span class='rbrace'>}</span>
+  <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Azure::Storage::Queue::QueueService (class)">QueueService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Azure::Storage::Queue::QueueService#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_service_options'>service_options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create_from_env-class_method">
+  
+    .<strong>create_from_env</strong>(&amp;block)  &#x21d2; <tt><span class='object_link'><a href="" title="Azure::Storage::Queue::QueueService (class)">Azure::Storage::Queue::QueueService</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Creates an instance of [Azure::Storage::Queue::QueueService] from
+Environment Variables</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Azure::Storage::Queue::QueueService (class)">Azure::Storage::Queue::QueueService</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+92
+93
+94
+95</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 92</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_create_from_env'>create_from_env</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_service_options'>service_options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>client:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Client</span><span class='op'>::</span><span class='id identifier rubyid_create_from_env'>create_from_env</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>api_version:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::Queue::Default (module)">Default</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html#STG_VERSION-constant" title="Azure::Storage::Queue::Default::STG_VERSION (constant)">STG_VERSION</a></span></span> <span class='rbrace'>}</span>
+  <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Azure::Storage::Queue::QueueService (class)">QueueService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Azure::Storage::Queue::QueueService#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_service_options'>service_options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -577,16 +1112,16 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179454">msdn.microsoft.com
       <pre class="lines">
 
 
-123
-124
-125
-126
-127
-128
-129</pre>
+242
+243
+244
+245
+246
+247
+248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/queue/queue_service.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 242</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear_messages'>clear_messages</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -671,24 +1206,24 @@ echo of request on success</p>
       <pre class="lines">
 
 
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360</pre>
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/queue/queue_service.rb', line 346</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 465</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_message'>create_message</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_message_text'>message_text</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -763,21 +1298,21 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179342">msdn.microsoft.com
       <pre class="lines">
 
 
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160</pre>
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/queue/queue_service.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 268</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_queue'>create_queue</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -786,7 +1321,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179342">msdn.microsoft.com
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_queue_uri'>queue_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-  <span class='const'><span class='object_link'><a href="../Service.html" title="Azure::Storage::Service (module)">Service</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'><span class='object_link'><a href="../Service/StorageService.html#add_metadata_to_headers-class_method" title="Azure::Storage::Service::StorageService.add_metadata_to_headers (method)">add_metadata_to_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+  <span class='const'><span class='object_link'><a href="../../Storage.html#StorageService-constant" title="Azure::Storage::StorageService (constant)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'>add_metadata_to_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>nil</span>
@@ -905,18 +1440,18 @@ that the cause of the failure was a mismatched pop receipt.</p>
       <pre class="lines">
 
 
-420
-421
-422
-423
-424
-425
-426
-427
-428</pre>
+539
+540
+541
+542
+543
+544
+545
+546
+547</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/queue/queue_service.rb', line 420</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 539</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_message'>delete_message</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_message_id'>message_id</span><span class='comma'>,</span> <span class='id identifier rubyid_pop_receipt'>pop_receipt</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>popreceipt</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_pop_receipt'>pop_receipt</span> <span class='rbrace'>}</span>
@@ -982,18 +1517,18 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179436">msdn.microsoft.com
       <pre class="lines">
 
 
-179
-180
-181
-182
-183
-184
-185
-186
-187</pre>
+298
+299
+300
+301
+302
+303
+304
+305
+306</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/queue/queue_service.rb', line 179</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 298</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_queue'>delete_queue</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1064,30 +1599,30 @@ href="http://msdn.microsoft.com/en-us/library/azure/jj159101">msdn.microsoft.com
       <pre class="lines">
 
 
-278
-279
-280
-281
-282
-283
-284
-285
-286
-287
-288</pre>
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/queue/queue_service.rb', line 278</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 397</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_queue_acl'>get_queue_acl</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>acl</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>RequestLocationMode</span><span class='op'>::</span><span class='const'>PRIMARY_OR_SECONDARY</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_queue_uri'>queue_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Queue::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_from_xml'><span class='object_link'><a href="../Service/Serialization/ClassMethods.html#signed_identifiers_from_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#signed_identifiers_from_xml (method)">signed_identifiers_from_xml</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>==</span> <span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&lt;</span> <span class='lparen'>(</span><span class='int'>1</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Queue::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_from_xml'>signed_identifiers_from_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>==</span> <span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&lt;</span> <span class='lparen'>(</span><span class='int'>1</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_signed_identifiers'>signed_identifiers</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1157,35 +1692,35 @@ in the queue, but could be higher.</p>
       <pre class="lines">
 
 
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225</pre>
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/queue/queue_service.rb', line 212</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 331</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_queue_metadata'>get_queue_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>metadata</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>RequestLocationMode</span><span class='op'>::</span><span class='const'>PRIMARY_OR_SECONDARY</span>
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_queue_uri'>queue_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_approximate_messages_count'>approximate_messages_count</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-ms-approximate-messages-count</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Queue::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_metadata_from_headers'><span class='object_link'><a href="../Service/Serialization/ClassMethods.html#metadata_from_headers-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#metadata_from_headers (method)">metadata_from_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Queue::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_metadata_from_headers'>metadata_from_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
 
   <span class='kw'>return</span> <span class='id identifier rubyid_approximate_messages_count'>approximate_messages_count</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span>
 <span class='kw'>end</span></pre>
@@ -1253,22 +1788,22 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179474">msdn.microsoft.com
       <pre class="lines">
 
 
-486
-487
-488
-489
-490
-491
-492
-493
-494
-495
-496
-497
-498</pre>
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/queue/queue_service.rb', line 486</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 605</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list_messages'>list_messages</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_visibility_timeout'>visibility_timeout</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_number_of_messages'>number_of_messages</span> <span class='op'>=</span> <span class='int'>1</span>
@@ -1337,7 +1872,7 @@ status code 400 (Bad Request). (optional)</code></pre>
 <p><code>:metadata</code>                  - Boolean. Specifies whether or not
 to return the container metadata.</p>
 
-<pre class="code ruby"><code class="ruby"><span class='lparen'>(</span><span class='id identifier rubyid_optional'>optional</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Default.html" title="Azure::Storage::Default (module)">Default</a></span></span><span class='op'>=</span><span class='kw'>false</span><span class='rparen'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='lparen'>(</span><span class='id identifier rubyid_optional'>optional</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::Queue::Default (module)">Default</a></span></span><span class='op'>=</span><span class='kw'>false</span><span class='rparen'>)</span>
 </code></pre>
 </li><li>
 <p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
@@ -1366,7 +1901,7 @@ returned with the key “x-ms-invalid-name” in the metadata hash. This may
 contain multiple values and be an Array (vs a String if it only contains a
 single value).</p>
 
-<p>Returns an Azure::Service::EnumerationResults</p>
+<p>Returns an Azure::Storage::Common::EnumerationResults</p>
 
 
   </div>
@@ -1380,23 +1915,23 @@ single value).</p>
       <pre class="lines">
 
 
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97</pre>
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/queue/queue_service.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 203</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list_queues'>list_queues</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1406,7 +1941,7 @@ single value).</p>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>include</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>metadata</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>true</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>RequestLocationMode</span><span class='op'>::</span><span class='const'>PRIMARY_OR_SECONDARY</span>
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_collection_uri'>collection_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
@@ -1479,23 +2014,23 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179472">msdn.microsoft.com
       <pre class="lines">
 
 
-451
-452
-453
-454
-455
-456
-457
-458
-459
-460
-461
-462
-463
-464</pre>
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/queue/queue_service.rb', line 451</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 570</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_peek_messages'>peek_messages</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_number_of_messages'>number_of_messages</span> <span class='op'>=</span> <span class='int'>1</span>
@@ -1504,7 +2039,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179472">msdn.microsoft.com
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>peekonly</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>true</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>numofmessages</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_number_of_messages'>number_of_messages</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_query'>query</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../RequestLocationMode.html" title="Azure::Storage::RequestLocationMode (module)">RequestLocationMode</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RequestLocationMode.html#PRIMARY_OR_SECONDARY-constant" title="Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY (constant)">PRIMARY_OR_SECONDARY</a></span></span>
+  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:request_location_mode</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>RequestLocationMode</span><span class='op'>::</span><span class='const'>PRIMARY_OR_SECONDARY</span>
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_messages_uri'>messages_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
@@ -1569,20 +2104,20 @@ href="http://msdn.microsoft.com/en-us/library/azure/jj159099">msdn.microsoft.com
       <pre class="lines">
 
 
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317
-318</pre>
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/queue/queue_service.rb', line 308</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 427</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_queue_acl'>set_queue_acl</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>acl</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -1590,7 +2125,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/jj159099">msdn.microsoft.com
 
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_queue_uri'>queue_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='kw'>nil</span>
-  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Queue::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_to_xml'><span class='object_link'><a href="../Service/Serialization/ClassMethods.html#signed_identifiers_to_xml-instance_method" title="Azure::Storage::Service::Serialization::ClassMethods#signed_identifiers_to_xml (method)">signed_identifiers_to_xml</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Serialization.html" title="Azure::Storage::Queue::Serialization (module)">Serialization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_signed_identifiers_to_xml'>signed_identifiers_to_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:signed_identifiers</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
 
   <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>nil</span>
@@ -1654,21 +2189,21 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179348">msdn.microsoft.com
       <pre class="lines">
 
 
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257</pre>
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/queue/queue_service.rb', line 246</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 365</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_queue_metadata'>set_queue_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>metadata</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -1677,7 +2212,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179348">msdn.microsoft.com
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_queue_uri'>queue_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-  <span class='const'><span class='object_link'><a href="../Service.html" title="Azure::Storage::Service (module)">Service</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Service/StorageService.html" title="Azure::Storage::Service::StorageService (class)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'><span class='object_link'><a href="../Service/StorageService.html#add_metadata_to_headers-class_method" title="Azure::Storage::Service::StorageService.add_metadata_to_headers (method)">add_metadata_to_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../../Storage.html#StorageService-constant" title="Azure::Storage::StorageService (constant)">StorageService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_metadata_to_headers'>add_metadata_to_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>nil</span>
@@ -1803,21 +2338,21 @@ process it.</p>
       <pre class="lines">
 
 
-553
-554
-555
-556
-557
-558
-559
-560
-561
-562
-563
-564</pre>
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/azure/storage/queue/queue_service.rb', line 553</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 672</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_message'>update_message</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_message_id'>message_id</span><span class='comma'>,</span> <span class='id identifier rubyid_pop_receipt'>pop_receipt</span><span class='comma'>,</span> <span class='id identifier rubyid_message_text'>message_text</span><span class='comma'>,</span> <span class='id identifier rubyid_visibility_timeout'>visibility_timeout</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>visibilitytimeout</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_visibility_timeout'>visibility_timeout</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>popreceipt</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_pop_receipt'>pop_receipt</span> <span class='rbrace'>}</span>
@@ -1841,9 +2376,9 @@ process it.</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Nov 17 12:03:08 2017 by
+  Generated on Thu Jan 11 16:12:05 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.4.1).
+  0.9.12 (ruby-2.4.1).
 </div>
 
     </div>
