@@ -25,7 +25,7 @@ require "azure/core/http/http_error"
 require "integration/test_helper"
 
 describe Azure::Storage::File::FileService do
-  subject { Azure::Storage::File::FileService.new }
+  subject { Azure::Storage::File::FileService.create(SERVICE_CREATE_OPTIONS()) }
   after { ShareNameHelper.clean }
 
   describe "#create_share" do
@@ -38,7 +38,6 @@ describe Azure::Storage::File::FileService do
 
     it "creates the share with custom metadata" do
       metadata = { "CustomMetadataProperty" => "CustomMetadataValue" }
-
       share = subject.create_share share_name, metadata: metadata
 
       share.name.must_equal share_name

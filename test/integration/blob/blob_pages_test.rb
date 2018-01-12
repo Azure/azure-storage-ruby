@@ -24,9 +24,10 @@
 require "integration/test_helper"
 require "azure/storage/blob/blob_service"
 require "securerandom"
+require 'digest/md5'
 
 describe Azure::Storage::Blob::BlobService do
-  subject { Azure::Storage::Blob::BlobService.new }
+  subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
   after { ContainerNameHelper.clean }
 
   let(:container_name) { ContainerNameHelper.name }
@@ -40,6 +41,65 @@ describe Azure::Storage::Blob::BlobService do
     subject.create_page_blob container_name, blob_name2, length
     subject.create_page_blob container_name, blob_name3, length
   }
+
+  describe "#create_page_blob_from_content" do
+    it "1MB string payload works" do
+      length = 1 * 1024 * 1024
+      content = SecureRandom.random_bytes(length)
+      content.force_encoding "utf-8"
+      blob_name = BlobNameHelper.name
+      subject.create_page_blob_from_content container_name, blob_name, length, content
+      blob, body = subject.get_blob(container_name, blob_name)
+      blob.name.must_equal blob_name
+      blob.properties[:content_length].must_equal length
+      blob.properties[:content_type].must_equal "text/plain; charset=UTF-8"
+      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+    end
+
+    it "4MB string payload works" do
+      length = 4 * 1024 * 1024
+      content = SecureRandom.random_bytes(length)
+      blob_name = BlobNameHelper.name
+      subject.create_page_blob_from_content container_name, blob_name, length, content
+      blob, body = subject.get_blob(container_name, blob_name)
+      blob.name.must_equal blob_name
+      blob.properties[:content_length].must_equal length
+      blob.properties[:content_type].must_equal "text/plain; charset=ASCII-8BIT"
+      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+    end
+
+    it "5MB string payload works" do
+      length = 5 * 1024 * 1024
+      content = SecureRandom.random_bytes(length)
+      blob_name = BlobNameHelper.name
+      subject.create_page_blob_from_content container_name, blob_name, length, content
+      blob, body = subject.get_blob(container_name, blob_name)
+      blob.name.must_equal blob_name
+      blob.properties[:content_length].must_equal length
+      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+    end
+
+    it "IO payload works" do
+      begin
+        content = SecureRandom.hex(1024)
+        length = content.size
+        blob_name = BlobNameHelper.name
+        file = File.open blob_name, "w+"
+        file.write content
+        file.seek 0
+        subject.create_page_blob_from_content container_name, blob_name, length, file
+        blob, body = subject.get_blob(container_name, blob_name)
+        blob.name.must_equal blob_name
+        blob.properties[:content_length].must_equal length
+        Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+      ensure
+        unless file.nil?
+          file.close
+          File.delete blob_name
+        end
+      end
+    end
+  end
 
   describe "#put_blob_pages" do
     it "creates pages in a page blob" do

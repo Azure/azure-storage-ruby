@@ -1,3 +1,5 @@
+**Note: This BreakingChanges.md file is deprecated after version 0.15.0-preview, please refer to the BreakingChange.md in each package for future change logs.** 
+
 Tracking Breaking Changes in 0.14.0-preview
 
 QUEUE

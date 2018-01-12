@@ -22,11 +22,11 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "test_helper"
-require "azure/storage/core/auth/shared_access_signature"
+require "azure/storage/common"
 require "base64"
 require "uri"
 
-describe Azure::Storage::Core::Auth::SharedAccessSignature do
+describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
   let(:path) { "example/path" }
   let(:service_type) { "blob" }
   let(:service_options) {
@@ -59,20 +59,20 @@ describe Azure::Storage::Core::Auth::SharedAccessSignature do
   let(:access_account_name) { "account-name" }
   let(:access_key_base64) { Base64.strict_encode64("access-key") }
 
-  subject { Azure::Storage::Core::Auth::SharedAccessSignature.new(access_account_name, access_key_base64) }
+  subject { Azure::Storage::Common::Core::Auth::SharedAccessSignature.new(access_account_name, access_key_base64) }
 
   describe "#signable_string" do
     it "constructs a string for service in the required format" do
       subject.signable_string_for_service(service_type, path, service_options).must_equal(
         "rwd\n#{Time.parse('2020-12-10T00:00:00Z').utc.iso8601}\n#{Time.parse('2020-12-11T00:00:00Z').utc.iso8601}\n" +
-        "/blob/account-name/example/path\n\n168.1.5.60-168.1.5.70\nhttps,http\n#{Azure::Storage::Default::STG_VERSION}\n" +
+        "/blob/account-name/example/path\n\n168.1.5.60-168.1.5.70\nhttps,http\n#{Azure::Storage::Common::Default::STG_VERSION}\n" +
         "public\ninline, filename=nyan.cat\ngzip\nEnglish\nbinary"
       )
     end
 
     it "constructs a string for account in the required format" do
       subject.signable_string_for_account(account_options).must_equal(
-        "account-name\nrwd\nb\nb\n#{Time.parse('2020-12-10T00:00:00Z').utc.iso8601}\n#{Time.parse('2020-12-11T00:00:00Z').utc.iso8601}\n168.1.5.60-168.1.5.70\nhttps,http\n#{Azure::Storage::Default::STG_VERSION}\n"
+        "account-name\nrwd\nb\nb\n#{Time.parse('2020-12-10T00:00:00Z').utc.iso8601}\n#{Time.parse('2020-12-11T00:00:00Z').utc.iso8601}\n168.1.5.60-168.1.5.70\nhttps,http\n#{Azure::Storage::Common::Default::STG_VERSION}\n"
       )
     end
   end

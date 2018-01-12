@@ -1,3 +1,5 @@
+**Note: This changelog is deprecated after version 0.15.0-preview, please refer to the ChangeLog.md in each package for future change logs.** 
+
 2017.11 - version 0.15.0-preview
 
 ALL

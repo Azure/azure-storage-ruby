@@ -22,14 +22,124 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
-  subject { Azure::Storage::Blob::BlobService.new }
+  subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
   after { ContainerNameHelper.clean }
 
   let(:container_name) { ContainerNameHelper.name }
   let(:blob_name) { "blobname" }
+
+  describe "#create_append_blob_with_content" do
+    before {
+      subject.create_container container_name
+    }
+
+    it "1MB string payload with 512K max size fails" do
+      length = 1 * 1024 * 1024
+      maxSize = 512 * 1024
+      content = SecureRandom.random_bytes(length)
+      blob_name = BlobNameHelper.name
+      exception = assert_raises(Azure::Storage::Common::Core::StorageError) do
+        subject.create_append_blob_from_content container_name, blob_name, content, max_size: maxSize
+      end
+      exception.message.must_include("Given content has exceeded the specified maximum size for the blob.")
+    end
+
+    it "4MB + 1 byte IO with no 'size' and 4MB max size fails with max size condition not met" do
+      class LocalFakeString
+        def initialize(string)
+          @string = StringIO.new(string)
+        end
+        def read(length)
+          @string.read(length)
+        end
+        def eof?
+          @string.eof?
+        end
+      end
+      length = 4 * 1024 * 1024 + 1
+      maxSize = length - 1
+      content = LocalFakeString.new(SecureRandom.random_bytes(length))
+      blob_name = BlobNameHelper.name
+      exception = assert_raises(Azure::Core::Http::HTTPError) do
+        subject.create_append_blob_from_content container_name, blob_name, content, max_size: maxSize
+      end
+      exception.status_code.must_equal 412
+      exception.message.must_include("MaxBlobSizeConditionNotMet")
+    end
+
+    it "4MB string payload with 4MB max size and duplicate request fails" do
+      length = 4 * 1024 * 1024
+      content = SecureRandom.random_bytes(length)
+      blob_name = BlobNameHelper.name
+      tempSubject = subject.clone
+      # Use duplicate request filter to simulate the retry scenario
+      tempSubject.with_filter(Azure::Storage::DuplicateRequestFilter.new)
+      exception = assert_raises(Azure::Core::Http::HTTPError) do
+        tempSubject.create_append_blob_from_content container_name, blob_name, content, max_size: length
+      end
+      exception.status_code.must_equal 412
+      exception.message.must_include("AppendPositionConditionNotMet")
+    end
+
+    it "1MB string payload works" do
+      length = 1 * 1024 * 1024
+      content = SecureRandom.random_bytes(length)
+      content.force_encoding "utf-8"
+      blob_name = BlobNameHelper.name
+      subject.create_append_blob_from_content container_name, blob_name, content
+      blob, body = subject.get_blob(container_name, blob_name)
+      blob.name.must_equal blob_name
+      blob.properties[:content_length].must_equal length
+      blob.properties[:content_type].must_equal "text/plain; charset=UTF-8"
+      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+    end
+
+    it "4MB string payload works" do
+      length = 4 * 1024 * 1024
+      content = SecureRandom.random_bytes(length)
+      blob_name = BlobNameHelper.name
+      subject.create_page_blob_from_content container_name, blob_name, length, content
+      blob, body = subject.get_blob(container_name, blob_name)
+      blob.name.must_equal blob_name
+      blob.properties[:content_length].must_equal length
+      blob.properties[:content_type].must_equal "text/plain; charset=ASCII-8BIT"
+      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+    end
+
+    it "5MB string payload works" do
+      length = 5 * 1024 * 1024
+      content = SecureRandom.random_bytes(length)
+      blob_name = BlobNameHelper.name
+      subject.create_append_blob_from_content container_name, blob_name, content
+      blob, body = subject.get_blob(container_name, blob_name)
+      blob.name.must_equal blob_name
+      blob.properties[:content_length].must_equal length
+      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+    end
+
+    it "IO payload works" do
+      begin
+        content = SecureRandom.hex(3 * 1024 * 1024)
+        length = content.size
+        blob_name = BlobNameHelper.name
+        file = File.open blob_name, "w+"
+        file.write content
+        file.seek 0
+        subject.create_append_blob_from_content container_name, blob_name, file
+        blob, body = subject.get_blob(container_name, blob_name)
+        blob.name.must_equal blob_name
+        blob.properties[:content_length].must_equal length
+        Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+      ensure
+        unless file.nil?
+          file.close
+          File.delete blob_name
+        end
+      end
+    end
+  end
 
   describe "#create_append_blob" do
     let(:complex_blob_name) { 'qa-872053-/*"\'&.({[<+ ' + [ 0x7D, 0xEB, 0x8B, 0xA4].pack("U*") + "_" + "0" }

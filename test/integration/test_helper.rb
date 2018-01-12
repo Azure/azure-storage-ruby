@@ -22,14 +22,33 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "test_helper"
-require "azure/storage"
+require "azure/storage/blob"
+require "azure/storage/file"
+require "azure/storage/table"
+require "azure/storage/queue"
 
-Azure::Storage.configure do |config|
-  config.storage_access_key       = ENV.fetch("AZURE_STORAGE_ACCESS_KEY")
-  config.storage_account_name     = ENV.fetch("AZURE_STORAGE_ACCOUNT")
-  Azure::Storage.client(storage_account_name: config.storage_account_name, storage_access_key: config.storage_access_key)
+def SERVICE_CREATE_OPTIONS()
+  { storage_account_name: ENV.fetch("AZURE_STORAGE_ACCOUNT"), storage_access_key: ENV.fetch("AZURE_STORAGE_ACCESS_KEY") }
 end
 
 def is_boolean(value)
   (value == true || value == false) == true
+end
+
+require "azure/core/http/http_filter"
+
+module Azure::Storage
+  class DuplicateRequestFilter < Azure::Core::Http::HttpFilter
+    def initialize(callable = nil)
+      @callable = callable
+    end
+    def call(req, _next)
+      begin
+        r = _next.call
+      rescue Azure::Core::Http::HTTPError => e
+      end
+      @callable.call(req, r) if @callable
+      r = _next.call
+    end
+  end
 end

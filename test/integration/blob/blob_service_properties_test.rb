@@ -25,11 +25,11 @@ require "integration/test_helper"
 require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
-  subject { Azure::Storage::Blob::BlobService.new }
+  subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
 
   describe "#set_service_properties" do
     it "sets the service properties without version" do
-      properties = Azure::Storage::Service::StorageServiceProperties.new
+      properties = Azure::Storage::Common::Service::StorageServiceProperties.new
       properties.logging.delete = true
       properties.logging.read = true
       properties.logging.write = true
@@ -46,14 +46,14 @@ describe Azure::Storage::Blob::BlobService do
     end
 
     it "sets the service properties use default values" do
-     properties = Azure::Storage::Service::StorageServiceProperties.new
+     properties = Azure::Storage::Common::Service::StorageServiceProperties.new
      result = subject.set_service_properties properties
      result.must_be_nil
    end
 
     describe "#set_service_properties with logging" do
       it "with retention" do
-        properties = Azure::Storage::Service::StorageServiceProperties.new
+        properties = Azure::Storage::Common::Service::StorageServiceProperties.new
         properties.logging.delete = true
         properties.logging.read = true
         properties.logging.write = true
@@ -65,7 +65,7 @@ describe Azure::Storage::Blob::BlobService do
       end
 
       it "without retention" do
-        properties = Azure::Storage::Service::StorageServiceProperties.new
+        properties = Azure::Storage::Common::Service::StorageServiceProperties.new
         properties.logging.delete = false
         properties.logging.read = true
         properties.logging.write = true
@@ -79,7 +79,7 @@ describe Azure::Storage::Blob::BlobService do
 
     describe "#set_service_properties with metrics" do
       it "with hour metrics" do
-        properties = Azure::Storage::Service::StorageServiceProperties.new
+        properties = Azure::Storage::Common::Service::StorageServiceProperties.new
         properties.hour_metrics.enabled = true
         properties.hour_metrics.include_apis = true
         properties.hour_metrics.retention_policy.enabled = true
@@ -90,7 +90,7 @@ describe Azure::Storage::Blob::BlobService do
       end
 
       it "with minuite metrics" do
-        properties = Azure::Storage::Service::StorageServiceProperties.new
+        properties = Azure::Storage::Common::Service::StorageServiceProperties.new
         properties.minute_metrics.enabled = true
         properties.minute_metrics.include_apis = false
         properties.minute_metrics.retention_policy.enabled = true
@@ -101,7 +101,7 @@ describe Azure::Storage::Blob::BlobService do
       end
 
       it "without retention" do
-        properties = Azure::Storage::Service::StorageServiceProperties.new
+        properties = Azure::Storage::Common::Service::StorageServiceProperties.new
         properties.hour_metrics.enabled = true
         properties.hour_metrics.include_apis = false
         properties.hour_metrics.retention_policy.enabled = false
@@ -117,8 +117,8 @@ describe Azure::Storage::Blob::BlobService do
     end
 
     describe "#set_service_properties with CORS" do
-      let(:cors_properties) { Azure::Storage::Service::StorageServiceProperties.new }
-      let(:cors_rule) { Azure::Storage::Service::CorsRule.new }
+      let(:cors_properties) { Azure::Storage::Common::Service::StorageServiceProperties.new }
+      let(:cors_rule) { Azure::Storage::Common::Service::CorsRule.new }
       before {
         cors_properties.cors.cors_rules.clear
         cors_rule.allowed_origins = ["www.ab.com", "www.bc.com"]
@@ -129,8 +129,8 @@ describe Azure::Storage::Blob::BlobService do
       }
 
       it "nil CORS" do
-        properties = Azure::Storage::Service::StorageServiceProperties.new
-        properties.cors = Azure::Storage::Service::Cors.new
+        properties = Azure::Storage::Common::Service::StorageServiceProperties.new
+        properties.cors = Azure::Storage::Common::Service::Cors.new
 
         result = subject.set_service_properties properties
         result.must_be_nil
@@ -231,7 +231,7 @@ describe Azure::Storage::Blob::BlobService do
 
   describe "#get_service_properties" do
     it "gets service properties" do
-      properties = Azure::Storage::Service::StorageServiceProperties.new
+      properties = Azure::Storage::Common::Service::StorageServiceProperties.new
       properties.logging.delete = false
       properties.logging.read = true
       properties.logging.write = true
@@ -247,8 +247,8 @@ describe Azure::Storage::Blob::BlobService do
       properties.minute_metrics.retention_policy.enabled = true
       properties.minute_metrics.retention_policy.days = 4
 
-      properties.cors = Azure::Storage::Service::Cors.new
-      rule = Azure::Storage::Service::CorsRule.new
+      properties.cors = Azure::Storage::Common::Service::Cors.new
+      rule = Azure::Storage::Common::Service::CorsRule.new
       rule.allowed_origins = ["www.cd.com", "www.ef.com"]
       rule.allowed_methods = ["GET", "PUT"]
       rule.max_age_in_seconds = 20

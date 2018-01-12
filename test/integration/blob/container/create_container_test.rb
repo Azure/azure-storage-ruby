@@ -23,10 +23,9 @@
 #--------------------------------------------------------------------------
 require "azure/core/http/http_error"
 require "integration/test_helper"
-require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
-  subject { Azure::Storage::Blob::BlobService.new }
+  subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
   after { ContainerNameHelper.clean }
 
   describe "#create_container" do

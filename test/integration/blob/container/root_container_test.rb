@@ -26,7 +26,7 @@ require "azure/storage/blob/blob_service"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Blob::BlobService do
-  subject { Azure::Storage::Blob::BlobService.new }
+  subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
 
   let(:container_name) { "$root" }
   let(:blob_name1) { "blobname1" }
@@ -44,7 +44,6 @@ describe Azure::Storage::Blob::BlobService do
     begin
       container = subject.create_container container_name
       container.name.must_equal container_name
-
       # explicit root container name
       blob = subject.create_page_blob container_name, blob_name1, length
       blob.name.must_equal blob_name1

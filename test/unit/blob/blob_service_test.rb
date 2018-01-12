@@ -21,27 +21,20 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require "test_helper"
 require "unit/test_helper"
-require "azure/storage/blob/blob_service"
-require "azure/storage/blob/serialization"
-require "azure/storage/blob/container"
-require "azure/storage/blob/blob"
-require "azure/storage/service/signed_identifier"
+require "azure/storage/blob"
 
 describe Azure::Storage::Blob::BlobService do
   let(:user_agent_prefix) { "azure_storage_ruby_unit_test" }
   subject {
-    Azure::Storage::Blob::BlobService.new { |headers|
-      headers["User-Agent"] = "#{user_agent_prefix}; #{headers['User-Agent']}"
-    }
+    Azure::Storage::Blob::BlobService::create({ storage_account_name: "mockaccount", storage_access_key: "YWNjZXNzLWtleQ==" })
   }
   let(:serialization) { Azure::Storage::Blob::Serialization }
   let(:uri) { URI.parse "http://foo.com" }
   let(:query) { {} }
-  let(:x_ms_version) { Azure::Storage::Default::STG_VERSION }
-  let(:user_agent) { Azure::Storage::Default::USER_AGENT }
-  let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+  let(:x_ms_version) { Azure::Storage::Blob::Default::STG_VERSION }
+  let(:user_agent) { Azure::Storage::Blob::Default::USER_AGENT }
+  let(:request_headers) { {} }
   let(:request_body) { "request-body" }
 
   let(:response_headers) { {} }
@@ -56,8 +49,8 @@ describe Azure::Storage::Blob::BlobService do
 
   describe "#list_containers" do
     let(:verb) { :get }
-    let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
-    let(:container_enumeration_result) { Azure::Service::EnumerationResults.new }
+    let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+    let(:container_enumeration_result) { Azure::Storage::Common::Service::EnumerationResults.new }
 
     before {
       subject.stubs(:containers_uri).with({}, options).returns(uri)
@@ -81,7 +74,7 @@ describe Azure::Storage::Blob::BlobService do
 
     it "returns a list of containers for the account" do
       result = subject.list_containers
-      result.must_be_kind_of Azure::Service::EnumerationResults
+      result.must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
     end
 
     describe "when the options Hash is used" do
@@ -190,9 +183,7 @@ describe Azure::Storage::Blob::BlobService do
         before do
           request_headers = {
             "x-ms-meta-MetadataKey" => "MetaDataValue",
-            "x-ms-meta-MetadataKey1" => "MetaDataValue1",
-            "x-ms-version" => x_ms_version,
-            "User-Agent" => "#{user_agent_prefix}; #{user_agent}"
+            "x-ms-meta-MetadataKey1" => "MetaDataValue1"
           }
           subject.stubs(:container_uri).with(container_name, {}).returns(uri)
           serialization.stubs(:container_from_headers).with(response_headers).returns(container)
@@ -210,7 +201,7 @@ describe Azure::Storage::Blob::BlobService do
         let(:options) { { public_access_level: public_access_level } }
 
         before do
-          request_headers = { "x-ms-blob-public-access" => public_access_level, "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" }
+          request_headers = { "x-ms-blob-public-access" => public_access_level }
           subject.stubs(:container_uri).with(container_name, {}).returns(uri)
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           serialization.stubs(:container_from_headers).with(response_headers).returns(container)
@@ -248,7 +239,7 @@ describe Azure::Storage::Blob::BlobService do
 
     describe "#get_container_properties" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:container_properties) { {} }
 
       before {
@@ -284,7 +275,7 @@ describe Azure::Storage::Blob::BlobService do
 
     describe "#get_container_metadata" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:container_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
       let(:response_headers) { { "x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1" } }
 
@@ -323,8 +314,8 @@ describe Azure::Storage::Blob::BlobService do
 
     describe "#get_container_acl" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
-      let(:signed_identifier) { Azure::Storage::Service::SignedIdentifier.new }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:signed_identifier) { Azure::Storage::Common::Service::SignedIdentifier.new }
       let(:signed_identifiers) { [signed_identifier] }
 
       before {
@@ -361,7 +352,7 @@ describe Azure::Storage::Blob::BlobService do
         returned_container.name.must_equal container_name
 
         returned_acl.must_be_kind_of Array
-        returned_acl[0].must_be_kind_of Azure::Storage::Service::SignedIdentifier
+        returned_acl[0].must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
       end
     end
 
@@ -417,7 +408,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         describe "when a signed_identifiers value is provided" do
-          let(:signed_identifier) { Azure::Storage::Service::SignedIdentifier.new }
+          let(:signed_identifier) { Azure::Storage::Common::Service::SignedIdentifier.new }
           let(:signed_identifiers) { [signed_identifier] }
           before {
             subject.stubs(:call).with(verb, uri, request_body, request_headers, {}).returns(response)
@@ -441,7 +432,7 @@ describe Azure::Storage::Blob::BlobService do
             returned_container.public_access_level.must_equal public_access_level
 
             returned_acl.must_be_kind_of Array
-            returned_acl[0].must_be_kind_of Azure::Storage::Service::SignedIdentifier
+            returned_acl[0].must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
           end
         end
       end
@@ -476,9 +467,7 @@ describe Azure::Storage::Blob::BlobService do
       let(:container_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
       let(:request_headers) {
         { "x-ms-meta-MetadataKey" => "MetaDataValue",
-         "x-ms-meta-MetadataKey1" => "MetaDataValue1",
-         "x-ms-version" => x_ms_version,
-         "User-Agent" => "#{user_agent_prefix}; #{user_agent}"
+         "x-ms-meta-MetadataKey1" => "MetaDataValue1"
          }
       }
 
@@ -508,8 +497,8 @@ describe Azure::Storage::Blob::BlobService do
     describe "#list_blobs" do
       let(:verb) { :get }
       let(:query) { { "comp" => "list" } }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
-      let(:blob_enumeration_results) { Azure::Service::EnumerationResults.new }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:blob_enumeration_results) { Azure::Storage::Common::Service::EnumerationResults.new }
 
       before {
         subject.stubs(:container_uri).with(container_name, query, options).returns(uri)
@@ -535,7 +524,7 @@ describe Azure::Storage::Blob::BlobService do
 
       it "returns a list of blobs for the container" do
         result = subject.list_blobs container_name
-        result.must_be_kind_of Azure::Service::EnumerationResults
+        result.must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
       end
 
       describe "when the options Hash is used" do
@@ -651,8 +640,7 @@ describe Azure::Storage::Blob::BlobService do
             "Content-Length" => 0.to_s,
             "x-ms-blob-content-length" => blob_length.to_s,
             "x-ms-sequence-number" => 0.to_s,
-            "x-ms-version" => x_ms_version,
-            "User-Agent" => "#{user_agent_prefix}; #{user_agent}"
+            "x-ms-blob-content-type" => "application/octet-stream"
           }
         }
 
@@ -758,9 +746,7 @@ describe Azure::Storage::Blob::BlobService do
         let(:source_uri) { "https://dummy.uri" }
         let(:request_headers) {
           {
-            "x-ms-copy-source" => source_uri,
-            "x-ms-version" => x_ms_version,
-            "User-Agent" => "#{user_agent_prefix}; #{user_agent}"
+            "x-ms-copy-source" => source_uri
           }
         }
         let(:copy_id) { "copy-id" }
@@ -801,9 +787,7 @@ describe Azure::Storage::Blob::BlobService do
           {
             "x-ms-page-write" => "update",
             "x-ms-range" => "bytes=#{start_range}-#{end_range}",
-            "Content-Type" => "",
-            "x-ms-version" => x_ms_version,
-            "User-Agent" => "#{user_agent_prefix}; #{user_agent}"
+            "Content-Type" => ""
           }
         }
 
@@ -898,9 +882,7 @@ describe Azure::Storage::Blob::BlobService do
           {
             "x-ms-range" => "bytes=#{start_range}-#{end_range}",
             "x-ms-page-write" => "clear",
-            "Content-Type" => "",
-            "x-ms-version" => x_ms_version,
-            "User-Agent" => "#{user_agent_prefix}; #{user_agent}"
+            "Content-Type" => ""
           }
         }
 
@@ -964,7 +946,7 @@ describe Azure::Storage::Blob::BlobService do
         let(:content) { "some content" }
         let(:block_id) { "block-id" }
         let(:server_generated_content_md5) { "server-content-md5" }
-        let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+        let(:request_headers) { {} }
 
         before {
           query.update("comp" => "block", "blockid" => Base64.strict_encode64(block_id))
@@ -1010,8 +992,7 @@ describe Azure::Storage::Blob::BlobService do
         let(:request_headers) {
           {
             "x-ms-blob-type" => "BlockBlob",
-            "x-ms-version" => x_ms_version,
-            "User-Agent" => "#{user_agent_prefix}; #{user_agent}"
+            "x-ms-blob-content-type" => "text/plain; charset=#{content.encoding}"
           }
         }
 
@@ -1107,7 +1088,7 @@ describe Azure::Storage::Blob::BlobService do
         let(:verb) { :put }
         let(:request_body) { "body" }
         let(:block_list) { mock() }
-        let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+        let(:request_headers) { { "x-ms-blob-content-type" => "application/octet-stream" } }
 
         before {
           query.update("comp" => "blocklist")
@@ -1234,7 +1215,7 @@ describe Azure::Storage::Blob::BlobService do
       describe "#list_blob_blocks" do
         let(:verb) { :get }
         let(:query) { { "comp" => "blocklist", "blocklisttype" => "all" } }
-        let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+        let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
         let(:blob_block_list) { [Azure::Storage::Blob::Block.new] }
 
         before {
@@ -1311,7 +1292,7 @@ describe Azure::Storage::Blob::BlobService do
       describe "#list_page_blob_ranges" do
         let(:verb) { :get }
         let(:query) { { "comp" => "pagelist" } }
-        let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+        let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
         let(:page_list) { [[0, 511], [512, 1023]] }
 
         before {
@@ -1367,7 +1348,7 @@ describe Azure::Storage::Blob::BlobService do
         describe "when both start_range and end_range are provided" do
           let(:start_range) { 255 }
           let(:end_range) { 512 }
-          let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+          let(:request_headers) { {} }
 
           it "modifies the request headers with the desired range" do
             request_headers["x-ms-range"] = "bytes=#{start_range}-#{end_range}"
@@ -1427,7 +1408,7 @@ describe Azure::Storage::Blob::BlobService do
         let(:verb) { :put }
         let(:query) { { "comp" => "properties" } }
         let(:size) { 2048 }
-        let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}", "x-ms-blob-content-length" => size.to_s } }
+        let(:request_headers) { { "x-ms-blob-content-length" => size.to_s } }
 
         before {
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
@@ -1475,7 +1456,7 @@ describe Azure::Storage::Blob::BlobService do
         let(:query) { { "comp" => "properties" } }
         let(:action) { :update }
         let(:number) { 1024 }
-        let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+        let(:request_headers) { {} }
 
         before {
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
@@ -1485,7 +1466,7 @@ describe Azure::Storage::Blob::BlobService do
         it 'set the page blob\'s sequence number' do
           options = { sequence_number_action: action, sequence_number: number }
           subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-          request_headers["x-ms-blob-sequence-number-action"] = action.to_s
+          request_headers["x-ms-sequence-number-action"] = action.to_s
           request_headers["x-ms-blob-sequence-number"] = number.to_s
           subject.set_sequence_number container_name, blob_name, action, number
         end
@@ -1494,7 +1475,7 @@ describe Azure::Storage::Blob::BlobService do
           action = :max
           options = { sequence_number_action: action, sequence_number: number }
           subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-          request_headers["x-ms-blob-sequence-number-action"] = action.to_s
+          request_headers["x-ms-sequence-number-action"] = action.to_s
           request_headers["x-ms-blob-sequence-number"] = number.to_s
           subject.set_sequence_number container_name, blob_name, action, number
         end
@@ -1503,7 +1484,7 @@ describe Azure::Storage::Blob::BlobService do
           action = :increment
           options = { sequence_number_action: action, sequence_number: nil }
           subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-          request_headers["x-ms-blob-sequence-number-action"] = action.to_s
+          request_headers["x-ms-sequence-number-action"] = action.to_s
           subject.set_sequence_number container_name, blob_name, action, nil
         end
 
@@ -1511,13 +1492,13 @@ describe Azure::Storage::Blob::BlobService do
           action = :increment
           options = { sequence_number_action: action, sequence_number: number }
           subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-          request_headers["x-ms-blob-sequence-number-action"] = action.to_s
+          request_headers["x-ms-sequence-number-action"] = action.to_s
           subject.set_sequence_number container_name, blob_name, action, number
         end
 
         describe "when the option hash is used" do
           before {
-            request_headers["x-ms-blob-sequence-number-action"] = action.to_s
+            request_headers["x-ms-sequence-number-action"] = action.to_s
             request_headers["x-ms-blob-sequence-number"] = number.to_s
           }
 
@@ -1557,8 +1538,7 @@ describe Azure::Storage::Blob::BlobService do
           {
             "x-ms-blob-type" => "AppendBlob",
             "Content-Length" => 0.to_s,
-            "x-ms-version" => x_ms_version,
-            "User-Agent" => "#{user_agent_prefix}; #{user_agent}"
+            "x-ms-blob-content-type" => "application/octet-stream"
           }
         }
 
@@ -1687,7 +1667,7 @@ describe Azure::Storage::Blob::BlobService do
         let(:lease_id) { "lease_id" }
         let(:max_size) { 123 }
         let(:append_position) { 999 }
-        let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+        let(:request_headers) { {} }
 
         before {
           query.update("comp" => "appendblock")
@@ -1772,7 +1752,7 @@ describe Azure::Storage::Blob::BlobService do
 
       describe "#set_blob_properties" do
         let(:verb) { :put }
-        let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+        let(:request_headers) { {} }
 
         before {
           query.update("comp" => "properties")
@@ -1847,14 +1827,14 @@ describe Azure::Storage::Blob::BlobService do
           end
 
           it "modifies the request headers when provided a :sequence_number_action value" do
-            request_headers["x-ms-blob-sequence-number-action"] = "anyvalue"
+            request_headers["x-ms-sequence-number-action"] = "anyvalue"
             options = { sequence_number_action: :anyvalue }
             subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
             subject.set_blob_properties container_name, blob_name, options
           end
 
           it "modifies the request headers when provided a :sequence_number value" do
-            request_headers["x-ms-blob-sequence-number-action"] = :max.to_s
+            request_headers["x-ms-sequence-number-action"] = :max.to_s
             request_headers["x-ms-blob-sequence-number"] = "37"
             options = { sequence_number_action: :max, sequence_number: 37 }
             subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
@@ -1872,7 +1852,7 @@ describe Azure::Storage::Blob::BlobService do
       describe "#set_blob_metadata" do
         let(:verb) { :put }
         let(:blob_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
-        let(:request_headers) { { "x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1", "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+        let(:request_headers) { { "x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1"} }
 
         before {
           query.update("comp" => "metadata")
@@ -1899,8 +1879,8 @@ describe Azure::Storage::Blob::BlobService do
 
       describe "#get_blob_properties" do
         let(:verb) { :head }
-        let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
-        let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+        let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+        let(:request_headers) { {} }
 
         before {
           subject.stubs(:blob_uri).with(container_name, blob_name, query, options).returns(uri)
@@ -1949,8 +1929,8 @@ describe Azure::Storage::Blob::BlobService do
 
       describe "#get_blob_metadata" do
         let(:verb) { :get }
-        let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
-        let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+        let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+        let(:request_headers) { {} }
 
         before {
           query["comp"] = "metadata"
@@ -2004,7 +1984,7 @@ describe Azure::Storage::Blob::BlobService do
 
       describe "#get_blob" do
         let(:verb) { :get }
-        let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+        let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
 
         before {
           response.stubs(:success?).returns(true)
@@ -2116,7 +2096,6 @@ describe Azure::Storage::Blob::BlobService do
         before {
           response.stubs(:success?).returns(true)
           request_headers["x-ms-delete-snapshots"] = "include"
-          request_headers["x-ms-version"] = x_ms_version
 
           subject.stubs(:blob_uri).with(container_name, blob_name, query).returns(uri)
           subject.stubs(:call).with(verb, uri, nil, request_headers, delete_snapshots: :include).returns(response)
@@ -2750,7 +2729,7 @@ describe Azure::Storage::Blob::BlobService do
   end
 
   describe "uri functions" do
-    subject { MockBlobService.new }
+    subject { MockBlobService.new({ storage_account_name: "mockaccount", storage_access_key: "YWNjZXNzLWtleQ==" }) }
 
     let(:container_name) { "container" }
     let(:blob_name) { "blob" }

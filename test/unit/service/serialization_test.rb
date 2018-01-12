@@ -22,20 +22,12 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "unit/test_helper"
-require "azure/storage/service/serialization"
+require "azure/storage/common"
 
-require "azure/storage/service/signed_identifier"
-require "azure/storage/service/access_policy"
+describe Azure::Storage::Common::Service::Serialization do
+  subject { Azure::Storage::Common::Service::Serialization }
 
-require "azure/storage/service/storage_service_properties"
-require "azure/storage/service/logging"
-require "azure/storage/service/metrics"
-require "azure/storage/service/retention_policy"
-
-describe Azure::Storage::Service::Serialization do
-  subject { Azure::Storage::Service::Serialization }
-
-  let(:storage_service_properties) { Azure::Storage::Service::StorageServiceProperties.new }
+  let(:storage_service_properties) { Azure::Storage::Common::Service::StorageServiceProperties.new }
   let(:storage_service_properties_xml) { Fixtures["storage_service_properties"] }
 
   describe "#signed_identifiers_from_xml" do
@@ -48,14 +40,14 @@ describe Azure::Storage::Service::Serialization do
     it "returns an Array of SignedIdentifier instances" do
       results = subject.signed_identifiers_from_xml signed_identifiers_xml
       results.must_be_kind_of Array
-      results[0].must_be_kind_of Azure::Storage::Service::SignedIdentifier
+      results[0].must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
       results.count.must_equal 1
     end
   end
 
   describe "#signed_identifiers_to_xml" do
     let(:signed_identifiers) {
-      identifier = Azure::Storage::Service::SignedIdentifier.new
+      identifier = Azure::Storage::Common::Service::SignedIdentifier.new
       identifier.id = "MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI="
       identifier.access_policy.start = "2009-09-28T08:49:37.0000000Z"
       identifier.access_policy.expiry = "2009-09-29T08:49:37.0000000Z"
@@ -86,7 +78,7 @@ describe Azure::Storage::Service::Serialization do
 
     it "returns a SignedIdentifier instance" do
       identifier = subject.signed_identifier_from_xml signed_identifier_xml
-      identifier.must_be_kind_of Azure::Storage::Service::SignedIdentifier
+      identifier.must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
     end
 
     it "sets the properties of the SignedIdentifier" do
@@ -105,7 +97,7 @@ describe Azure::Storage::Service::Serialization do
 
     it "returns a AccessPolicy instance" do
       access_policy = subject.access_policy_from_xml access_policy_xml
-      access_policy.must_be_kind_of Azure::Storage::Service::AccessPolicy
+      access_policy.must_be_kind_of Azure::Storage::Common::Service::AccessPolicy
     end
 
     it "sets the properties of the AccessPolicy" do
@@ -122,11 +114,11 @@ describe Azure::Storage::Service::Serialization do
     let(:enumeration_results_xml) { Fixtures[:list_containers] }
 
     describe "when passed an instance of EnumerationResults" do
-      let(:enumeration_results) { Azure::Service::EnumerationResults.new }
+      let(:enumeration_results) { Azure::Storage::Common::Service::EnumerationResults.new }
 
       it "parses the XML and populates the provided EnumerationResults instance" do
         result = subject.enumeration_results_from_xml enumeration_results_xml, enumeration_results
-        result.must_be :kind_of?, Azure::Service::EnumerationResults
+        result.must_be :kind_of?, Azure::Storage::Common::Service::EnumerationResults
         result.continuation_token.must_equal "video"
       end
 
@@ -139,7 +131,7 @@ describe Azure::Storage::Service::Serialization do
     describe "when passed nil" do
       it "returns a new instance of EnumerationResults" do
         result = subject.enumeration_results_from_xml enumeration_results_xml, nil
-        result.must_be_kind_of Azure::Service::EnumerationResults
+        result.must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
       end
     end
   end
@@ -198,7 +190,7 @@ describe Azure::Storage::Service::Serialization do
 
   describe "#retention_policy_to_xml" do
     let(:retention_policy) {
-      retention_policy = Azure::Storage::Service::RetentionPolicy.new
+      retention_policy = Azure::Storage::Common::Service::RetentionPolicy.new
       retention_policy.enabled = true
       retention_policy.days = 7
 
@@ -231,7 +223,7 @@ describe Azure::Storage::Service::Serialization do
     it "returns an RetentionPolicy instance" do
       retention_policy = subject.retention_policy_from_xml retention_policy_xml
       retention_policy.wont_be_nil
-      retention_policy.must_be_kind_of Azure::Storage::Service::RetentionPolicy
+      retention_policy.must_be_kind_of Azure::Storage::Common::Service::RetentionPolicy
     end
 
     it "sets the properties of the RetentionPolicy instance" do
@@ -243,11 +235,11 @@ describe Azure::Storage::Service::Serialization do
 
   describe "#hour_metrics_to_xml" do
     let(:metrics) {
-      metrics = Azure::Storage::Service::Metrics.new
+      metrics = Azure::Storage::Common::Service::Metrics.new
       metrics.version = "1.0"
       metrics.enabled = true
       metrics.include_apis = false
-      retention_policy = metrics.retention_policy = Azure::Storage::Service::RetentionPolicy.new
+      retention_policy = metrics.retention_policy = Azure::Storage::Common::Service::RetentionPolicy.new
       retention_policy.enabled = true
       retention_policy.days = 7
 
@@ -285,7 +277,7 @@ describe Azure::Storage::Service::Serialization do
     it "returns an Metrics instance" do
       metrics = subject.metrics_from_xml metrics_xml
       metrics.wont_be_nil
-      metrics.must_be_kind_of Azure::Storage::Service::Metrics
+      metrics.must_be_kind_of Azure::Storage::Common::Service::Metrics
     end
 
     it "sets the properties of the Metrics instance" do
@@ -300,13 +292,13 @@ describe Azure::Storage::Service::Serialization do
 
   describe "#logging_to_xml" do
     let(:logging) {
-      logging = Azure::Storage::Service::Logging.new
+      logging = Azure::Storage::Common::Service::Logging.new
       logging.version = "1.0"
       logging.delete = true
       logging.read = false
       logging.write = true
 
-      retention_policy = logging.retention_policy = Azure::Storage::Service::RetentionPolicy.new
+      retention_policy = logging.retention_policy = Azure::Storage::Common::Service::RetentionPolicy.new
       retention_policy.enabled = true
       retention_policy.days = 7
 
@@ -344,7 +336,7 @@ describe Azure::Storage::Service::Serialization do
     it "returns an Logging instance" do
       logging = subject.logging_from_xml logging_xml
       logging.wont_be_nil
-      logging.must_be_kind_of Azure::Storage::Service::Logging
+      logging.must_be_kind_of Azure::Storage::Common::Service::Logging
     end
 
     it "sets the properties of the Logging instance" do
@@ -359,30 +351,30 @@ describe Azure::Storage::Service::Serialization do
 
   describe "#service_properties_to_xml" do
     let(:service_properties) {
-      service_properties = Azure::Storage::Service::StorageServiceProperties.new
+      service_properties = Azure::Storage::Common::Service::StorageServiceProperties.new
       service_properties.default_service_version = "2011-08-18"
-      logging = service_properties.logging = Azure::Storage::Service::Logging.new
+      logging = service_properties.logging = Azure::Storage::Common::Service::Logging.new
       logging.version = "1.0"
       logging.delete = true
       logging.read = false
       logging.write = true
-      retention_policy = logging.retention_policy = Azure::Storage::Service::RetentionPolicy.new
+      retention_policy = logging.retention_policy = Azure::Storage::Common::Service::RetentionPolicy.new
       retention_policy.enabled = true
       retention_policy.days = 7
 
-      metrics = service_properties.hour_metrics = Azure::Storage::Service::Metrics.new
+      metrics = service_properties.hour_metrics = Azure::Storage::Common::Service::Metrics.new
       metrics.version = "1.0"
       metrics.enabled = true
       metrics.include_apis = false
-      retention_policy = metrics.retention_policy = Azure::Storage::Service::RetentionPolicy.new
+      retention_policy = metrics.retention_policy = Azure::Storage::Common::Service::RetentionPolicy.new
       retention_policy.enabled = true
       retention_policy.days = 7
 
       service_properties.minute_metrics = metrics
 
-      service_properties.cors = Azure::Storage::Service::Cors.new do |cors|
+      service_properties.cors = Azure::Storage::Common::Service::Cors.new do |cors|
         cors.cors_rules = []
-        cors.cors_rules.push(Azure::Storage::Service::CorsRule.new { |cors_rule|
+        cors.cors_rules.push(Azure::Storage::Common::Service::CorsRule.new { |cors_rule|
           cors_rule.allowed_origins = ["http://www.contoso.com", "http://dummy.uri"]
           cors_rule.allowed_methods = ["PUT", "HEAD"]
           cors_rule.max_age_in_seconds = 5
@@ -390,7 +382,7 @@ describe Azure::Storage::Service::Serialization do
           cors_rule.allowed_headers = ["x-ms-blob-content-type", "x-ms-blob-content-disposition"]
         })
 
-        cors.cors_rules.push(Azure::Storage::Service::CorsRule.new { |cors_rule|
+        cors.cors_rules.push(Azure::Storage::Common::Service::CorsRule.new { |cors_rule|
           cors_rule.allowed_origins = ["*"]
           cors_rule.allowed_methods = ["PUT", "GET"]
           cors_rule.max_age_in_seconds = 5
@@ -398,7 +390,7 @@ describe Azure::Storage::Service::Serialization do
           cors_rule.allowed_headers = ["x-ms-blob-content-type", "x-ms-blob-content-disposition"]
         })
 
-        cors.cors_rules.push(Azure::Storage::Service::CorsRule.new { |cors_rule|
+        cors.cors_rules.push(Azure::Storage::Common::Service::CorsRule.new { |cors_rule|
           cors_rule.allowed_origins = ["http://www.contoso.com"]
           cors_rule.allowed_methods = ["GET"]
           cors_rule.max_age_in_seconds = 5
@@ -441,7 +433,7 @@ describe Azure::Storage::Service::Serialization do
     it "returns an StorageServiceProperties instance" do
       service_properties = subject.service_properties_from_xml service_properties_xml
       service_properties.wont_be_nil
-      service_properties.must_be_kind_of Azure::Storage::Service::StorageServiceProperties
+      service_properties.must_be_kind_of Azure::Storage::Common::Service::StorageServiceProperties
     end
 
     it "sets the properties of the StorageServiceProperties instance" do

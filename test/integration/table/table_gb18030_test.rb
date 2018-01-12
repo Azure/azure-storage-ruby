@@ -22,10 +22,9 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/blob/blob_service"
 
 describe "Table GB-18030" do
-  subject { Azure::Storage::Table::TableService.new }
+  subject { Azure::Storage::Table::TableService.create(SERVICE_CREATE_OPTIONS()) }
 
   let(:table_name) { TableNameHelper.name }
 

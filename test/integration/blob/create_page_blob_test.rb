@@ -25,7 +25,7 @@ require "integration/test_helper"
 require "azure/storage/blob/blob_service"
 
 describe Azure::Storage::Blob::BlobService do
-  subject { Azure::Storage::Blob::BlobService.new }
+  subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
   after { ContainerNameHelper.clean }
 
   describe "#create_page_blob" do
@@ -41,6 +41,8 @@ describe Azure::Storage::Blob::BlobService do
       blob = subject.create_page_blob container_name, blob_name, length
       blob.name.must_equal blob_name
       is_boolean(blob.encrypted).must_equal true
+      blob = subject.get_blob_properties container_name, blob_name
+      blob.properties[:content_type].must_equal "application/octet-stream"
     end
 
     it "creates page blob with non uri encoded path" do

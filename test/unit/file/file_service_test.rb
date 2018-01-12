@@ -21,28 +21,20 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require "test_helper"
 require "unit/test_helper"
-require "azure/storage/file/file_service"
-require "azure/storage/file/serialization"
-require "azure/storage/file/share"
-require "azure/storage/file/directory"
-require "azure/storage/file/file"
-require "azure/storage/service/signed_identifier"
+require "azure/storage/file"
 
 describe Azure::Storage::File::FileService do
   let(:user_agent_prefix) { "azure_storage_ruby_unit_test" }
   subject {
-    Azure::Storage::File::FileService.new { |headers|
-      headers["User-Agent"] = "#{user_agent_prefix}; #{headers['User-Agent']}"
-    }
+    Azure::Storage::File::FileService.new {}
   }
   let(:serialization) { Azure::Storage::File::Serialization }
   let(:uri) { URI.parse "http://foo.com" }
   let(:query) { {} }
-  let(:x_ms_version) { Azure::Storage::Default::STG_VERSION }
-  let(:user_agent) { Azure::Storage::Default::USER_AGENT }
-  let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+  let(:x_ms_version) { Azure::Storage::File::Default::STG_VERSION }
+  let(:user_agent) { Azure::Storage::File::Default::USER_AGENT }
+  let(:request_headers) { {} }
   let(:request_body) { "request-body" }
 
   let(:response_headers) { {} }
@@ -60,8 +52,8 @@ describe Azure::Storage::File::FileService do
 
   describe "#list_shares" do
     let(:verb) { :get }
-    let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
-    let(:shares_enumeration_result) { Azure::Service::EnumerationResults.new }
+    let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+    let(:shares_enumeration_result) { Azure::Storage::Common::Service::EnumerationResults.new }
 
     before {
       subject.stubs(:shares_uri).with({}, options).returns(uri)
@@ -85,7 +77,7 @@ describe Azure::Storage::File::FileService do
 
     it "returns a list of containers for the account" do
       result = subject.list_shares
-      result.must_be_kind_of Azure::Service::EnumerationResults
+      result.must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
     end
 
     describe "when the options Hash is used" do
@@ -192,9 +184,7 @@ describe Azure::Storage::File::FileService do
         before do
           request_headers = {
             "x-ms-meta-MetadataKey" => "MetaDataValue",
-            "x-ms-meta-MetadataKey1" => "MetaDataValue1",
-            "x-ms-version" => x_ms_version,
-            "User-Agent" => "#{user_agent_prefix}; #{user_agent}"
+            "x-ms-meta-MetadataKey1" => "MetaDataValue1"
           }
           subject.stubs(:share_uri).with(share_name, {}).returns(uri)
           serialization.stubs(:share_from_headers).with(response_headers).returns(share)
@@ -234,7 +224,7 @@ describe Azure::Storage::File::FileService do
 
     describe "#set_share_properties" do
         let(:verb) { :put }
-        let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+        let(:request_headers) { {} }
 
         before {
           query.update("comp" => "properties")
@@ -285,7 +275,7 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_share_properties" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:share_properties) { {} }
 
       before {
@@ -322,7 +312,7 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_share_metadata" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:share_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
       let(:response_headers) { { "x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1" } }
 
@@ -365,9 +355,7 @@ describe Azure::Storage::File::FileService do
       let(:share_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
       let(:request_headers) {
         { "x-ms-meta-MetadataKey" => "MetaDataValue",
-         "x-ms-meta-MetadataKey1" => "MetaDataValue1",
-         "x-ms-version" => x_ms_version,
-         "User-Agent" => "#{user_agent_prefix}; #{user_agent}"
+         "x-ms-meta-MetadataKey1" => "MetaDataValue1"
          }
       }
 
@@ -396,8 +384,8 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_share_acl" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
-      let(:signed_identifier) { Azure::Storage::Service::SignedIdentifier.new }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:signed_identifier) { Azure::Storage::Common::Service::SignedIdentifier.new }
       let(:signed_identifiers) { [signed_identifier] }
 
       before {
@@ -436,7 +424,7 @@ describe Azure::Storage::File::FileService do
         returned_share.name.must_equal share_name
 
         returned_acl.must_be_kind_of Array
-        returned_acl[0].must_be_kind_of Azure::Storage::Service::SignedIdentifier
+        returned_acl[0].must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
       end
     end
 
@@ -477,7 +465,7 @@ describe Azure::Storage::File::FileService do
       end
 
       describe "when the signed_identifiers parameter is set" do
-        let(:signed_identifier) { Azure::Storage::Service::SignedIdentifier.new }
+        let(:signed_identifier) { Azure::Storage::Common::Service::SignedIdentifier.new }
         let(:signed_identifiers) { [signed_identifier] }
 
         before {
@@ -501,14 +489,14 @@ describe Azure::Storage::File::FileService do
           returned_share.name.must_equal share_name
 
           returned_acl.must_be_kind_of Array
-          returned_acl[0].must_be_kind_of Azure::Storage::Service::SignedIdentifier
+          returned_acl[0].must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
         end
       end
     end
 
     describe "#get_share_stats" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:share_stats) { 10 }
 
       before {
@@ -553,8 +541,8 @@ describe Azure::Storage::File::FileService do
     describe "#list_directories_and_files" do
       let(:verb) { :get }
       let(:query) { { "comp" => "list" } }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
-      let(:directories_and_files_enumeration_results) { Azure::Service::EnumerationResults.new }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:directories_and_files_enumeration_results) { Azure::Storage::Common::Service::EnumerationResults.new }
 
       before {
         subject.stubs(:directory_uri).with(share_name, directory_path, query, options).returns(uri)
@@ -582,7 +570,7 @@ describe Azure::Storage::File::FileService do
       it "returns a list of containers for the account" do
         subject.expects(:directory_uri).with(share_name, directory_path, query, options).returns(uri)
         result = subject.list_directories_and_files share_name, directory_path
-        result.must_be_kind_of Azure::Service::EnumerationResults
+        result.must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
       end
 
       describe "when the options Hash is used" do
@@ -631,7 +619,7 @@ describe Azure::Storage::File::FileService do
     describe "#get_directory_properties" do
       let(:verb) { :get }
       let(:query) { {} }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:directory_properties) { {} }
 
       before {
@@ -669,7 +657,7 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_directory_metadata" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:directory_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
       let(:response_headers) { { "x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1" } }
 
@@ -711,9 +699,7 @@ describe Azure::Storage::File::FileService do
       let(:directory_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
       let(:request_headers) {
         { "x-ms-meta-MetadataKey" => "MetaDataValue",
-         "x-ms-meta-MetadataKey1" => "MetaDataValue1",
-         "x-ms-version" => x_ms_version,
-         "User-Agent" => "#{user_agent_prefix}; #{user_agent}"
+         "x-ms-meta-MetadataKey1" => "MetaDataValue1"
          }
       }
 
@@ -753,8 +739,7 @@ describe Azure::Storage::File::FileService do
           "x-ms-type" => "file",
           "Content-Length" => 0.to_s,
           "x-ms-content-length" => file_length.to_s,
-          "x-ms-version" => x_ms_version,
-          "User-Agent" => "#{user_agent_prefix}; #{user_agent}"
+          "x-ms-content-type" => "application/octet-stream"
         }
       }
 
@@ -849,9 +834,7 @@ describe Azure::Storage::File::FileService do
       let(:request_headers) {
         {
           "x-ms-write" => "update",
-          "x-ms-range" => "bytes=#{start_range}-#{end_range}",
-          "x-ms-version" => x_ms_version,
-          "User-Agent" => "#{user_agent_prefix}; #{user_agent}"
+          "x-ms-range" => "bytes=#{start_range}-#{end_range}"
         }
       }
 
@@ -887,9 +870,7 @@ describe Azure::Storage::File::FileService do
       let(:request_headers) {
         {
           "x-ms-range" => "bytes=#{start_range}-#{end_range}",
-          "x-ms-write" => "clear",
-          "x-ms-version" => x_ms_version,
-          "User-Agent" => "#{user_agent_prefix}; #{user_agent}"
+          "x-ms-write" => "clear"
         }
       }
 
@@ -950,7 +931,7 @@ describe Azure::Storage::File::FileService do
       let(:verb) { :get }
       let(:query) { { "comp" => "rangelist" } }
       let(:range_list) { [[0, 511], [512, 1023]] }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
 
       before {
         subject.stubs(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
@@ -1010,7 +991,7 @@ describe Azure::Storage::File::FileService do
       describe "when both start_range and end_range are provided" do
         let(:start_range) { 255 }
         let(:end_range) { 512 }
-        let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+        let(:request_headers) { {} }
 
         it "modifies the request headers with the desired range" do
           request_headers["x-ms-range"] = "bytes=#{start_range}-#{end_range}"
@@ -1027,7 +1008,7 @@ describe Azure::Storage::File::FileService do
       let(:verb) { :put }
       let(:query) { { "comp" => "properties" } }
       let(:size) { 2048 }
-      let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}", "x-ms-content-length" => size.to_s } }
+      let(:request_headers) { {"x-ms-content-length" => size.to_s } }
 
       before {
         subject.stubs(:file_uri).with(share_name, directory_path, file_name, query).returns(uri)
@@ -1042,7 +1023,7 @@ describe Azure::Storage::File::FileService do
 
     describe "#set_file_properties" do
       let(:verb) { :put }
-      let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+      let(:request_headers) { {} }
 
       before {
         query.update("comp" => "properties")
@@ -1126,8 +1107,8 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_file_properties" do
       let(:verb) { :head }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
-      let(:request_headers) { { "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:request_headers) { {} }
 
       before {
         subject.stubs(:file_uri).with(share_name, directory_path, file_name, query).returns(uri)
@@ -1159,7 +1140,7 @@ describe Azure::Storage::File::FileService do
     describe "#set_file_metadata" do
       let(:verb) { :put }
       let(:file_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
-      let(:request_headers) { { "x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1", "x-ms-version" => x_ms_version, "User-Agent" => "#{user_agent_prefix}; #{user_agent}" } }
+      let(:request_headers) { { "x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1"} }
 
       before {
         query.update("comp" => "metadata")
@@ -1186,7 +1167,7 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_file_metadata" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       # No header is added in the get_file_metadata. StorageService.call will add common headers.
       let(:request_headers) { {} }
 
@@ -1219,7 +1200,7 @@ describe Azure::Storage::File::FileService do
     end
 
     describe "#get_file" do
-      let(:options) { { request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:verb) { :get }
 
       before {

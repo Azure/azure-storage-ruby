@@ -3,7 +3,7 @@ If you intend to contribute to the project, please make sure you've followed the
 The Azure Storage development team uses Visual Studio Code so instructions will be tailored to that preference. However, any preferred IDE or other toolset should be usable.
 
 ### Install
-* Ruby 1.9.3, 2.0, 2.1 or 2.2.
+* Ruby 1.9.3 to 2.5.0.
 * [Visual Studio Code](https://code.visualstudio.com/)
 
 ### Development Environment Setup
@@ -43,7 +43,7 @@ You can use the following commands to run:
 
 * All the tests: ``rake test``. **This will run integration tests if you have .env file or env vars setup**
 * Run storage suite of tests: ``rake test:unit``, ``rake test:integration``
-* One particular test file: ``ruby -I"lib:test" "<path of the test file>"``
+* One particular test file: ``ruby -I".\blob\lib;.\common\lib;.\table\lib;.\queue\lib;.\file\lib;test" "<path of the test file>"``
 
 ### Testing Features
 As you develop a feature, you'll need to write tests to ensure quality. Your changes should be covered by both unit tests and integration tests. You should also run existing tests related to your change to address any unexpected breaks.
@@ -59,11 +59,11 @@ The following are the minimum requirements for any pull request that must be met
   * You should strive to mimic the style with which we have written the library
   * Clean, well-commented, well-designed code
   * Try to limit the number of commits for a feature to 1-2. If you end up having too many we may ask you to squash your changes into fewer commits.
-* [ChangeLog.md](ChangeLog.md) needs to be updated describing the new change
+* ChangeLog.md in service module folders needs to be updated describing the new change
 * Thoroughly test your feature
 
 ### Branching Policy
-Changes should be based on the **dev** branch, not master as master is considered publicly released code. Each breaking change should be recorded in [BreakingChanges.md](BreakingChanges.md).
+Changes should be based on the **dev** branch, not master as master is considered publicly released code. Each breaking change should be recorded in the corresponding BreakingChanges.md in service module folders. Note that [BreakingChanges.md](BreakingChanges.md) is deprecated after GA release.
 
 ### Adding Features for All Platforms
 We strive to release each new feature for each of our environments at the same time. Therefore, we ask that all contributions be written for Ruby 1.9.3 and later.

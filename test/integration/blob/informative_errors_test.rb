@@ -27,7 +27,7 @@ require "azure/core/http/http_error"
 
 describe Azure::Storage::Blob::BlobService do
   describe "#informative_errors_blob" do
-    subject { Azure::Storage::Blob::BlobService.new }
+    subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
     after { ContainerNameHelper.clean }
     let(:container_name) { ContainerNameHelper.name }
 

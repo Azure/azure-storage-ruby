@@ -22,13 +22,11 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "integration/test_helper"
-require "azure/storage/table/table_service"
-require "azure/storage/table/query"
 require "azure/core/http/http_error"
 
 describe Azure::Storage::Table::TableService do
   describe "#query_entities" do
-    subject { Azure::Storage::Table::TableService.new }
+    subject { Azure::Storage::Table::TableService.create(SERVICE_CREATE_OPTIONS()) }
     let(:table_name) { TableNameHelper.name }
     let(:entities_per_partition) { 3 }
     let(:partitions) { ["part1", "part2", "part3"] }
@@ -62,9 +60,15 @@ describe Azure::Storage::Table::TableService do
           subject.insert_entity table_name, entity
         }
       }
+      @cs = ENV["AZURE_STORAGE_CONNECTION_STRING"]
+      ENV["AZURE_STORAGE_CONNECTION_STRING"] =
+        "DefaultEndpointsProtocol=https;AccountName=#{SERVICE_CREATE_OPTIONS()[:storage_account_name]};AccountKey=#{SERVICE_CREATE_OPTIONS()[:storage_access_key]}"
     }
 
-    after { TableNameHelper.clean }
+    after {
+      TableNameHelper.clean
+      ENV["AZURE_STORAGE_CONNECTION_STRING"] = @cs
+    }
 
     it "Queries a table for list of entities" do
       q = Azure::Storage::Table::Query.new.from table_name

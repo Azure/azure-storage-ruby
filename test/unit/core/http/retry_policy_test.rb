@@ -24,9 +24,7 @@
 require "test_helper"
 require "azure/core/http/retry_policy"
 require "azure/core/http/http_request"
-require "azure/storage/default"
-require "azure/storage/core/filter/linear_retry_filter"
-require "azure/storage/core/filter/exponential_retry_filter"
+require "azure/storage/common"
 
 describe Azure::Core::Http::RetryPolicy do
   it "uses blocks as retry logic" do
@@ -36,13 +34,13 @@ describe Azure::Core::Http::RetryPolicy do
 
   it "uses linear retry policy" do
     retry_count = retry_interval = 1
-    retry_policy = Azure::Storage::Core::Filter::LinearRetryPolicyFilter.new retry_count, retry_interval
+    retry_policy = Azure::Storage::Common::Core::Filter::LinearRetryPolicyFilter.new retry_count, retry_interval
     retry_policy.should_retry?(nil, error: "SocketError: Hostname not known").must_equal true
   end
 
   it "uses exponential retry policy" do
     retry_count = retry_interval = 1
-    retry_policy = Azure::Storage::Core::Filter::ExponentialRetryPolicyFilter.new retry_count, retry_interval
+    retry_policy = Azure::Storage::Common::Core::Filter::ExponentialRetryPolicyFilter.new retry_count, retry_interval
     retry_policy.should_retry?(nil, error: "Errno::EPROTONOSUPPORT").must_equal false
   end
 
@@ -50,7 +48,7 @@ describe Azure::Core::Http::RetryPolicy do
     let(:retry_count) { 1 } 
     let(:retry_interval) { 1 }
 
-    subject { Azure::Storage::Core::Filter::LinearRetryPolicyFilter.new retry_count, retry_interval }
+    subject { Azure::Storage::Common::Core::Filter::LinearRetryPolicyFilter.new retry_count, retry_interval }
 
     let(:verb) { :put }
     let(:primary_uri) { URI.parse "http://primary.com" }
@@ -70,8 +68,8 @@ describe Azure::Core::Http::RetryPolicy do
         {
           primary_uri: primary_uri,
           secondary_uri: secondary_uri,
-          location_mode: Azure::Storage::LocationMode::PRIMARY_THEN_SECONDARY,
-          request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
+          location_mode: Azure::Storage::Common::LocationMode::PRIMARY_THEN_SECONDARY,
+          request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
         }
       subject.retry_data = retry_data
       subject.call request, request
@@ -83,8 +81,8 @@ describe Azure::Core::Http::RetryPolicy do
         {
           primary_uri: primary_uri,
           secondary_uri: secondary_uri,
-          location_mode: Azure::Storage::LocationMode::SECONDARY_THEN_PRIMARY,
-          request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
+          location_mode: Azure::Storage::Common::LocationMode::SECONDARY_THEN_PRIMARY,
+          request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
         }
       subject.retry_data = retry_data
       subject.call request, request
@@ -96,8 +94,8 @@ describe Azure::Core::Http::RetryPolicy do
         {
           primary_uri: primary_uri,
           secondary_uri: secondary_uri,
-          location_mode: Azure::Storage::LocationMode::PRIMARY_ONLY,
-          request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
+          location_mode: Azure::Storage::Common::LocationMode::PRIMARY_ONLY,
+          request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
         }
       subject.retry_data = retry_data
       subject.call request, request
@@ -109,8 +107,8 @@ describe Azure::Core::Http::RetryPolicy do
         {
           primary_uri: primary_uri,
           secondary_uri: secondary_uri,
-          location_mode: Azure::Storage::LocationMode::SECONDARY_ONLY,
-          request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_OR_SECONDARY
+          location_mode: Azure::Storage::Common::LocationMode::SECONDARY_ONLY,
+          request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
         }
       subject.retry_data = retry_data
       subject.call request, request
@@ -122,8 +120,8 @@ describe Azure::Core::Http::RetryPolicy do
         {
           primary_uri: primary_uri,
           secondary_uri: secondary_uri,
-          location_mode: Azure::Storage::LocationMode::PRIMARY_THEN_SECONDARY,
-          request_location_mode: Azure::Storage::RequestLocationMode::PRIMARY_ONLY
+          location_mode: Azure::Storage::Common::LocationMode::PRIMARY_THEN_SECONDARY,
+          request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_ONLY
         }
       subject.retry_data = retry_data
       subject.call request, request
@@ -135,8 +133,8 @@ describe Azure::Core::Http::RetryPolicy do
         {
           primary_uri: primary_uri,
           secondary_uri: secondary_uri,
-          location_mode: Azure::Storage::LocationMode::SECONDARY_THEN_PRIMARY,
-          request_location_mode: Azure::Storage::RequestLocationMode::SECONDARY_ONLY
+          location_mode: Azure::Storage::Common::LocationMode::SECONDARY_THEN_PRIMARY,
+          request_location_mode: Azure::Storage::Common::RequestLocationMode::SECONDARY_ONLY
         }
       subject.retry_data = retry_data
       subject.call request, request

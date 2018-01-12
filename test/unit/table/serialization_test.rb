@@ -22,10 +22,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 require "unit/test_helper"
-require "azure/storage/table/serialization"
-require "azure/storage/table/entity"
-require "azure/storage/default"
-
+require "azure/storage/table"
 require "time"
 
 describe Azure::Storage::Table::Serialization do
@@ -112,12 +109,12 @@ describe Azure::Storage::Table::Serialization do
   describe "#get_accept_string" do
     let(:expected_results) {
       {
-        no_meta: Azure::Storage::HeaderConstants::ODATA_NO_META,
-        min_meta: Azure::Storage::HeaderConstants::ODATA_MIN_META,
-        full_meta: Azure::Storage::HeaderConstants::ODATA_FULL_META,
-        Azure::Storage::HeaderConstants::ODATA_NO_META => Azure::Storage::HeaderConstants::ODATA_NO_META,
-        Azure::Storage::HeaderConstants::ODATA_MIN_META => Azure::Storage::HeaderConstants::ODATA_MIN_META,
-        Azure::Storage::HeaderConstants::ODATA_FULL_META => Azure::Storage::HeaderConstants::ODATA_FULL_META,
+        no_meta: Azure::Storage::Common::HeaderConstants::ODATA_NO_META,
+        min_meta: Azure::Storage::Common::HeaderConstants::ODATA_MIN_META,
+        full_meta: Azure::Storage::Common::HeaderConstants::ODATA_FULL_META,
+        Azure::Storage::Common::HeaderConstants::ODATA_NO_META => Azure::Storage::Common::HeaderConstants::ODATA_NO_META,
+        Azure::Storage::Common::HeaderConstants::ODATA_MIN_META => Azure::Storage::Common::HeaderConstants::ODATA_MIN_META,
+        Azure::Storage::Common::HeaderConstants::ODATA_FULL_META => Azure::Storage::Common::HeaderConstants::ODATA_FULL_META,
         "nonsense" => "nonsense"
       }
     }

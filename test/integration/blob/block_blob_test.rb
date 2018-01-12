@@ -27,12 +27,12 @@ require "base64"
 require "securerandom"
 
 describe Azure::Storage::Blob::BlobService do
-  subject { Azure::Storage::Blob::BlobService.new }
+  subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
   after { ContainerNameHelper.clean }
 
   let(:container_name) { ContainerNameHelper.name }
   let(:blob_name) { "blobname" }
-  let(:content) { content = ""; 512.times.each { |i| content << "@" }; content }
+  let(:content) { content = ""; 512.times.each { |i| content << "@" }; content.force_encoding "utf-8"; content }
   before {
     subject.create_container container_name
   }
@@ -42,6 +42,17 @@ describe Azure::Storage::Blob::BlobService do
       blob = subject.create_block_blob container_name, blob_name, content
       blob.name.must_equal blob_name
       is_boolean(blob.encrypted).must_equal true
+      blob = subject.get_blob_properties container_name, blob_name
+      blob.properties[:content_type].must_equal "text/plain; charset=UTF-8"
+    end
+
+    it "creates a block blob with empty content" do
+      temp = subject.clone
+      blob = temp.create_block_blob container_name, blob_name, ""
+      blob.name.must_equal blob_name
+      is_boolean(blob.encrypted).must_equal true
+      blob = subject.get_blob_properties container_name, blob_name
+      blob.properties[:content_type].must_equal "application/octet-stream"
     end
 
     it "creates a block blob with IO" do
@@ -54,12 +65,26 @@ describe Azure::Storage::Blob::BlobService do
         blob.name.must_equal blob_name
         is_boolean(blob.encrypted).must_equal true
         blob.properties[:content_length].must_equal content.length
+        blob.properties[:content_type].must_equal "application/octet-stream"
       ensure
         unless file.nil?
           file.close
           File.delete blob_name
         end
       end
+    end
+
+    it "creates a block that is larger than single upload" do
+      options = {}
+      options[:single_upload_threshold] = Azure::Storage::Blob::BlobConstants::DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES
+      content_50_mb = SecureRandom.random_bytes(50 * 1024 * 1024)
+      content_50_mb.force_encoding "utf-8"
+      blob_name = BlobNameHelper.name
+      blob = subject.create_block_blob container_name, blob_name, content_50_mb, options
+      blob.name.must_equal blob_name
+      # No content length if single upload
+      blob.properties[:content_length].must_equal 50 * 1024 * 1024
+      blob.properties[:content_type].must_equal "text/plain; charset=UTF-8"
     end
 
     it "should create a block blob with spaces in name" do
@@ -212,6 +237,7 @@ describe Azure::Storage::Blob::BlobService do
       blob, returned_content = subject.get_blob container_name, blob_name
       is_boolean(blob.encrypted).must_equal true
       blob.properties[:content_length].must_equal (content.length * 2)
+      blob.properties[:content_type].must_equal "application/octet-stream"
       returned_content.must_equal (content + content)
     end
 
