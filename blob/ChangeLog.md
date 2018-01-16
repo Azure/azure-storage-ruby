@@ -1,3 +1,6 @@
+2018.1 - version 1.0.1
+* Resolved an issue where user cannot use Gem package using `gem install`.
+
 2018.1 - version 1.0.0
 
 * This module now only consists of functionalities to access Azure Storage Blob Service.
