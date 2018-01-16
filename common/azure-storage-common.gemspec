@@ -25,7 +25,7 @@
 #--------------------------------------------------------------------------
 require "date"
 
-require File.expand_path("../common/lib/azure/storage/common/version", __FILE__)
+require_relative "./lib/azure/storage/common/version"
 
 Gem::Specification.new do |s|
   s.name        = "azure-storage-common"
@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.summary     = "Official Ruby client library to consume Azure Storage Common service"
   s.homepage    = "http://github.com/azure/azure-storage-ruby"
   s.license     = "MIT"
-  s.files       = `git ls-files ./common/lib/azure/storage/common/`.split("\n") << "common/lib/azure/storage/common.rb"
+  s.files       = `git ls-files ./lib/azure/storage/common/`.split("\n") << "./lib/azure/storage/common.rb"
 
   s.required_ruby_version = ">= 1.9.3"
 

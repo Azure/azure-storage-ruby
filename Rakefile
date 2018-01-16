@@ -28,48 +28,33 @@ require "rubygems/package_task"
 require "dotenv/tasks"
 require "yard"
 
-namespace :storage_common do
-  gem_spec = eval(File.read("./common/azure-storage-common.gemspec"))
-  Gem::PackageTask.new(gem_spec) do |pkg|
-    pkg.need_zip = false
-    pkg.need_tar = false
-    pkg.package_dir = "pkg_azure_storage_common"
+task :build_common do
+  Dir.chdir("./common") do
+    system "gem build azure-storage-common.gemspec"
   end
 end
 
-namespace :storage_blob do
-  gem_spec = eval(File.read("./blob/azure-storage-blob.gemspec"))
-  Gem::PackageTask.new(gem_spec) do |pkg|
-    pkg.need_zip = false
-    pkg.need_tar = false
-    pkg.package_dir = "pkg_azure_storage_blob"
+task :build_blob do
+  Dir.chdir("./blob") do
+    system "gem build azure-storage-blob.gemspec"
   end
 end
 
-namespace :storage_file do
-  gem_spec = eval(File.read("./file/azure-storage-file.gemspec"))
-  Gem::PackageTask.new(gem_spec) do |pkg|
-    pkg.need_zip = false
-    pkg.need_tar = false
-    pkg.package_dir = "pkg_azure_storage_file"
+task :build_table do
+  Dir.chdir("./table") do
+    system "gem build azure-storage-table.gemspec"
   end
 end
 
-namespace :storage_table do
-  gem_spec = eval(File.read("./table/azure-storage-table.gemspec"))
-  Gem::PackageTask.new(gem_spec) do |pkg|
-    pkg.need_zip = false
-    pkg.need_tar = false
-    pkg.package_dir = "pkg_azure_storage_table"
+task :build_file do
+  Dir.chdir("./file") do
+    system "gem build azure-storage-file.gemspec"
   end
 end
 
-namespace :storage_queue do
-  gem_spec = eval(File.read("./queue/azure-storage-queue.gemspec"))
-  Gem::PackageTask.new(gem_spec) do |pkg|
-    pkg.need_zip = false
-    pkg.need_tar = false
-    pkg.package_dir = "pkg_azure_storage_queue"
+task :build_queue do
+  Dir.chdir("./queue") do
+    system "gem build azure-storage-queue.gemspec"
   end
 end
 
@@ -203,5 +188,29 @@ namespace :test do
 end
 
 task test: %w(test:unit test:integration)
+
+task :sanity_check do
+  system "rake build_common"
+  system "rake build_blob"
+  system "rake build_file"
+  system "rake build_table"
+  system "rake build_queue"
+  Dir.chdir("./common") do
+    system "gem install azure-storage-common -l"
+  end
+  Dir.chdir("./blob") do
+    system "gem install azure-storage-blob -l"
+  end
+  Dir.chdir("./table") do
+    system "gem install azure-storage-table -l"
+  end
+  Dir.chdir("./queue") do
+    system "gem install azure-storage-queue -l"
+  end
+  Dir.chdir("./file") do
+    system "gem install azure-storage-file -l"
+  end
+  system "ruby ./test/sanity_check.rb"
+end
 
 task default: :test
