@@ -25,7 +25,7 @@
 #--------------------------------------------------------------------------
 require "date"
 
-require File.expand_path("../queue/lib/azure/storage/queue/version", __FILE__)
+require_relative "./lib/azure/storage/queue/version"
 
 Gem::Specification.new do |s|
   s.name        = "azure-storage-queue"
@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.summary     = "Official Ruby client library to consume Azure Storage Queue service"
   s.homepage    = "http://github.com/azure/azure-storage-ruby"
   s.license     = "MIT"
-  s.files       = `git ls-files ./queue/lib/azure/storage/queue/`.split("\n") << "queue/lib/azure/storage/queue.rb"
+  s.files       = `git ls-files ./lib/azure/storage/queue/`.split("\n") << "./lib/azure/storage/queue.rb"
 
   s.required_ruby_version = ">= 1.9.3"
 

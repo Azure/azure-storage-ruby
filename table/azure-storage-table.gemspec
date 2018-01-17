@@ -25,7 +25,7 @@
 #--------------------------------------------------------------------------
 require "date"
 
-require File.expand_path("../table/lib/azure/storage/table/version", __FILE__)
+require_relative "./lib/azure/storage/table/version"
 
 Gem::Specification.new do |s|
   s.name        = "azure-storage-table"
@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.summary     = "Official Ruby client library to consume Azure Storage Table service"
   s.homepage    = "http://github.com/azure/azure-storage-ruby"
   s.license     = "MIT"
-  s.files       = `git ls-files ./table/lib/azure/storage/table/`.split("\n") << "table/lib/azure/storage/table.rb"
+  s.files       = `git ls-files ./lib/azure/storage/table/`.split("\n") << "./lib/azure/storage/table.rb"
 
   s.required_ruby_version = ">= 1.9.3"
 
