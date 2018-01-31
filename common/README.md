@@ -43,7 +43,7 @@ There are two ways you can create the client:
   require 'azure/storage/common'
 
   # Setup a specific instance of an Azure::Storage::Common::Client
-  client = Azure::Storage::Common::Client.create(:storage_account_name => 'your account name', :storage_access_key => 'your access key')
+  client = Azure::Storage::Common::Client.create(storage_account_name: <your account name>, storage_access_key: <your access key>)
 
   # Configure a ca_cert.pem file if you are having issues with ssl peer verification
   client.ca_file = './ca_file.pem'
@@ -58,7 +58,7 @@ There are two ways you can create the client:
   client = Azure::Storage::Common::Client.create_development
 
   # Or create by options and provide your own proxy_uri
-  client = Azure::Storage::Common::Client.create(:use_development_storage => true, :development_storage_proxy_uri => 'your proxy uri')
+  client = Azure::Storage::Common::Client.create(use_development_storage: true, development_storage_proxy_uri: <your proxy uri>)
 
 ```
 
@@ -94,12 +94,47 @@ There are two ways you can create the client:
 require "azure/storage/common"
 
 # Creating an instance of `Azure::Storage::Common::Core::SharedAccessSignature`
-generator = Azure::Storage::Common::Core::SharedAccessSignature.new(your_account_name, your_access_key)
+generator = Azure::Storage::Common::Core::SharedAccessSignature.new(<your_account_name>, <your_access_key>)
 
 # The generator now can be used to create service SAS or account SAS.
 generator.generate_service_sas_token(my_path_or_table_name, my_sas_options)
 generator.generate_account_sas_token(my_account_sas_options)
 # For details about the possible options, please reference the document of the class `Azure::Storage::Common::Core::SharedAccessSignature`
+
+```
+
+<a name="token"></a>
+## Access Token
+
+```ruby
+require "azure/storage/common"
+
+access_token = <your initial access token>
+
+# Creating an instance of `Azure::Storage::Common::Core::TokenCredential`
+token_credential = Azure::Storage::Common::Core::TokenCredential.new access_token
+token_signer = Azure::Storage::Common::Core::Auth::TokenSigner.new token_credential
+common_token_client = Azure::Storage::Common::Client.create.new(storage_account_name: <your_account_name>, signer: token_signer)
+
+# Refresh internal is 50 minutes
+refresh_interval = 50 * 60
+# The user-defined thread that renews the access token
+cancelled = false
+renew_token = Thread.new do
+  Thread.stop
+  while !cancelled
+    sleep(refresh_interval)
+
+    # Renew the access token here
+
+    # Update the access token to the credential
+    token_credential.renew_token <new_access_token>
+  end
+end
+sleep 0.1 while renew_token.status != 'sleep'
+renew_token.run
+
+# Call client functions as usaual
 
 ```
 

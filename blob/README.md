@@ -44,11 +44,11 @@ There are two ways you can set up the connections:
   require 'azure/storage/blob'
 
   # Setup a specific instance of an Azure::Storage::Blob::BlobService
-  blob_client = Azure::Storage::Blob::BlobService.create(storage_account_name: 'your account name', storage_access_key: 'your access key')
+  blob_client = Azure::Storage::Blob::BlobService.create(storage_account_name: <your account name>, storage_access_key: <your access key>)
 
   # Or create a client and initialize with it.
   require 'azure/storage/common'
-  common_client = Azure::Storage::Common::Client.create(storage_account_name: 'your account name', storage_access_key: 'your access key')
+  common_client = Azure::Storage::Common::Client.create(storage_account_name: <your account name>, storage_access_key: <your access key>)
   blob_client = Azure::Storage::Blob::BlobService.new(client: common_client)
 
   # Configure a ca_cert.pem file if you are having issues with ssl peer verification
@@ -64,7 +64,7 @@ There are two ways you can set up the connections:
   client = Azure::Storage::Blob::BlobService.create_development
 
   # Or create by options and provide your own proxy_uri
-  client = Azure::Storage::Blob::BlobService.create(:use_development_storage => true, :development_storage_proxy_uri => 'your proxy uri')
+  client = Azure::Storage::Blob::BlobService.create(use_development_storage: true, development_storage_proxy_uri: <your proxy uri>)
 
 ```
 
@@ -101,7 +101,7 @@ There are two ways you can set up the connections:
 require 'azure/storage/blob'
 
 # Setup a specific instance of an Azure::Storage::Blob::BlobService
-client = Azure::Storage::Blob::BlobService.create(:storage_account_name => 'your account name', :storage_access_key => 'your access key')
+client = Azure::Storage::Blob::BlobService.create(storage_account_name: <your account name>, storage_access_key: <your access key>)
 
 # Alternatively, create a client that can anonymously access public containers for read operations
 client = Azure::Storage::Blob::BlobService.create(storage_blob_host: "https://youraccountname.blob.core.windows.net")
@@ -132,6 +132,41 @@ client.delete_blob(container.name, 'image-blob')
 
 ```
 
+<a name="token"></a>
+## Access Token
+
+```ruby
+require "azure/storage/common"
+
+access_token = <your initial access token>
+
+# Creating an instance of `Azure::Storage::Common::Core::TokenCredential`
+token_credential = Azure::Storage::Common::Core::TokenCredential.new access_token
+token_signer = Azure::Storage::Common::Core::Auth::TokenSigner.new token_credential
+blob_token_client = Azure::Storage::Blob::BlobService.new(storage_account_name: <your_account_name>, signer: token_signer)
+
+# Refresh internal is 50 minutes
+refresh_interval = 50 * 60
+# The user-defined thread that renews the access token
+cancelled = false
+renew_token = Thread.new do
+  Thread.stop
+  while !cancelled
+    sleep(refresh_interval)
+
+    # Renew the access token here
+
+    # Update the access token to the credential
+    token_credential.renew_token <new_access_token>
+  end
+end
+sleep 0.1 while renew_token.status != 'sleep'
+renew_token.run
+
+# Call blob client functions as usaual
+
+```
+
 <a name="Customize the user-agent"></a>
 ## Customize the user-agent
 
@@ -142,7 +177,7 @@ You can customize the user-agent string by setting your user agent prefix when c
 require "azure/storage/blob"
 
 # Setup a specific instance of an Azure::Storage::Client with :user_agent_prefix option
-client = Azure::Storage::Blob::BlobService.create(:storage_account_name => "your account name", :storage_access_key => "your access key", :user_agent_prefix => "your application name")
+client = Azure::Storage::Blob::BlobService.create(storage_account_name: <your account name>, storage_access_key: <your access key>, user_agent_prefix: <your application name>)
 ```
 
 # Code of Conduct 

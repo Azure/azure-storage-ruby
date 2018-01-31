@@ -23,26 +23,41 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
+require "azure/core"
 
-module Azure
-  module Storage
-    module Blob
-      class Version
-        # Fields represent the parts defined in http://semver.org/
-        MAJOR = 1 unless defined? MAJOR
-        MINOR = 1 unless defined? MINOR
-        UPDATE = 0 unless defined? UPDATE
+module Azure::Storage::Common::Core
+  class TokenCredential
 
-        class << self
-          # @return [String]
-          def to_s
-            [MAJOR, MINOR, UPDATE].compact.join(".")
-          end
+    # Public: Initializes an instance of [Azure::Storage::Common::Core::TokenCredential]
+    #
+    # ==== Attributes
+    #
+    # * +token+                           - String. The initial access token.
+    #
+    def initialize(token)
+      @token = token
+      @mutex = Mutex.new
+    end
 
-          def to_uas
-            [MAJOR, MINOR, UPDATE].join(".")
-          end
-        end
+    # Public: Gets the access token
+    #
+    # Note: Providing this getter under the protect of a mutex
+    #
+    def token
+      @mutex.synchronize do
+        @token
+      end
+    end
+
+    # Public: Renews the access token
+    #
+    # ==== Attributes
+    #
+    # * +new_token+                       - String. The new access token.
+    #
+    def renew_token(new_token)
+      @mutex.synchronize do
+        @token = new_token
       end
     end
   end

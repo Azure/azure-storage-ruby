@@ -223,6 +223,38 @@ describe Azure::Storage::Common::Client do
 
   end
 
+  describe "when create with TokenCredential" do
+    let(:token) { "TestToken" }
+    let(:token_credential) { Azure::Storage::Common::Core::TokenCredential.new token }
+    let(:token_signer) { Azure::Storage::Common::Core::Auth::TokenSigner.new token_credential }
+    let(:common_signer_client) { Azure::Storage::Common::Client.create storage_account_name: @account_name, signer: token_signer }
+
+    it "should succeed to create blob client if account name and signer are given" do
+      token_credential.token.must_equal token
+      blob_signer_client = Azure::Storage::Blob::BlobService.new(storage_account_name: @account_name, signer: token_signer)
+      blob_signer_client.wont_be_nil
+    end
+
+    it "should succeed to create blob client if common client is given" do
+      token_credential.token.must_equal token
+      blob_signer_client = Azure::Storage::Blob::BlobService.new(client: common_signer_client, signer: token_signer)
+      blob_signer_client.wont_be_nil
+    end
+
+    it "should succeed to create queue client if account name and signer are given" do
+      token_credential.token.must_equal token
+      queue_signer_client = Azure::Storage::Queue::QueueService.new(storage_account_name: @account_name, signer: token_signer)
+      queue_signer_client.wont_be_nil
+    end
+
+    it "should succeed to create queue client if common client is given" do
+      token_credential.token.must_equal token
+      queue_signer_client = Azure::Storage::Queue::QueueService.new(client: common_signer_client, signer: token_signer)
+      queue_signer_client.wont_be_nil
+    end
+
+  end
+
   after do
     restore_storage_envs(@removed)
   end
