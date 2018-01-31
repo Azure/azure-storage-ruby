@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -23,27 +21,32 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
+require "unit/test_helper"
+require "azure/storage/common"
 
-module Azure
-  module Storage
-    module Blob
-      class Version
-        # Fields represent the parts defined in http://semver.org/
-        MAJOR = 1 unless defined? MAJOR
-        MINOR = 1 unless defined? MINOR
-        UPDATE = 0 unless defined? UPDATE
+describe Azure::Storage::Common::Core::TokenCredential do
 
-        class << self
-          # @return [String]
-          def to_s
-            [MAJOR, MINOR, UPDATE].compact.join(".")
-          end
+  describe "when create token credentials" do
 
-          def to_uas
-            [MAJOR, MINOR, UPDATE].join(".")
-          end
+    it "should be able to refresh by several threads" do
+      initial_token = "initial_access_token"
+      token_credential = Azure::Storage::Common::Core::TokenCredential.new initial_token
+
+      threads = []
+      current = nil
+      15.times do |i|
+        threads[i] = Thread.new do
+          sleep(rand(0)/10.0)
+          Thread.current["index"] = i
+          token_credential.renew_token "refreshed_token_#{i}"
+          current = i
         end
       end
+      
+      threads.each { |t| t.join }
+      current.wont_be_nil
+      token_credential.token.must_equal "refreshed_token_#{current}"
     end
+
   end
 end

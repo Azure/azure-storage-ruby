@@ -203,7 +203,7 @@ module Azure::Storage::Common
         begin
           results = validated_options(opts,
                                       required: [:storage_account_name],
-                                      only_one: [:storage_access_key, :storage_sas_token],
+                                      only_one: [:storage_access_key, :storage_sas_token, :signer],
                                       optional: [:default_endpoints_protocol, :storage_dns_suffix])
           protocol = results[:default_endpoints_protocol] ||= StorageServiceClientConstants::DEFAULT_PROTOCOL
           suffix = results[:storage_dns_suffix] ||= StorageServiceClientConstants::DEFAULT_ENDPOINT_SUFFIX
@@ -312,7 +312,8 @@ module Azure::Storage::Common
           storage_file_host: is_url,
           storage_dns_suffix: is_url,
           default_endpoints_protocol: lambda { |i| ["http", "https"].include? i.downcase },
-          use_path_style_uri: is_true
+          use_path_style_uri: is_true,
+          signer: lambda { |i| i.is_a? Azure::Core::Auth::Signer} 
         }
 
         valid_options = required + at_least_one + only_one + optional

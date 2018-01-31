@@ -29,7 +29,7 @@ require "rbconfig"
 module Azure::Storage::Blob
   module Default
     # Default REST service (STG) version number
-    STG_VERSION = "2016-05-31"
+    STG_VERSION = "2017-11-09"
 
     # The number of default concurrent requests for parallel operation.
     DEFAULT_PARALLEL_OPERATION_THREAD_COUNT = 1
