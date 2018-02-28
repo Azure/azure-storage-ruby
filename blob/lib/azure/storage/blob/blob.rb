@@ -268,6 +268,7 @@ module Azure::Storage
     #     * :content_md5
     #     * :content_encoding
     #     * :content_language
+    #     * :content_disposition
     #
     # See http://msdn.microsoft.com/en-us/library/azure/ee691966.aspx
     #
