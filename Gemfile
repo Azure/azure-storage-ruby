@@ -25,7 +25,12 @@
 #--------------------------------------------------------------------------
 source "https://rubygems.org" do
   gem "azure-core",          "~> 0.1.13", :require => false
-  gem "nokogiri",            "~> 1.6", ">= 1.6.8", :require => false
+
+  if RUBY_VERSION =~ /^1\.9/
+    gem "nokogiri",            "~> 1.6", ">= 1.6.8", :require => false
+  else
+    gem 'nokogiri', '>=1.6', :require => false
+  end
 
   gem "dotenv",              "~> 2.0", :require => false
   gem "minitest",            "~> 5", :require => false
