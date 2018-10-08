@@ -30,7 +30,7 @@ require "azure/storage/common/core/auth/anonymous_signer"
 
 module Azure::Storage::Common
   module ClientOptions
-    attr_accessor :ca_file
+    attr_accessor :ca_file, :ssl_version, :ssl_min_version, :ssl_max_version
 
     # Public: Reset options for [Azure::Storage::Common::Client]
     #
@@ -55,6 +55,9 @@ module Azure::Storage::Common
     # * +:default_endpoints_protocol+     - String. http or https
     # * +:use_path_style_uri+             - String. Whether use path style URI for specified endpoints
     # * +:ca_file+                        - String. File path of the CA file if having issue with SSL
+    # * +:ssl_version+                    - Symbol. The ssl version to be used
+    # * +:ssl_min_version+                - Symbol. The min ssl version supported
+    # * +:ssl_max_version+                - Symbol. The max ssl version supported
     #
     # The valid set of options include:
     # * Storage Emulator: +:use_development_storage+ required, +:development_storage_proxy_uri+ optionally
@@ -85,6 +88,9 @@ module Azure::Storage::Common
       options = load_env if options.length == 0
 
       @ca_file = options.delete(:ca_file)
+      @ssl_version = options.delete(:ssl_version)
+      @ssl_min_version = options.delete(:ssl_min_version)
+      @ssl_max_version = options.delete(:ssl_max_version)
       @options = filter(options)
       self.send(:reset_config!, @options) if self.respond_to?(:reset_config!)
       self
