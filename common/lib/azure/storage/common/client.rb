@@ -103,8 +103,11 @@ module Azure::Storage::Common
       # * +:default_endpoints_protocol+     - String. http or https
       # * +:use_path_style_uri+             - String. Whether use path style URI for specified endpoints
       # * +:ca_file+                        - String. File path of the CA file if having issue with SSL
+      # * +:ssl_version+                    - Symbol. The ssl version to be used
+      # * +:ssl_min_version+                - Symbol. The min ssl version supported
+      # * +:ssl_max_version+                - Symbol. The max ssl version supported
       # * +:user_agent_prefix+              - String. The user agent prefix that can identify the application calls the library
-      #
+
       # The valid set of options include:
       # * Storage Emulator: +:use_development_storage+ required, +:development_storage_proxy_uri+ optionally
       # * Storage account name and key: +:storage_account_name+ and +:storage_access_key+ required, set +:storage_dns_suffix+ necessarily
