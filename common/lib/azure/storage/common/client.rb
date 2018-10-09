@@ -103,9 +103,9 @@ module Azure::Storage::Common
       # * +:default_endpoints_protocol+     - String. http or https
       # * +:use_path_style_uri+             - String. Whether use path style URI for specified endpoints
       # * +:ca_file+                        - String. File path of the CA file if having issue with SSL
-      # * +:ssl_version+                    - Symbol. The ssl version to be used, for the details, see https://github.com/ruby/openssl/blob/master/lib/openssl/ssl.rb
-      # * +:ssl_min_version+                - Symbol. The min ssl version supported
-      # * +:ssl_max_version+                - Symbol. The max ssl version supported
+      # * +:ssl_version+                    - Symbol. The ssl version to be used, sample: :TLSv1_1, :TLSv1_2, for the details, see https://github.com/ruby/openssl/blob/master/lib/openssl/ssl.rb
+      # * +:ssl_min_version+                - Symbol. The min ssl version supported, only supported in Ruby 2.5+
+      # * +:ssl_max_version+                - Symbol. The max ssl version supported, only supported in Ruby 2.5+
       # * +:user_agent_prefix+              - String. The user agent prefix that can identify the application calls the library
       #
       # The valid set of options include:
