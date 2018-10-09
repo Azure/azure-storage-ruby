@@ -56,6 +56,17 @@ describe Azure::Storage::Common::Client do
       storage_dns_suffix: "mocksuffix.com"
     }
 
+    @ssl_version = :TLSv1_2
+    @ssl_min_version = :TLSv1_2
+    @ssl_max_version = :TLSv1_2
+    @account_key_options_with_ssl_version = {
+      storage_account_name: @account_name,
+      storage_access_key: @access_key,
+      ssl_version: @ssl_version,
+      ssl_min_version: @ssl_min_version,
+      ssl_max_version: @ssl_max_version
+    }
+
     @removed = clear_storage_envs
   end
 
@@ -253,6 +264,15 @@ describe Azure::Storage::Common::Client do
       queue_signer_client.wont_be_nil
     end
 
+  end
+
+  describe "when create with ssl options" do
+    it "should set the ssl option correctly" do
+      client1 = Azure::Storage::Common::Client.new(@account_key_options_with_ssl_version)
+      client1.ssl_version.must_equal(@ssl_version)
+      client1.ssl_min_version.must_equal(@ssl_min_version)
+      client1.ssl_max_version.must_equal(@ssl_max_version)
+    end
   end
 
   after do
