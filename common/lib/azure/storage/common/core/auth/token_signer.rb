@@ -24,25 +24,19 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-module Azure
-  module Storage
-    module Blob
-      class Version
-        # Fields represent the parts defined in http://semver.org/
-        MAJOR = 1 unless defined? MAJOR
-        MINOR = 1 unless defined? MINOR
-        UPDATE = 0 unless defined? UPDATE
+module Azure::Storage::Common::Core
+  module Auth
+    class TokenSigner < Azure::Core::Auth::Signer
+      # Public: Initialize the Token Signer
+      def initialize(token_credential)
+        @credential = token_credential
+        # Use mock key to initialize super class
+        super(Base64.strict_encode64("accesstoken"))
+      end
 
-        class << self
-          # @return [String]
-          def to_s
-            [MAJOR, MINOR, UPDATE].compact.join(".")
-          end
-
-          def to_uas
-            [MAJOR, MINOR, UPDATE].join(".")
-          end
-        end
+      def sign_request(req)
+        req.headers['Authorization'] = "Bearer #{@credential.token}"
+        req
       end
     end
   end

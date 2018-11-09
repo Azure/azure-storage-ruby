@@ -30,7 +30,7 @@ require "azure/storage/common/core/auth/anonymous_signer"
 
 module Azure::Storage::Common
   module ClientOptions
-    attr_accessor :ca_file
+    attr_accessor :ca_file, :ssl_version, :ssl_min_version, :ssl_max_version
 
     # Public: Reset options for [Azure::Storage::Common::Client]
     #
@@ -55,6 +55,9 @@ module Azure::Storage::Common
     # * +:default_endpoints_protocol+     - String. http or https
     # * +:use_path_style_uri+             - String. Whether use path style URI for specified endpoints
     # * +:ca_file+                        - String. File path of the CA file if having issue with SSL
+    # * +:ssl_version+                    - Symbol. The ssl version to be used, sample: :TLSv1_1, :TLSv1_2, for the details, see https://github.com/ruby/openssl/blob/master/lib/openssl/ssl.rb
+    # * +:ssl_min_version+                - Symbol. The min ssl version supported, only supported in Ruby 2.5+
+    # * +:ssl_max_version+                - Symbol. The max ssl version supported, only supported in Ruby 2.5+
     #
     # The valid set of options include:
     # * Storage Emulator: +:use_development_storage+ required, +:development_storage_proxy_uri+ optionally
@@ -85,6 +88,9 @@ module Azure::Storage::Common
       options = load_env if options.length == 0
 
       @ca_file = options.delete(:ca_file)
+      @ssl_version = options.delete(:ssl_version)
+      @ssl_min_version = options.delete(:ssl_min_version)
+      @ssl_max_version = options.delete(:ssl_max_version)
       @options = filter(options)
       self.send(:reset_config!, @options) if self.respond_to?(:reset_config!)
       self
@@ -203,7 +209,7 @@ module Azure::Storage::Common
         begin
           results = validated_options(opts,
                                       required: [:storage_account_name],
-                                      only_one: [:storage_access_key, :storage_sas_token],
+                                      only_one: [:storage_access_key, :storage_sas_token, :signer],
                                       optional: [:default_endpoints_protocol, :storage_dns_suffix])
           protocol = results[:default_endpoints_protocol] ||= StorageServiceClientConstants::DEFAULT_PROTOCOL
           suffix = results[:storage_dns_suffix] ||= StorageServiceClientConstants::DEFAULT_ENDPOINT_SUFFIX
@@ -312,7 +318,8 @@ module Azure::Storage::Common
           storage_file_host: is_url,
           storage_dns_suffix: is_url,
           default_endpoints_protocol: lambda { |i| ["http", "https"].include? i.downcase },
-          use_path_style_uri: is_true
+          use_path_style_uri: is_true,
+          signer: lambda { |i| i.is_a? Azure::Core::Auth::Signer} 
         }
 
         valid_options = required + at_least_one + only_one + optional

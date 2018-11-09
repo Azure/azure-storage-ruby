@@ -1,3 +1,6 @@
+2018.1 - version 1.1.0
+* Added the support for sending a request with a bearer token.
+
 2018.1 - version 1.0.1
 * Resolved an issue where user cannot use Gem package using `gem install`.
 
