@@ -106,6 +106,10 @@ generator.generate_account_sas_token(my_account_sas_options)
 <a name="token"></a>
 ## Access Token
 
+Please refer to the below links for obtaining an access token:
+* [Authenticate with Azure Active Directory](https://docs.microsoft.com/en-us/rest/api/storageservices/authenticate-with-azure-active-directory)
+* [Getting a MSI access token](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/tutorial-linux-vm-access-storage#get-an-access-token-and-use-it-to-call-azure-storage)
+
 ```ruby
 require "azure/storage/common"
 
