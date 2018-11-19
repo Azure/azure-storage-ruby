@@ -2,6 +2,7 @@
 * Added the support for sending a request with a bearer token.
 * Added the configuration for SSL versions.
 * Fixed the issue that the retry interval could be negative. [#121]
+* Fixed the timeout issue when the resource doesn't exist. [#122]
 
 2018.1 - version 1.0.1
 * Resolved an issue where user cannot use Gem package using `gem install`.

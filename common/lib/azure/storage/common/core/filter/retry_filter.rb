@@ -213,7 +213,9 @@ module Azure::Storage::Common::Core::Filter
       # If a request sent to the secondary location fails with 404 (Not Found), it is possible
       # that the resource replication is not finished yet. So, in case of 404 only in the secondary
       # location, the failure should still be retryable.
-      retry_data[:secondary_not_found] = (retry_data[:current_location] === Azure::Storage::Common::StorageLocation::SECONDARY) && response.status_code === 404;
+      retry_data[:secondary_not_found] = 
+        ((retry_data[:current_location] === Azure::Storage::Common::StorageLocation::SECONDARY) && 
+        response.status_code === 404);
 
       if retry_data[:secondary_not_found]
         retry_data[:status_code] = 500
@@ -237,11 +239,6 @@ module Azure::Storage::Common::Core::Filter
         # Always no retry on "not implemented" and "version not supported"
         if (retry_data[:status_code] == 501 || retry_data[:status_code] == 505)
           retry_data[:retryable] = false;
-        end
-
-        if (retry_data[:status_code] == 404)
-          retry_data[:retryable] = true;
-          return true;
         end
 
         # When absorb_conditional_errors_on_retry is set (for append blob)
