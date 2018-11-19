@@ -1,5 +1,7 @@
-2018.1 - version 1.1.0
+2018.11 - version 1.1.0
 * Added the support for sending a request with a bearer token.
+* Added the configuration for SSL versions.
+* Fixed the issue that the retry interval could be negative. [#121]
 
 2018.1 - version 1.0.1
 * Resolved an issue where user cannot use Gem package using `gem install`.

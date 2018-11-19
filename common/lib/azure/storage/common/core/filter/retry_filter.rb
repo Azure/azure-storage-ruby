@@ -149,7 +149,7 @@ module Azure::Storage::Common::Core::Filter
 
     # Adjust the retry parameter and wait for retry
     def wait_for_retry
-      sleep @retry_interval
+      sleep @retry_interval if @retry_interval > 0
     end
 
     # Adjust the retry request
@@ -184,7 +184,8 @@ module Azure::Storage::Common::Core::Filter
           0
         else
           since_last_attempt = Time.now - lastAttemptTime
-          retry_data[:interval] - since_last_attempt
+          remainder = retry_data[:interval] - since_last_attempt
+          remainder > 0 ? remainder : 0
         end
     end
 

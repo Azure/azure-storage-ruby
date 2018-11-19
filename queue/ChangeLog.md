@@ -1,4 +1,4 @@
-2018.1 - version 1.1.0
+2018.11 - version 1.1.0
 * Added the support for sending a request with a bearer token.
 
 2018.1 - version 1.0.1
