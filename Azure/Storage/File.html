@@ -6,7 +6,7 @@
 <title>
   Module: Azure::Storage::File
   
-    &mdash; Documentation by YARD 0.9.12
+    &mdash; Documentation by YARD 0.9.16
   
 </title>
 
@@ -108,15 +108,21 @@
   
 </p>
 
-  <h2>Constant Summary</h2>
-  <dl class="constants">
-    
-      <dt id="StorageService-constant" class="">StorageService =
-        
-      </dt>
-      <dd><pre class="code"><span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Service</span><span class='op'>::</span><span class='const'>StorageService</span></pre></dd>
-    
-  </dl>
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="StorageService-constant" class="">StorageService =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'><span class='object_link'><a href="../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Service</span><span class='op'>::</span><span class='const'>StorageService</span></pre></dd>
+      
+    </dl>
+  
 
 
 
@@ -693,7 +699,8 @@ in the copy file operation.</p>
 <p><code>:request_id</code>           - String. Provides a client-generated,
 opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -788,7 +795,8 @@ of the range.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -898,14 +906,16 @@ store with the copy. If this parameter is not</p>
 
 <pre class="code ruby"><code class="ruby">specified, the operation will copy the source file metadata to the destination
 file. If this parameter is specified, the destination file is created with the
-specified metadata, and metadata is not copied from the source file.</code></pre>
+specified metadata, and metadata is not copied from the source file.
+</code></pre>
 </li><li>
 <p><code>:timeout</code>                    - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                 - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -916,13 +926,15 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/cop
 <p><code>copy_id</code>                    - String identifier for this copy
 operation. Use with get_file or get_file_properties to check</p>
 
-<pre class="code ruby"><code class="ruby">the status of this copy operation, or pass to abort_copy_file to abort a pending copy.</code></pre>
+<pre class="code ruby"><code class="ruby">the status of this copy operation, or pass to abort_copy_file to abort a pending copy.
+</code></pre>
 </li><li>
 <p><code>copy_status</code>                - String. The state of the copy
 operation, with these values:</p>
 
 <pre class="code ruby"><code class="ruby">&quot;success&quot; - The copy completed successfully.
-&quot;pending&quot; - The copy is in progress.</code></pre>
+&quot;pending&quot; - The copy is in progress.
+</code></pre>
 </li></ul>
 
 
@@ -997,14 +1009,16 @@ store with the copy. If this parameter is not</p>
 
 <pre class="code ruby"><code class="ruby">specified, the operation will copy the source file metadata to the destination
 file. If this parameter is specified, the destination file is created with the
-specified metadata, and metadata is not copied from the source file.</code></pre>
+specified metadata, and metadata is not copied from the source file.
+</code></pre>
 </li><li>
 <p><code>:timeout</code>                    - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                 - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1015,13 +1029,15 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/cop
 <p><code>copy_id</code>                    - String identifier for this copy
 operation. Use with get_file or get_file_properties to check</p>
 
-<pre class="code ruby"><code class="ruby">the status of this copy operation, or pass to abort_copy_file to abort a pending copy.</code></pre>
+<pre class="code ruby"><code class="ruby">the status of this copy operation, or pass to abort_copy_file to abort a pending copy.
+</code></pre>
 </li><li>
 <p><code>copy_status</code>                - String. The state of the copy
 operation, with these values:</p>
 
 <pre class="code ruby"><code class="ruby">&quot;success&quot; - The copy completed successfully.
-&quot;pending&quot; - The copy is in progress.</code></pre>
+&quot;pending&quot; - The copy is in progress.
+</code></pre>
 </li></ul>
 
 
@@ -1105,7 +1121,8 @@ the share (optional).</p>
 <p><code>:request_id</code>               - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1191,7 +1208,8 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/cre
 <p>Public: Creates a new file or replaces a file. Note that it only
 initializes the file.</p>
 
-<pre class="code ruby"><code class="ruby">To add content to a file, call the put_range operation.</code></pre>
+<pre class="code ruby"><code class="ruby">To add content to a file, call the put_range operation.
+</code></pre>
 
 <p>Updating an existing file overwrites any existing metadata on the file
 Partial updates are not supported with create_file. The content of the
@@ -1238,7 +1256,8 @@ file. Will be saved with file.</p>
 <p><code>:content_disposition</code>       - String. Conveys additional
 information about how to process the response payload,</p>
 
-<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata</code></pre>
+<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata
+</code></pre>
 </li><li>
 <p><code>:metadata</code>                  - Hash. Custom metadata values to
 store with the file.</p>
@@ -1248,7 +1267,8 @@ store with the file.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1407,7 +1427,8 @@ file. Will be saved with file.</p>
 <p><code>:content_disposition</code>       - String. Conveys additional
 information about how to process the response payload,</p>
 
-<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata</code></pre>
+<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata
+</code></pre>
 </li><li>
 <p><code>:metadata</code>                  - Hash. Custom metadata values to
 store with the file.</p>
@@ -1417,7 +1438,8 @@ store with the file.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1513,7 +1535,8 @@ share.</p>
 <p><code>:request_id</code>               - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1599,7 +1622,8 @@ share.</p>
 <p><code>:request_id</code>               - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1683,12 +1707,14 @@ share.</p>
 <p><code>:request_id</code>               - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>            - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1760,7 +1786,8 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
 <p>Public: Returns all system properties for the specified directory,</p>
 
 <pre class="code ruby"><code class="ruby">and can also be used to check the existence of a directory.
-The data returned does not include the files in the directory or any subdirectories.</code></pre>
+The data returned does not include the files in the directory or any subdirectories.
+</code></pre>
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
@@ -1781,12 +1808,14 @@ share.</p>
 <p><code>:request_id</code>               - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>            - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1892,12 +1921,14 @@ the range. This option only valid if</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>             - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2001,12 +2032,14 @@ share.</p>
 <p><code>:request_id</code>               - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>            - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2099,12 +2132,14 @@ directory.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>             - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2178,7 +2213,8 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get
 <p>Public: Get a list of files or directories under the specified share or
 directory.</p>
 
-<pre class="code ruby"><code class="ruby">It lists the contents only for a single level of the directory hierarchy.</code></pre>
+<pre class="code ruby"><code class="ruby">It lists the contents only for a single level of the directory hierarchy.
+</code></pre>
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
@@ -2207,7 +2243,8 @@ the portion of the</p>
 Azure::Storage::Common::EnumerationResults.continuation_token when there
 are more shares available than were returned. The
 marker value may then be used here to request the next set
-of list items. (optional)</code></pre>
+of list items. (optional)
+</code></pre>
 </li><li>
 <p><code>:max_results</code>             - Integer. Specifies the maximum
 number of shares to return.</p>
@@ -2215,19 +2252,22 @@ number of shares to return.</p>
 <pre class="code ruby"><code class="ruby">If max_results is not specified, or is a value greater than
 5,000, the server will return up to 5,000 items. If it is set
 to a value less than or equal to zero, the server will return
-status code 400 (Bad Request). (optional)</code></pre>
+status code 400 (Bad Request). (optional)
+</code></pre>
 </li><li>
 <p><code>:timeout</code>                 - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>              - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>           - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li></ul>
 
 <p>See: <a
@@ -2338,12 +2378,14 @@ of the range.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>             - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2352,7 +2394,8 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/lis
 <p>Returns a tuple of a File and a list of ranges in the format [ [start,
 end], [start, end], … ]</p>
 
-<pre class="code ruby"><code class="ruby">eg. (File::File, [ [0, 511], [512, 1024], ... ])</code></pre>
+<pre class="code ruby"><code class="ruby">eg. (File::File, [ [0, 511], [512, 1024], ... ])
+</code></pre>
 
 
   </div>
@@ -2456,14 +2499,16 @@ of the range. The range can be up to 4 MB in size.</p>
 content. This hash is used to verify the integrity of the data during
 transport.</p>
 
-<pre class="code ruby"><code class="ruby">When this header is specified, the storage service checks the hash that has arrived with the one that was sent.</code></pre>
+<pre class="code ruby"><code class="ruby">When this header is specified, the storage service checks the hash that has arrived with the one that was sent.
+</code></pre>
 </li><li>
 <p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2552,7 +2597,8 @@ directory.</p>
 file to the specified size.</p>
 
 <pre class="code ruby"><code class="ruby">If the specified value is less than the current size of the file,
-then all ranges above the specified value are cleared.</code></pre>
+then all ranges above the specified value are cleared.
+</code></pre>
 </li><li>
 <p><code>options</code>                    - Hash. Optional parameters.</p>
 </li></ul>
@@ -2566,7 +2612,8 @@ then all ranges above the specified value are cleared.</code></pre>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2639,7 +2686,8 @@ values.</p>
 <p><code>:request_id</code>               - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2736,7 +2784,8 @@ values.</p>
 <p><code>:request_id</code>               - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2844,20 +2893,23 @@ file. Will be saved with file.</p>
 <p><code>:content_disposition</code>       - String. Conveys additional
 information about how to process the response payload,</p>
 
-<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata</code></pre>
+<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata
+</code></pre>
 </li><li>
 <p><code>:content_length</code>            - Integer. Resizes a file to the
 specified size. If the specified</p>
 
 <pre class="code ruby"><code class="ruby">value is less than the current size of the file, then all ranges above
-the specified value are cleared.</code></pre>
+the specified value are cleared.
+</code></pre>
 </li><li>
 <p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2931,9 +2983,9 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/set
 </div>
 
       <div id="footer">
-  Generated on Thu Jan 11 16:12:01 2018 by
+  Generated on Mon Dec  3 15:51:01 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.4.1).
+  0.9.16 (ruby-2.5.1).
 </div>
 
     </div>

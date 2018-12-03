@@ -6,7 +6,7 @@
 <title>
   Class: Azure::Storage::File::FileService
   
-    &mdash; Documentation by YARD 0.9.12
+    &mdash; Documentation by YARD 0.9.16
   
 </title>
 
@@ -467,9 +467,6 @@ relationship</p>
       <pre class="lines">
 
 
-158
-159
-160
 161
 162
 163
@@ -477,10 +474,13 @@ relationship</p>
 165
 166
 167
-168</pre>
+168
+169
+170
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/file_service.rb', line 158</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/file_service.rb', line 161</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_service_options'>service_options</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_clone'>clone</span>
@@ -558,6 +558,16 @@ style URI for specified endpoints</p>
 <p><code>:ca_file</code>                        - String. File path of the CA
 file if having issue with SSL</p>
 </li><li>
+<p><code>:ssl_version</code>                    - Symbol. The ssl version to
+be used, sample: :TLSv1_1, :TLSv1_2, for the details, see <a
+href="https://github.com/ruby/openssl/blob/master/lib/openssl/ssl.rb">github.com/ruby/openssl/blob/master/lib/openssl/ssl.rb</a></p>
+</li><li>
+<p><code>:ssl_min_version</code>                - Symbol. The min ssl version
+supported, only supported in Ruby 2.5+</p>
+</li><li>
+<p><code>:ssl_max_version</code>                - Symbol. The max ssl version
+supported, only supported in Ruby 2.5+</p>
+</li><li>
 <p><code>:user_agent_prefix</code>              - String. The user agent
 prefix that can identify the application calls the library</p>
 </li></ul>
@@ -626,14 +636,14 @@ relationship</p>
       <pre class="lines">
 
 
-78
-79
-80
 81
-82</pre>
+82
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/file_service.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/file_service.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_service_options'>service_options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>client:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Client</span><span class='op'>::</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>api_version:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../File.html" title="Azure::Storage::File (module)">File</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::File::Default (module)">Default</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html#STG_VERSION-constant" title="Azure::Storage::File::Default::STG_VERSION (constant)">STG_VERSION</a></span></span> <span class='rbrace'>}</span>
@@ -692,13 +702,13 @@ localhost.</p>
       <pre class="lines">
 
 
-91
-92
-93
-94</pre>
+94
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/file_service.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/file_service.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_development'>create_development</span><span class='lparen'>(</span><span class='id identifier rubyid_proxy_uri'>proxy_uri</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_service_options'>service_options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>client:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Client</span><span class='op'>::</span><span class='id identifier rubyid_create_development'>create_development</span><span class='lparen'>(</span><span class='id identifier rubyid_proxy_uri'>proxy_uri</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>api_version:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../File.html" title="Azure::Storage::File (module)">File</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::File::Default (module)">Default</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html#STG_VERSION-constant" title="Azure::Storage::File::Default::STG_VERSION (constant)">STG_VERSION</a></span></span> <span class='rbrace'>}</span>
@@ -755,13 +765,13 @@ href="https://azure.microsoft.com/en-us/documentation/articles/storage-configure
       <pre class="lines">
 
 
-111
-112
-113
-114</pre>
+114
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/file_service.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/file_service.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_from_connection_string'>create_from_connection_string</span><span class='lparen'>(</span><span class='id identifier rubyid_connection_string'>connection_string</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_service_options'>service_options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>client:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Client</span><span class='op'>::</span><span class='id identifier rubyid_create_from_connection_string'>create_from_connection_string</span><span class='lparen'>(</span><span class='id identifier rubyid_connection_string'>connection_string</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>api_version:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../File.html" title="Azure::Storage::File (module)">File</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::File::Default (module)">Default</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html#STG_VERSION-constant" title="Azure::Storage::File::Default::STG_VERSION (constant)">STG_VERSION</a></span></span> <span class='rbrace'>}</span>
@@ -812,13 +822,13 @@ Environment Variables</p>
       <pre class="lines">
 
 
-99
-100
-101
-102</pre>
+102
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/file_service.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/file_service.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_from_env'>create_from_env</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_service_options'>service_options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>client:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Client</span><span class='op'>::</span><span class='id identifier rubyid_create_from_env'>create_from_env</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>api_version:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../File.html" title="Azure::Storage::File (module)">File</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::File::Default (module)">Default</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html#STG_VERSION-constant" title="Azure::Storage::File::Default::STG_VERSION (constant)">STG_VERSION</a></span></span> <span class='rbrace'>}</span>
@@ -850,9 +860,6 @@ Environment Variables</p>
       <pre class="lines">
 
 
-170
-171
-172
 173
 174
 175
@@ -866,10 +873,13 @@ Environment Variables</p>
 183
 184
 185
-186</pre>
+186
+187
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/file_service.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/file_service.rb', line 173</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_content_type'>content_type</span> <span class='op'>=</span> <span class='id identifier rubyid_get_or_apply_content_type'>get_or_apply_content_type</span><span class='lparen'>(</span><span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>HeaderConstants</span><span class='op'>::</span><span class='const'>FILE_CONTENT_TYPE</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -929,7 +939,8 @@ the portion of the</p>
 Azure::Storage::Common::EnumerationResults.continuation_token when there
 are more shares available than were returned. The
 marker value may then be used here to request the next set
-of list items. (optional)</code></pre>
+of list items. (optional)
+</code></pre>
 </li><li>
 <p><code>:max_results</code>             - Integer. Specifies the maximum
 number of shares to return.</p>
@@ -937,7 +948,8 @@ number of shares to return.</p>
 <pre class="code ruby"><code class="ruby">If max_results is not specified, or is a value greater than
 5,000, the server will return up to 5,000 items. If it is set
 to a value less than or equal to zero, the server will return
-status code 400 (Bad Request). (optional)</code></pre>
+status code 400 (Bad Request). (optional)
+</code></pre>
 </li><li>
 <p><code>:metadata</code>                - Boolean. Specifies whether or not
 to return the share metadata.</p>
@@ -950,12 +962,14 @@ to return the share metadata.</p>
 <p><code>:request_id</code>              - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>           - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li></ul>
 
 <p>See: <a
@@ -975,9 +989,6 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/lis
       <pre class="lines">
 
 
-228
-229
-230
 231
 232
 233
@@ -990,10 +1001,13 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/lis
 240
 241
 242
-243</pre>
+243
+244
+245
+246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/file_service.rb', line 228</span>
+      <pre class="code"><span class="info file"># File 'file/lib/azure/storage/file/file_service.rb', line 231</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list_shares'>list_shares</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1021,9 +1035,9 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/lis
 </div>
 
       <div id="footer">
-  Generated on Thu Jan 11 16:12:05 2018 by
+  Generated on Mon Dec  3 15:51:04 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.4.1).
+  0.9.16 (ruby-2.5.1).
 </div>
 
     </div>

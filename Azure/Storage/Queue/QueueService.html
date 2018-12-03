@@ -6,7 +6,7 @@
 <title>
   Class: Azure::Storage::Queue::QueueService
   
-    &mdash; Documentation by YARD 0.9.12
+    &mdash; Documentation by YARD 0.9.16
   
 </title>
 
@@ -625,6 +625,16 @@ style URI for specified endpoints</p>
 <p><code>:ca_file</code>                        - String. File path of the CA
 file if having issue with SSL</p>
 </li><li>
+<p><code>:ssl_version</code>                    - Symbol. The ssl version to
+be used, sample: :TLSv1_1, :TLSv1_2, for the details, see <a
+href="https://github.com/ruby/openssl/blob/master/lib/openssl/ssl.rb">github.com/ruby/openssl/blob/master/lib/openssl/ssl.rb</a></p>
+</li><li>
+<p><code>:ssl_min_version</code>                - Symbol. The min ssl version
+supported, only supported in Ruby 2.5+</p>
+</li><li>
+<p><code>:ssl_max_version</code>                - Symbol. The max ssl version
+supported, only supported in Ruby 2.5+</p>
+</li><li>
 <p><code>:user_agent_prefix</code>              - String. The user agent
 prefix that can identify the application calls the library</p>
 </li><li>
@@ -687,20 +697,20 @@ relationship</p>
       <pre class="lines">
 
 
-149
-150
-151
-152
-153
-154
 155
 156
 157
 158
-159</pre>
+159
+160
+161
+162
+163
+164
+165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_service_options'>service_options</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_clone'>clone</span>
@@ -778,6 +788,16 @@ style URI for specified endpoints</p>
 <p><code>:ca_file</code>                        - String. File path of the CA
 file if having issue with SSL</p>
 </li><li>
+<p><code>:ssl_version</code>                    - Symbol. The ssl version to
+be used, sample: :TLSv1_1, :TLSv1_2, for the details, see <a
+href="https://github.com/ruby/openssl/blob/master/lib/openssl/ssl.rb">github.com/ruby/openssl/blob/master/lib/openssl/ssl.rb</a></p>
+</li><li>
+<p><code>:ssl_min_version</code>                - Symbol. The min ssl version
+supported, only supported in Ruby 2.5+</p>
+</li><li>
+<p><code>:ssl_max_version</code>                - Symbol. The max ssl version
+supported, only supported in Ruby 2.5+</p>
+</li><li>
 <p><code>:user_agent_prefix</code>              - String. The user agent
 prefix that can identify the application calls the library</p>
 </li></ul>
@@ -846,14 +866,14 @@ relationship</p>
       <pre class="lines">
 
 
-71
-72
-73
 74
-75</pre>
+75
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_service_options'>service_options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>client:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Client</span><span class='op'>::</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>api_version:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::Queue::Default (module)">Default</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html#STG_VERSION-constant" title="Azure::Storage::Queue::Default::STG_VERSION (constant)">STG_VERSION</a></span></span> <span class='rbrace'>}</span>
@@ -912,13 +932,13 @@ localhost.</p>
       <pre class="lines">
 
 
-84
-85
-86
-87</pre>
+87
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_development'>create_development</span><span class='lparen'>(</span><span class='id identifier rubyid_proxy_uri'>proxy_uri</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_service_options'>service_options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>client:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Client</span><span class='op'>::</span><span class='id identifier rubyid_create_development'>create_development</span><span class='lparen'>(</span><span class='id identifier rubyid_proxy_uri'>proxy_uri</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>api_version:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::Queue::Default (module)">Default</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html#STG_VERSION-constant" title="Azure::Storage::Queue::Default::STG_VERSION (constant)">STG_VERSION</a></span></span> <span class='rbrace'>}</span>
@@ -975,13 +995,13 @@ href="https://azure.microsoft.com/en-us/documentation/articles/storage-configure
       <pre class="lines">
 
 
-104
-105
-106
-107</pre>
+107
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 107</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_from_connection_string'>create_from_connection_string</span><span class='lparen'>(</span><span class='id identifier rubyid_connection_string'>connection_string</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_service_options'>service_options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>client:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Client</span><span class='op'>::</span><span class='id identifier rubyid_create_from_connection_string'>create_from_connection_string</span><span class='lparen'>(</span><span class='id identifier rubyid_connection_string'>connection_string</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>api_version:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::Queue::Default (module)">Default</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html#STG_VERSION-constant" title="Azure::Storage::Queue::Default::STG_VERSION (constant)">STG_VERSION</a></span></span> <span class='rbrace'>}</span>
@@ -1032,13 +1052,13 @@ Environment Variables</p>
       <pre class="lines">
 
 
-92
-93
-94
-95</pre>
+95
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_from_env'>create_from_env</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_service_options'>service_options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>client:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Client</span><span class='op'>::</span><span class='id identifier rubyid_create_from_env'>create_from_env</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>api_version:</span> <span class='const'><span class='object_link'><a href="../../../Azure.html" title="Azure (module)">Azure</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Storage.html" title="Azure::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Queue.html" title="Azure::Storage::Queue (module)">Queue</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html" title="Azure::Storage::Queue::Default (module)">Default</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Default.html#STG_VERSION-constant" title="Azure::Storage::Queue::Default::STG_VERSION (constant)">STG_VERSION</a></span></span> <span class='rbrace'>}</span>
@@ -1092,7 +1112,8 @@ messages have been deleted.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1112,16 +1133,16 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179454">msdn.microsoft.com
       <pre class="lines">
 
 
-242
-243
-244
-245
-246
-247
-248</pre>
+248
+249
+250
+251
+252
+253
+254</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 242</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 248</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear_messages'>clear_messages</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1170,12 +1191,14 @@ visibility timeout value, in seconds, relative to server</p>
 <pre class="code ruby"><code class="ruby">time. The new value must be larger than or equal to 0, and cannot be larger than 7
 days. The visibility timeout of a message cannot be set to a value later than the
 expiry time. :visibility_timeout should be set to a value smaller than the
-time-to-live value. If not specified, the default value is 0.</code></pre>
+time-to-live value. If not specified, the default value is 0.
+</code></pre>
 </li><li>
 <p><code>:message_ttl</code>               - Integer. Specifies the
 time-to-live interval for the message, in seconds. The maximum</p>
 
-<pre class="code ruby"><code class="ruby">time-to-live allowed is 7 days. If not specified, the default time-to-live is 7 days.</code></pre>
+<pre class="code ruby"><code class="ruby">time-to-live allowed is 7 days. If not specified, the default time-to-live is 7 days.
+</code></pre>
 </li><li>
 <p><code>:encode</code>                    - Boolean. If set to true, the
 message will be base64 encoded.</p>
@@ -1185,7 +1208,8 @@ message will be base64 encoded.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1206,12 +1230,6 @@ echo of request on success</p>
       <pre class="lines">
 
 
-465
-466
-467
-468
-469
-470
 471
 472
 473
@@ -1220,10 +1238,16 @@ echo of request on success</p>
 476
 477
 478
-479</pre>
+479
+480
+481
+482
+483
+484
+485</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 465</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 471</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_message'>create_message</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_message_text'>message_text</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1278,7 +1302,8 @@ metadata.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1298,21 +1323,21 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179342">msdn.microsoft.com
       <pre class="lines">
 
 
-268
-269
-270
-271
-272
-273
 274
 275
 276
 277
 278
-279</pre>
+279
+280
+281
+282
+283
+284
+285</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 268</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 274</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_queue'>create_queue</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1354,7 +1379,8 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179342">msdn.microsoft.com
 <p><code>pop_receipt</code>                - String. The valid pop receipt
 value returned from an earlier call to the Get Messages or</p>
 
-<pre class="code ruby"><code class="ruby">Update Message operation.</code></pre>
+<pre class="code ruby"><code class="ruby">Update Message operation.
+</code></pre>
 </li><li>
 <p><code>options</code>                    - Hash. Optional parameters.</p>
 </li></ul>
@@ -1368,7 +1394,8 @@ value returned from an earlier call to the Get Messages or</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1440,18 +1467,18 @@ that the cause of the failure was a mismatched pop receipt.</p>
       <pre class="lines">
 
 
-539
-540
-541
-542
-543
-544
 545
 546
-547</pre>
+547
+548
+549
+550
+551
+552
+553</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 539</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 545</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_message'>delete_message</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_message_id'>message_id</span><span class='comma'>,</span> <span class='id identifier rubyid_pop_receipt'>pop_receipt</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>popreceipt</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_pop_receipt'>pop_receipt</span> <span class='rbrace'>}</span>
@@ -1497,7 +1524,8 @@ that the cause of the failure was a mismatched pop receipt.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1517,18 +1545,18 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179436">msdn.microsoft.com
       <pre class="lines">
 
 
-298
-299
-300
-301
-302
-303
 304
 305
-306</pre>
+306
+307
+308
+309
+310
+311
+312</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 298</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 304</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_queue'>delete_queue</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1574,12 +1602,14 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179436">msdn.microsoft.com
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>             - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1599,20 +1629,20 @@ href="http://msdn.microsoft.com/en-us/library/azure/jj159101">msdn.microsoft.com
       <pre class="lines">
 
 
-397
-398
-399
-400
-401
-402
 403
 404
 405
 406
-407</pre>
+407
+408
+409
+410
+411
+412
+413</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 397</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 403</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_queue_acl'>get_queue_acl</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>acl</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -1660,12 +1690,14 @@ href="http://msdn.microsoft.com/en-us/library/azure/jj159101">msdn.microsoft.com
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>             - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1692,12 +1724,6 @@ in the queue, but could be higher.</p>
       <pre class="lines">
 
 
-331
-332
-333
-334
-335
-336
 337
 338
 339
@@ -1705,10 +1731,16 @@ in the queue, but could be higher.</p>
 341
 342
 343
-344</pre>
+344
+345
+346
+347
+348
+349
+350</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 331</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 337</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_queue_metadata'>get_queue_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>metadata</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -1765,7 +1797,8 @@ return. (optional, Default: 1)</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:decode</code>                    - Boolean. Boolean value indicating
 if the message should be base64 decoded.</p>
@@ -1788,22 +1821,22 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179474">msdn.microsoft.com
       <pre class="lines">
 
 
-605
-606
-607
-608
-609
-610
 611
 612
 613
 614
 615
 616
-617</pre>
+617
+618
+619
+620
+621
+622
+623</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 605</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 611</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list_messages'>list_messages</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_visibility_timeout'>visibility_timeout</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_number_of_messages'>number_of_messages</span> <span class='op'>=</span> <span class='int'>1</span>
@@ -1859,7 +1892,8 @@ specifies the portion of the</p>
 Azure::Service::EnumerationResults.continuation_token when there
 are more containers available than were returned. The
 marker value may then be used here to request the next set
-of list items. (optional)</code></pre>
+of list items. (optional)
+</code></pre>
 </li><li>
 <p><code>:max_results</code>               - Integer. Specifies the maximum
 number of containers to return.</p>
@@ -1867,7 +1901,8 @@ number of containers to return.</p>
 <pre class="code ruby"><code class="ruby">If max_results is not specified, or is a value greater than
 5,000, the server will return up to 5,000 items. If it is set
 to a value less than or equal to zero, the server will return
-status code 400 (Bad Request). (optional)</code></pre>
+status code 400 (Bad Request). (optional)
+</code></pre>
 </li><li>
 <p><code>:metadata</code>                  - Boolean. Specifies whether or not
 to return the container metadata.</p>
@@ -1880,12 +1915,14 @@ to return the container metadata.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>             - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li></ul>
 
 <p>NOTE: Metadata requested with the :metadata parameter must have been stored
@@ -1915,12 +1952,6 @@ single value).</p>
       <pre class="lines">
 
 
-203
-204
-205
-206
-207
-208
 209
 210
 211
@@ -1928,10 +1959,16 @@ single value).</p>
 213
 214
 215
-216</pre>
+216
+217
+218
+219
+220
+221
+222</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 203</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 209</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list_queues'>list_queues</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1989,12 +2026,14 @@ if the message should be base64 decoded.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>             - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2014,12 +2053,6 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179472">msdn.microsoft.com
       <pre class="lines">
 
 
-570
-571
-572
-573
-574
-575
 576
 577
 578
@@ -2027,10 +2060,16 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179472">msdn.microsoft.com
 580
 581
 582
-583</pre>
+583
+584
+585
+586
+587
+588
+589</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 570</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 576</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_peek_messages'>peek_messages</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_number_of_messages'>number_of_messages</span> <span class='op'>=</span> <span class='int'>1</span>
@@ -2084,7 +2123,8 @@ Azure::Storage::Entity::SignedIdentifier instances</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2104,20 +2144,20 @@ href="http://msdn.microsoft.com/en-us/library/azure/jj159099">msdn.microsoft.com
       <pre class="lines">
 
 
-427
-428
-429
-430
-431
-432
 433
 434
 435
 436
-437</pre>
+437
+438
+439
+440
+441
+442
+443</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 427</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 433</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_queue_acl'>set_queue_acl</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>acl</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -2169,7 +2209,8 @@ metadata</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2189,21 +2230,21 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179348">msdn.microsoft.com
       <pre class="lines">
 
 
-365
-366
-367
-368
-369
-370
 371
 372
 373
 374
 375
-376</pre>
+376
+377
+378
+379
+380
+381
+382</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 365</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 371</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_queue_metadata'>set_queue_metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>comp</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>metadata</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -2246,12 +2287,14 @@ timeout for the message.</p>
 <p><code>pop_receipt</code>                - String. The valid pop receipt
 value returned from an earlier call to the Get Messages or</p>
 
-<pre class="code ruby"><code class="ruby">update Message operation.</code></pre>
+<pre class="code ruby"><code class="ruby">update Message operation.
+</code></pre>
 </li><li>
 <p><code>message_text</code>               - String. The message contents.
 Note that the message content must be in a format that may</p>
 
-<pre class="code ruby"><code class="ruby">be encoded with UTF-8.</code></pre>
+<pre class="code ruby"><code class="ruby">be encoded with UTF-8.
+</code></pre>
 </li><li>
 <p><code>visibility_timeout</code>         - Integer. The new visibility
 timeout value, in seconds, relative to server time.</p>
@@ -2271,7 +2314,8 @@ message will be base64 encoded.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2338,21 +2382,21 @@ process it.</p>
       <pre class="lines">
 
 
-672
-673
-674
-675
-676
-677
 678
 679
 680
 681
 682
-683</pre>
+683
+684
+685
+686
+687
+688
+689</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 672</span>
+      <pre class="code"><span class="info file"># File 'queue/lib/azure/storage/queue/queue_service.rb', line 678</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_message'>update_message</span><span class='lparen'>(</span><span class='id identifier rubyid_queue_name'>queue_name</span><span class='comma'>,</span> <span class='id identifier rubyid_message_id'>message_id</span><span class='comma'>,</span> <span class='id identifier rubyid_pop_receipt'>pop_receipt</span><span class='comma'>,</span> <span class='id identifier rubyid_message_text'>message_text</span><span class='comma'>,</span> <span class='id identifier rubyid_visibility_timeout'>visibility_timeout</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>visibilitytimeout</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_visibility_timeout'>visibility_timeout</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>popreceipt</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_pop_receipt'>pop_receipt</span> <span class='rbrace'>}</span>
@@ -2376,9 +2420,9 @@ process it.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Jan 11 16:12:05 2018 by
+  Generated on Mon Dec  3 15:51:04 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.4.1).
+  0.9.16 (ruby-2.5.1).
 </div>
 
     </div>
