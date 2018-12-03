@@ -6,7 +6,7 @@
 <title>
   Module: Azure::Storage::Blob::Container
   
-    &mdash; Documentation by YARD 0.9.12
+    &mdash; Documentation by YARD 0.9.16
   
 </title>
 
@@ -472,49 +472,57 @@ container, a client must provide a lease ID.</p>
 <p><code>:duration</code>                  - Integer. Default -1. Specifies
 the duration of the lease, in seconds, or negative one (-1)</p>
 
-<pre class="code ruby"><code class="ruby">for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. (optional)</code></pre>
+<pre class="code ruby"><code class="ruby">for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. (optional)
+</code></pre>
 </li><li>
 <p><code>:proposed_lease_id</code>         - String. Proposed lease ID, in a
 GUID string format. The Blob service returns 400 (Invalid request)</p>
 
-<pre class="code ruby"><code class="ruby">if the proposed lease ID is not in the correct format. (optional)</code></pre>
+<pre class="code ruby"><code class="ruby">if the proposed lease ID is not in the correct format. (optional)
+</code></pre>
 </li><li>
 <p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to acquire the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container has been modified since the specified date/time. If the container has not been modified,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to acquire the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container has not been modified since the specified date/time. If the container has been modified,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to acquire the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to acquire the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:origin</code>                    - String. Optional. Specifies the
 origin from which the request is issued. The presence of this header
 results</p>
 
-<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.</code></pre>
+<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -594,44 +602,51 @@ new lease will not be available before the break period has expired, but the lea
 be held for longer than the break period.
 
 If this option is not used, a fixed-duration lease breaks after the remaining lease
-period elapses, and an infinite lease breaks immediately.</code></pre>
+period elapses, and an infinite lease breaks immediately.
+</code></pre>
 </li><li>
 <p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to break the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container has been modified since the specified date/time. If the container has not been modified,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to break the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container has not been modified since the specified date/time. If the container has been modified,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to break the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to break the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:origin</code>                    - String. Optional. Specifies the
 origin from which the request is issued. The presence of this header
 results</p>
 
-<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.</code></pre>
+<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -692,7 +707,8 @@ immediate, 0 is returned.</p>
 <p><code>proposed_lease</code>             - String. Proposed lease ID, in a
 GUID string format. The Blob service returns 400 (Invalid request)</p>
 
-<pre class="code ruby"><code class="ruby">if the proposed lease ID is not in the correct format. (optional).</code></pre>
+<pre class="code ruby"><code class="ruby">if the proposed lease ID is not in the correct format. (optional).
+</code></pre>
 </li><li>
 <p><code>options</code>                    - Hash. Optional parameters.</p>
 </li></ul>
@@ -706,37 +722,43 @@ GUID string format. The Blob service returns 400 (Invalid request)</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to change the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container has been modified since the specified date/time. If the container has not been modified,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to change the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container has not been modified since the specified date/time. If the container has been modified,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to change the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to change the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:origin</code>                    - String. Optional. Specifies the
 origin from which the request is issued. The presence of this header
 results</p>
 
-<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.</code></pre>
+<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -807,7 +829,8 @@ the container (optional).</p>
 <p><code>:request_id</code>               - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -910,7 +933,8 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179468.aspx">msdn.microsof
 <p><code>:request_id</code>               - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:lease_id</code>                 - String. Required for version
 2012-02-12 and newer if the container has an active lease. To call</p>
@@ -918,7 +942,8 @@ client-generated, opaque value with a 1 KB character limit that is recorded</p>
 <pre class="code ruby"><code class="ruby">Delete Container on a container that has an active lease, specify the lease ID in this header.
 If this header is not specified when there is an active lease, Delete Container will return 409
 (Conflict). If you specify the wrong lease ID, or a lease ID on a container that does not have
-an active lease, Delete Container will return 412 (Precondition failed).</code></pre>
+an active lease, Delete Container will return 412 (Precondition failed).
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1004,18 +1029,21 @@ policies for the container.</p>
 <p><code>:request_id</code>               - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>            - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li><li>
 <p><code>:lease_id</code>                 - String. If specified, Get
 Container ACL only succeeds if the container’s lease is</p>
 
 <pre class="code ruby"><code class="ruby">active and matches this ID. If there is no active lease or the ID does not match, 412
-(Precondition Failed) is returned.</code></pre>
+(Precondition Failed) is returned.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1024,7 +1052,8 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179469.aspx">msdn.microsof
 <p>Returns a tuple of (container, signed_identifiers)</p>
 
 <pre class="code ruby"><code class="ruby">container           - A Azure::Storage::Entity::Blob::Container instance
-signed_identifiers  - A list of Azure::Storage::Entity::SignedIdentifier instances</code></pre>
+signed_identifiers  - A list of Azure::Storage::Entity::SignedIdentifier instances
+</code></pre>
 
 
   </div>
@@ -1117,18 +1146,21 @@ signed_identifiers  - A list of Azure::Storage::Entity::SignedIdentifier instanc
 <p><code>:request_id</code>               - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>            - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li><li>
 <p><code>:lease_id</code>                 - String. If specified, Get
 Container Metadata only succeeds if the container’s lease is</p>
 
 <pre class="code ruby"><code class="ruby">active and matches this ID. If there is no active lease or the ID does not match, 412
-(Precondition Failed) is returned.</code></pre>
+(Precondition Failed) is returned.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1219,18 +1251,21 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691976.aspx">msdn.microsof
 <p><code>:request_id</code>               - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>            - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li><li>
 <p><code>:lease_id</code>                 - String. If specified, Get
 Container Properties only succeeds if the container’s lease is</p>
 
 <pre class="code ruby"><code class="ruby">active and matches this ID. If there is no active lease or the ID does not match, 412
-(Precondition Failed) is returned.</code></pre>
+(Precondition Failed) is returned.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1329,7 +1364,8 @@ parameter, the operation</p>
 <pre class="code ruby"><code class="ruby">returns a BlobPrefix element in the response body that acts as a
 placeholder for all blobs whose names begin with the same substring
 up to the appearance of the delimiter character. The delimiter may
-be a single character or a string.</code></pre>
+be a single character or a string.
+</code></pre>
 </li><li>
 <p><code>:marker</code>           - String. An identifier that specifies the
 portion of the</p>
@@ -1338,7 +1374,8 @@ portion of the</p>
 Azure::Storage::Common::EnumerationResults.continuation_token when
 there are more blobs available than were returned. The
 marker value may then be used here to request the next set
-of list items. (optional)</code></pre>
+of list items. (optional)
+</code></pre>
 </li><li>
 <p><code>:max_results</code>      - Integer. Specifies the maximum number of
 blobs to return.</p>
@@ -1346,7 +1383,8 @@ blobs to return.</p>
 <pre class="code ruby"><code class="ruby">If max_results is not specified, or is a value greater than
 5,000, the server will return up to 5,000 items. If it is set
 to a value less than or equal to zero, the server will return
-status code 400 (Bad Request). (optional)</code></pre>
+status code 400 (Bad Request). (optional)
+</code></pre>
 </li><li>
 <p><code>:metadata</code>         - Boolean. Specifies whether or not to
 return the blob metadata.</p>
@@ -1358,31 +1396,36 @@ return the blob metadata.</p>
 be included in the</p>
 
 <pre class="code ruby"><code class="ruby">enumeration. Snapshots are listed from oldest to newest in the
-response. (optional, Default=false)</code></pre>
+response. (optional, Default=false)
+</code></pre>
 </li><li>
 <p><code>:uncomittedblobs</code>  - Boolean. Specifies that blobs for which
 blocks have been uploaded,</p>
 
 <pre class="code ruby"><code class="ruby">but which have not been committed using put_block_list, be included
-in the response. (optional, Default=false)</code></pre>
+in the response. (optional, Default=false)
+</code></pre>
 </li><li>
 <p><code>:copy</code>             - Boolean. Specifies that metadata related
 to any current or previous</p>
 
 <pre class="code ruby"><code class="ruby">copy_blob operation should be included in the response.
-(optional, Default=false)</code></pre>
+(optional, Default=false)
+</code></pre>
 </li><li>
 <p><code>:timeout</code>          - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>       - String. Provides a client-generated,
 opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:location_mode</code>    - LocationMode. Specifies the location mode
 used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.
+</code></pre>
 </li></ul>
 
 <p>NOTE: Metadata requested with the :metadata parameter must have been stored
@@ -1518,37 +1561,43 @@ for the container as soon as the release is complete.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to release the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container has been modified since the specified date/time. If the container has not been modified,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to release the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container has not been modified since the specified date/time. If the container has been modified,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to release the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to release the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:origin</code>                    - String. Optional. Specifies the
 origin from which the request is issued. The presence of this header
 results</p>
 
-<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.</code></pre>
+<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1619,37 +1668,43 @@ that lease. When you renew a lease, the lease duration clock resets.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to renew the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container has been modified since the specified date/time. If the container has not been modified,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to renew the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container has not been modified since the specified date/time. If the container has been modified,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to renew the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to renew the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the container&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).</code></pre>
+the Blob service returns status code 412 (Precondition Failed).
+</code></pre>
 </li><li>
 <p><code>:origin</code>                    - String. Optional. Specifies the
 origin from which the request is issued. The presence of this header
 results</p>
 
-<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.</code></pre>
+<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1722,13 +1777,15 @@ Azure::Storage::Entity::SignedIdentifier instances (optional)</p>
 <p><code>:request_id</code>                  - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:lease_id</code>                    - String. If specified, Set
 Container ACL only succeeds if the container’s lease is</p>
 
 <pre class="code ruby"><code class="ruby">active and matches this ID. If there is no active lease or the ID does not match, 412
-(Precondition Failed) is returned.</code></pre>
+(Precondition Failed) is returned.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1855,13 +1912,15 @@ values</p>
 <p><code>:request_id</code>               - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
+</code></pre>
 </li><li>
 <p><code>:lease_id</code>                 - String. If specified, Set
 Container Metadata only succeeds if the container’s lease is</p>
 
 <pre class="code ruby"><code class="ruby">active and matches this ID. If there is no active lease or the ID does not match, 412
-(Precondition Failed) is returned.</code></pre>
+(Precondition Failed) is returned.
+</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1927,9 +1986,9 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179362.aspx">msdn.microsof
 </div>
 
       <div id="footer">
-  Generated on Thu Jan 11 16:12:00 2018 by
+  Generated on Mon Dec  3 15:51:00 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.4.1).
+  0.9.16 (ruby-2.5.1).
 </div>
 
     </div>
