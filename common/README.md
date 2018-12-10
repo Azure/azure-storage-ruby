@@ -93,13 +93,13 @@ There are two ways you can create the client:
 
 require "azure/storage/common"
 
-# Creating an instance of `Azure::Storage::Common::Core::SharedAccessSignature`
-generator = Azure::Storage::Common::Core::SharedAccessSignature.new(<your_account_name>, <your_access_key>)
+# Creating an instance of `Azure::Storage::Common::Core::Auth::SharedAccessSignature`
+generator = Azure::Storage::Common::Core::Auth::SharedAccessSignature.new(your_account_name, your_access_key)
 
 # The generator now can be used to create service SAS or account SAS.
 generator.generate_service_sas_token(my_path_or_table_name, my_sas_options)
 generator.generate_account_sas_token(my_account_sas_options)
-# For details about the possible options, please reference the document of the class `Azure::Storage::Common::Core::SharedAccessSignature`
+# For details about the possible options, please reference the document of the class `Azure::Storage::Common::Core::Auth::SharedAccessSignature`
 
 ```
 
