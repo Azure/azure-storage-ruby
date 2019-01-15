@@ -48,9 +48,11 @@ describe Azure::Storage::Queue::QueueService do
       result[0].message_text.must_equal message_text
     end
 
+
     describe "when the options hash is used" do
       let(:visibility_timeout) { 3 }
       let(:message_ttl) { 600 }
+      let(:encode) { true }
 
       it "the :visibility_timeout option causes the message to be invisible for a period of time" do
         result = subject.create_message(queue_name, message_text, visibility_timeout: visibility_timeout)
@@ -86,6 +88,21 @@ describe Azure::Storage::Queue::QueueService do
         message = result[0]
         message.message_text.must_equal message_text
         Time.parse(message.expiration_time).to_i.must_equal Time.parse(message.insertion_time).to_i + message_ttl
+      end
+
+      it "the :encode option encodes with strict base64" do
+        result = subject.create_message(queue_name, message_text, encode: encode)
+        result.wont_be_nil
+        result.wont_be_empty
+        result.length.must_equal 1
+        result[0].message_text.must_be_nil
+        result[0].pop_receipt.wont_be_nil
+        result[0].id.wont_be_nil
+
+        result = subject.peek_messages queue_name
+        result.wont_be_nil
+        result.wont_be_empty
+        result[0].message_text.must_equal Base64.strict_encode64(message_text)
       end
     end
 
