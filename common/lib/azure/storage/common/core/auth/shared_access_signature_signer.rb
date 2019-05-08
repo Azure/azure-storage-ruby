@@ -49,9 +49,19 @@ module Azure::Storage::Common::Core
       end
 
       def sign_request(req)
-        req.uri = URI.parse(req.uri.to_s + (req.uri.query.nil? ? "?" : "&") + sas_token.sub(/^\?/, "") + "&api-version=" + @api_ver)
+        if source = req.headers["x-ms-copy-source"]
+          req.headers["x-ms-copy-source"] = sign_uri(URI.parse(source))
+        end
+        req.uri = URI.parse(sign_uri(req.uri))
         req
       end
+
+    private
+
+      def sign_uri(uri)
+        uri.to_s + (uri.query.nil? ? "?" : "&") + sas_token.sub(/^\?/, "") + "&api-version=" + @api_ver
+      end
+
     end
   end
 end
