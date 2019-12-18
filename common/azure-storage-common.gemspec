@@ -41,7 +41,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ">= 1.9.3"
 
   s.add_runtime_dependency("azure-core",              "~> 0.1.13")
-  s.add_runtime_dependency("nokogiri",                "~> 1.6", ">= 1.6.8")
+  s.add_runtime_dependency("nokogiri",                "~> 1.10", ">= 1.10.4")
 
   s.add_development_dependency("dotenv",              "~> 2.0")
   s.add_development_dependency("minitest",            "~> 5")
