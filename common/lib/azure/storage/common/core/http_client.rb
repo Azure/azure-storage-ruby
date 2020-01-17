@@ -30,7 +30,9 @@ module Azure::Storage::Common::Core
     # @param uri  [URI|String] the base uri (scheme, host, port) of the http endpoint
     # @return [Net::HTTP] http agent for a given uri
     def agents(uri)
-      key = uri.to_s
+      uri = URI(uri) unless uri.is_a? URI
+      key = uri.host
+
       @agents ||= {}
       unless @agents.key?(key)
         @agents[key] = build_http(uri)
