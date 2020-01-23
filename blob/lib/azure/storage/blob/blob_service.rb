@@ -254,6 +254,33 @@ module Azure::Storage
         Serialization.container_enumeration_results_from_xml(response.body)
       end
 
+      # Public: Obtain a user delegation key for the purpose of signing SAS tokens.
+      #
+      # ==== Attributes
+      #
+      # * +start+                  - Time. The start time for the user delegation SAS.
+      # * +expiry+                 - Time. The expiry time of user delegation SAS.
+      #
+      # See: https://docs.microsoft.com/en-us/rest/api/storageservices/get-user-delegation-key
+      #
+      # NOTE: A token credential must be present on the service object for this request to succeed.
+      # The start and expiry times must be within 7 days of the current time.
+      #
+      # Returns an Azure::Storage::Common::UserDelegationKey
+      #
+      def get_user_delegation_key(start, expiry)
+        max_delegation_time = Time.now + BlobConstants::MAX_USER_DELEGATION_KEY_SECONDS
+        raise ArgumentError, "Start time must be before #{max_delegation_time}" if start > max_delegation_time
+        raise ArgumentError, "Expiry time must be before #{max_delegation_time}" if expiry > max_delegation_time
+        raise ArgumentError, "Start time must be before expiry time" if start >= expiry
+
+        body = Serialization.key_info_to_xml(start, expiry)
+
+        response = call(:post, user_delegation_key_uri, body)
+
+        Serialization.user_delegation_key_from_xml(response.body)
+      end
+
       # Protected: Establishes an exclusive write lock on a container or a blob. The lock duration can be 15 to 60 seconds, or can be infinite.
       # To write to a locked container or blob, a client must provide a lease ID.
       #
@@ -574,6 +601,20 @@ module Azure::Storage
       protected
         def containers_uri(query = {}, options = {})
           query = { "comp" => "list" }.merge(query)
+          generate_uri("", query, options)
+        end
+
+      # Protected: Generate the URI for the user delegation key.
+      #
+      # ==== Attributes
+      #
+      # * +query+ - A Hash of key => value query parameters.
+      #
+      # Returns a URI.
+      #
+      protected
+        def user_delegation_key_uri(query = {}, options = {})
+          query = { :restype => "service", :comp => "userdelegationkey" }.merge(query)
           generate_uri("", query, options)
         end
 

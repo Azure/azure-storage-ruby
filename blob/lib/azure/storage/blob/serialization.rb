@@ -49,6 +49,31 @@ module Azure::Storage
         results
       end
 
+      def self.key_info_to_xml(start, expiry)
+        builder = Nokogiri::XML::Builder.new(encoding: "UTF-8") do |xml|
+          xml.KeyInfo {
+            xml.Start start.utc.iso8601
+            xml.Expiry expiry.utc.iso8601
+          }
+        end
+        builder.to_xml
+      end
+
+      def self.user_delegation_key_from_xml(xml)
+        xml = slopify(xml)
+        expect_node("UserDelegationKey", xml)
+
+        Azure::Storage::Common::Service::UserDelegationKey.new do |user_delegation_key|
+          user_delegation_key.signed_oid = xml.SignedOid.text if (xml > "SignedOid").any?
+          user_delegation_key.signed_tid = xml.SignedTid.text if (xml > "SignedTid").any?
+          user_delegation_key.signed_start = xml.SignedStart.text if (xml > "SignedStart").any?
+          user_delegation_key.signed_expiry = xml.SignedExpiry.text if (xml > "SignedExpiry").any?
+          user_delegation_key.signed_service = xml.SignedService.text if (xml > "SignedService").any?
+          user_delegation_key.signed_version = xml.SignedVersion.text if (xml > "SignedVersion").any?
+          user_delegation_key.value = xml.Value.text if (xml > "Value").any?
+        end
+      end
+
       def self.container_from_xml(xml)
         xml = slopify(xml)
         expect_node("Container", xml)
