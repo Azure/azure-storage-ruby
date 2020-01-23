@@ -47,6 +47,45 @@ describe Azure::Storage::Blob::BlobService do
     subject.stubs(:call).returns(response)
   }
 
+  describe "#get_user_delegation_key" do
+    let(:response_body) {
+      '<?xml version="1.0" encoding="utf-8"?>
+<UserDelegationKey>
+    <SignedOid>aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa</SignedOid>
+    <SignedTid>bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb</SignedTid>
+    <SignedStart>2020-01-24T13:24:33Z</SignedStart>
+    <SignedExpiry>2020-01-24T14:24:33Z</SignedExpiry>
+    <SignedService>b</SignedService>
+    <SignedVersion>2018-11-09</SignedVersion>
+    <Value>abcdefgh1234567890=?.,:-</Value>
+</UserDelegationKey>'
+    }
+
+    it "validates that start is before expiry" do
+      now = Time.now
+      assert_raises(ArgumentError) {
+        subject.get_user_delegation_key(now, now - 1)
+      }
+    end
+
+    it "validates that start and expiry are within 7 days of current time" do
+      now = Time.now
+      days = 60 * 60 * 24
+      assert_raises(ArgumentError) {
+        subject.get_user_delegation_key(now, now + 8 * days)
+      }
+      assert_raises(ArgumentError) {
+        subject.get_user_delegation_key(now + 8 * days, now)
+      }
+    end
+
+    it "returns a user delegation key for the account" do
+      now = Time.now
+      result = subject.get_user_delegation_key(now, now + 100)
+      _(result).must_be_kind_of Azure::Storage::Common::Service::UserDelegationKey
+    end
+  end
+
   describe "#list_containers" do
     let(:verb) { :get }
     let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }

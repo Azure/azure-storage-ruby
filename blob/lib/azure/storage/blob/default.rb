@@ -119,6 +119,9 @@ module Azure::Storage::Blob
     # The size of a page, in bytes, in a page blob.
     PAGE_SIZE = 512
 
+    # The maximum validity of user delegation SAS (7 days from the current time).
+    MAX_USER_DELEGATION_KEY_SECONDS = 60 * 60 * 24 * 7
+
     # Resource types.
     module ResourceTypes
       CONTAINER = "c"

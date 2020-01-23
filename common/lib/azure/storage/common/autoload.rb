@@ -55,6 +55,7 @@ module Azure
         autoload :StorageService,           "azure/storage/common/service/storage_service"
         autoload :CorsRule,                 "azure/storage/common/service/cors_rule"
         autoload :EnumerationResults,       "azure/storage/common/service/enumeration_results"
+        autoload :UserDelegationKey,        "azure/storage/common/service/user_delegation_key"
       end
     end
   end
