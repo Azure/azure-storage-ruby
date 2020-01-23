@@ -67,8 +67,18 @@ module Azure::Storage::Common::Core
         ip_range:             :sip
       }
 
+      USER_DELEGATION_KEY_MAPPINGS = {
+        signed_oid:           :skoid,
+        signed_tid:           :sktid,
+        signed_start:         :skt,
+        signed_expiry:        :ske,
+        signed_service:       :sks,
+        signed_version:       :skv
+      }
+
       BLOB_KEY_MAPPINGS = {
         resource:             :sr,
+        timestamp:            :snapshot,
         cache_control:        :rscc,
         content_disposition:  :rscd,
         content_encoding:     :rsce,
@@ -103,13 +113,20 @@ module Azure::Storage::Common::Core
       #
       # @param account_name [String] The account name. Defaults to the one in the global configuration.
       # @param access_key [String]   The access_key encoded in Base64. Defaults to the one in the global configuration.
-      def initialize(account_name = "", access_key = "")
+      # @param user_delegation_key [Azure::Storage::Common::UserDelegationKey] The user delegation key obtained from
+      # calling get_user_delegation_key after authenticating with an Azure Active Directory entity. If present, the
+      # SAS is signed with the user delegation key instead of the access key.
+      def initialize(account_name = "", access_key = "", user_delegation_key = nil)
+        if access_key.empty? && !user_delegation_key.nil?
+          access_key = user_delegation_key.value
+        end
         if account_name.empty? || access_key.empty?
           client = Azure::Storage::Common::Client.create_from_env
           account_name = client.storage_account_name if account_name.empty?
           access_key = client.storage_access_key if access_key.empty?
         end
         @account_name = account_name
+        @user_delegation_key = user_delegation_key
         @signer = Azure::Core::Auth::Signer.new(access_key)
       end
 
@@ -131,10 +148,12 @@ module Azure::Storage::Common::Core
       # * +:start+               - String. Optional. UTC Date/Time in ISO8601 format.
       # * +:expiry+              - String. Optional. UTC Date/Time in ISO8601 format. Default now + 30 minutes.
       # * +:identifier+          - String. Optional. Identifier for stored access policy.
+      #                                              This option must be omitted if a user delegation key has been provided.
       # * +:protocol+            - String. Optional. Permitted protocols.
       # * +:ip_range+            - String. Optional. An IP address or a range of IP addresses from which to accept requests.
       #
       # Below options for blob serivce only
+      # * +:snapshot+            - String. Optional. UTC Date/Time in ISO8601 format. The blob snapshot to grant permission.
       # * +:cache_control+       - String. Optional. Response header override.
       # * +:content_disposition+ - String. Optional. Response header override.
       # * +:content_encoding+    - String. Optional. Response header override.
@@ -175,12 +194,20 @@ module Azure::Storage::Common::Core
           valid_mappings.merge!(FILE_KEY_MAPPINGS)
         end
 
+        service_key_mappings = SERVICE_KEY_MAPPINGS
+        unless @user_delegation_key.nil?
+          valid_mappings.delete(:identifier)
+          USER_DELEGATION_KEY_MAPPINGS.each { |k, _| options[k] = @user_delegation_key.send(k) }
+          valid_mappings.merge!(USER_DELEGATION_KEY_MAPPINGS)
+          service_key_mappings = service_key_mappings.merge(USER_DELEGATION_KEY_MAPPINGS)
+        end
+
         invalid_options = options.reject { |k, _| valid_mappings.key?(k) }
         raise Azure::Storage::Common::InvalidOptionsError, "invalid options #{invalid_options} provided for SAS token generate" if invalid_options.length > 0
 
         canonicalize_time(options)
 
-        query_hash = Hash[options.map { |k, v| [SERVICE_KEY_MAPPINGS[k], v] }]
+        query_hash = Hash[options.map { |k, v| [service_key_mappings[k], v] }]
         .reject { |k, v| SERVICE_OPTIONAL_QUERY_PARAMS.include?(k) && v.to_s == "" }
         .merge(sig: @signer.sign(signable_string_for_service(service_type, path, options)))
 
@@ -197,12 +224,32 @@ module Azure::Storage::Common::Core
           options[:permissions],
           options[:start],
           options[:expiry],
-          canonicalized_resource(service_type, path),
-          options[:identifier],
+          canonicalized_resource(service_type, path)
+        ]
+
+        if @user_delegation_key.nil?
+          signable_fields.push(options[:identifier])
+        else
+          signable_fields.concat [
+            @user_delegation_key.signed_oid,
+            @user_delegation_key.signed_tid,
+            @user_delegation_key.signed_start,
+            @user_delegation_key.signed_expiry,
+            @user_delegation_key.signed_service,
+            @user_delegation_key.signed_version
+          ]
+        end
+
+        signable_fields.concat [
           options[:ip_range],
           options[:protocol],
           Azure::Storage::Common::Default::STG_VERSION
         ]
+
+        signable_fields.concat [
+          options[:resource],
+          options[:timestamp]
+        ] if service_type == Azure::Storage::Common::ServiceType::BLOB
 
         signable_fields.concat [
           options[:cache_control],

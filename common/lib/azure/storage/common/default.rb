@@ -30,7 +30,7 @@ require "azure/storage/common/version"
 module Azure::Storage::Common
   module Default
     # Default REST service (STG) version number. This is used only for SAS generator.
-    STG_VERSION = "2017-11-09"
+    STG_VERSION = "2018-11-09"
 
     # The number of default concurrent requests for parallel operation.
     DEFAULT_PARALLEL_OPERATION_THREAD_COUNT = 1

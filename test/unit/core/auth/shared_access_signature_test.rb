@@ -66,6 +66,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
       _(subject.signable_string_for_service(service_type, path, service_options)).must_equal(
         "rwd\n#{Time.parse('2020-12-10T00:00:00Z').utc.iso8601}\n#{Time.parse('2020-12-11T00:00:00Z').utc.iso8601}\n" +
         "/blob/account-name/example/path\n\n168.1.5.60-168.1.5.70\nhttps,http\n#{Azure::Storage::Common::Default::STG_VERSION}\n" +
+        "b\n\n" +
         "public\ninline, filename=nyan.cat\ngzip\nEnglish\nbinary"
       )
     end
