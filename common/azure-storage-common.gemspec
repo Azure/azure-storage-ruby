@@ -37,11 +37,13 @@ Gem::Specification.new do |s|
   s.homepage    = "http://github.com/azure/azure-storage-ruby"
   s.license     = "MIT"
   s.files       = `git ls-files ./lib/azure/storage/common/`.split("\n") << "./lib/azure/storage/common.rb"
+  s.files       += `git ls-files ./lib/azure/core/`.split("\n") << "./lib/azure/core.rb" << "./lib/azure/http_response_helper.rb"
 
   s.required_ruby_version = ">= 1.9.3"
 
-  s.add_runtime_dependency("azure-core",              "~> 0.1.13")
   s.add_runtime_dependency("nokogiri",                "~> 1.6", ">= 1.6.8")
+  s.add_runtime_dependency('faraday',                 '~> 0.9')
+  s.add_runtime_dependency('faraday_middleware',      '~> 0.10')
 
   s.add_development_dependency("dotenv",              "~> 2.0")
   s.add_development_dependency("minitest",            "~> 5")
@@ -50,4 +52,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency("rake",                "~> 10.0")
   s.add_development_dependency("timecop",             "~> 0.7")
   s.add_development_dependency("yard",                "~> 0.9", ">= 0.9.11")
+  s.add_development_dependency('bundler',             '~> 1.11')
 end
