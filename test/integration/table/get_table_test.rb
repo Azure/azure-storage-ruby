@@ -33,8 +33,8 @@ describe Azure::Storage::Table::TableService do
 
     it "gets the last updated time of a valid table" do
       result = subject.get_table table_name
-      result.must_be_kind_of Hash
-      result["TableName"].must_equal table_name
+      _(result).must_be_kind_of Hash
+      _(result["TableName"]).must_equal table_name
     end
 
     it "errors on an invalid table" do

@@ -59,18 +59,18 @@ describe Azure::Storage::Table::TableService do
       assert does_not_exist
 
       etag = subject.insert_or_replace_entity table_name, entity
-      etag.must_be_kind_of String
+      _(etag).must_be_kind_of String
 
       result = subject.get_entity table_name, entity["PartitionKey"], entity["RowKey"]
 
-      result.must_be_kind_of Azure::Storage::Table::Entity
-      result.etag.must_equal etag
+      _(result).must_be_kind_of Azure::Storage::Table::Entity
+      _(result.etag).must_equal etag
 
       entity.each { |k, v|
         unless entity[k].class == Time
-          result.properties[k].must_equal entity[k]
+          _(result.properties[k]).must_equal entity[k]
         else
-          result.properties[k].to_i.must_equal entity[k].to_i
+          _(result.properties[k].to_i).must_equal entity[k].to_i
         end
       }
     end
@@ -97,12 +97,12 @@ describe Azure::Storage::Table::TableService do
         "RowKey" => entity["RowKey"],
         "NewCustomProperty" => "NewCustomValue"
 
-      etag.must_be_kind_of String
+      _(etag).must_be_kind_of String
       etag.wont_equal existing_etag
 
       result = subject.get_entity table_name, entity["PartitionKey"], entity["RowKey"]
 
-      result.must_be_kind_of Azure::Storage::Table::Entity
+      _(result).must_be_kind_of Azure::Storage::Table::Entity
 
       # removed all existing props
       entity.each { |k, v|
@@ -110,7 +110,7 @@ describe Azure::Storage::Table::TableService do
       }
 
       # and has the new one
-      result.properties["NewCustomProperty"].must_equal "NewCustomValue"
+      _(result.properties["NewCustomProperty"]).must_equal "NewCustomValue"
     end
 
     it "errors on an invalid table name" do

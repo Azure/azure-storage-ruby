@@ -74,22 +74,22 @@ describe Azure::Storage::Common::Client do
 
     it "should fail with nil params or call create_from_env directly" do
       removed = clear_storage_instance_variables
-      lambda { Azure::Storage::Common::Client.create }.must_raise(Azure::Storage::Common::InvalidOptionsError)
-      lambda { Azure::Storage::Common::Client.new }.must_raise(Azure::Storage::Common::InvalidOptionsError)
-      lambda { Azure::Storage::Common::Client.create_from_env }.must_raise(Azure::Storage::Common::InvalidOptionsError)
+      _(lambda { Azure::Storage::Common::Client.create }).must_raise(Azure::Storage::Common::InvalidOptionsError)
+      _(lambda { Azure::Storage::Common::Client.new }).must_raise(Azure::Storage::Common::InvalidOptionsError)
+      _(lambda { Azure::Storage::Common::Client.create_from_env }).must_raise(Azure::Storage::Common::InvalidOptionsError)
       restore_storage_instance_variables removed
     end
 
     it "should fail with empty Hash" do
       removed = clear_storage_instance_variables
-      lambda { Azure::Storage::Common::Client.create({}) }.must_raise(Azure::Storage::Common::InvalidOptionsError)
-      lambda { Azure::Storage::Common::Client.new({}) }.must_raise(Azure::Storage::Common::InvalidOptionsError)
+      _(lambda { Azure::Storage::Common::Client.create({}) }).must_raise(Azure::Storage::Common::InvalidOptionsError)
+      _(lambda { Azure::Storage::Common::Client.new({}) }).must_raise(Azure::Storage::Common::InvalidOptionsError)
       restore_storage_instance_variables removed
     end
 
     it "should fail with empty connection string" do
       removed = clear_storage_instance_variables
-      lambda { Azure::Storage::Common::Client.create_from_connection_string("") }.must_raise(Azure::Storage::Common::InvalidConnectionStringError)
+      _(lambda { Azure::Storage::Common::Client.create_from_connection_string("") }).must_raise(Azure::Storage::Common::InvalidConnectionStringError)
       restore_storage_instance_variables removed
     end
 
@@ -103,11 +103,11 @@ describe Azure::Storage::Common::Client do
       client3 = Azure::Storage::Common::Client.create_development(@devstore_options[:development_storage_proxy_uri])
 
       [client1, client2, client3].each do |c|
-        c.wont_be_nil
-        c.storage_account_name.must_equal(Azure::Storage::Common::StorageServiceClientConstants::DEVSTORE_STORAGE_ACCOUNT)
-        c.storage_access_key.must_equal(Azure::Storage::Common::StorageServiceClientConstants::DEVSTORE_STORAGE_ACCESS_KEY)
-        c.storage_blob_host.must_include(@devstore_options[:development_storage_proxy_uri])
-        c.use_path_style_uri.must_equal(true)
+        _(c).wont_be_nil
+        _(c.storage_account_name).must_equal(Azure::Storage::Common::StorageServiceClientConstants::DEVSTORE_STORAGE_ACCOUNT)
+        _(c.storage_access_key).must_equal(Azure::Storage::Common::StorageServiceClientConstants::DEVSTORE_STORAGE_ACCESS_KEY)
+        _(c.storage_blob_host).must_include(@devstore_options[:development_storage_proxy_uri])
+        _(c.use_path_style_uri).must_equal(true)
       end
     end
 
@@ -121,10 +121,10 @@ describe Azure::Storage::Common::Client do
       restore_storage_instance_variables removed
 
       [client1, client2, client3, client4].each do |c|
-        c.wont_be_nil
-        c.storage_account_name.must_equal(Azure::Storage::Common::StorageServiceClientConstants::DEVSTORE_STORAGE_ACCOUNT)
-        c.storage_access_key.must_equal(Azure::Storage::Common::StorageServiceClientConstants::DEVSTORE_STORAGE_ACCESS_KEY)
-        c.storage_blob_host.must_include(Azure::Storage::Common::StorageServiceClientConstants::DEV_STORE_URI)
+        _(c).wont_be_nil
+        _(c.storage_account_name).must_equal(Azure::Storage::Common::StorageServiceClientConstants::DEVSTORE_STORAGE_ACCOUNT)
+        _(c.storage_access_key).must_equal(Azure::Storage::Common::StorageServiceClientConstants::DEVSTORE_STORAGE_ACCESS_KEY)
+        _(c.storage_blob_host).must_include(Azure::Storage::Common::StorageServiceClientConstants::DEV_STORE_URI)
       end
 
       ENV.delete("EMULATED")
@@ -139,45 +139,45 @@ describe Azure::Storage::Common::Client do
       client2 = Azure::Storage::Common::Client.create_from_connection_string(get_connection_string(@account_key_options))
 
       [client1, client2].each do |c|
-        c.wont_be_nil
-        c.storage_account_name.must_equal(@account_name)
-        c.storage_access_key.must_equal(@access_key)
-        c.storage_table_host.must_include(Azure::Storage::Common::StorageServiceClientConstants::DEFAULT_ENDPOINT_SUFFIX)
-        c.default_endpoints_protocol.must_equal("https")
-        c.use_path_style_uri.must_equal(false)
+        _(c).wont_be_nil
+        _(c.storage_account_name).must_equal(@account_name)
+        _(c.storage_access_key).must_equal(@access_key)
+        _(c.storage_table_host).must_include(Azure::Storage::Common::StorageServiceClientConstants::DEFAULT_ENDPOINT_SUFFIX)
+        _(c.default_endpoints_protocol).must_equal("https")
+        _(c.use_path_style_uri).must_equal(false)
       end
     end
 
     it "should set hosts differently if suffix is set" do
       c = Azure::Storage::Common::Client.new(@account_key_suffix_options)
-      c.wont_be_nil
-      c.storage_account_name.must_equal(@account_name)
-      c.storage_access_key.must_equal(@access_key)
-      c.storage_queue_host.must_include(@account_key_suffix_options[:storage_dns_suffix])
+      _(c).wont_be_nil
+      _(c.storage_account_name).must_equal(@account_name)
+      _(c.storage_access_key).must_equal(@access_key)
+      _(c.storage_queue_host).must_include(@account_key_suffix_options[:storage_dns_suffix])
     end
 
     it "should set scheme if protocol is set" do
       c = Azure::Storage::Common::Client.create(@account_key_protocol_options)
-      c.wont_be_nil
-      c.storage_account_name.must_equal(@account_name)
-      c.storage_access_key.must_equal(@access_key)
-      c.default_endpoints_protocol.must_equal("http")
-      c.storage_blob_host.must_include("http://")
+      _(c).wont_be_nil
+      _(c.storage_account_name).must_equal(@account_name)
+      _(c.storage_access_key).must_equal(@access_key)
+      _(c.default_endpoints_protocol).must_equal("http")
+      _(c.storage_blob_host).must_include("http://")
     end
 
     it "should set host if given" do
       opts = @account_key_options.merge(storage_blob_host: @mock_blob_host_with_protocol)
       c = Azure::Storage::Common::Client.new(get_connection_string(opts))
-      c.wont_be_nil
-      c.storage_account_name.must_equal(@account_name)
-      c.storage_access_key.must_equal(@access_key)
-      lambda { c.default_endpoints_protocol }.must_raise(NoMethodError)
-      c.storage_blob_host.must_equal(@mock_blob_host_with_protocol)
+      _(c).wont_be_nil
+      _(c.storage_account_name).must_equal(@account_name)
+      _(c.storage_access_key).must_equal(@access_key)
+      _(lambda { c.default_endpoints_protocol }).must_raise(NoMethodError)
+      _(c.storage_blob_host).must_equal(@mock_blob_host_with_protocol)
     end
 
     it "should fail host if protocol are dup set" do
       opts = @account_key_protocol_options.merge(storage_blob_host: @mock_blob_host_with_protocol)
-      lambda { Azure::Storage::Common::Client.new(opts) }.must_raise(Azure::Storage::Common::InvalidOptionsError)
+      _(lambda { Azure::Storage::Common::Client.new(opts) }).must_raise(Azure::Storage::Common::InvalidOptionsError)
     end
   end
 
@@ -186,23 +186,23 @@ describe Azure::Storage::Common::Client do
     it "should succeed if sas_token is given with name" do
       opts = { storage_account_name: @account_name, storage_sas_token: @mock_sas }
       c = Azure::Storage::Common::Client.create(opts)
-      c.wont_be_nil
-      c.storage_account_name.must_equal(@account_name)
-      lambda { c.options.storage_access_key }.must_raise(NoMethodError)
-      c.storage_sas_token.must_equal(@mock_sas)
+      _(c).wont_be_nil
+      _(c.storage_account_name).must_equal(@account_name)
+      _(lambda { c.options.storage_access_key }).must_raise(NoMethodError)
+      _(c.storage_sas_token).must_equal(@mock_sas)
     end
 
     it "should fail if both sas_token and key" do
       opts = @account_key_options.merge(storage_sas_token: @mock_sas)
-      lambda { Azure::Storage::Common::Client.create(opts) }.must_raise(Azure::Storage::Common::InvalidOptionsError)
+      _(lambda { Azure::Storage::Common::Client.create(opts) }).must_raise(Azure::Storage::Common::InvalidOptionsError)
     end
 
     it "should succeed if given a host anonymously" do
       opts = { storage_blob_host: @mock_blob_host_with_protocol }
       c = Azure::Storage::Common::Client.create(opts)
-      c.wont_be_nil
-      c.storage_blob_host.must_equal(@mock_blob_host_with_protocol)
-      lambda { c.options.storage_queue_host }.must_raise(NoMethodError)
+      _(c).wont_be_nil
+      _(c.storage_blob_host).must_equal(@mock_blob_host_with_protocol)
+      _(lambda { c.options.storage_queue_host }).must_raise(NoMethodError)
     end
   end
 
@@ -210,14 +210,14 @@ describe Azure::Storage::Common::Client do
 
     it "should fail if no environment variables are set" do
       removed = clear_storage_instance_variables
-      lambda { Azure::Storage::Common::Client.create }.must_raise(Azure::Storage::Common::InvalidOptionsError)
+      _(lambda { Azure::Storage::Common::Client.create }).must_raise(Azure::Storage::Common::InvalidOptionsError)
       restore_storage_instance_variables removed
     end
 
     it "calls default options to see if valid"  do
       options = Azure::Storage::Common::Default.options
       for key in Azure::Storage::Common::Configurable::keys
-        options[key].must_be_nil
+        _(options[key]).must_be_nil
       end
     end
 
@@ -225,9 +225,9 @@ describe Azure::Storage::Common::Client do
       set_storage_envs(@account_key_options)
 
       client = Azure::Storage::Common::Client.create
-      client.wont_be_nil
-      client.storage_account_name.must_equal(@account_key_options[:storage_account_name])
-      client.storage_access_key.must_equal(@account_key_options[:storage_access_key])
+      _(client).wont_be_nil
+      _(client.storage_account_name).must_equal(@account_key_options[:storage_account_name])
+      _(client.storage_access_key).must_equal(@account_key_options[:storage_access_key])
 
       clear_storage_envs
     end
@@ -241,27 +241,27 @@ describe Azure::Storage::Common::Client do
     let(:common_signer_client) { Azure::Storage::Common::Client.create storage_account_name: @account_name, signer: token_signer }
 
     it "should succeed to create blob client if account name and signer are given" do
-      token_credential.token.must_equal token
+      _(token_credential.token).must_equal token
       blob_signer_client = Azure::Storage::Blob::BlobService.new(storage_account_name: @account_name, signer: token_signer)
-      blob_signer_client.wont_be_nil
+      _(blob_signer_client).wont_be_nil
     end
 
     it "should succeed to create blob client if common client is given" do
-      token_credential.token.must_equal token
+      _(token_credential.token).must_equal token
       blob_signer_client = Azure::Storage::Blob::BlobService.new(client: common_signer_client, signer: token_signer)
-      blob_signer_client.wont_be_nil
+      _(blob_signer_client).wont_be_nil
     end
 
     it "should succeed to create queue client if account name and signer are given" do
-      token_credential.token.must_equal token
+      _(token_credential.token).must_equal token
       queue_signer_client = Azure::Storage::Queue::QueueService.new(storage_account_name: @account_name, signer: token_signer)
-      queue_signer_client.wont_be_nil
+      _(queue_signer_client).wont_be_nil
     end
 
     it "should succeed to create queue client if common client is given" do
-      token_credential.token.must_equal token
+      _(token_credential.token).must_equal token
       queue_signer_client = Azure::Storage::Queue::QueueService.new(client: common_signer_client, signer: token_signer)
-      queue_signer_client.wont_be_nil
+      _(queue_signer_client).wont_be_nil
     end
 
   end
@@ -269,9 +269,9 @@ describe Azure::Storage::Common::Client do
   describe "when create with ssl options" do
     it "should set the ssl option correctly" do
       client1 = Azure::Storage::Common::Client.new(@account_key_options_with_ssl_version)
-      client1.ssl_version.must_equal(@ssl_version)
-      client1.ssl_min_version.must_equal(@ssl_min_version)
-      client1.ssl_max_version.must_equal(@ssl_max_version)
+      _(client1.ssl_version).must_equal(@ssl_version)
+      _(client1.ssl_min_version).must_equal(@ssl_min_version)
+      _(client1.ssl_max_version).must_equal(@ssl_max_version)
     end
   end
 

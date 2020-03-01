@@ -45,11 +45,11 @@ describe Azure::Storage::Blob::BlobService do
 
     it "sets and gets properties for a blob" do
       result = subject.set_blob_properties container_name, blob_name, options
-      result.must_be_nil
+      _(result).must_be_nil
       blob = subject.get_blob_properties container_name, blob_name
-      blob.properties[:content_type].must_equal options[:content_type]
-      blob.properties[:content_encoding].must_equal options[:content_encoding]
-      blob.properties[:cache_control].must_equal options[:cache_control]
+      _(blob.properties[:content_type]).must_equal options[:content_type]
+      _(blob.properties[:content_encoding]).must_equal options[:content_encoding]
+      _(blob.properties[:cache_control]).must_equal options[:cache_control]
     end
 
     describe "when a blob has a snapshot" do
@@ -61,10 +61,10 @@ describe Azure::Storage::Blob::BlobService do
         snapshot = subject.create_blob_snapshot container_name, blob_name
         blob = subject.get_blob_properties container_name, blob_name, snapshot: snapshot
 
-        blob.snapshot.must_equal snapshot
-        blob.properties[:content_type].must_equal options[:content_type]
-        blob.properties[:content_encoding].must_equal options[:content_encoding]
-        blob.properties[:cache_control].must_equal options[:cache_control]
+        _(blob.snapshot).must_equal snapshot
+        _(blob.properties[:content_type]).must_equal options[:content_type]
+        _(blob.properties[:content_encoding]).must_equal options[:content_encoding]
+        _(blob.properties[:cache_control]).must_equal options[:cache_control]
       end
 
       it "errors if the snapshot does not exist" do
@@ -100,19 +100,19 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
+      _(status_code).must_equal "412"
       # assert right lease succeeds
       blob = subject.get_blob_properties container_name, page_blob_name, lease_id: new_lease_id
-      blob.wont_be_nil
-      blob.properties[:content_type].must_equal options[:content_type]
-      blob.properties[:content_encoding].must_equal options[:content_encoding]
-      blob.properties[:cache_control].must_equal options[:cache_control]
+      _(blob).wont_be_nil
+      _(blob.properties[:content_type]).must_equal options[:content_type]
+      _(blob.properties[:content_encoding]).must_equal options[:content_encoding]
+      _(blob.properties[:cache_control]).must_equal options[:cache_control]
       # assert no lease succeeds
       blob = subject.get_blob_properties container_name, page_blob_name
-      blob.wont_be_nil
-      blob.properties[:content_type].must_equal options[:content_type]
-      blob.properties[:content_encoding].must_equal options[:content_encoding]
-      blob.properties[:cache_control].must_equal options[:cache_control]
+      _(blob).wont_be_nil
+      _(blob.properties[:content_type]).must_equal options[:content_type]
+      _(blob.properties[:content_encoding]).must_equal options[:content_encoding]
+      _(blob.properties[:cache_control]).must_equal options[:cache_control]
     end
 
     it "lease id works for set_blob_properties" do
@@ -131,16 +131,16 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "The lease ID specified did not match the lease ID for the blob."
+      _(status_code).must_equal "412"
+      _(description).must_include "The lease ID specified did not match the lease ID for the blob."
       # assert right lease succeeds
       result = subject.set_blob_properties container_name, page_blob_name, options.merge(lease_id: new_lease_id)
-      result.must_be_nil
+      _(result).must_be_nil
       blob = subject.get_blob_properties container_name, page_blob_name
-      blob.wont_be_nil
-      blob.properties[:content_type].must_equal options[:content_type]
-      blob.properties[:content_encoding].must_equal options[:content_encoding]
-      blob.properties[:cache_control].must_equal options[:cache_control]
+      _(blob).wont_be_nil
+      _(blob.properties[:content_type]).must_equal options[:content_type]
+      _(blob.properties[:content_encoding]).must_equal options[:content_encoding]
+      _(blob.properties[:cache_control]).must_equal options[:cache_control]
       # prove that no lease fails
       status_code = ""
       description = ""
@@ -150,8 +150,8 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      _(status_code).must_equal "412"
+      _(description).must_include "There is currently a lease on the blob and no lease ID was specified in the request."
     end
   end
 end

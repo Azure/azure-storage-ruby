@@ -65,23 +65,23 @@ describe Azure::Storage::Blob::BlobService do
 
       # content/properties/metadata in blob is new version
       blob, returned_content = subject.get_blob container_name, blob_name, start_range: 0, end_range: 511
-      returned_content.length.must_equal 512
-      returned_content.must_equal content2[0..511]
-      blob.properties[:content_type].must_equal options2[:content_type]
+      _(returned_content.length).must_equal 512
+      _(returned_content).must_equal content2[0..511]
+      _(blob.properties[:content_type]).must_equal options2[:content_type]
       options2[:metadata].each { |k, v|
-        blob.metadata.must_include k.downcase
-        blob.metadata[k.downcase].must_equal v
+        _(blob.metadata).must_include k.downcase
+        _(blob.metadata[k.downcase]).must_equal v
       }
 
       # content/properties/metadata in snapshot is old version
       blob, returned_content = subject.get_blob container_name, blob_name, start_range: 0, end_range: 511, snapshot: snapshot
 
-      returned_content.length.must_equal 512
-      returned_content.must_equal content[0..511]
-      blob.properties[:content_type].must_equal options[:content_type]
+      _(returned_content.length).must_equal 512
+      _(returned_content).must_equal content[0..511]
+      _(blob.properties[:content_type]).must_equal options[:content_type]
       options[:metadata].each { |k, v|
-        blob.metadata.must_include k.downcase
-        blob.metadata[k.downcase].must_equal v
+        _(blob.metadata).must_include k.downcase
+        _(blob.metadata[k.downcase]).must_equal v
       }
 
     end
@@ -102,14 +102,14 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "The lease ID specified did not match the lease ID for the blob."
+      _(status_code).must_equal "412"
+      _(description).must_include "The lease ID specified did not match the lease ID for the blob."
       # assert right lease succeeds
       snapshot = subject.create_blob_snapshot container_name, page_blob_name, lease_id: new_lease_id
-      snapshot.wont_be_nil
+      _(snapshot).wont_be_nil
       # assert no lease succeeds
       snapshot = subject.create_blob_snapshot container_name, page_blob_name
-      snapshot.wont_be_nil
+      _(snapshot).wont_be_nil
     end
   end
 end

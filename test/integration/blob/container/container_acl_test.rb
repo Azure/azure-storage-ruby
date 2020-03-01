@@ -43,24 +43,24 @@ describe Azure::Storage::Blob::BlobService do
       container_name = ContainerNameHelper.name
       subject.create_container container_name
       container, acl = subject.set_container_acl container_name, public_access_level, signed_identifiers: identifiers
-      container.wont_be_nil
-      container.name.must_equal container_name
-      container.public_access_level.must_equal public_access_level.to_s
-      acl.length.must_equal identifiers.length
-      acl.first.id.must_equal identifiers.first.id
-      acl.first.access_policy.start.must_equal identifiers.first.access_policy.start
-      acl.first.access_policy.expiry.must_equal identifiers.first.access_policy.expiry
-      acl.first.access_policy.permission.must_equal identifiers.first.access_policy.permission
+      _(container).wont_be_nil
+      _(container.name).must_equal container_name
+      _(container.public_access_level).must_equal public_access_level.to_s
+      _(acl.length).must_equal identifiers.length
+      _(acl.first.id).must_equal identifiers.first.id
+      _(acl.first.access_policy.start).must_equal identifiers.first.access_policy.start
+      _(acl.first.access_policy.expiry).must_equal identifiers.first.access_policy.expiry
+      _(acl.first.access_policy.permission).must_equal identifiers.first.access_policy.permission
 
       container, acl = subject.get_container_acl container_name
-      container.wont_be_nil
-      container.name.must_equal container_name
-      container.public_access_level.must_equal public_access_level.to_s
-      acl.length.must_equal identifiers.length
-      acl.first.id.must_equal identifiers.first.id
-      acl.first.access_policy.start.must_equal identifiers.first.access_policy.start
-      acl.first.access_policy.expiry.must_equal identifiers.first.access_policy.expiry
-      acl.first.access_policy.permission.must_equal identifiers.first.access_policy.permission
+      _(container).wont_be_nil
+      _(container.name).must_equal container_name
+      _(container.public_access_level).must_equal public_access_level.to_s
+      _(acl.length).must_equal identifiers.length
+      _(acl.first.id).must_equal identifiers.first.id
+      _(acl.first.access_policy.start).must_equal identifiers.first.access_policy.start
+      _(acl.first.access_policy.expiry).must_equal identifiers.first.access_policy.expiry
+      _(acl.first.access_policy.permission).must_equal identifiers.first.access_policy.permission
     end
 
     it "errors if the container does not exist" do
@@ -88,28 +88,28 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "The lease ID specified did not match the lease ID for the container."
+      _(status_code).must_equal "412"
+      _(description).must_include "The lease ID specified did not match the lease ID for the container."
       # assert right lease succeeds
       container, acl = subject.get_container_acl container_name, lease_id: new_lease_id
-      container.wont_be_nil
-      container.name.must_equal container_name
-      container.public_access_level.must_equal public_access_level.to_s
-      acl.length.must_equal identifiers.length
-      acl.first.id.must_equal identifiers.first.id
-      acl.first.access_policy.start.must_equal identifiers.first.access_policy.start
-      acl.first.access_policy.expiry.must_equal identifiers.first.access_policy.expiry
-      acl.first.access_policy.permission.must_equal identifiers.first.access_policy.permission
+      _(container).wont_be_nil
+      _(container.name).must_equal container_name
+      _(container.public_access_level).must_equal public_access_level.to_s
+      _(acl.length).must_equal identifiers.length
+      _(acl.first.id).must_equal identifiers.first.id
+      _(acl.first.access_policy.start).must_equal identifiers.first.access_policy.start
+      _(acl.first.access_policy.expiry).must_equal identifiers.first.access_policy.expiry
+      _(acl.first.access_policy.permission).must_equal identifiers.first.access_policy.permission
       # assert no lease succeeds
       container, acl = subject.get_container_acl container_name
-      container.wont_be_nil
-      container.name.must_equal container_name
-      container.public_access_level.must_equal public_access_level.to_s
-      acl.length.must_equal identifiers.length
-      acl.first.id.must_equal identifiers.first.id
-      acl.first.access_policy.start.must_equal identifiers.first.access_policy.start
-      acl.first.access_policy.expiry.must_equal identifiers.first.access_policy.expiry
-      acl.first.access_policy.permission.must_equal identifiers.first.access_policy.permission
+      _(container).wont_be_nil
+      _(container.name).must_equal container_name
+      _(container.public_access_level).must_equal public_access_level.to_s
+      _(acl.length).must_equal identifiers.length
+      _(acl.first.id).must_equal identifiers.first.id
+      _(acl.first.access_policy.start).must_equal identifiers.first.access_policy.start
+      _(acl.first.access_policy.expiry).must_equal identifiers.first.access_policy.expiry
+      _(acl.first.access_policy.permission).must_equal identifiers.first.access_policy.permission
       # release lease afterwards
       subject.release_container_lease container_name, new_lease_id
     end
@@ -129,19 +129,19 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "The lease ID specified did not match the lease ID for the container."
+      _(status_code).must_equal "412"
+      _(description).must_include "The lease ID specified did not match the lease ID for the container."
       # assert right lease succeeds
       container, acl = subject.set_container_acl container_name, public_access_level, signed_identifiers: identifiers, lease_id: new_lease_id
       container, acl = subject.get_container_acl container_name, lease_id: new_lease_id
-      container.wont_be_nil
-      container.name.must_equal container_name
-      container.public_access_level.must_equal public_access_level.to_s
-      acl.length.must_equal identifiers.length
-      acl.first.id.must_equal identifiers.first.id
-      acl.first.access_policy.start.must_equal identifiers.first.access_policy.start
-      acl.first.access_policy.expiry.must_equal identifiers.first.access_policy.expiry
-      acl.first.access_policy.permission.must_equal identifiers.first.access_policy.permission
+      _(container).wont_be_nil
+      _(container.name).must_equal container_name
+      _(container.public_access_level).must_equal public_access_level.to_s
+      _(acl.length).must_equal identifiers.length
+      _(acl.first.id).must_equal identifiers.first.id
+      _(acl.first.access_policy.start).must_equal identifiers.first.access_policy.start
+      _(acl.first.access_policy.expiry).must_equal identifiers.first.access_policy.expiry
+      _(acl.first.access_policy.permission).must_equal identifiers.first.access_policy.permission
       # prove that no lease succeeds
       container, acl = subject.set_container_acl container_name, public_access_level, signed_identifiers: identifiers, lease_id: new_lease_id
       # release lease afterwards

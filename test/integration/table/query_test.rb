@@ -74,16 +74,16 @@ describe Azure::Storage::Table::TableService do
       q = Azure::Storage::Table::Query.new.from table_name
 
       result = q.execute
-      result.must_be_kind_of Array
-      result.length.must_equal ((partitions.length + 1) * entities_per_partition)
+      _(result).must_be_kind_of Array
+      _(result.length).must_equal ((partitions.length + 1) * entities_per_partition)
 
       result.each { |e|
-        entities[e.properties["PartitionKey"]].must_include e.properties["RowKey"]
+        _(entities[e.properties["PartitionKey"]]).must_include e.properties["RowKey"]
         entity_properties.each { |k, v|
           unless v.class == Time
-            e.properties[k].must_equal v
+            _(e.properties[k]).must_equal v
           else
-            e.properties[k].to_i.must_equal v.to_i
+            _(e.properties[k].to_i).must_equal v.to_i
           end
         }
       }
@@ -99,16 +99,16 @@ describe Azure::Storage::Table::TableService do
         .row(row_key)
 
       result = q.execute
-      result.must_be_kind_of Array
-      result.length.must_equal 1
+      _(result).must_be_kind_of Array
+      _(result.length).must_equal 1
 
       result.each { |e|
-        e.properties["RowKey"].must_equal row_key
+        _(e.properties["RowKey"]).must_equal row_key
         entity_properties.each { |k, v|
           unless v.class == Time
-            e.properties[k].must_equal v
+            _(e.properties[k]).must_equal v
           else
-            e.properties[k].to_i.must_equal v.to_i
+            _(e.properties[k].to_i).must_equal v.to_i
           end
         }
       }
@@ -123,14 +123,14 @@ describe Azure::Storage::Table::TableService do
         .select(projection[1])
 
       result = q.execute
-      result.must_be_kind_of Array
-      result.length.must_equal ((partitions.length + 1) * entities_per_partition)
+      _(result).must_be_kind_of Array
+      _(result.length).must_equal ((partitions.length + 1) * entities_per_partition)
 
       result.each { |e|
-        e.properties.length.must_equal projection.length
-        e.properties["CustomIntegerProperty"].must_equal entity_properties["CustomIntegerProperty"]
-        e.properties.must_include "ThisPropertyDoesNotExist"
-        e.properties["ThisPropertyDoesNotExist"].must_equal ""
+        _(e.properties.length).must_equal projection.length
+        _(e.properties["CustomIntegerProperty"]).must_equal entity_properties["CustomIntegerProperty"]
+        _(e.properties).must_include "ThisPropertyDoesNotExist"
+        _(e.properties["ThisPropertyDoesNotExist"]).must_equal ""
       }
     end
 
@@ -146,17 +146,17 @@ describe Azure::Storage::Table::TableService do
         .where("CustomBooleanProperty eq false")
 
       result = q.execute
-      result.must_be_kind_of Array
-      result.length.must_equal 1
-      result.first.properties["PartitionKey"].must_equal "filter-test-partition"
+      _(result).must_be_kind_of Array
+      _(result.length).must_equal 1
+      _(result.first.properties["PartitionKey"]).must_equal "filter-test-partition"
 
       q = Azure::Storage::Table::Query.new
         .from(table_name)
         .where("CustomIntegerProperty gt #{entity_properties['CustomIntegerProperty']}")
         .where("CustomBooleanProperty eq true")
       result = q.execute
-      result.must_be_kind_of Array
-      result.length.must_equal 0
+      _(result).must_be_kind_of Array
+      _(result.length).must_equal 0
     end
 
     it "can limit the result set using the top parameter" do
@@ -165,9 +165,9 @@ describe Azure::Storage::Table::TableService do
         .top(3)
 
       result = q.execute
-      result.must_be_kind_of Array
-      result.length.must_equal 3
-      result.continuation_token.wont_be_nil
+      _(result).must_be_kind_of Array
+      _(result.length).must_equal 3
+      _(result.continuation_token).wont_be_nil
     end
 
     it "can page results using the top parameter and continuation_token" do
@@ -176,9 +176,9 @@ describe Azure::Storage::Table::TableService do
         .top(3)
 
       result = q.execute
-      result.must_be_kind_of Array
-      result.length.must_equal 3
-      result.continuation_token.wont_be_nil
+      _(result).must_be_kind_of Array
+      _(result.length).must_equal 3
+      _(result.continuation_token).wont_be_nil
 
       q = Azure::Storage::Table::Query.new
         .from(table_name)
@@ -187,9 +187,9 @@ describe Azure::Storage::Table::TableService do
         .next_partition(result.continuation_token[:next_partition_key])
 
       result2 = q.execute
-      result2.must_be_kind_of Array
-      result2.length.must_equal 3
-      result2.continuation_token.wont_be_nil
+      _(result2).must_be_kind_of Array
+      _(result2.length).must_equal 3
+      _(result2.continuation_token).wont_be_nil
 
       q = Azure::Storage::Table::Query.new
         .from(table_name)
@@ -198,9 +198,9 @@ describe Azure::Storage::Table::TableService do
         .next_partition(result2.continuation_token[:next_partition_key])
 
       result3 = q.execute
-      result3.must_be_kind_of Array
-      result3.length.must_equal 3
-      result3.continuation_token.wont_be_nil
+      _(result3).must_be_kind_of Array
+      _(result3.length).must_equal 3
+      _(result3.continuation_token).wont_be_nil
 
       q = Azure::Storage::Table::Query.new
         .from(table_name)
@@ -209,9 +209,9 @@ describe Azure::Storage::Table::TableService do
         .next_partition(result3.continuation_token[:next_partition_key])
 
       result4 = q.execute
-      result4.must_be_kind_of Array
-      result4.length.must_equal 3
-      result4.continuation_token.must_be_nil
+      _(result4).must_be_kind_of Array
+      _(result4.length).must_equal 3
+      _(result4.continuation_token).must_be_nil
     end
 
     it "can combine projection, filtering, and paging in the same query" do
@@ -229,32 +229,32 @@ describe Azure::Storage::Table::TableService do
         .top(3)
 
       result = q.execute
-      result.must_be_kind_of Array
-      result.length.must_equal 3
-      result.continuation_token.wont_be_nil
+      _(result).must_be_kind_of Array
+      _(result.length).must_equal 3
+      _(result.continuation_token).wont_be_nil
 
-      result.first.properties["CustomIntegerProperty"].must_equal entity_properties["CustomIntegerProperty"]
-      result.first.properties["PartitionKey"].wont_be_nil
-      result.first.properties.length.must_equal 2
+      _(result.first.properties["CustomIntegerProperty"]).must_equal entity_properties["CustomIntegerProperty"]
+      _(result.first.properties["PartitionKey"]).wont_be_nil
+      _(result.first.properties.length).must_equal 2
 
       q.next_row(result.continuation_token[:next_row_key]).next_partition(result.continuation_token[:next_partition_key])
 
       result2 = q.execute
-      result2.must_be_kind_of Array
-      result2.length.must_equal 3
-      result2.continuation_token.wont_be_nil
+      _(result2).must_be_kind_of Array
+      _(result2.length).must_equal 3
+      _(result2.continuation_token).wont_be_nil
 
       q.next_row(result2.continuation_token[:next_row_key]).next_partition(result2.continuation_token[:next_partition_key])
       result3 = q.execute
-      result3.must_be_kind_of Array
-      result3.length.must_equal 3
-      result3.continuation_token.wont_be_nil
+      _(result3).must_be_kind_of Array
+      _(result3.length).must_equal 3
+      _(result3.continuation_token).wont_be_nil
 
       q.next_row(result3.continuation_token[:next_row_key]).next_partition(result3.continuation_token[:next_partition_key])
       result4 = q.execute
-      result4.must_be_kind_of Array
-      result4.length.must_equal 3
-      result4.continuation_token.must_be_nil
+      _(result4).must_be_kind_of Array
+      _(result4.length).must_equal 3
+      _(result4.continuation_token).must_be_nil
     end
   end
 end

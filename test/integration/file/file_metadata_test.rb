@@ -46,13 +46,13 @@ describe Azure::Storage::File::FileService do
 
     it "sets and gets custom file for the directory" do
       result = subject.set_file_metadata share_name, directory_name, file_name, metadata
-      result.must_be_nil
+      _(result).must_be_nil
       file = subject.get_file_metadata share_name, directory_name, file_name
-      file.wont_be_nil
-      file.name.must_equal file_name
+      _(file).wont_be_nil
+      _(file.name).must_equal file_name
       metadata.each { |k, v|
-        file.metadata.must_include k.downcase
-        file.metadata[k.downcase].must_equal v
+        _(file.metadata).must_include k.downcase
+        _(file.metadata[k.downcase]).must_equal v
       }
     end
 

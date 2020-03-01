@@ -51,59 +51,59 @@ describe Azure::Storage::File::FileService do
 
     it "copies an existing file to a new storage location" do
       copy_id, copy_status = subject.copy_file dest_share_name, dest_directory_name, dest_file_name, source_share_name, source_directory_name, source_file_name
-      copy_id.wont_be_nil
+      _(copy_id).wont_be_nil
 
       file, returned_content = subject.get_file dest_share_name, dest_directory_name, dest_file_name
 
-      file.name.must_equal dest_file_name
-      returned_content.must_equal content
+      _(file.name).must_equal dest_file_name
+      _(returned_content).must_equal content
     end
 
     it "copies an existing file from URI to a new storage location" do
       copy_id, copy_status = subject.copy_file_from_uri dest_share_name, dest_directory_name, dest_file_name, source_file_uri
-      copy_id.wont_be_nil
+      _(copy_id).wont_be_nil
 
       file, returned_content = subject.get_file dest_share_name, dest_directory_name, dest_file_name
 
-      file.name.must_equal dest_file_name
-      returned_content.must_equal content
+      _(file.name).must_equal dest_file_name
+      _(returned_content).must_equal content
     end
 
     it "returns a copyid which can be used to monitor status of the asynchronous copy operation" do
       copy_id, copy_status = subject.copy_file dest_share_name, dest_directory_name, dest_file_name, source_share_name, source_directory_name, source_file_name
-      copy_id.wont_be_nil
+      _(copy_id).wont_be_nil
 
       counter = 0
       finished = false
       while (counter < (10) && (not finished))
         sleep(1)
         file = subject.get_file_properties dest_share_name, dest_directory_name, dest_file_name
-        file.properties[:copy_id].must_equal copy_id
+        _(file.properties[:copy_id]).must_equal copy_id
         finished = file.properties[:copy_status] == "success"
         counter += 1
       end
-      finished.must_equal true
+      _(finished).must_equal true
 
       file, returned_content = subject.get_file dest_share_name, dest_directory_name, dest_file_name
 
-      file.name.must_equal dest_file_name
-      returned_content.must_equal content
+      _(file.name).must_equal dest_file_name
+      _(returned_content).must_equal content
     end
 
     it "returns a copyid which can be used to abort copy operation" do
       copy_id, copy_status = subject.copy_file dest_share_name, dest_directory_name, dest_file_name, source_share_name, source_directory_name, source_file_name
-      copy_id.wont_be_nil
+      _(copy_id).wont_be_nil
 
       counter = 0
       finished = false
       while (counter < (10) && (not finished))
         sleep(1)
         file = subject.get_file_properties dest_share_name, dest_directory_name, dest_file_name
-        file.properties[:copy_id].must_equal copy_id
+        _(file.properties[:copy_id]).must_equal copy_id
         finished = file.properties[:copy_status] == "success"
         counter += 1
       end
-      finished.must_equal true
+      _(finished).must_equal true
 
       exception = assert_raises(Azure::Core::Http::HTTPError) do
         subject.abort_copy_file dest_share_name, dest_directory_name, dest_file_name, copy_id
@@ -114,16 +114,16 @@ describe Azure::Storage::File::FileService do
     describe "when a options hash is used" do
       it "replaces source metadata on the copy with provided Hash in :metadata property" do
         copy_id, copy_status = subject.copy_file dest_share_name, dest_directory_name, dest_file_name, source_share_name, source_directory_name, source_file_name, metadata: metadata
-        copy_id.wont_be_nil
+        _(copy_id).wont_be_nil
 
         file, returned_content = subject.get_file dest_share_name, dest_directory_name, dest_file_name
-        file.name.must_equal dest_file_name
-        returned_content.must_equal content
+        _(file.name).must_equal dest_file_name
+        _(returned_content).must_equal content
 
         file = subject.get_file_metadata dest_share_name, dest_directory_name, dest_file_name
         metadata.each { |k, v|
-          file.metadata.must_include k
-          file.metadata[k].must_equal v
+          _(file.metadata).must_include k
+          _(file.metadata[k]).must_equal v
         }
       end
     end

@@ -46,7 +46,7 @@ describe Azure::Storage::Table::Serialization do
     }
     it "serialize a hash to JSON string" do
       result = subject.hash_to_json(query_entities_response_hash)
-      result.must_equal query_entities_response_json
+      _(result).must_equal query_entities_response_json
     end
   end
 
@@ -74,7 +74,7 @@ describe Azure::Storage::Table::Serialization do
 
     it "deserialize a table entries from json" do
       result = subject.table_entries_from_json(query_tables_json)
-      result.must_equal table_entries
+      _(result).must_equal table_entries
     end
   end
 
@@ -83,9 +83,9 @@ describe Azure::Storage::Table::Serialization do
 
     it "create an entity from JSON" do
       result = subject.entity_from_json(entity_json)
-      result.must_be_kind_of Azure::Storage::Table::Entity
-      result.etag.must_equal "sampleetag"
-      result.properties.must_equal("PartitionKey" => "abcd321", "RowKey" => "abcd123" , "CustomDoubleProperty" => "3.141592")
+      _(result).must_be_kind_of Azure::Storage::Table::Entity
+      _(result.etag).must_equal "sampleetag"
+      _(result.properties).must_equal("PartitionKey" => "abcd321", "RowKey" => "abcd123" , "CustomDoubleProperty" => "3.141592")
     end
   end
 
@@ -95,13 +95,13 @@ describe Azure::Storage::Table::Serialization do
     it "create entities array from JSON string" do
       result = subject.entities_from_json(multiple_entities_json)
       result.each do |e|
-        e.properties["PartitionKey"].must_include "part"
-        e.properties["RowKey"].must_include "entity-"
-        e.properties["Timestamp"].must_include "2017-09-12"
-        e.properties["CustomStringProperty"].must_equal "CustomPropertyValue"
-        e.properties["CustomIntegerProperty"].must_equal 37
-        e.properties["CustomBooleanProperty"].must_equal true
-        e.properties["CustomDateProperty"].to_i.must_equal Time.parse("2017-09-12 03:40:23 UTC").to_i
+        _(e.properties["PartitionKey"]).must_include "part"
+        _(e.properties["RowKey"]).must_include "entity-"
+        _(e.properties["Timestamp"]).must_include "2017-09-12"
+        _(e.properties["CustomStringProperty"]).must_equal "CustomPropertyValue"
+        _(e.properties["CustomIntegerProperty"]).must_equal 37
+        _(e.properties["CustomBooleanProperty"]).must_equal true
+        _(e.properties["CustomDateProperty"].to_i).must_equal Time.parse("2017-09-12 03:40:23 UTC").to_i
       end
     end
   end
@@ -121,7 +121,7 @@ describe Azure::Storage::Table::Serialization do
 
     it "create accept string with input" do
       expected_results.each do |k, v|
-        subject.get_accept_string(k).must_equal v
+        _(subject.get_accept_string(k)).must_equal v
       end
     end
   end

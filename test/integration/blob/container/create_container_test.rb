@@ -33,7 +33,7 @@ describe Azure::Storage::Blob::BlobService do
 
     it "creates the container" do
       container = subject.create_container container_name
-      container.name.must_equal container_name
+      _(container.name).must_equal container_name
     end
 
     it "creates the container with custom metadata" do
@@ -41,13 +41,13 @@ describe Azure::Storage::Blob::BlobService do
 
       container = subject.create_container container_name, metadata: metadata
 
-      container.name.must_equal container_name
-      container.metadata.must_equal metadata
+      _(container.name).must_equal container_name
+      _(container.metadata).must_equal metadata
       container = subject.get_container_metadata container_name
 
       metadata.each { |k, v|
-        container.metadata.must_include k.downcase
-        container.metadata[k.downcase].must_equal v
+        _(container.metadata).must_include k.downcase
+        _(container.metadata[k.downcase]).must_equal v
       }
     end
 

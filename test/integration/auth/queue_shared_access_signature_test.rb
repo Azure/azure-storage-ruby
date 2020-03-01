@@ -44,7 +44,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     connection_string = "QueueEndpoint=https://#{SERVICE_CREATE_OPTIONS()[:storage_account_name]}.queue.core.windows.net;SharedAccessSignature=#{sas_token}"
     client = Azure::Storage::Queue::QueueService::create_from_connection_string connection_string
     message = client.peek_messages queue_name, number_of_messages: 2
-    message.wont_be_nil
+    _(message).wont_be_nil
     assert message.length > 1
   end
 
@@ -52,7 +52,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     sas_token = generator.generate_service_sas_token queue_name, service: "q", permissions: "r", protocol: "https,http"
     client = Azure::Storage::Queue::QueueService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
     message = client.peek_messages queue_name, number_of_messages: 2
-    message.wont_be_nil
+    _(message).wont_be_nil
     assert message.length > 1
   end
 
@@ -60,12 +60,12 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     sas_token = generator.generate_service_sas_token queue_name, service: "q", permissions: "a", protocol: "https"
     client = Azure::Storage::Queue::QueueService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
     result = client.create_message queue_name, message_3
-    result.wont_be_nil
+    _(result).wont_be_nil
     result.wont_be_empty
-    result.length.must_equal 1
-    result[0].message_text.must_be_nil
-    result[0].pop_receipt.wont_be_nil
-    result[0].id.wont_be_nil
+    _(result.length).must_equal 1
+    _(result[0].message_text).must_be_nil
+    _(result[0].pop_receipt).wont_be_nil
+    _(result[0].id).wont_be_nil
   end
 
   it "processes and updates a message to the queue with a SAS" do
@@ -73,8 +73,8 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     client = Azure::Storage::Queue::QueueService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
     message = client.list_messages queue_name, 10
     new_pop_receipt, time_next_visible = client.update_message queue_name, message[0].id, message[0].pop_receipt, "updated message", 10
-    new_pop_receipt.wont_be_nil
-    time_next_visible.wont_be_nil
+    _(new_pop_receipt).wont_be_nil
+    _(time_next_visible).wont_be_nil
   end
 
   it "deletes a message in the queue with a SAS" do

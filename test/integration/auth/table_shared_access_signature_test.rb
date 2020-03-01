@@ -46,9 +46,9 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     client = Azure::Storage::Table::TableService::create_from_connection_string connection_string
     query = { filter: "RowKey eq '1-1'" }
     result = client.query_entities table_name, query
-    result.wont_be_nil
-    result[0].properties["PartitionKey"].must_equal entity1[:PartitionKey]
-    result[0].properties["Content"].must_equal entity1[:Content]
+    _(result).wont_be_nil
+    _(result[0].properties["PartitionKey"]).must_equal entity1[:PartitionKey]
+    _(result[0].properties["Content"]).must_equal entity1[:Content]
   end
 
   it "queries a table entity with a SAS" do
@@ -56,18 +56,18 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     client = Azure::Storage::Table::TableService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
     query = { filter: "RowKey eq '1-1'" }
     result = client.query_entities table_name, query
-    result.wont_be_nil
-    result[0].properties["PartitionKey"].must_equal entity1[:PartitionKey]
-    result[0].properties["Content"].must_equal entity1[:Content]
+    _(result).wont_be_nil
+    _(result[0].properties["PartitionKey"]).must_equal entity1[:PartitionKey]
+    _(result[0].properties["Content"]).must_equal entity1[:Content]
   end
 
   it "inserts a table entity with a SAS" do
     sas_token = generator.generate_service_sas_token table_name, service: "t", permissions: "a", protocol: "https"
     client = Azure::Storage::Table::TableService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
     result = client.insert_entity table_name, entity4
-    result.wont_be_nil
-    result.properties["PartitionKey"].must_equal entity4[:PartitionKey]
-    result.properties["Content"].must_equal entity4[:Content]
+    _(result).wont_be_nil
+    _(result.properties["PartitionKey"]).must_equal entity4[:PartitionKey]
+    _(result.properties["Content"]).must_equal entity4[:Content]
   end
 
   it "updates a table entity with a SAS" do
@@ -75,7 +75,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     client = Azure::Storage::Table::TableService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
     entity2[:Content] = "test entity content-2-updated"
     result = client.update_entity table_name, entity2
-    result.wont_be_nil
+    _(result).wont_be_nil
   end
 
   it "queries a table entity with pk in the SAS" do
@@ -84,8 +84,8 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     client = Azure::Storage::Table::TableService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
     query = { top: 10 }
     result = client.query_entities table_name, query
-    result.wont_be_nil
-    result.length.must_equal 2
+    _(result).wont_be_nil
+    _(result.length).must_equal 2
   end
 
   it "queries a table entity with rk in the SAS" do
@@ -95,8 +95,8 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     client = Azure::Storage::Table::TableService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
     query = { top: 10 }
     result = client.query_entities table_name, query
-    result.wont_be_nil
-    result.length.must_equal 1
+    _(result).wont_be_nil
+    _(result.length).must_equal 1
   end
 
   it "deletes a table entity with a SAS" do
@@ -104,6 +104,6 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     client = Azure::Storage::Table::TableService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
     entity2[:Content] = "test entity content-2-updated"
     result = client.delete_entity table_name, entity3[:PartitionKey], entity3[:RowKey]
-    result.must_be_nil
+    _(result).must_be_nil
   end
 end

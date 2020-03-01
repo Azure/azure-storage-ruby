@@ -44,19 +44,19 @@ describe Azure::Storage::Blob::BlobService do
 
     it "retrieves the blob properties, metadata, and contents" do
       blob, returned_content = subject.get_blob container_name, blob_name
-      returned_content.must_equal content
-      blob.metadata.must_include "custommetadataproperty"
-      blob.metadata["custommetadataproperty"].must_equal "CustomMetadataValue"
-      blob.properties[:content_type].must_equal "application/foo"
+      _(returned_content).must_equal content
+      _(blob.metadata).must_include "custommetadataproperty"
+      _(blob.metadata["custommetadataproperty"]).must_equal "CustomMetadataValue"
+      _(blob.properties[:content_type]).must_equal "application/foo"
     end
 
     it "retrieves a range of data from the blob" do
       blob, returned_content = subject.get_blob container_name, blob_name, start_range: 0, end_range: 511, get_content_md5: true
-      is_boolean(blob.encrypted).must_equal true
-      returned_content.length.must_equal 512
-      returned_content.must_equal content[0..511]
-      blob.properties[:range_md5].must_equal Digest::MD5.base64digest(content[0..511])
-      blob.properties[:content_md5].must_equal Digest::MD5.base64digest(content)
+      _(is_boolean(blob.encrypted)).must_equal true
+      _(returned_content.length).must_equal 512
+      _(returned_content).must_equal content[0..511]
+      _(blob.properties[:range_md5]).must_equal Digest::MD5.base64digest(content[0..511])
+      _(blob.properties[:content_md5]).must_equal Digest::MD5.base64digest(content)
     end
 
     it "retrieves a snapshot of data from the blob" do
@@ -67,15 +67,15 @@ describe Azure::Storage::Blob::BlobService do
       subject.create_block_blob container_name, blob_name, content2, options
 
       blob, returned_content = subject.get_blob container_name, blob_name, start_range: 0, end_range: 511
-      is_boolean(blob.encrypted).must_equal true
-      returned_content.length.must_equal 512
-      returned_content.must_equal content2[0..511]
+      _(is_boolean(blob.encrypted)).must_equal true
+      _(returned_content.length).must_equal 512
+      _(returned_content).must_equal content2[0..511]
 
       blob, returned_content = subject.get_blob container_name, blob_name, start_range: 0, end_range: 511, snapshot: snapshot
-      is_boolean(blob.encrypted).must_equal true
+      _(is_boolean(blob.encrypted)).must_equal true
 
-      returned_content.length.must_equal 512
-      returned_content.must_equal content[0..511]
+      _(returned_content.length).must_equal 512
+      _(returned_content).must_equal content[0..511]
     end
 
     it "read failure with if_none_match: *" do
@@ -87,8 +87,8 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "400"
-      description.must_include "The request includes an unsatisfiable condition for this operation."
+      _(status_code).must_equal "400"
+      _(description).must_include "The request includes an unsatisfiable condition for this operation."
     end
 
     it "lease id works for get_blob" do
@@ -107,16 +107,16 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "The lease ID specified did not match the lease ID for the blob."
+      _(status_code).must_equal "412"
+      _(description).must_include "The lease ID specified did not match the lease ID for the blob."
       # assert correct lease works
       blob, body = subject.get_blob container_name, block_blob_name, lease_id: new_lease_id
-      blob.name.must_equal block_blob_name
-      body.must_equal content
+      _(blob.name).must_equal block_blob_name
+      _(body).must_equal content
       # assert no lease works
       blob, body = subject.get_blob container_name, block_blob_name
-      blob.name.must_equal block_blob_name
-      body.must_equal content
+      _(blob.name).must_equal block_blob_name
+      _(body).must_equal content
     end
   end
 end

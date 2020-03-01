@@ -44,10 +44,10 @@ describe Azure::Storage::File::FileService do
       file_name = FileNameHelper.name
       subject.create_file_from_content share_name, directory_name, file_name, length, content
       file, body = subject.get_file(share_name, directory_name, file_name)
-      file.name.must_equal file_name
-      file.properties[:content_length].must_equal length
-      file.properties[:content_type].must_equal "text/plain; charset=UTF-8"
-      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+      _(file.name).must_equal file_name
+      _(file.properties[:content_length]).must_equal length
+      _(file.properties[:content_type]).must_equal "text/plain; charset=UTF-8"
+      _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
     end
 
     it "4MB string payload works" do
@@ -56,10 +56,10 @@ describe Azure::Storage::File::FileService do
       file_name = FileNameHelper.name
       subject.create_file_from_content share_name, directory_name, file_name, length, content
       file, body = subject.get_file(share_name, directory_name, file_name)
-      file.name.must_equal file_name
-      file.properties[:content_length].must_equal length
-      file.properties[:content_type].must_equal "text/plain; charset=ASCII-8BIT"
-      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+      _(file.name).must_equal file_name
+      _(file.properties[:content_length]).must_equal length
+      _(file.properties[:content_type]).must_equal "text/plain; charset=ASCII-8BIT"
+      _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
     end
 
     it "5MB string payload works" do
@@ -68,9 +68,9 @@ describe Azure::Storage::File::FileService do
       file_name = FileNameHelper.name
       subject.create_file_from_content share_name, directory_name, file_name, length, content
       file, body = subject.get_file(share_name, directory_name, file_name)
-      file.name.must_equal file_name
-      file.properties[:content_length].must_equal length
-      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+      _(file.name).must_equal file_name
+      _(file.properties[:content_length]).must_equal length
+      _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
     end
 
     it "IO payload works" do
@@ -83,9 +83,9 @@ describe Azure::Storage::File::FileService do
         local_file.seek 0
         subject.create_file_from_content share_name, directory_name, file_name, length, local_file
         file, body = subject.get_file(share_name, directory_name, file_name)
-        file.name.must_equal file_name
-        file.properties[:content_length].must_equal length
-        Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+        _(file.name).must_equal file_name
+        _(file.properties[:content_length]).must_equal length
+        _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
       ensure
         unless local_file.nil?
           local_file.close
@@ -107,24 +107,24 @@ describe Azure::Storage::File::FileService do
 
     it "creates the file" do
       file = subject.create_file share_name, directory_name, file_name, file_length
-      file.name.must_equal file_name
+      _(file.name).must_equal file_name
 
       file = subject.get_file_properties share_name, directory_name, file_name
-      file.properties[:content_length].must_equal file_length
-      file.properties[:content_type].must_equal "application/octet-stream"
+      _(file.properties[:content_length]).must_equal file_length
+      _(file.properties[:content_type]).must_equal "application/octet-stream"
     end
 
     it "creates the file with custom metadata" do
       metadata = { "CustomMetadataProperty" => "CustomMetadataValue" }
       file = subject.create_file share_name, directory_name, file_name, file_length, metadata: metadata
 
-      file.name.must_equal file_name
-      file.metadata.must_equal metadata
+      _(file.name).must_equal file_name
+      _(file.metadata).must_equal metadata
       file = subject.get_file_metadata share_name, directory_name, file_name
 
       metadata.each { |k, v|
-        file.metadata.must_include k.downcase
-        file.metadata[k.downcase].must_equal v
+        _(file.metadata).must_include k.downcase
+        _(file.metadata[k.downcase]).must_equal v
       }
     end
 
@@ -132,8 +132,8 @@ describe Azure::Storage::File::FileService do
       subject.create_file share_name, directory_name, file_name, file_length
       subject.create_file share_name, directory_name, file_name, file_length + file_length
       file = subject.get_file_properties share_name, directory_name, file_name
-      file.name.must_equal file_name
-      file.properties[:content_length].must_equal file_length * 2
+      _(file.name).must_equal file_name
+      _(file.properties[:content_length]).must_equal file_length * 2
     end
 
     it "errors if the difilerectory name is invalid" do

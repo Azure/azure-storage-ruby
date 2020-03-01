@@ -33,7 +33,7 @@ describe Azure::Storage::Table::TableService do
 
     it "deletes a table and returns nil on success" do
       result = subject.delete_table(table_name)
-      result.must_be_nil
+      _(result).must_be_nil
 
       tables = subject.query_tables
       tables.wont_include table_name

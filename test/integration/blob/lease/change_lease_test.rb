@@ -38,26 +38,26 @@ describe Azure::Storage::Blob::BlobService do
 
     it "should be possible to change a container lease" do
       lease_id = subject.acquire_container_lease container_name
-      lease_id.wont_be_nil
+      _(lease_id).wont_be_nil
 
       new_lease_id = subject.change_container_lease container_name, lease_id, porposed_lease_id
-      new_lease_id.wont_be_nil
+      _(new_lease_id).wont_be_nil
 
       # changing a lease returns the same lease id
-      new_lease_id.must_equal porposed_lease_id
+      _(new_lease_id).must_equal porposed_lease_id
     end
 
     it "should be possible to change a blob lease" do
       subject.create_page_blob container_name, blob_name, length
 
       lease_id = subject.acquire_blob_lease container_name, blob_name
-      lease_id.wont_be_nil
+      _(lease_id).wont_be_nil
 
       new_lease_id = subject.change_blob_lease container_name, blob_name, lease_id, porposed_lease_id
-      new_lease_id.wont_be_nil
+      _(new_lease_id).wont_be_nil
 
       # changing a lease returns the same lease id
-      new_lease_id.must_equal porposed_lease_id
+      _(new_lease_id).must_equal porposed_lease_id
     end
   end
 end

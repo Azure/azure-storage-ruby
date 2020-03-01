@@ -40,13 +40,13 @@ describe Azure::Storage::Blob::BlobService do
 
     it "sets and gets metadata for a blob" do
       result = subject.set_blob_metadata container_name, blob_name, metadata
-      result.must_be_nil
+      _(result).must_be_nil
       blob = subject.get_blob_metadata container_name, blob_name
-      blob.encrypted.must_be_nil
+      _(blob.encrypted).must_be_nil
 
       metadata.each { |k, v|
-        blob.metadata.must_include k
-        blob.metadata[k].must_equal v
+        _(blob.metadata).must_include k
+        _(blob.metadata[k]).must_equal v
       }
     end
 
@@ -57,12 +57,12 @@ describe Azure::Storage::Blob::BlobService do
       it "gets metadata for a blob snapshot (when set during create)" do
 
         blob = subject.get_blob_metadata container_name, blob_name, snapshot: snapshot
-        blob.encrypted.must_be_nil
+        _(blob.encrypted).must_be_nil
 
-        blob.snapshot.must_equal snapshot
+        _(blob.snapshot).must_equal snapshot
         metadata.each { |k, v|
-          blob.metadata.must_include k
-          blob.metadata[k].must_equal v
+          _(blob.metadata).must_include k
+          _(blob.metadata[k]).must_equal v
         }
 
       end
@@ -100,20 +100,20 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
+      _(status_code).must_equal "412"
       # assert right lease succeeds
       blob = subject.get_blob_metadata container_name, page_blob_name, lease_id: new_lease_id
-      blob.wont_be_nil
+      _(blob).wont_be_nil
       metadata.each { |k, v|
-        blob.metadata.must_include k
-        blob.metadata[k].must_equal v
+        _(blob.metadata).must_include k
+        _(blob.metadata[k]).must_equal v
       }
       # assert no lease succeeds
       blob = subject.get_blob_metadata container_name, page_blob_name
-      blob.wont_be_nil
+      _(blob).wont_be_nil
       metadata.each { |k, v|
-        blob.metadata.must_include k
-        blob.metadata[k].must_equal v
+        _(blob.metadata).must_include k
+        _(blob.metadata[k]).must_equal v
       }
     end
 
@@ -133,16 +133,16 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "The lease ID specified did not match the lease ID for the blob."
+      _(status_code).must_equal "412"
+      _(description).must_include "The lease ID specified did not match the lease ID for the blob."
       # assert right lease succeeds
       result = subject.set_blob_metadata container_name, page_blob_name, metadata, lease_id: new_lease_id
-      result.must_be_nil
+      _(result).must_be_nil
       blob = subject.get_blob_metadata container_name, page_blob_name
-      blob.wont_be_nil
+      _(blob).wont_be_nil
       metadata.each { |k, v|
-        blob.metadata.must_include k
-        blob.metadata[k].must_equal v
+        _(blob.metadata).must_include k
+        _(blob.metadata[k]).must_equal v
       }
       # prove that no lease fails
       status_code = ""
@@ -153,8 +153,8 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      _(status_code).must_equal "412"
+      _(description).must_include "There is currently a lease on the blob and no lease ID was specified in the request."
     end
   end
 end

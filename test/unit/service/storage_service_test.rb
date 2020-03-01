@@ -120,19 +120,19 @@ describe Azure::Storage::Common::Service::StorageService do
       initial_length = subject.filters.length
       filter = mock()
       subject.with_filter filter
-      subject.filters.length.must_equal initial_length + 1
+      _(subject.filters.length).must_equal initial_length + 1
     end
 
     it "accepts object instances as filters" do
       filter = mock()
       subject.with_filter filter
-      subject.filters.last.must_equal filter
+      _(subject.filters.last).must_equal filter
     end
 
     it "accepts blocks as filters" do
       subject.with_filter do |a, b|
       end
-      subject.filters.last.class.must_equal Proc
+      _(subject.filters.last.class).must_equal Proc
     end
 
     it "preserves the order of the filters" do
@@ -146,9 +146,9 @@ describe Azure::Storage::Common::Service::StorageService do
       subject.with_filter do |a, b|
       end
 
-      subject.filters.first.must_equal filter
-      subject.filters[1].must_equal filter1
-      subject.filters.last.class.must_equal Proc
+      _(subject.filters.first).must_equal filter
+      _(subject.filters[1]).must_equal filter1
+      _(subject.filters.last.class).must_equal Proc
     end
   end
 
@@ -196,7 +196,7 @@ describe Azure::Storage::Common::Service::StorageService do
 
     it "returns a StorageServiceProperties instance" do
       result = subject.get_service_properties
-      result.must_be_kind_of Azure::Storage::Common::Service::StorageServiceProperties
+      _(result).must_be_kind_of Azure::Storage::Common::Service::StorageServiceProperties
     end
   end
 
@@ -250,17 +250,17 @@ describe Azure::Storage::Common::Service::StorageService do
 
   describe "service_properties_uri" do
     it "returns an instance of URI" do
-      subject.service_properties_uri.must_be_kind_of URI
+      _(subject.service_properties_uri).must_be_kind_of URI
     end
 
     it "uses the value of the host property as the base of the url" do
-      subject.service_properties_uri.to_s.must_include subject.host
+      _(subject.service_properties_uri.to_s).must_include subject.host
       subject.host = "http://something.else"
-      subject.service_properties_uri.to_s.must_include subject.host
+      _(subject.service_properties_uri.to_s).must_include subject.host
     end
 
     it "sets a query string that specifies the storage service properties endpoint" do
-      subject.service_properties_uri.query.must_include "restype=service&comp=properties"
+      _(subject.service_properties_uri.query).must_include "restype=service&comp=properties"
     end
   end
 
@@ -314,23 +314,23 @@ describe Azure::Storage::Common::Service::StorageService do
 
     it "returns a StorageServiceStats instance" do
       result = subject.get_service_stats
-      result.must_be_kind_of Azure::Storage::Common::Service::StorageServiceStats
+      _(result).must_be_kind_of Azure::Storage::Common::Service::StorageServiceStats
     end
   end
 
   describe "service_stats_uri" do
     it "returns an instance of URI" do
-      subject.service_stats_uri.must_be_kind_of URI
+      _(subject.service_stats_uri).must_be_kind_of URI
     end
 
     it "uses the value of the host property as the base of the url" do
-      subject.service_stats_uri.to_s.must_include subject.host
+      _(subject.service_stats_uri.to_s).must_include subject.host
       subject.host = "http://something.else"
-      subject.service_stats_uri.to_s.must_include subject.host
+      _(subject.service_stats_uri.to_s).must_include subject.host
     end
 
     it "sets a query string that specifies the storage service stats endpoint" do
-      subject.service_stats_uri.query.must_include "restype=service&comp=stats"
+      _(subject.service_stats_uri.query).must_include "restype=service&comp=stats"
     end
   end
 
@@ -338,55 +338,55 @@ describe Azure::Storage::Common::Service::StorageService do
     it "prefixes header names with x-ms-meta- but does not modify the values" do
       headers = {}
       Azure::Storage::Common::Service::StorageService.add_metadata_to_headers({ "Foo" => "Bar" }, headers)
-      headers.keys.must_include "x-ms-meta-Foo"
-      headers["x-ms-meta-Foo"].must_equal "Bar"
+      _(headers.keys).must_include "x-ms-meta-Foo"
+      _(headers["x-ms-meta-Foo"]).must_equal "Bar"
     end
 
     it "updates any existing x-ms-meta-* headers with the new values" do
       headers = { "x-ms-meta-Foo" => "Foo" }
       Azure::Storage::Common::Service::StorageService.add_metadata_to_headers({ "Foo" => "Bar" }, headers)
-      headers["x-ms-meta-Foo"].must_equal "Bar"
+      _(headers["x-ms-meta-Foo"]).must_equal "Bar"
     end
   end
 
   describe "#generate_uri" do
     it "returns a URI instance" do
-      subject.generate_uri.must_be_kind_of ::URI
+      _(subject.generate_uri).must_be_kind_of ::URI
     end
 
     describe "when called with no arguments" do
       it "returns the StorageService host URL" do
-        subject.generate_uri.to_s.must_equal "http://dumyhost.uri/"
+        _(subject.generate_uri.to_s).must_equal "http://dumyhost.uri/"
       end
     end
 
     describe "when passed an optional path" do
       it "adds the path to the host url" do
-        subject.generate_uri("resource/entity/").path.must_equal "/resource/entity/"
+        _(subject.generate_uri("resource/entity/").path).must_equal "/resource/entity/"
       end
 
       it "correctly joins the path if the host url contained a path" do
         subject.storage_service_host[:primary] = "http://dummy.uri/host/path"
-        subject.generate_uri("resource/entity/").path.must_equal "/host/path/resource/entity/"
+        _(subject.generate_uri("resource/entity/").path).must_equal "/host/path/resource/entity/"
       end
     end
 
     describe "when passed an Hash of query parameters" do
       it "encodes the keys" do
-        subject.generate_uri("", "key !" => "value").query.must_include "key+%21=value"
+        _(subject.generate_uri("", "key !" => "value").query).must_include "key+%21=value"
       end
 
       it "encodes the values" do
-        subject.generate_uri("", "key" => "value !").query.must_include "key=value+%21"
+        _(subject.generate_uri("", "key" => "value !").query).must_include "key=value+%21"
       end
 
       it "sets the query string to the encoded result" do
-        subject.generate_uri("", "key" => "value !", "key !" => "value").query.must_equal "key=value+%21&key+%21=value"
+        _(subject.generate_uri("", "key" => "value !", "key !" => "value").query).must_equal "key=value+%21&key+%21=value"
       end
 
       describe "when the query parameters include a timeout key" do
         it "overrides the default timeout" do
-          subject.generate_uri("", "timeout" => 45).query.must_equal "timeout=45"
+          _(subject.generate_uri("", "timeout" => 45).query).must_equal "timeout=45"
         end
       end
 
@@ -399,17 +399,17 @@ describe Azure::Storage::Common::Service::StorageService do
 
     describe "when passed an optional location" do
       it "default location should be primary" do
-        subject.generate_uri("", nil).to_s.must_equal "http://dumyhost.uri/"
+        _(subject.generate_uri("", nil).to_s).must_equal "http://dumyhost.uri/"
       end
 
       it "primary location should work" do
-        subject.generate_uri("", nil, { location_mode: Azure::Storage::Common::LocationMode::PRIMARY_ONLY}).to_s.must_equal "http://dumyhost.uri/"
+        _(subject.generate_uri("", nil, { location_mode: Azure::Storage::Common::LocationMode::PRIMARY_ONLY}).to_s).must_equal "http://dumyhost.uri/"
       end
 
       it "secondary location should work" do
-        subject.generate_uri("", nil, 
+        _(subject.generate_uri("", nil, 
           { location_mode: Azure::Storage::Common::LocationMode::SECONDARY_ONLY, 
-            request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY}).to_s.must_equal "http://dumyhost-secondary.uri/"
+            request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY}).to_s).must_equal "http://dumyhost-secondary.uri/"
       end
 
       it "raise exception when primary only" do

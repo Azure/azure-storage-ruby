@@ -39,9 +39,9 @@ describe Azure::Storage::Common::Service::Serialization do
 
     it "returns an Array of SignedIdentifier instances" do
       results = subject.signed_identifiers_from_xml signed_identifiers_xml
-      results.must_be_kind_of Array
-      results[0].must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
-      results.count.must_equal 1
+      _(results).must_be_kind_of Array
+      _(results[0]).must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
+      _(results.count).must_equal 1
     end
   end
 
@@ -63,7 +63,7 @@ describe Azure::Storage::Common::Service::Serialization do
 
     it "returns a XML graph of the provided values" do
       xml = subject.signed_identifiers_to_xml signed_identifiers
-      xml.must_equal signed_identifiers_xml
+      _(xml).must_equal signed_identifiers_xml
     end
   end
 
@@ -78,13 +78,13 @@ describe Azure::Storage::Common::Service::Serialization do
 
     it "returns a SignedIdentifier instance" do
       identifier = subject.signed_identifier_from_xml signed_identifier_xml
-      identifier.must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
+      _(identifier).must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
     end
 
     it "sets the properties of the SignedIdentifier" do
       identifier = subject.signed_identifier_from_xml signed_identifier_xml
-      identifier.wont_be_nil
-      identifier.id.must_equal "MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI="
+      _(identifier).wont_be_nil
+      _(identifier.id).must_equal "MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI="
     end
   end
 
@@ -97,16 +97,16 @@ describe Azure::Storage::Common::Service::Serialization do
 
     it "returns a AccessPolicy instance" do
       access_policy = subject.access_policy_from_xml access_policy_xml
-      access_policy.must_be_kind_of Azure::Storage::Common::Service::AccessPolicy
+      _(access_policy).must_be_kind_of Azure::Storage::Common::Service::AccessPolicy
     end
 
     it "sets the properties of the AccessPolicy" do
       access_policy = subject.access_policy_from_xml access_policy_xml
 
-      access_policy.wont_be_nil
-      access_policy.start.must_equal "2009-09-28T08:49:37.0000000Z"
-      access_policy.expiry.must_equal "2009-09-29T08:49:37.0000000Z"
-      access_policy.permission.must_equal "rwd"
+      _(access_policy).wont_be_nil
+      _(access_policy.start).must_equal "2009-09-28T08:49:37.0000000Z"
+      _(access_policy.expiry).must_equal "2009-09-29T08:49:37.0000000Z"
+      _(access_policy.permission).must_equal "rwd"
     end
   end
 
@@ -118,20 +118,20 @@ describe Azure::Storage::Common::Service::Serialization do
 
       it "parses the XML and populates the provided EnumerationResults instance" do
         result = subject.enumeration_results_from_xml enumeration_results_xml, enumeration_results
-        result.must_be :kind_of?, Azure::Storage::Common::Service::EnumerationResults
-        result.continuation_token.must_equal "video"
+        _(result).must_be :kind_of?, Azure::Storage::Common::Service::EnumerationResults
+        _(result.continuation_token).must_equal "video"
       end
 
       it "returns the same instance provided" do
         result = subject.enumeration_results_from_xml enumeration_results_xml, enumeration_results
-        result.must_equal enumeration_results
+        _(result).must_equal enumeration_results
       end
     end
 
     describe "when passed nil" do
       it "returns a new instance of EnumerationResults" do
         result = subject.enumeration_results_from_xml enumeration_results_xml, nil
-        result.must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
+        _(result).must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
       end
     end
   end
@@ -141,27 +141,27 @@ describe Azure::Storage::Common::Service::Serialization do
     let(:metadata_xml_node) { Nokogiri.Slop(list_containers_xml).root.Containers.Container[1].Metadata }
 
     it "converts a Metadata XML element to a Hash" do
-      subject.metadata_from_xml(metadata_xml_node).must_be_kind_of Hash
+      _(subject.metadata_from_xml(metadata_xml_node)).must_be_kind_of Hash
     end
 
     it "uses the child element names as keys" do
       hash = subject.metadata_from_xml(metadata_xml_node)
-      hash.has_key?("mymetadata1").must_equal true
-      hash.has_key?("mymetadata2").must_equal true
-      hash.has_key?("x-ms-invalid-name").must_equal true
+      _(hash.has_key?("mymetadata1")).must_equal true
+      _(hash.has_key?("mymetadata2")).must_equal true
+      _(hash.has_key?("x-ms-invalid-name")).must_equal true
     end
 
     it "uses the child element text contents as values" do
       hash = subject.metadata_from_xml(metadata_xml_node)
-      hash["mymetadata1"].must_equal "first value"
-      hash["mymetadata2"].must_equal "second value"
+      _(hash["mymetadata1"]).must_equal "first value"
+      _(hash["mymetadata2"]).must_equal "second value"
     end
 
     describe "when it encounters more than one of the same element name" do
       it "returns and array of values for that key" do
         hash = subject.metadata_from_xml(metadata_xml_node)
-        hash["x-ms-invalid-name"].must_be_kind_of Array
-        hash["x-ms-invalid-name"].must_equal ["invalid-metadata-name", "invalid-metadata-name2"]
+        _(hash["x-ms-invalid-name"]).must_be_kind_of Array
+        _(hash["x-ms-invalid-name"]).must_equal ["invalid-metadata-name", "invalid-metadata-name2"]
       end
     end
   end
@@ -172,19 +172,19 @@ describe Azure::Storage::Common::Service::Serialization do
     let(:metadata_headers) { headers.merge("x-ms-meta-MyMetadata1" => "first value", "x-ms-meta-MyMetadata2" => "second value") }
 
     it "returns a Hash" do
-      subject.metadata_from_headers(metadata_headers).must_be_kind_of Hash
+      _(subject.metadata_from_headers(metadata_headers)).must_be_kind_of Hash
     end
 
     it "extracts metadata from a Hash for keys that start with x-ms-meta-* and removes that prefix" do
       hash = subject.metadata_from_headers(metadata_headers)
-      hash.has_key?("MyMetadata1").must_equal true
-      hash.has_key?("MyMetadata2").must_equal true
+      _(hash.has_key?("MyMetadata1")).must_equal true
+      _(hash.has_key?("MyMetadata2")).must_equal true
     end
 
     it "sets the metadata values to the corresponding header values" do
       hash = subject.metadata_from_headers(metadata_headers)
-      hash["MyMetadata1"].must_equal "first value"
-      hash["MyMetadata2"].must_equal "second value"
+      _(hash["MyMetadata1"]).must_equal "first value"
+      _(hash["MyMetadata2"]).must_equal "second value"
     end
   end
 
@@ -209,7 +209,7 @@ describe Azure::Storage::Common::Service::Serialization do
       builder = Nokogiri::XML::Builder.new do |xml|
         subject.retention_policy_to_xml retention_policy, xml
       end
-      builder.to_xml.must_equal retention_policy_xml
+      _(builder.to_xml).must_equal retention_policy_xml
     end
   end
 
@@ -222,14 +222,14 @@ describe Azure::Storage::Common::Service::Serialization do
 
     it "returns an RetentionPolicy instance" do
       retention_policy = subject.retention_policy_from_xml retention_policy_xml
-      retention_policy.wont_be_nil
-      retention_policy.must_be_kind_of Azure::Storage::Common::Service::RetentionPolicy
+      _(retention_policy).wont_be_nil
+      _(retention_policy).must_be_kind_of Azure::Storage::Common::Service::RetentionPolicy
     end
 
     it "sets the properties of the RetentionPolicy instance" do
       retention_policy = subject.retention_policy_from_xml retention_policy_xml
-      retention_policy.enabled.must_equal true
-      retention_policy.days.must_equal 7
+      _(retention_policy.enabled).must_equal true
+      _(retention_policy.days).must_equal 7
     end
   end
 
@@ -258,7 +258,7 @@ describe Azure::Storage::Common::Service::Serialization do
       builder = Nokogiri::XML::Builder.new do |xml|
         subject.hour_metrics_to_xml metrics, xml
       end
-      builder.to_xml.must_equal metrics_xml
+      _(builder.to_xml).must_equal metrics_xml
     end
   end
 
@@ -276,16 +276,16 @@ describe Azure::Storage::Common::Service::Serialization do
 
     it "returns an Metrics instance" do
       metrics = subject.metrics_from_xml metrics_xml
-      metrics.wont_be_nil
-      metrics.must_be_kind_of Azure::Storage::Common::Service::Metrics
+      _(metrics).wont_be_nil
+      _(metrics).must_be_kind_of Azure::Storage::Common::Service::Metrics
     end
 
     it "sets the properties of the Metrics instance" do
       metrics = subject.metrics_from_xml metrics_xml
-      metrics.version.must_equal "1.0"
-      metrics.enabled.must_equal true
-      metrics.include_apis.must_equal false
-      metrics.retention_policy.must_equal mock_retention_policy
+      _(metrics.version).must_equal "1.0"
+      _(metrics.enabled).must_equal true
+      _(metrics.include_apis).must_equal false
+      _(metrics.retention_policy).must_equal mock_retention_policy
     end
   end
 
@@ -317,7 +317,7 @@ describe Azure::Storage::Common::Service::Serialization do
       builder = Nokogiri::XML::Builder.new do |xml|
         subject.logging_to_xml logging, xml
       end
-      builder.to_xml.must_equal logging_xml
+      _(builder.to_xml).must_equal logging_xml
     end
   end
 
@@ -335,17 +335,17 @@ describe Azure::Storage::Common::Service::Serialization do
 
     it "returns an Logging instance" do
       logging = subject.logging_from_xml logging_xml
-      logging.wont_be_nil
-      logging.must_be_kind_of Azure::Storage::Common::Service::Logging
+      _(logging).wont_be_nil
+      _(logging).must_be_kind_of Azure::Storage::Common::Service::Logging
     end
 
     it "sets the properties of the Logging instance" do
       logging = subject.logging_from_xml logging_xml
-      logging.version.must_equal "1.0"
-      logging.delete.must_equal true
-      logging.read.must_equal false
-      logging.write.must_equal true
-      logging.retention_policy.must_equal mock_retention_policy
+      _(logging.version).must_equal "1.0"
+      _(logging.delete).must_equal true
+      _(logging.read).must_equal false
+      _(logging.write).must_equal true
+      _(logging.retention_policy).must_equal mock_retention_policy
     end
   end
 
@@ -410,7 +410,7 @@ describe Azure::Storage::Common::Service::Serialization do
 
     it "returns a XML graph of the provided values" do
       xml = subject.service_properties_to_xml service_properties
-      xml.must_equal service_properties_xml
+      _(xml).must_equal service_properties_xml
     end
   end
 
@@ -432,35 +432,35 @@ describe Azure::Storage::Common::Service::Serialization do
 
     it "returns an StorageServiceProperties instance" do
       service_properties = subject.service_properties_from_xml service_properties_xml
-      service_properties.wont_be_nil
-      service_properties.must_be_kind_of Azure::Storage::Common::Service::StorageServiceProperties
+      _(service_properties).wont_be_nil
+      _(service_properties).must_be_kind_of Azure::Storage::Common::Service::StorageServiceProperties
     end
 
     it "sets the properties of the StorageServiceProperties instance" do
       service_properties = subject.service_properties_from_xml service_properties_xml
-      service_properties.logging.must_equal mock_logging
-      service_properties.hour_metrics.must_equal mock_metrics
-      service_properties.minute_metrics.must_equal mock_metrics
+      _(service_properties.logging).must_equal mock_logging
+      _(service_properties.hour_metrics).must_equal mock_metrics
+      _(service_properties.minute_metrics).must_equal mock_metrics
     end
   end
 
   describe "#to_bool" do
     it "converts a valid string value to a Boolean" do
-      subject.to_bool("true").must_be_kind_of TrueClass
-      subject.to_bool("false").must_be_kind_of FalseClass
+      _(subject.to_bool("true")).must_be_kind_of TrueClass
+      _(subject.to_bool("false")).must_be_kind_of FalseClass
     end
 
     it "is case insensitive" do
       # mixed case
-      subject.to_bool("True").must_equal true
+      _(subject.to_bool("True")).must_equal true
 
       # upper case
-      subject.to_bool("TRUE").must_equal true
+      _(subject.to_bool("TRUE")).must_equal true
     end
 
     it "returns false for any value other than 'true'" do
-      subject.to_bool("random string").must_equal false
-      subject.to_bool(nil).must_equal false
+      _(subject.to_bool("random string")).must_equal false
+      _(subject.to_bool(nil)).must_equal false
     end
   end
 
@@ -474,49 +474,49 @@ describe Azure::Storage::Common::Service::Serialization do
 
       it "parses the string into a Nokogiri::XML::Element node" do
         result = subject.slopify(xml_data)
-        result.must_be_kind_of Nokogiri::XML::Element
+        _(result).must_be_kind_of Nokogiri::XML::Element
       end
 
       it "returns the root of the parsed Document" do
         result = subject.slopify(xml_data)
-        result.name.must_equal root_node.name
+        _(result.name).must_equal root_node.name
       end
 
       it "enables Nokogiri 'Slop' mode on the returned Element" do
         result = subject.slopify(xml_data)
-        result.must_respond_to :method_missing
+        _(result).must_respond_to :method_missing
       end
     end
 
     describe "when passed a Nokogiri::XML::Document" do
       it "returns a Nokogiri::XML::Element node" do
         result = subject.slopify(document)
-        result.must_be_kind_of Nokogiri::XML::Element
+        _(result).must_be_kind_of Nokogiri::XML::Element
       end
 
       it "returns the root of the Document" do
         result = subject.slopify(document)
-        result.name.must_equal root_node.name
+        _(result.name).must_equal root_node.name
       end
 
       it "enables Nokogiri 'Slop' mode on the returned Element" do
         result = subject.slopify(xml_data)
-        result.must_respond_to :method_missing
+        _(result).must_respond_to :method_missing
       end
     end
 
     describe "when passed a Nokogiri::XML::Element" do
       it "returns the Element unchanged" do
         result = subject.slopify(root_node)
-        result.must_equal root_node
+        _(result).must_equal root_node
       end
 
       it "does not enable Nokogiri 'Slop' mode on the returned Element if it didn't already have it" do
         result = subject.slopify(root_node)
-        result.respond_to?(:method_missing).must_equal root_node.respond_to?(:method_missing)
+        _(result.respond_to?(:method_missing)).must_equal root_node.respond_to?(:method_missing)
 
         result = subject.slopify(non_slop_node)
-        result.respond_to?(:method_missing).must_equal non_slop_node.respond_to?(:method_missing)
+        _(result.respond_to?(:method_missing)).must_equal non_slop_node.respond_to?(:method_missing)
       end
     end
   end

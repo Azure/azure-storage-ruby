@@ -39,13 +39,13 @@ describe Azure::Storage::Table::TableService do
         result.continuation_token = nil
         result.concat(subject.query_tables(next_table_token: token))
       end
-      result.must_be_kind_of Array
+      _(result).must_be_kind_of Array
 
       tables.each { |t|
         table = result.find { |c|
           c["TableName"] == t
         }
-        table.wont_be_nil
+        _(table).wont_be_nil
       }
     end
   end

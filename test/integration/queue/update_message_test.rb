@@ -39,9 +39,9 @@ describe Azure::Storage::Queue::QueueService do
 
     it "updates a message" do
       messages = subject.list_messages queue_name, 500
-      messages.length.must_equal 1
+      _(messages.length).must_equal 1
       message = messages.first
-      message.message_text.must_equal message_text
+      _(message.message_text).must_equal message_text
 
       pop_receipt, time_next_visible = subject.update_message queue_name, message.id, message.pop_receipt, new_message_text, 0
 
@@ -49,8 +49,8 @@ describe Azure::Storage::Queue::QueueService do
       result.wont_be_empty
 
       message2 = result[0]
-      message2.id.must_equal message.id
-      message2.message_text.must_equal new_message_text
+      _(message2.id).must_equal message.id
+      _(message2.message_text).must_equal new_message_text
     end
 
     it "errors on an non-existent queue" do
@@ -61,7 +61,7 @@ describe Azure::Storage::Queue::QueueService do
 
     it "errors on an non-existent message id" do
       messages = subject.list_messages queue_name, 500
-      messages.length.must_equal 1
+      _(messages.length).must_equal 1
       message = messages.first
 
       assert_raises(Azure::Core::Http::HTTPError) do
@@ -71,7 +71,7 @@ describe Azure::Storage::Queue::QueueService do
 
     it "errors on an non-existent pop_receipt" do
       messages = subject.list_messages queue_name, 500
-      messages.length.must_equal 1
+      _(messages.length).must_equal 1
       message = messages.first
 
       assert_raises(Azure::Core::Http::HTTPError) do

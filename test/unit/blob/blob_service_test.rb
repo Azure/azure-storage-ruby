@@ -74,7 +74,7 @@ describe Azure::Storage::Blob::BlobService do
 
     it "returns a list of containers for the account" do
       result = subject.list_containers
-      result.must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
+      _(result).must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
     end
 
     describe "when the options Hash is used" do
@@ -168,8 +168,8 @@ describe Azure::Storage::Blob::BlobService do
       it "returns a new container" do
         result = subject.create_container container_name
 
-        result.must_be_kind_of Azure::Storage::Blob::Container::Container
-        result.name.must_equal container_name
+        _(result).must_be_kind_of Azure::Storage::Blob::Container::Container
+        _(result.name).must_equal container_name
       end
 
       describe "when optional metadata parameter is used" do
@@ -233,7 +233,7 @@ describe Azure::Storage::Blob::BlobService do
 
       it "returns nil on success" do
         result = subject.delete_container container_name
-        result.must_equal nil
+        _(result).must_equal nil
       end
     end
 
@@ -267,9 +267,9 @@ describe Azure::Storage::Blob::BlobService do
 
       it "returns a container, with it's properties attribute populated" do
         result = subject.get_container_properties container_name
-        result.must_be_kind_of Azure::Storage::Blob::Container::Container
-        result.name.must_equal container_name
-        result.properties.must_equal container_properties
+        _(result).must_be_kind_of Azure::Storage::Blob::Container::Container
+        _(result.name).must_equal container_name
+        _(result.properties).must_equal container_properties
       end
     end
 
@@ -306,9 +306,9 @@ describe Azure::Storage::Blob::BlobService do
 
       it "returns a container, with it's metadata attribute populated" do
         result = subject.get_container_metadata container_name
-        result.must_be_kind_of Azure::Storage::Blob::Container::Container
-        result.name.must_equal container_name
-        result.metadata.must_equal container_metadata
+        _(result).must_be_kind_of Azure::Storage::Blob::Container::Container
+        _(result.name).must_equal container_name
+        _(result.metadata).must_equal container_metadata
       end
     end
 
@@ -348,11 +348,11 @@ describe Azure::Storage::Blob::BlobService do
       it "returns a container and an ACL" do
         returned_container, returned_acl = subject.get_container_acl container_name
 
-        returned_container.must_be_kind_of Azure::Storage::Blob::Container::Container
-        returned_container.name.must_equal container_name
+        _(returned_container).must_be_kind_of Azure::Storage::Blob::Container::Container
+        _(returned_container.name).must_equal container_name
 
-        returned_acl.must_be_kind_of Array
-        returned_acl[0].must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
+        _(returned_acl).must_be_kind_of Array
+        _(returned_acl[0]).must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
       end
     end
 
@@ -389,11 +389,11 @@ describe Azure::Storage::Blob::BlobService do
       it "returns a container and an ACL" do
         returned_container, returned_acl = subject.set_container_acl container_name, public_access_level
 
-        returned_container.must_be_kind_of Azure::Storage::Blob::Container::Container
-        returned_container.name.must_equal container_name
-        returned_container.public_access_level.must_equal public_access_level
+        _(returned_container).must_be_kind_of Azure::Storage::Blob::Container::Container
+        _(returned_container.name).must_equal container_name
+        _(returned_container.public_access_level).must_equal public_access_level
 
-        returned_acl.must_be_kind_of Array
+        _(returned_acl).must_be_kind_of Array
       end
 
       describe "when the public_access_level parameter is set to 'container'" do
@@ -427,12 +427,12 @@ describe Azure::Storage::Blob::BlobService do
             subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
             returned_container, returned_acl = subject.set_container_acl container_name, public_access_level, options
 
-            returned_container.must_be_kind_of Azure::Storage::Blob::Container::Container
-            returned_container.name.must_equal container_name
-            returned_container.public_access_level.must_equal public_access_level
+            _(returned_container).must_be_kind_of Azure::Storage::Blob::Container::Container
+            _(returned_container.name).must_equal container_name
+            _(returned_container.public_access_level).must_equal public_access_level
 
-            returned_acl.must_be_kind_of Array
-            returned_acl[0].must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
+            _(returned_acl).must_be_kind_of Array
+            _(returned_acl[0]).must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
           end
         end
       end
@@ -490,7 +490,7 @@ describe Azure::Storage::Blob::BlobService do
 
       it "returns nil on success" do
         result = subject.set_container_metadata container_name, container_metadata
-        result.must_equal nil
+        _(result).must_equal nil
       end
     end
 
@@ -524,7 +524,7 @@ describe Azure::Storage::Blob::BlobService do
 
       it "returns a list of blobs for the container" do
         result = subject.list_blobs container_name
-        result.must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
+        _(result).must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
       end
 
       describe "when the options Hash is used" do
@@ -662,9 +662,9 @@ describe Azure::Storage::Blob::BlobService do
 
         it "returns a Blob on success" do
           result = subject.create_page_blob container_name, blob_name, blob_length
-          result.must_be_kind_of Azure::Storage::Blob::Blob
-          result.must_equal blob
-          result.name.must_equal blob_name
+          _(result).must_be_kind_of Azure::Storage::Blob::Blob
+          _(result).must_equal blob
+          _(result.name).must_equal blob_name
         end
 
         describe "when the options Hash is used" do
@@ -772,8 +772,8 @@ describe Azure::Storage::Blob::BlobService do
 
         it "returns 'x-ms-copy-id' and 'x-ms-copy-status' on success" do
           result = subject.incremental_copy_blob container_name, blob_name, source_uri
-          result[0].must_equal copy_id
-          result[1].must_equal copy_status
+          _(result[0]).must_equal copy_id
+          _(result[1]).must_equal copy_status
         end
       end
 
@@ -809,9 +809,9 @@ describe Azure::Storage::Blob::BlobService do
 
         it "returns a Blob on success" do
           result = subject.put_blob_pages container_name, blob_name, start_range, end_range, content
-          result.must_be_kind_of Azure::Storage::Blob::Blob
-          result.must_equal blob
-          result.name.must_equal blob_name
+          _(result).must_be_kind_of Azure::Storage::Blob::Blob
+          _(result).must_equal blob
+          _(result.name).must_equal blob_name
         end
 
         describe "when the options Hash is used" do
@@ -904,9 +904,9 @@ describe Azure::Storage::Blob::BlobService do
 
         it "returns a Blob on success" do
           result = subject.clear_blob_pages container_name, blob_name, start_range, end_range
-          result.must_be_kind_of Azure::Storage::Blob::Blob
-          result.must_equal blob
-          result.name.must_equal blob_name
+          _(result).must_be_kind_of Azure::Storage::Blob::Blob
+          _(result).must_equal blob
+          _(result.name).must_equal blob_name
         end
 
         # describe "when start_range is provided" do
@@ -967,7 +967,7 @@ describe Azure::Storage::Blob::BlobService do
 
         it "returns content MD5 on success" do
           result = subject.put_blob_block container_name, blob_name, block_id, content
-          result.must_equal server_generated_content_md5
+          _(result).must_equal server_generated_content_md5
         end
 
         describe "when the options Hash is used" do
@@ -1013,9 +1013,9 @@ describe Azure::Storage::Blob::BlobService do
 
         it "returns a Blob on success" do
           result = subject.create_block_blob container_name, blob_name, content
-          result.must_be_kind_of Azure::Storage::Blob::Blob
-          result.must_equal blob
-          result.name.must_equal blob_name
+          _(result).must_be_kind_of Azure::Storage::Blob::Blob
+          _(result).must_equal blob
+          _(result.name).must_equal blob_name
         end
 
         describe "when the options Hash is used" do
@@ -1115,7 +1115,7 @@ describe Azure::Storage::Blob::BlobService do
 
         it "returns nil on success" do
           result = subject.commit_blob_blocks container_name, blob_name, block_list
-          result.must_equal nil
+          _(result).must_equal nil
         end
 
         describe "when the options Hash is used" do
@@ -1248,8 +1248,8 @@ describe Azure::Storage::Blob::BlobService do
           local_call_options = { blocklist_type: :all }.merge options
           subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
           result = subject.list_blob_blocks container_name, blob_name
-          result.must_be_kind_of Array
-          result.first.must_be_kind_of Azure::Storage::Blob::Block
+          _(result).must_be_kind_of Array
+          _(result.first).must_be_kind_of Azure::Storage::Blob::Block
         end
 
         describe "when blocklist_type is provided" do
@@ -1319,10 +1319,10 @@ describe Azure::Storage::Blob::BlobService do
 
         it "returns a list of ranges for the page blob" do
           result = subject.list_page_blob_ranges container_name, blob_name
-          result.must_be_kind_of Array
-          result.first.must_be_kind_of Array
-          result.first.first.must_be_kind_of Integer
-          result.first.first.next.must_be_kind_of Integer
+          _(result).must_be_kind_of Array
+          _(result.first).must_be_kind_of Array
+          _(result.first.first).must_be_kind_of Integer
+          _(result.first.first.next).must_be_kind_of Integer
         end
 
         # describe "when start_range is provided" do
@@ -1560,9 +1560,9 @@ describe Azure::Storage::Blob::BlobService do
 
         it "returns a Blob on success" do
           result = subject.create_append_blob container_name, blob_name
-          result.must_be_kind_of Azure::Storage::Blob::Blob
-          result.must_equal blob
-          result.name.must_equal blob_name
+          _(result).must_be_kind_of Azure::Storage::Blob::Blob
+          _(result).must_equal blob
+          _(result.name).must_equal blob_name
         end
 
         describe "when the options Hash is used" do
@@ -1773,7 +1773,7 @@ describe Azure::Storage::Blob::BlobService do
 
         it "returns nil on success" do
           result = subject.set_blob_properties container_name, blob_name
-          result.must_equal nil
+          _(result).must_equal nil
         end
 
         describe "when the options Hash is used" do
@@ -1873,7 +1873,7 @@ describe Azure::Storage::Blob::BlobService do
 
         it "returns nil on success" do
           result = subject.set_blob_metadata container_name, blob_name, blob_metadata
-          result.must_equal nil
+          _(result).must_equal nil
         end
       end
 
@@ -1901,9 +1901,9 @@ describe Azure::Storage::Blob::BlobService do
         it "returns the blob on success" do
           result = subject.get_blob_properties container_name, blob_name
 
-          result.must_be_kind_of Azure::Storage::Blob::Blob
-          result.must_equal blob
-          result.name.must_equal blob_name
+          _(result).must_be_kind_of Azure::Storage::Blob::Blob
+          _(result).must_equal blob
+          _(result.name).must_equal blob_name
         end
 
         describe "when snapshot is provided" do
@@ -1922,7 +1922,7 @@ describe Azure::Storage::Blob::BlobService do
             subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
             subject.stubs(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
             result = subject.get_blob_properties container_name, blob_name, local_call_options
-            result.snapshot.must_equal snapshot
+            _(result.snapshot).must_equal snapshot
           end
         end
       end
@@ -1953,9 +1953,9 @@ describe Azure::Storage::Blob::BlobService do
         it "returns the blob on success" do
           result = subject.get_blob_metadata container_name, blob_name
 
-          result.must_be_kind_of Azure::Storage::Blob::Blob
-          result.must_equal blob
-          result.name.must_equal blob_name
+          _(result).must_be_kind_of Azure::Storage::Blob::Blob
+          _(result).must_equal blob
+          _(result.name).must_equal blob_name
         end
 
         describe "when snapshot is provided" do
@@ -1977,7 +1977,7 @@ describe Azure::Storage::Blob::BlobService do
             subject.expects(:blob_uri).with(container_name, blob_name, query, local_call_options).returns(uri)
             subject.stubs(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
             result = subject.get_blob_metadata container_name, blob_name, local_call_options
-            result.snapshot.must_equal snapshot
+            _(result.snapshot).must_equal snapshot
           end
         end
       end
@@ -2007,10 +2007,10 @@ describe Azure::Storage::Blob::BlobService do
         it "returns the blob and blob contents on success" do
           returned_blob, returned_blob_contents = subject.get_blob container_name, blob_name
 
-          returned_blob.must_be_kind_of Azure::Storage::Blob::Blob
-          returned_blob.must_equal blob
+          _(returned_blob).must_be_kind_of Azure::Storage::Blob::Blob
+          _(returned_blob).must_equal blob
 
-          returned_blob_contents.must_equal response_body
+          _(returned_blob_contents).must_equal response_body
         end
 
         describe "when snapshot is provided" do
@@ -2113,7 +2113,7 @@ describe Azure::Storage::Blob::BlobService do
 
         it "returns nil on success" do
           result = subject.delete_blob container_name, blob_name
-          result.must_equal nil
+          _(result).must_equal nil
         end
 
         describe "when snapshot is provided" do
@@ -2197,8 +2197,8 @@ describe Azure::Storage::Blob::BlobService do
 
         it "returns the snapshot id on success" do
           result = subject.create_blob_snapshot container_name, blob_name
-          result.must_be_kind_of String
-          result.must_equal snapshot_id
+          _(result).must_be_kind_of String
+          _(result).must_equal snapshot_id
         end
 
         describe "when the options Hash is used" do
@@ -2289,8 +2289,8 @@ describe Azure::Storage::Blob::BlobService do
 
         it "returns the copy id and copy status on success" do
           returned_copy_id, returned_copy_status = subject.copy_blob container_name, blob_name, source_container_name, source_blob_name
-          returned_copy_id.must_equal copy_id
-          returned_copy_status.must_equal copy_status
+          _(returned_copy_id).must_equal copy_id
+          _(returned_copy_status).must_equal copy_status
         end
 
         describe "when snapshot is provided" do
@@ -2439,7 +2439,7 @@ describe Azure::Storage::Blob::BlobService do
 
           it "returns lease id on success" do
             result = subject.acquire_blob_lease container_name, blob_name
-            result.must_equal lease_id
+            _(result).must_equal lease_id
           end
 
           describe "when passed a duration" do
@@ -2487,7 +2487,7 @@ describe Azure::Storage::Blob::BlobService do
 
           it "returns lease id on success" do
             result = subject.renew_blob_lease container_name, blob_name, lease_id
-            result.must_equal lease_id
+            _(result).must_equal lease_id
           end
         end
 
@@ -2514,7 +2514,7 @@ describe Azure::Storage::Blob::BlobService do
 
           it "returns lease id on success" do
             result = subject.change_blob_lease container_name, blob_name, lease_id, proposed_lease_id
-            result.must_equal proposed_lease_id
+            _(result).must_equal proposed_lease_id
           end
         end
 
@@ -2538,7 +2538,7 @@ describe Azure::Storage::Blob::BlobService do
 
           it "returns nil on success" do
             result = subject.release_blob_lease container_name, blob_name, lease_id
-            result.must_equal nil
+            _(result).must_equal nil
           end
         end
 
@@ -2563,7 +2563,7 @@ describe Azure::Storage::Blob::BlobService do
 
           it "returns lease time on success" do
             result = subject.break_blob_lease container_name, blob_name
-            result.must_equal lease_time
+            _(result).must_equal lease_time
           end
 
           describe "when passed an optional break period" do
@@ -2599,7 +2599,7 @@ describe Azure::Storage::Blob::BlobService do
 
           it "returns lease id on success" do
             result = subject.acquire_container_lease container_name
-            result.must_equal lease_id
+            _(result).must_equal lease_id
           end
 
           describe "when passed a duration" do
@@ -2647,7 +2647,7 @@ describe Azure::Storage::Blob::BlobService do
 
           it "returns lease id on success" do
             result = subject.renew_container_lease container_name, lease_id
-            result.must_equal lease_id
+            _(result).must_equal lease_id
           end
         end
 
@@ -2671,7 +2671,7 @@ describe Azure::Storage::Blob::BlobService do
 
           it "returns nil on success" do
             result = subject.release_container_lease container_name, lease_id
-            result.must_equal nil
+            _(result).must_equal nil
           end
         end
 
@@ -2696,7 +2696,7 @@ describe Azure::Storage::Blob::BlobService do
 
           it "returns lease time on success" do
             result = subject.break_container_lease container_name
-            result.must_equal lease_time
+            _(result).must_equal lease_time
           end
 
           describe "when passed an optional break period" do
@@ -2743,53 +2743,53 @@ describe Azure::Storage::Blob::BlobService do
     describe "#containers_uri" do
       it "returns a containers URI" do
         result = subject.containers_uri
-        result.must_be_kind_of URI
-        result.scheme.must_equal "http"
-        result.host.must_equal "dummy.uri"
-        result.path.must_equal "/"
-        result.query.must_equal "comp=list"
+        _(result).must_be_kind_of URI
+        _(result.scheme).must_equal "http"
+        _(result.host).must_equal "dummy.uri"
+        _(result.path).must_equal "/"
+        _(result.query).must_equal "comp=list"
       end
 
       it "encodes optional query has as uri parameters" do
         result = subject.containers_uri query
-        result.query.must_equal "comp=list&param=value&param+1=value+1"
+        _(result.query).must_equal "comp=list&param=value&param+1=value+1"
       end
     end
 
     describe "#container_uri" do
       it "returns a container URI" do
         result = subject.container_uri container_name
-        result.must_be_kind_of URI
-        result.scheme.must_equal "http"
-        result.host.must_equal "dummy.uri"
-        result.path.must_equal "/container"
-        result.query.must_equal "restype=container"
+        _(result).must_be_kind_of URI
+        _(result.scheme).must_equal "http"
+        _(result.host).must_equal "dummy.uri"
+        _(result.path).must_equal "/container"
+        _(result.query).must_equal "restype=container"
       end
 
       it "encodes optional query has as uri parameters" do
         result = subject.container_uri container_name, query
-        result.query.must_equal "restype=container&param=value&param+1=value+1"
+        _(result.query).must_equal "restype=container&param=value&param+1=value+1"
       end
 
       it "returns the same URI instance when the first parameter is a URI" do
         random_uri = URI.parse("http://random.uri")
         result = subject.container_uri random_uri
-        result.must_equal random_uri
+        _(result).must_equal random_uri
       end
     end
 
     describe "#blob_uri" do
       it "returns a blob URI" do
         result = subject.blob_uri container_name, blob_name
-        result.must_be_kind_of URI
-        result.scheme.must_equal "http"
-        result.host.must_equal "dummy.uri"
-        result.path.must_equal "/container/blob"
+        _(result).must_be_kind_of URI
+        _(result.scheme).must_equal "http"
+        _(result.host).must_equal "dummy.uri"
+        _(result.path).must_equal "/container/blob"
       end
 
       it "encodes optional query has as uri parameters" do
         result = subject.blob_uri container_name, blob_name, query
-        result.query.must_equal "param=value&param+1=value+1"
+        _(result.query).must_equal "param=value&param+1=value+1"
       end
     end
   end

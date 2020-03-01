@@ -50,7 +50,7 @@ describe Azure::Storage::Table::TableService do
       batch = Azure::Storage::Table::Batch.new table_name, entity_properties["PartitionKey"]
       batch.delete entity_properties["RowKey"]
       results = subject.execute_batch batch
-      results[0].must_be_nil
+      _(results[0]).must_be_nil
 
       # query entity to make sure it was deleted
       assert_raises(Azure::Core::Http::HTTPError, "ResourceNotFound (404): The specified resource does not exist.") do
@@ -82,9 +82,9 @@ describe Azure::Storage::Table::TableService do
 
       results = subject.execute_batch batch
 
-      results[0].must_be_nil
-      results[1].must_be_nil
-      results[2].must_be_nil
+      _(results[0]).must_be_nil
+      _(results[1]).must_be_nil
+      _(results[2]).must_be_nil
     end
 
     it "errors on an invalid table name" do

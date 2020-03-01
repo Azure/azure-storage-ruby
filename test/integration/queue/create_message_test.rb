@@ -34,18 +34,18 @@ describe Azure::Storage::Queue::QueueService do
 
     it "creates a message in the specified queue and returns nil on success" do
       result = subject.create_message(queue_name, message_text)
-      result.wont_be_nil
+      _(result).wont_be_nil
       result.wont_be_empty
-      result.length.must_equal 1
-      result[0].message_text.must_be_nil
-      result[0].pop_receipt.wont_be_nil
-      result[0].id.wont_be_nil
+      _(result.length).must_equal 1
+      _(result[0].message_text).must_be_nil
+      _(result[0].pop_receipt).wont_be_nil
+      _(result[0].id).wont_be_nil
 
       result = subject.peek_messages queue_name
-      result.wont_be_nil
+      _(result).wont_be_nil
       result.wont_be_empty
-      result.length.must_equal 1
-      result[0].message_text.must_equal message_text
+      _(result.length).must_equal 1
+      _(result[0].message_text).must_equal message_text
     end
 
 
@@ -56,53 +56,53 @@ describe Azure::Storage::Queue::QueueService do
 
       it "the :visibility_timeout option causes the message to be invisible for a period of time" do
         result = subject.create_message(queue_name, message_text, visibility_timeout: visibility_timeout)
-        result.wont_be_nil
+        _(result).wont_be_nil
         result.wont_be_empty
-        result.length.must_equal 1
-        result[0].message_text.must_be_nil
-        result[0].pop_receipt.wont_be_nil
-        result[0].id.wont_be_nil
+        _(result.length).must_equal 1
+        _(result[0].message_text).must_be_nil
+        _(result[0].pop_receipt).wont_be_nil
+        _(result[0].id).wont_be_nil
 
         result = subject.peek_messages queue_name
-        result.length.must_equal 0
+        _(result.length).must_equal 0
         sleep(visibility_timeout)
 
         result = subject.peek_messages queue_name
-        result.length.must_equal 1
+        _(result.length).must_equal 1
         result.wont_be_empty
-        result[0].message_text.must_equal message_text
+        _(result[0].message_text).must_equal message_text
       end
 
       it "the :message_ttl option modifies the expiration_date of the message" do
         result = subject.create_message(queue_name, message_text, message_ttl: message_ttl)
-        result.wont_be_nil
+        _(result).wont_be_nil
         result.wont_be_empty
-        result.length.must_equal 1
-        result[0].message_text.must_be_nil
-        result[0].pop_receipt.wont_be_nil
-        result[0].id.wont_be_nil
+        _(result.length).must_equal 1
+        _(result[0].message_text).must_be_nil
+        _(result[0].pop_receipt).wont_be_nil
+        _(result[0].id).wont_be_nil
 
         result = subject.peek_messages queue_name
-        result.wont_be_nil
+        _(result).wont_be_nil
         result.wont_be_empty
         message = result[0]
-        message.message_text.must_equal message_text
-        Time.parse(message.expiration_time).to_i.must_equal Time.parse(message.insertion_time).to_i + message_ttl
+        _(message.message_text).must_equal message_text
+        _(Time.parse(message.expiration_time).to_i).must_equal Time.parse(message.insertion_time).to_i + message_ttl
       end
 
       it "the :encode option encodes with strict base64" do
         result = subject.create_message(queue_name, message_text, encode: encode)
-        result.wont_be_nil
+        _(result).wont_be_nil
         result.wont_be_empty
-        result.length.must_equal 1
-        result[0].message_text.must_be_nil
-        result[0].pop_receipt.wont_be_nil
-        result[0].id.wont_be_nil
+        _(result.length).must_equal 1
+        _(result[0].message_text).must_be_nil
+        _(result[0].pop_receipt).wont_be_nil
+        _(result[0].id).wont_be_nil
 
         result = subject.peek_messages queue_name
-        result.wont_be_nil
+        _(result).wont_be_nil
         result.wont_be_empty
-        result[0].message_text.must_equal Base64.strict_encode64(message_text)
+        _(result[0].message_text).must_equal Base64.strict_encode64(message_text)
       end
     end
 

@@ -37,14 +37,14 @@ describe Azure::Storage::Blob::BlobService do
 
     it "should be possible to acquire a container lease" do
       lease_id = subject.acquire_container_lease container_name
-      lease_id.wont_be_nil
+      _(lease_id).wont_be_nil
     end
 
     it "should be possible to acquire a blob lease" do
       subject.create_page_blob container_name, blob_name, length
 
       lease_id = subject.acquire_blob_lease container_name, blob_name
-      lease_id.wont_be_nil
+      _(lease_id).wont_be_nil
     end
   end
 end

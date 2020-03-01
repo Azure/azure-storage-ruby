@@ -44,22 +44,22 @@ describe Azure::Storage::File::FileService do
 
     it "sets and gets the ACL for the share" do
       share, acl = subject.set_share_acl share_name, signed_identifiers: identifiers
-      share.wont_be_nil
-      share.name.must_equal share_name
-      acl.length.must_equal identifiers.length
-      acl.first.id.must_equal identifiers.first.id
-      acl.first.access_policy.start.must_equal identifiers.first.access_policy.start
-      acl.first.access_policy.expiry.must_equal identifiers.first.access_policy.expiry
-      acl.first.access_policy.permission.must_equal identifiers.first.access_policy.permission
+      _(share).wont_be_nil
+      _(share.name).must_equal share_name
+      _(acl.length).must_equal identifiers.length
+      _(acl.first.id).must_equal identifiers.first.id
+      _(acl.first.access_policy.start).must_equal identifiers.first.access_policy.start
+      _(acl.first.access_policy.expiry).must_equal identifiers.first.access_policy.expiry
+      _(acl.first.access_policy.permission).must_equal identifiers.first.access_policy.permission
 
       share, acl = subject.get_share_acl share_name
-      share.wont_be_nil
-      share.name.must_equal share_name
-      acl.length.must_equal identifiers.length
-      acl.first.id.must_equal identifiers.first.id
-      acl.first.access_policy.start.must_equal identifiers.first.access_policy.start
-      acl.first.access_policy.expiry.must_equal identifiers.first.access_policy.expiry
-      acl.first.access_policy.permission.must_equal identifiers.first.access_policy.permission
+      _(share).wont_be_nil
+      _(share.name).must_equal share_name
+      _(acl.length).must_equal identifiers.length
+      _(acl.first.id).must_equal identifiers.first.id
+      _(acl.first.access_policy.start).must_equal identifiers.first.access_policy.start
+      _(acl.first.access_policy.expiry).must_equal identifiers.first.access_policy.expiry
+      _(acl.first.access_policy.permission).must_equal identifiers.first.access_policy.permission
     end
 
     it "errors if the share does not exist" do

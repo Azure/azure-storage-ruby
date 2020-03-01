@@ -39,13 +39,13 @@ describe Azure::Storage::Queue::QueueService do
       begin
         result = subject.list_queues(marker: next_marker)
         result.each { |q|
-          q.name.wont_be_nil
+          _(q.name).wont_be_nil
           expected_queues += 1 if queue_names.include? q.name
         }
 
         next_marker = result.continuation_token
       end while next_marker != ""
-      expected_queues.must_equal queue_names.length
+      _(expected_queues).must_equal queue_names.length
     end
   end
 end

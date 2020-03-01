@@ -38,18 +38,18 @@ describe Azure::Storage::Queue::QueueService do
 
     it "returns a message from the queue without marking it as invisible" do
       result = subject.peek_messages queue_name
-      result.wont_be_nil
+      _(result).wont_be_nil
       result.wont_be_empty
-      result.length.must_equal 1
+      _(result.length).must_equal 1
       message = result[0]
-      message.message_text.must_equal message_text
+      _(message.message_text).must_equal message_text
 
       # the same message is returned on another call, because it's still at the top of the queue
       result = subject.peek_messages queue_name
-      result.wont_be_nil
+      _(result).wont_be_nil
       result.wont_be_empty
-      result.length.must_equal 1
-      result[0].id.must_equal message.id
+      _(result.length).must_equal 1
+      _(result[0].id).must_equal message.id
     end
 
     it "returns multiple messages if passed the optional parameter" do
@@ -57,11 +57,11 @@ describe Azure::Storage::Queue::QueueService do
       subject.create_message queue_name, msg_text2
 
       result = subject.peek_messages queue_name, number_of_messages: 2
-      result.wont_be_nil
+      _(result).wont_be_nil
       result.wont_be_empty
-      result.length.must_equal 2
-      result[0].message_text.must_equal message_text
-      result[1].message_text.must_equal msg_text2
+      _(result.length).must_equal 2
+      _(result[0].message_text).must_equal message_text
+      _(result[1].message_text).must_equal msg_text2
       result[0].id.wont_equal result[1].id
     end
   end

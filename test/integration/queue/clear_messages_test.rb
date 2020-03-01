@@ -36,9 +36,9 @@ describe Azure::Storage::Queue::QueueService do
 
     it "clears the queue" do
       result = subject.clear_messages queue_name
-      result.must_be_nil
+      _(result).must_be_nil
       result = subject.peek_messages queue_name
-      result.must_be_empty
+      _(result).must_be_empty
     end
 
     it "errors on an non-existent queue" do

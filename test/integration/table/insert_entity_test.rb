@@ -57,12 +57,12 @@ describe Azure::Storage::Table::TableService do
     after { TableNameHelper.clean }
     it "creates an entity" do
       result = subject.insert_entity table_name, entity_properties
-      result.must_be_kind_of Azure::Storage::Table::Entity
+      _(result).must_be_kind_of Azure::Storage::Table::Entity
       entity_properties.each { |k, v|
         if entity_properties[k].class == Time
-          floor_to(result.properties[k].to_f, 6).must_equal floor_to(entity_properties[k].to_f, 6)
+          _(floor_to(result.properties[k].to_f, 6)).must_equal floor_to(entity_properties[k].to_f, 6)
         else
-          result.properties[k].must_equal entity_properties[k]
+          _(result.properties[k]).must_equal entity_properties[k]
         end
       }
     end

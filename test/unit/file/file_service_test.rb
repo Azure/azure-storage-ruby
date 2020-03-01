@@ -77,7 +77,7 @@ describe Azure::Storage::File::FileService do
 
     it "returns a list of containers for the account" do
       result = subject.list_shares
-      result.must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
+      _(result).must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
     end
 
     describe "when the options Hash is used" do
@@ -169,8 +169,8 @@ describe Azure::Storage::File::FileService do
       it "returns a new share" do
         result = subject.create_share share_name
 
-        result.must_be_kind_of Azure::Storage::File::Share::Share
-        result.name.must_equal share_name
+        _(result).must_be_kind_of Azure::Storage::File::Share::Share
+        _(result.name).must_equal share_name
       end
 
       describe "when optional metadata parameter is used" do
@@ -218,7 +218,7 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.delete_share share_name
-        result.must_equal nil
+        _(result).must_equal nil
       end
     end
 
@@ -245,7 +245,7 @@ describe Azure::Storage::File::FileService do
 
         it "returns nil on success" do
           result = subject.set_share_properties share_name
-          result.must_equal nil
+          _(result).must_equal nil
         end
 
         describe "when the options Hash is used" do
@@ -304,9 +304,9 @@ describe Azure::Storage::File::FileService do
 
       it "returns a share, with it's properties attribute populated" do
         result = subject.get_share_properties share_name
-        result.must_be_kind_of Azure::Storage::File::Share::Share
-        result.name.must_equal share_name
-        result.properties.must_equal share_properties
+        _(result).must_be_kind_of Azure::Storage::File::Share::Share
+        _(result.name).must_equal share_name
+        _(result.properties).must_equal share_properties
       end
     end
 
@@ -344,9 +344,9 @@ describe Azure::Storage::File::FileService do
 
       it "returns a share, with it's metadata attribute populated" do
         result = subject.get_share_metadata share_name
-        result.must_be_kind_of Azure::Storage::File::Share::Share
-        result.name.must_equal share_name
-        result.metadata.must_equal share_metadata
+        _(result).must_be_kind_of Azure::Storage::File::Share::Share
+        _(result.name).must_equal share_name
+        _(result.metadata).must_equal share_metadata
       end
     end
 
@@ -378,7 +378,7 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.set_share_metadata share_name, share_metadata
-        result.must_equal nil
+        _(result).must_equal nil
       end
     end
 
@@ -420,11 +420,11 @@ describe Azure::Storage::File::FileService do
       it "returns a share and an ACL" do
         returned_share, returned_acl = subject.get_share_acl share_name
 
-        returned_share.must_be_kind_of Azure::Storage::File::Share::Share
-        returned_share.name.must_equal share_name
+        _(returned_share).must_be_kind_of Azure::Storage::File::Share::Share
+        _(returned_share.name).must_equal share_name
 
-        returned_acl.must_be_kind_of Array
-        returned_acl[0].must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
+        _(returned_acl).must_be_kind_of Array
+        _(returned_acl[0]).must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
       end
     end
 
@@ -458,10 +458,10 @@ describe Azure::Storage::File::FileService do
       it "returns a share and an ACL" do
         returned_share, returned_acl = subject.set_share_acl share_name
 
-        returned_share.must_be_kind_of Azure::Storage::File::Share::Share
-        returned_share.name.must_equal share_name
+        _(returned_share).must_be_kind_of Azure::Storage::File::Share::Share
+        _(returned_share.name).must_equal share_name
 
-        returned_acl.must_be_kind_of Array
+        _(returned_acl).must_be_kind_of Array
       end
 
       describe "when the signed_identifiers parameter is set" do
@@ -485,11 +485,11 @@ describe Azure::Storage::File::FileService do
           subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
           returned_share, returned_acl = subject.set_share_acl share_name, options
 
-          returned_share.must_be_kind_of Azure::Storage::File::Share::Share
-          returned_share.name.must_equal share_name
+          _(returned_share).must_be_kind_of Azure::Storage::File::Share::Share
+          _(returned_share.name).must_equal share_name
 
-          returned_acl.must_be_kind_of Array
-          returned_acl[0].must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
+          _(returned_acl).must_be_kind_of Array
+          _(returned_acl[0]).must_be_kind_of Azure::Storage::Common::Service::SignedIdentifier
         end
       end
     end
@@ -528,9 +528,9 @@ describe Azure::Storage::File::FileService do
         subject.expects(:share_uri).with(share_name, query, options).returns(uri)
         serialization.expects(:share_stats_from_xml).with(response_body).returns(share_stats)
         result = subject.get_share_stats share_name
-        result.must_be_kind_of Azure::Storage::File::Share::Share
-        result.name.must_equal share_name
-        result.usage.must_equal share_stats
+        _(result).must_be_kind_of Azure::Storage::File::Share::Share
+        _(result.name).must_equal share_name
+        _(result.usage).must_equal share_stats
       end
     end
   end
@@ -570,7 +570,7 @@ describe Azure::Storage::File::FileService do
       it "returns a list of containers for the account" do
         subject.expects(:directory_uri).with(share_name, directory_path, query, options).returns(uri)
         result = subject.list_directories_and_files share_name, directory_path
-        result.must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
+        _(result).must_be_kind_of Azure::Storage::Common::Service::EnumerationResults
       end
 
       describe "when the options Hash is used" do
@@ -649,9 +649,9 @@ describe Azure::Storage::File::FileService do
 
       it "returns a share, with it's properties attribute populated" do
         result = subject.get_directory_properties share_name, directory_path
-        result.must_be_kind_of Azure::Storage::File::Directory::Directory
-        result.name.must_equal directory_path
-        result.properties.must_equal directory_properties
+        _(result).must_be_kind_of Azure::Storage::File::Directory::Directory
+        _(result.name).must_equal directory_path
+        _(result.properties).must_equal directory_properties
       end
     end
 
@@ -688,9 +688,9 @@ describe Azure::Storage::File::FileService do
 
       it "returns a directory, with it's metadata attribute populated" do
         result = subject.get_directory_metadata share_name, directory_path
-        result.must_be_kind_of Azure::Storage::File::Directory::Directory
-        result.name.must_equal directory_path
-        result.metadata.must_equal directory_metadata
+        _(result).must_be_kind_of Azure::Storage::File::Directory::Directory
+        _(result.name).must_equal directory_path
+        _(result.metadata).must_equal directory_metadata
       end
     end
 
@@ -722,7 +722,7 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.set_directory_metadata share_name, directory_path, directory_metadata
-        result.must_equal nil
+        _(result).must_equal nil
       end
     end
   end
@@ -761,9 +761,9 @@ describe Azure::Storage::File::FileService do
 
       it "returns a Blob on success" do
         result = subject.create_file share_name, directory_path, file_name, file_length
-        result.must_be_kind_of Azure::Storage::File::File
-        result.must_equal file
-        result.name.must_equal file_name
+        _(result).must_be_kind_of Azure::Storage::File::File
+        _(result).must_equal file
+        _(result.name).must_equal file_name
       end
 
       describe "when the options Hash is used" do
@@ -856,9 +856,9 @@ describe Azure::Storage::File::FileService do
 
       it "returns a Blob on success" do
         result = subject.put_file_range share_name, directory_path, file_name, start_range, end_range, content
-        result.must_be_kind_of Azure::Storage::File::File
-        result.must_equal file
-        result.name.must_equal file_name
+        _(result).must_be_kind_of Azure::Storage::File::File
+        _(result).must_equal file
+        _(result.name).must_equal file_name
       end
     end
 
@@ -892,9 +892,9 @@ describe Azure::Storage::File::FileService do
 
       it "returns a Blob on success" do
         result = subject.clear_file_range share_name, directory_path, file_name, start_range, end_range
-        result.must_be_kind_of Azure::Storage::File::File
-        result.must_equal file
-        result.name.must_equal file_name
+        _(result).must_be_kind_of Azure::Storage::File::File
+        _(result).must_equal file
+        _(result.name).must_equal file_name
       end
 
       describe "when start_range is provided" do
@@ -956,10 +956,10 @@ describe Azure::Storage::File::FileService do
 
       it "returns a list of ranges" do
         file, result = subject.list_file_ranges share_name, directory_path, file_name
-        result.must_be_kind_of Array
-        result.first.must_be_kind_of Array
-        result.first.first.must_be_kind_of Integer
-        result.first.first.next.must_be_kind_of Integer
+        _(result).must_be_kind_of Array
+        _(result.first).must_be_kind_of Array
+        _(result.first.first).must_be_kind_of Integer
+        _(result.first.first.next).must_be_kind_of Integer
       end
 
       describe "when start_range is provided" do
@@ -1044,7 +1044,7 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.set_file_properties share_name, directory_path, file_name
-        result.must_equal nil
+        _(result).must_equal nil
       end
 
       describe "when the options Hash is used" do
@@ -1131,9 +1131,9 @@ describe Azure::Storage::File::FileService do
         subject.expects(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
         result = subject.get_file_properties share_name, directory_path, file_name
 
-        result.must_be_kind_of Azure::Storage::File::File
-        result.must_equal file
-        result.name.must_equal file_name
+        _(result).must_be_kind_of Azure::Storage::File::File
+        _(result).must_equal file
+        _(result.name).must_equal file_name
       end
     end
 
@@ -1161,7 +1161,7 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.set_file_metadata share_name, directory_path, file_name, file_metadata
-        result.must_equal nil
+        _(result).must_equal nil
       end
     end
 
@@ -1193,9 +1193,9 @@ describe Azure::Storage::File::FileService do
         subject.expects(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
         result = subject.get_file_metadata share_name, directory_path, file_name
 
-        result.must_be_kind_of Azure::Storage::File::File
-        result.must_equal file
-        result.name.must_equal file_name
+        _(result).must_be_kind_of Azure::Storage::File::File
+        _(result).must_equal file
+        _(result.name).must_equal file_name
       end
     end
 
@@ -1225,9 +1225,9 @@ describe Azure::Storage::File::FileService do
       it "returns the file and file contents on success" do
         returned_file, returned_file_contents = subject.get_file share_name, directory_path, file_name
 
-        returned_file.must_be_kind_of Azure::Storage::File::File
-        returned_file.must_equal file
-        returned_file_contents.must_equal response_body
+        _(returned_file).must_be_kind_of Azure::Storage::File::File
+        _(returned_file).must_equal file
+        _(returned_file_contents).must_equal response_body
       end
 
       describe "when start_range is provided" do
@@ -1325,7 +1325,7 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.delete_file share_name, directory_path, file_name
-        result.must_equal nil
+        _(result).must_equal nil
       end
     end
 
@@ -1372,8 +1372,8 @@ describe Azure::Storage::File::FileService do
 
       it "returns the copy id and copy status on success" do
         returned_copy_id, returned_copy_status = subject.copy_file share_name, directory_path, file_name, source_share_name, source_directory_path, source_file_name
-        returned_copy_id.must_equal copy_id
-        returned_copy_status.must_equal copy_status
+        _(returned_copy_id).must_equal copy_id
+        _(returned_copy_status).must_equal copy_status
       end
 
       describe "when the options Hash is used" do

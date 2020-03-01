@@ -48,35 +48,35 @@ describe Azure::Storage::File::FileService do
 
     it "sets and gets properties for a file" do
       result = subject.set_file_properties share_name, directory_name, file_name, options
-      result.must_be_nil
+      _(result).must_be_nil
       file = subject.get_file_properties share_name, directory_name, file_name
-      file.properties[:content_type].must_equal options[:content_type]
-      file.properties[:content_encoding].must_equal options[:content_encoding]
-      file.properties[:cache_control].must_equal options[:cache_control]
-      file.properties[:content_md5].must_equal options[:content_md5]
-      file.properties[:content_disposition].must_equal options[:content_disposition]
+      _(file.properties[:content_type]).must_equal options[:content_type]
+      _(file.properties[:content_encoding]).must_equal options[:content_encoding]
+      _(file.properties[:cache_control]).must_equal options[:cache_control]
+      _(file.properties[:content_md5]).must_equal options[:content_md5]
+      _(file.properties[:content_disposition]).must_equal options[:content_disposition]
     end
 
     it "resize a file" do
       result = subject.resize_file share_name, directory_name, file_name, file_length + file_length
-      result.must_be_nil
+      _(result).must_be_nil
       file = subject.get_file_properties share_name, directory_name, file_name
-      file.properties[:content_length].must_equal file_length * 2
+      _(file.properties[:content_length]).must_equal file_length * 2
     end
 
     it "resize a file should not change other properties" do
       result = subject.set_file_properties share_name, directory_name, file_name, options
-      result.must_be_nil
+      _(result).must_be_nil
 
       result = subject.resize_file share_name, directory_name, file_name, file_length + file_length
-      result.must_be_nil
+      _(result).must_be_nil
       file = subject.get_file_properties share_name, directory_name, file_name
-      file.properties[:content_length].must_equal file_length * 2
-      file.properties[:content_type].must_equal options[:content_type]
-      file.properties[:content_encoding].must_equal options[:content_encoding]
-      file.properties[:cache_control].must_equal options[:cache_control]
-      file.properties[:content_md5].must_equal options[:content_md5]
-      file.properties[:content_disposition].must_equal options[:content_disposition]
+      _(file.properties[:content_length]).must_equal file_length * 2
+      _(file.properties[:content_type]).must_equal options[:content_type]
+      _(file.properties[:content_encoding]).must_equal options[:content_encoding]
+      _(file.properties[:cache_control]).must_equal options[:cache_control]
+      _(file.properties[:content_md5]).must_equal options[:content_md5]
+      _(file.properties[:content_disposition]).must_equal options[:content_disposition]
     end
 
     it "errors if the file name does not exist" do

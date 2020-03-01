@@ -47,18 +47,18 @@ describe Azure::Storage::File::FileService do
 
     it "retrieves the file properties, metadata, and contents" do
       file, returned_content = subject.get_file share_name, directory_name, file_name
-      returned_content.must_equal content
-      file.metadata.must_include "custommetadataproperty"
-      file.metadata["custommetadataproperty"].must_equal "CustomMetadataValue"
-      file.properties[:content_type].must_equal "application/foo"
+      _(returned_content).must_equal content
+      _(file.metadata).must_include "custommetadataproperty"
+      _(file.metadata["custommetadataproperty"]).must_equal "CustomMetadataValue"
+      _(file.properties[:content_type]).must_equal "application/foo"
     end
 
     it "retrieves a range of data from the file" do
       file, returned_content = subject.get_file share_name, directory_name, file_name, start_range: 0, end_range: 511, get_content_md5: true
-      returned_content.length.must_equal 512
-      returned_content.must_equal content[0..511]
-      file.properties[:range_md5].must_equal Digest::MD5.base64digest(content[0..511])
-      file.properties[:content_md5].must_equal full_md5
+      _(returned_content.length).must_equal 512
+      _(returned_content).must_equal content[0..511]
+      _(file.properties[:range_md5]).must_equal Digest::MD5.base64digest(content[0..511])
+      _(file.properties[:content_md5]).must_equal full_md5
     end
   end
 end
