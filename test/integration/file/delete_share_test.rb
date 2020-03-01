@@ -35,10 +35,10 @@ describe Azure::Storage::File::FileService do
 
     it "deletes the share" do
       share = subject.get_share_stats share_name
-      share.usage.must_equal 0
+      _(share.usage).must_equal 0
 
       result = subject.delete_share share_name
-      result.must_be_nil
+      _(result).must_be_nil
 
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.get_share_stats share_name

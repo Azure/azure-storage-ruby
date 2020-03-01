@@ -61,12 +61,12 @@ describe Azure::Storage::Table::TableService do
       batch = Azure::Storage::Table::Batch.new table_name, entity_properties["PartitionKey"]
       batch.get entity_properties["RowKey"]
       results = subject.execute_batch batch
-      results[0].must_be_kind_of Azure::Storage::Table::Entity
+      _(results[0]).must_be_kind_of Azure::Storage::Table::Entity
       entity_properties.each { |k, v|
         if entity_properties[k].class == Time
-          floor_to(results[0].properties[k].to_f, 6).must_equal floor_to(entity_properties[k].to_f, 6)
+          _(floor_to(results[0].properties[k].to_f, 6)).must_equal floor_to(entity_properties[k].to_f, 6)
         else
-          results[0].properties[k].must_equal entity_properties[k]
+          _(results[0].properties[k]).must_equal entity_properties[k]
         end
       }
     end

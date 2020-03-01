@@ -36,14 +36,14 @@ describe Azure::Storage::Queue::QueueService do
 
     it "deletes a message" do
       messages = subject.list_messages queue_name, 500
-      messages.length.must_equal 1
+      _(messages.length).must_equal 1
       message = messages.first
 
       result = subject.delete_message queue_name, message.id, message.pop_receipt
-      result.must_be_nil
+      _(result).must_be_nil
 
       result = subject.peek_messages queue_name
-      result.must_be_empty
+      _(result).must_be_empty
     end
 
     it "errors on an non-existent queue" do
@@ -54,7 +54,7 @@ describe Azure::Storage::Queue::QueueService do
 
     it "errors on an non-existent message id" do
       messages = subject.list_messages queue_name, 500
-      messages.length.must_equal 1
+      _(messages.length).must_equal 1
       message = messages.first
 
       assert_raises(Azure::Core::Http::HTTPError) do
@@ -64,7 +64,7 @@ describe Azure::Storage::Queue::QueueService do
 
     it "errors on an non-existent pop_receipt" do
       messages = subject.list_messages queue_name, 500
-      messages.length.must_equal 1
+      _(messages.length).must_equal 1
       message = messages.first
 
       assert_raises(Azure::Core::Http::HTTPError) do

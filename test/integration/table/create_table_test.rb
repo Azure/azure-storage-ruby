@@ -37,7 +37,7 @@ describe Azure::Storage::Table::TableService do
 
     it "creates a table with a valid name" do
       result = subject.create_table(table_name)
-      result.must_be_nil
+      _(result).must_be_nil
     end
 
     it "errors on an invalid table name" do

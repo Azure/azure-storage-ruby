@@ -33,7 +33,7 @@ describe Azure::Storage::Blob::BlobService do
       container_name = ContainerNameHelper.name
       subject.create_container container_name
       result = subject.delete_container container_name
-      result.must_be_nil
+      _(result).must_be_nil
     end
 
     it "errors if the container does not exist" do
@@ -57,8 +57,8 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "The lease ID specified did not match the lease ID for the container."
+      _(status_code).must_equal "412"
+      _(description).must_include "The lease ID specified did not match the lease ID for the container."
       # assert right lease succeeds
       subject.delete_container container_name, lease_id: new_lease_id
     end

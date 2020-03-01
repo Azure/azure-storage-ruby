@@ -38,9 +38,9 @@ describe Azure::Storage::Table::TableService do
         subject.create_table(table_name)
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
-        error.status_code.must_equal 409
-        error.type.must_equal "TableAlreadyExists"
-        error.description.include?("The table specified already exists.").must_equal true
+        _(error.status_code).must_equal 409
+        _(error.type).must_equal "TableAlreadyExists"
+        _(error.description.include?("The table specified already exists.")).must_equal true
       end
     end
   end

@@ -51,7 +51,7 @@ describe Azure::Storage::File::FileService do
       result.each { |directory|
         found += 1 if directories_names.include? directory.name
       }
-      found.must_equal directories_names.length
+      _(found).must_equal directories_names.length
     end
 
     it "lists the level_2 directories for the account" do
@@ -65,17 +65,17 @@ describe Azure::Storage::File::FileService do
           found += 1
         }
       }
-      found.must_equal directories_names.length + directories_names.length * sub_directories_names.length
+      _(found).must_equal directories_names.length + directories_names.length * sub_directories_names.length
     end
 
     it "lists the shares for the account with max results" do
       result = subject.list_directories_and_files(share_name, nil, max_results: 1)
-      result.length.must_equal 1
+      _(result.length).must_equal 1
       first_directory = result[0]
       result.continuation_token.wont_equal ""
 
       result = subject.list_directories_and_files(share_name, nil, max_results: 2, marker: result.continuation_token)
-      result.length.must_equal 2
+      _(result.length).must_equal 2
       result[0].name.wont_equal first_directory.name
     end
 
@@ -89,20 +89,20 @@ describe Azure::Storage::File::FileService do
       directories_names.each { |name|
         count += 1 if name.start_with? prefix
       }
-      found.must_equal count
+      _(found).must_equal count
     end
 
     it "lists directories with the directory's name as prefix" do
       result = subject.list_directories_and_files(share_name, nil, prefix: directories_names[0])
-      result.length.must_equal 1
-      result.continuation_token.must_equal ""
-      result[0].name.must_equal directories_names[0]
+      _(result.length).must_equal 1
+      _(result.continuation_token).must_equal ""
+      _(result[0].name).must_equal directories_names[0]
     end
 
     it "lists directories with a prefix that does not exist" do
       result = subject.list_directories_and_files(share_name, nil, prefix: directories_names[0] + "nonexistsuffix")
-      result.length.must_equal 0
-      result.continuation_token.must_equal ""
+      _(result.length).must_equal 0
+      _(result.continuation_token).must_equal ""
     end
   end
 
@@ -141,8 +141,8 @@ describe Azure::Storage::File::FileService do
         directory_found += 1 if sub_directories_names.include?(entry.name) && entry.is_a?(Azure::Storage::File::Directory::Directory)
         file_found += 1 if file_names.include?(entry.name) && entry.is_a?(Azure::Storage::File::File)
       }
-      directory_found.must_equal sub_directories_names.length
-      file_found.must_equal file_names.length
+      _(directory_found).must_equal sub_directories_names.length
+      _(file_found).must_equal file_names.length
     end
 
     it "lists the files with prefix" do
@@ -155,7 +155,7 @@ describe Azure::Storage::File::FileService do
       file_names.each { |name|
         count += 1 if name.start_with? prefix
       }
-      found.must_equal count
+      _(found).must_equal count
     end
   end
 end

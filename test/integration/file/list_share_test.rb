@@ -42,17 +42,17 @@ describe Azure::Storage::File::FileService do
       result.each { |c|
         found += 1 if share_names.include? c.name
       }
-      found.must_equal share_names.length
+      _(found).must_equal share_names.length
     end
 
     it "lists the shares for the account with max results" do
       result = subject.list_shares(max_results: 1)
-      result.length.must_equal 1
+      _(result.length).must_equal 1
       first_share = result[0]
       result.continuation_token.wont_equal("")
 
       result = subject.list_shares(max_results: 2, marker: result.continuation_token)
-      result.length.must_equal 2
+      _(result.length).must_equal 2
       result[0].name.wont_equal first_share.name
     end
 
@@ -64,12 +64,12 @@ describe Azure::Storage::File::FileService do
         if share_names.include? c.name
           found += 1
           metadata.each { |k, v|
-            c.metadata.must_include k.downcase
-            c.metadata[k.downcase].must_equal v
+            _(c.metadata).must_include k.downcase
+            _(c.metadata[k.downcase]).must_equal v
           }
         end
       }
-      found.must_equal share_names.length
+      _(found).must_equal share_names.length
     end
   end
 end

@@ -64,14 +64,14 @@ describe Azure::Storage::Table::TableService do
 
       result = subject.get_entity table_name, entity["PartitionKey"], entity["RowKey"]
 
-      result.must_be_kind_of Azure::Storage::Table::Entity
-      result.etag.wont_be_nil
+      _(result).must_be_kind_of Azure::Storage::Table::Entity
+      _(result.etag).wont_be_nil
 
       entity.each { |k, v|
         unless entity[k].class == Time
-          result.properties[k].must_equal entity[k]
+          _(result.properties[k]).must_equal entity[k]
         else
-          result.properties[k].to_i.must_equal entity[k].to_i
+          _(result.properties[k].to_i).must_equal entity[k].to_i
         end
       }
     end
@@ -106,23 +106,23 @@ describe Azure::Storage::Table::TableService do
 
       result = subject.get_entity table_name, entity["PartitionKey"], entity["RowKey"]
 
-      result.etag.must_be_kind_of String
+      _(result.etag).must_be_kind_of String
       result.etag.wont_equal existing_etag
 
-      result.must_be_kind_of Azure::Storage::Table::Entity
+      _(result).must_be_kind_of Azure::Storage::Table::Entity
 
       # retained all existing props
       entity.each { |k, v|
         if entity[k].class == Time
-          result.properties[k].to_i.must_equal entity[k].to_i
+          _(result.properties[k].to_i).must_equal entity[k].to_i
         else
-          result.properties[k].must_equal entity[k]
+          _(result.properties[k]).must_equal entity[k]
         end
       }
 
       # and has the new one
-      result.properties["NewCustomProperty"].must_equal "NewCustomValue"
-      result.properties["NewNilProperty"].must_equal nil
+      _(result.properties["NewCustomProperty"]).must_equal "NewCustomValue"
+      _(result.properties["NewNilProperty"]).must_equal nil
     end
 
     it "errors on an invalid table name" do

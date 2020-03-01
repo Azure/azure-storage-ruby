@@ -35,9 +35,9 @@ describe Azure::Storage::File::FileService do
       properties = share.properties
 
       share = subject.get_share_stats share_name
-      share.wont_be_nil
-      share.name.must_equal share_name
-      share.usage.must_equal 0
+      _(share).wont_be_nil
+      _(share.name).must_equal share_name
+      _(share.usage).must_equal 0
     end
 
     it "errors if the share does not exist" do

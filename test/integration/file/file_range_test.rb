@@ -48,13 +48,13 @@ describe Azure::Storage::File::FileService do
       subject.put_file_range share_name, directory_name, file_name, 1024, 1535, content
 
       file, ranges = subject.list_file_ranges share_name, directory_name, file_name, start_range: 0, end_range: 1536
-      file.properties[:etag].wont_be_nil
-      file.properties[:last_modified].wont_be_nil
-      file.properties[:content_length].must_equal file_length
-      ranges[0][0].must_equal 0
-      ranges[0][1].must_equal 511
-      ranges[1][0].must_equal 1024
-      ranges[1][1].must_equal 1535
+      _(file.properties[:etag]).wont_be_nil
+      _(file.properties[:last_modified]).wont_be_nil
+      _(file.properties[:content_length]).must_equal file_length
+      _(ranges[0][0]).must_equal 0
+      _(ranges[0][1]).must_equal 511
+      _(ranges[1][0]).must_equal 1024
+      _(ranges[1][1]).must_equal 1535
     end
   end
 
@@ -87,13 +87,13 @@ describe Azure::Storage::File::FileService do
       subject.put_file_range share_name, directory_name, file_name, 2048, 2559, content
 
       file, ranges = subject.list_file_ranges share_name, directory_name, file_name, start_range: 0, end_range: 2560
-      ranges.length.must_equal 3
-      ranges[0][0].must_equal 0
-      ranges[0][1].must_equal 511
-      ranges[1][0].must_equal 1024
-      ranges[1][1].must_equal 1535
-      ranges[2][0].must_equal 2048
-      ranges[2][1].must_equal 2559
+      _(ranges.length).must_equal 3
+      _(ranges[0][0]).must_equal 0
+      _(ranges[0][1]).must_equal 511
+      _(ranges[1][0]).must_equal 1024
+      _(ranges[1][1]).must_equal 1535
+      _(ranges[2][0]).must_equal 2048
+      _(ranges[2][1]).must_equal 2559
     }
 
     describe "when both start_range and end_range are specified" do
@@ -101,14 +101,14 @@ describe Azure::Storage::File::FileService do
         subject.clear_file_range share_name, directory_name, file_name, 512, 1535
 
         file, ranges = subject.list_file_ranges share_name, directory_name, file_name, start_range: 0, end_range: 2560
-        file.properties[:etag].wont_be_nil
-        file.properties[:last_modified].wont_be_nil
-        file.properties[:content_length].must_equal file_length
-        ranges.length.must_equal 2
-        ranges[0][0].must_equal 0
-        ranges[0][1].must_equal 511
-        ranges[1][0].must_equal 2048
-        ranges[1][1].must_equal 2559
+        _(file.properties[:etag]).wont_be_nil
+        _(file.properties[:last_modified]).wont_be_nil
+        _(file.properties[:content_length]).must_equal file_length
+        _(ranges.length).must_equal 2
+        _(ranges[0][0]).must_equal 0
+        _(ranges[0][1]).must_equal 511
+        _(ranges[1][0]).must_equal 2048
+        _(ranges[1][1]).must_equal 2559
       end
     end
   end
@@ -124,13 +124,13 @@ describe Azure::Storage::File::FileService do
 
     it "lists the active file ranges" do
       file, ranges = subject.list_file_ranges share_name, directory_name, file_name, start_range: 0, end_range: 1536
-      file.properties[:etag].wont_be_nil
-      file.properties[:last_modified].wont_be_nil
-      file.properties[:content_length].must_equal file_length
-      ranges[0][0].must_equal 0
-      ranges[0][1].must_equal 511
-      ranges[1][0].must_equal 1024
-      ranges[1][1].must_equal 1535
+      _(file.properties[:etag]).wont_be_nil
+      _(file.properties[:last_modified]).wont_be_nil
+      _(file.properties[:content_length]).must_equal file_length
+      _(ranges[0][0]).must_equal 0
+      _(ranges[0][1]).must_equal 511
+      _(ranges[1][0]).must_equal 1024
+      _(ranges[1][1]).must_equal 1535
     end
   end
 end

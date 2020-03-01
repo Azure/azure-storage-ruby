@@ -43,7 +43,7 @@ describe Azure::Storage::Blob::BlobService do
       exception = assert_raises(Azure::Storage::Common::Core::StorageError) do
         subject.create_append_blob_from_content container_name, blob_name, content, max_size: maxSize
       end
-      exception.message.must_include("Given content has exceeded the specified maximum size for the blob.")
+      _(exception.message).must_include("Given content has exceeded the specified maximum size for the blob.")
     end
 
     it "4MB + 1 byte IO with no 'size' and 4MB max size fails with max size condition not met" do
@@ -65,8 +65,8 @@ describe Azure::Storage::Blob::BlobService do
       exception = assert_raises(Azure::Core::Http::HTTPError) do
         subject.create_append_blob_from_content container_name, blob_name, content, max_size: maxSize
       end
-      exception.status_code.must_equal 412
-      exception.message.must_include("MaxBlobSizeConditionNotMet")
+      _(exception.status_code).must_equal 412
+      _(exception.message).must_include("MaxBlobSizeConditionNotMet")
     end
 
     it "4MB string payload with 4MB max size and duplicate request fails" do
@@ -79,8 +79,8 @@ describe Azure::Storage::Blob::BlobService do
       exception = assert_raises(Azure::Core::Http::HTTPError) do
         tempSubject.create_append_blob_from_content container_name, blob_name, content, max_size: length
       end
-      exception.status_code.must_equal 412
-      exception.message.must_include("AppendPositionConditionNotMet")
+      _(exception.status_code).must_equal 412
+      _(exception.message).must_include("AppendPositionConditionNotMet")
     end
 
     it "1MB string payload works" do
@@ -90,10 +90,10 @@ describe Azure::Storage::Blob::BlobService do
       blob_name = BlobNameHelper.name
       subject.create_append_blob_from_content container_name, blob_name, content
       blob, body = subject.get_blob(container_name, blob_name)
-      blob.name.must_equal blob_name
-      blob.properties[:content_length].must_equal length
-      blob.properties[:content_type].must_equal "text/plain; charset=UTF-8"
-      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+      _(blob.name).must_equal blob_name
+      _(blob.properties[:content_length]).must_equal length
+      _(blob.properties[:content_type]).must_equal "text/plain; charset=UTF-8"
+      _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
     end
 
     it "4MB string payload works" do
@@ -102,10 +102,10 @@ describe Azure::Storage::Blob::BlobService do
       blob_name = BlobNameHelper.name
       subject.create_page_blob_from_content container_name, blob_name, length, content
       blob, body = subject.get_blob(container_name, blob_name)
-      blob.name.must_equal blob_name
-      blob.properties[:content_length].must_equal length
-      blob.properties[:content_type].must_equal "text/plain; charset=ASCII-8BIT"
-      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+      _(blob.name).must_equal blob_name
+      _(blob.properties[:content_length]).must_equal length
+      _(blob.properties[:content_type]).must_equal "text/plain; charset=ASCII-8BIT"
+      _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
     end
 
     it "5MB string payload works" do
@@ -114,9 +114,9 @@ describe Azure::Storage::Blob::BlobService do
       blob_name = BlobNameHelper.name
       subject.create_append_blob_from_content container_name, blob_name, content
       blob, body = subject.get_blob(container_name, blob_name)
-      blob.name.must_equal blob_name
-      blob.properties[:content_length].must_equal length
-      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+      _(blob.name).must_equal blob_name
+      _(blob.properties[:content_length]).must_equal length
+      _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
     end
 
     it "IO payload works" do
@@ -129,9 +129,9 @@ describe Azure::Storage::Blob::BlobService do
         file.seek 0
         subject.create_append_blob_from_content container_name, blob_name, file
         blob, body = subject.get_blob(container_name, blob_name)
-        blob.name.must_equal blob_name
-        blob.properties[:content_length].must_equal length
-        Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+        _(blob.name).must_equal blob_name
+        _(blob.properties[:content_length]).must_equal length
+        _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
       ensure
         unless file.nil?
           file.close
@@ -150,14 +150,14 @@ describe Azure::Storage::Blob::BlobService do
 
     it "creates an append blob" do
       blob = subject.create_append_blob container_name, blob_name
-      blob.name.must_equal blob_name
-      is_boolean(blob.encrypted).must_equal true
+      _(blob.name).must_equal blob_name
+      _(is_boolean(blob.encrypted)).must_equal true
     end
 
     it "creates an append blob with complex name" do
       blob = subject.create_append_blob container_name, complex_blob_name
-      blob.name.must_equal complex_blob_name
-      is_boolean(blob.encrypted).must_equal true
+      _(blob.name).must_equal complex_blob_name
+      _(is_boolean(blob.encrypted)).must_equal true
 
       complex_blob_name.force_encoding("UTF-8")
       found_complex_name = false
@@ -166,7 +166,7 @@ describe Azure::Storage::Blob::BlobService do
         found_complex_name = true if blob.name == complex_blob_name
       }
 
-      found_complex_name.must_equal true
+      _(found_complex_name).must_equal true
     end
 
     it "sets additional properties when the options hash is used" do
@@ -179,19 +179,19 @@ describe Azure::Storage::Blob::BlobService do
       }
 
       blob = subject.create_append_blob container_name, blob_name, options
-      is_boolean(blob.encrypted).must_equal true
+      _(is_boolean(blob.encrypted)).must_equal true
       blob = subject.get_blob_properties container_name, blob_name
-      blob.name.must_equal blob_name
-      is_boolean(blob.encrypted).must_equal true
-      blob.properties[:blob_type].must_equal "AppendBlob"
-      blob.properties[:content_type].must_equal options[:content_type]
-      blob.properties[:content_encoding].must_equal options[:content_encoding]
-      blob.properties[:cache_control].must_equal options[:cache_control]
-      blob.metadata["custommetadataproperty"].must_equal "CustomMetadataValue"
+      _(blob.name).must_equal blob_name
+      _(is_boolean(blob.encrypted)).must_equal true
+      _(blob.properties[:blob_type]).must_equal "AppendBlob"
+      _(blob.properties[:content_type]).must_equal options[:content_type]
+      _(blob.properties[:content_encoding]).must_equal options[:content_encoding]
+      _(blob.properties[:cache_control]).must_equal options[:cache_control]
+      _(blob.metadata["custommetadataproperty"]).must_equal "CustomMetadataValue"
 
       blob = subject.get_blob_metadata container_name, blob_name
-      blob.name.must_equal blob_name
-      blob.metadata["custommetadataproperty"].must_equal "CustomMetadataValue"
+      _(blob.name).must_equal blob_name
+      _(blob.metadata["custommetadataproperty"]).must_equal "CustomMetadataValue"
     end
 
     it "errors if the container does not exist" do
@@ -214,11 +214,11 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      _(status_code).must_equal "412"
+      _(description).must_include "There is currently a lease on the blob and no lease ID was specified in the request."
       # assert correct lease works
       blob = subject.create_append_blob container_name, append_blob_name, lease_id: lease_id
-      blob.name.must_equal append_blob_name
+      _(blob.name).must_equal append_blob_name
     end
   end
 
@@ -235,22 +235,22 @@ describe Azure::Storage::Blob::BlobService do
 
       options = { content_md5: Base64.strict_encode64(Digest::MD5.digest(content)) }
       blob = subject.append_blob_block container_name, blob_name, content, options
-      is_boolean(blob.encrypted).must_equal true
+      _(is_boolean(blob.encrypted)).must_equal true
 
       # verify
-      blob.properties[:content_md5].must_equal Base64.strict_encode64(Digest::MD5.digest(content))
-      blob.properties[:append_offset].must_equal 0
+      _(blob.properties[:content_md5]).must_equal Base64.strict_encode64(Digest::MD5.digest(content))
+      _(blob.properties[:append_offset]).must_equal 0
 
       blob = subject.get_blob_properties container_name, blob_name
-      is_boolean(blob.encrypted).must_equal true
-      blob.properties[:blob_type].must_equal "AppendBlob"
-      blob.properties[:content_length].must_equal 512
-      blob.properties[:committed_count].must_equal 1
+      _(is_boolean(blob.encrypted)).must_equal true
+      _(blob.properties[:blob_type]).must_equal "AppendBlob"
+      _(blob.properties[:content_length]).must_equal 512
+      _(blob.properties[:committed_count]).must_equal 1
 
       # append another and verify
       blob = subject.append_blob_block container_name, blob_name, content
-      blob.properties[:append_offset].must_equal 512
-      blob.properties[:committed_count].must_equal 2
+      _(blob.properties[:append_offset]).must_equal 512
+      _(blob.properties[:committed_count]).must_equal 2
     end
 
     it "appends a block as part of an append blob with wrong MD5" do
@@ -270,9 +270,9 @@ describe Azure::Storage::Blob::BlobService do
 
       options = { max_size: 600.to_s }
       blob = subject.append_blob_block container_name, blob_name, content, options
-      is_boolean(blob.encrypted).must_equal true
-      blob.properties[:append_offset].must_equal 0
-      blob.properties[:committed_count].must_equal 1
+      _(is_boolean(blob.encrypted)).must_equal true
+      _(blob.properties[:append_offset]).must_equal 0
+      _(blob.properties[:committed_count]).must_equal 1
 
       exception = assert_raises(Azure::Core::Http::HTTPError) do
         subject.append_blob_block container_name, blob_name, content, options
@@ -285,15 +285,15 @@ describe Azure::Storage::Blob::BlobService do
       subject.create_append_blob container_name, blob_name
 
       blob = subject.append_blob_block container_name, blob_name, content
-      is_boolean(blob.encrypted).must_equal true
-      blob.properties[:append_offset].must_equal 0
-      blob.properties[:committed_count].must_equal 1
+      _(is_boolean(blob.encrypted)).must_equal true
+      _(blob.properties[:append_offset]).must_equal 0
+      _(blob.properties[:committed_count]).must_equal 1
 
       options = { append_position: 512.to_s }
       blob = subject.append_blob_block container_name, blob_name, content, options
-      is_boolean(blob.encrypted).must_equal true
-      blob.properties[:append_offset].must_equal 512
-      blob.properties[:committed_count].must_equal 2
+      _(is_boolean(blob.encrypted)).must_equal true
+      _(blob.properties[:append_offset]).must_equal 512
+      _(blob.properties[:committed_count]).must_equal 2
 
       exception = assert_raises(Azure::Core::Http::HTTPError) do
         subject.append_blob_block container_name, blob_name, content, options
@@ -315,19 +315,19 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      _(status_code).must_equal "412"
+      _(description).must_include "There is currently a lease on the blob and no lease ID was specified in the request."
       # assert correct lease works
       blob = subject.append_blob_block container_name, append_blob_name, content, lease_id: lease_id
 
-      blob.properties[:content_md5].must_equal Base64.strict_encode64(Digest::MD5.digest(content))
-      blob.properties[:append_offset].must_equal 0
+      _(blob.properties[:content_md5]).must_equal Base64.strict_encode64(Digest::MD5.digest(content))
+      _(blob.properties[:append_offset]).must_equal 0
 
       blob = subject.get_blob_properties container_name, append_blob_name
-      is_boolean(blob.encrypted).must_equal true
-      blob.properties[:blob_type].must_equal "AppendBlob"
-      blob.properties[:content_length].must_equal 512
-      blob.properties[:committed_count].must_equal 1
+      _(is_boolean(blob.encrypted)).must_equal true
+      _(blob.properties[:blob_type]).must_equal "AppendBlob"
+      _(blob.properties[:content_length]).must_equal 512
+      _(blob.properties[:committed_count]).must_equal 1
     end
   end
 end

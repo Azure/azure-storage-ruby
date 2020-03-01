@@ -44,8 +44,8 @@ describe Azure::Storage::Common::Core::TokenCredential do
       end
       
       threads.each { |t| t.join }
-      current.wont_be_nil
-      token_credential.token.must_equal "refreshed_token_#{current}"
+      _(current).wont_be_nil
+      _(token_credential.token).must_equal "refreshed_token_#{current}"
     end
 
   end

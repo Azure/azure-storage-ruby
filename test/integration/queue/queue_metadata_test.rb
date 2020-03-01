@@ -35,14 +35,14 @@ describe Azure::Storage::Queue::QueueService do
 
     it "can set and retrieve queue metadata" do
       result = subject.set_queue_metadata queue_name, "CustomMetadataProperty" => "Custom Metadata Value"
-      result.must_be_nil
+      _(result).must_be_nil
 
       message_count, metadata = subject.get_queue_metadata queue_name
-      message_count.must_equal 1
+      _(message_count).must_equal 1
 
       # note: case insensitive! even though it was sent in mixed case, it will be returned in downcase
-      metadata.must_include "custommetadataproperty"
-      metadata["custommetadataproperty"].must_equal "Custom Metadata Value"
+      _(metadata).must_include "custommetadataproperty"
+      _(metadata["custommetadataproperty"]).must_equal "Custom Metadata Value"
     end
   end
 end

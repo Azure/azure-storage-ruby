@@ -40,10 +40,10 @@ describe Azure::Storage::File::FileService do
 
     it "deletes the directory" do
       file = subject.get_file_properties share_name, directory_name, file_name
-      file.properties[:content_length].must_equal file_length
+      _(file.properties[:content_length]).must_equal file_length
 
       result = subject.delete_file share_name, directory_name, file_name
-      result.must_be_nil
+      _(result).must_be_nil
 
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.get_file_properties share_name, directory_name, file_name

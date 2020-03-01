@@ -44,9 +44,9 @@ describe Azure::Storage::Blob::BlobService do
       found = 0
       result.each { |c|
         found += 1 if container_names.include? c.name
-        c.public_access_level.must_equal "blob" if container_names.include? c.name
+        _(c.public_access_level).must_equal "blob" if container_names.include? c.name
       }
-      found.must_equal container_names.length
+      _(found).must_equal container_names.length
     end
 
     it "lists the containers for the account with prefix" do
@@ -55,20 +55,20 @@ describe Azure::Storage::Blob::BlobService do
       found = 0
       result.each { |c|
         found += 1 if container_names.include? c.name
-        c.public_access_level.must_equal "blob" if container_names.include? c.name
+        _(c.public_access_level).must_equal "blob" if container_names.include? c.name
       }
 
-      found.must_equal 1
+      _(found).must_equal 1
     end
 
     it "lists the containers for the account with max results" do
       result = subject.list_containers(max_results: 1)
-      result.length.must_equal 1
+      _(result.length).must_equal 1
       first_container = result[0]
       result.continuation_token.wont_equal("")
 
       result = subject.list_containers(max_results: 1, marker: result.continuation_token)
-      result.length.must_equal 1
+      _(result.length).must_equal 1
       result[0].name.wont_equal first_container.name
     end
 
@@ -80,13 +80,13 @@ describe Azure::Storage::Blob::BlobService do
         if container_names.include? c.name
           found += 1
           metadata.each { |k, v|
-            c.metadata.must_include k.downcase
-            c.metadata[k.downcase].must_equal v
+            _(c.metadata).must_include k.downcase
+            _(c.metadata[k.downcase]).must_equal v
           }
-          c.public_access_level.must_equal "blob"
+          _(c.public_access_level).must_equal "blob"
         end
       }
-      found.must_equal container_names.length
+      _(found).must_equal container_names.length
     end
   end
 end

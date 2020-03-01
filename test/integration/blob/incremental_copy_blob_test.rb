@@ -70,9 +70,9 @@ describe Azure::Storage::Blob::BlobService do
     it "test incremental snapshot can work" do
       dest_blob_name = BlobNameHelper.name
       result = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri1.to_s
-      result[1].must_equal "pending"
+      _(result[1]).must_equal "pending"
       blob = subject.get_blob_properties(container_name, dest_blob_name)
-      blob.properties[:incremental_copy].must_equal true
+      _(blob.properties[:incremental_copy]).must_equal true
     end
 
     it "test incremental snapshot fails on existing blob" do
@@ -81,92 +81,92 @@ describe Azure::Storage::Blob::BlobService do
       e = assert_raises Azure::Core::Http::HTTPError do
         subject.incremental_copy_blob container_name, dest_blob_name, @source_uri1.to_s
       end
-      e.status_code.must_equal 409
-      e.type.must_equal "OperationNotAllowedOnIncrementalCopyBlob"
+      _(e.status_code).must_equal 409
+      _(e.type).must_equal "OperationNotAllowedOnIncrementalCopyBlob"
     end
 
     it "test 'if_modified_since' work" do
       dest_blob_name = BlobNameHelper.name
       result = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri1.to_s
-      result[1].must_equal "pending"
+      _(result[1]).must_equal "pending"
       blob = subject.get_blob_properties(container_name, dest_blob_name)
-      blob.properties[:incremental_copy].must_equal true
+      _(blob.properties[:incremental_copy]).must_equal true
       # test failing case for if_modified_since
       now = Time.new + 1
       e = assert_raises Azure::Core::Http::HTTPError do
         subject.incremental_copy_blob container_name, dest_blob_name, @source_uri2.to_s, if_modified_since: now.httpdate
       end
-      e.status_code.must_equal 412
-      e.type.must_equal "ConditionNotMet"
+      _(e.status_code).must_equal 412
+      _(e.type).must_equal "ConditionNotMet"
       now -= 65535 # Should be a long time that makes sense
       # test success case for if_modified_since
       copy_id = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri2.to_s, if_modified_since: now.httpdate
-      copy_id.wont_be_nil
+      _(copy_id).wont_be_nil
     end
 
     it "test 'if_unmodified_since' work" do
       dest_blob_name = BlobNameHelper.name
       result = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri1.to_s
-      result[1].must_equal "pending"
+      _(result[1]).must_equal "pending"
       blob = subject.get_blob_properties(container_name, dest_blob_name)
-      blob.properties[:incremental_copy].must_equal true
+      _(blob.properties[:incremental_copy]).must_equal true
       # test failing case for if_unmodified_since
       now = Time.new - 65535 # Should be a long time that makes sense
       e = assert_raises Azure::Core::Http::HTTPError do
         subject.incremental_copy_blob container_name, dest_blob_name, @source_uri2.to_s, if_unmodified_since: now.httpdate
       end
-      e.status_code.must_equal 412
-      e.type.must_equal "ConditionNotMet"
+      _(e.status_code).must_equal 412
+      _(e.type).must_equal "ConditionNotMet"
       now += 65536 # Should be a long time that makes sense
       # test success case for if_unmodified_since
       copy_id = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri2.to_s, if_unmodified_since: now.httpdate
-      copy_id.wont_be_nil
+      _(copy_id).wont_be_nil
     end
 
     it "test 'if_match' work" do
       dest_blob_name = BlobNameHelper.name
       result = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri1.to_s
-      result[1].must_equal "pending"
+      _(result[1]).must_equal "pending"
       blob = subject.get_blob_properties(container_name, dest_blob_name)
-      blob.properties[:incremental_copy].must_equal true
+      _(blob.properties[:incremental_copy]).must_equal true
       etag = blob.properties[:etag]
-      etag.wont_be_nil
+      _(etag).wont_be_nil
       # test failing case for if_match
       e = assert_raises Azure::Core::Http::HTTPError do
         subject.incremental_copy_blob container_name, dest_blob_name, @source_uri2.to_s, if_match: etag + "blablabla"
       end
-      e.status_code.must_equal 412
-      e.type.must_equal "TargetConditionNotMet"
+      _(e.status_code).must_equal 412
+      _(e.type).must_equal "TargetConditionNotMet"
       # test success case for if_match
       copy_id = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri2.to_s, if_match: etag
-      copy_id.wont_be_nil
+      _(copy_id).wont_be_nil
     end
 
     it "test 'if_none_match' work" do
       dest_blob_name = BlobNameHelper.name
       result = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri1.to_s
-      result[1].must_equal "pending"
+      _(result[1]).must_equal "pending"
       blob = subject.get_blob_properties(container_name, dest_blob_name)
-      blob.properties[:incremental_copy].must_equal true
+      _(blob.properties[:incremental_copy]).must_equal true
       etag = blob.properties[:etag]
-      etag.wont_be_nil
+      _(etag).wont_be_nil
       # test failing case for if_none_match
       e = assert_raises Azure::Core::Http::HTTPError do
         subject.incremental_copy_blob container_name, dest_blob_name, @source_uri2.to_s, if_none_match: etag
       end
-      e.status_code.must_equal 412
-      e.type.must_equal "ConditionNotMet"
+      _(e.status_code).must_equal 412
+      _(e.type).must_equal "ConditionNotMet"
       # test success case for if_none_match
       copy_id = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri2.to_s, if_none_match: etag + "blablabla"
-      copy_id.wont_be_nil
+      _(copy_id).wont_be_nil
     end
 
     it "lease id works for incremental_copy_blob" do
       dest_blob_name = BlobNameHelper.name
       result = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri1.to_s
-      result[1].must_equal "pending"
+      _(result[1]).must_equal "pending"
       blob = subject.get_blob_properties(container_name, dest_blob_name)
-      blob.properties[:incremental_copy].must_equal true
+      _(blob.properties[:incremental_copy]).must_equal true
       # acquire lease for blob
       lease_id = subject.acquire_blob_lease container_name, dest_blob_name
       subject.release_blob_lease container_name, dest_blob_name, lease_id
@@ -181,11 +181,11 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "The lease ID specified did not match the lease ID for the blob."
+      _(status_code).must_equal "412"
+      _(description).must_include "The lease ID specified did not match the lease ID for the blob."
       # assert correct lease works
       copy_id = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri2.to_s, lease_id: new_lease_id
-      copy_id.wont_be_nil
+      _(copy_id).wont_be_nil
     end
   end
 end

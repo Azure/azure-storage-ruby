@@ -29,19 +29,19 @@ require "azure/storage/common"
 describe Azure::Core::Http::RetryPolicy do
   it "uses blocks as retry logic" do
     retry_policy = Azure::Core::Http::RetryPolicy.new do |a, b| true end
-    retry_policy.should_retry?(nil, nil).must_equal true
+    _(retry_policy.should_retry?(nil, nil)).must_equal true
   end
 
   it "uses linear retry policy" do
     retry_count = retry_interval = 1
     retry_policy = Azure::Storage::Common::Core::Filter::LinearRetryPolicyFilter.new retry_count, retry_interval
-    retry_policy.should_retry?(nil, error: "SocketError: Hostname not known").must_equal true
+    _(retry_policy.should_retry?(nil, error: "SocketError: Hostname not known")).must_equal true
   end
 
   it "uses exponential retry policy" do
     retry_count = retry_interval = 1
     retry_policy = Azure::Storage::Common::Core::Filter::ExponentialRetryPolicyFilter.new retry_count, retry_interval
-    retry_policy.should_retry?(nil, error: "Errno::EPROTONOSUPPORT").must_equal false
+    _(retry_policy.should_retry?(nil, error: "Errno::EPROTONOSUPPORT")).must_equal false
   end
 
   describe "RetryPolicy retries with a new URL" do
@@ -73,7 +73,7 @@ describe Azure::Core::Http::RetryPolicy do
         }
       subject.retry_data = retry_data
       subject.call request, request
-      request.uri.must_equal secondary_uri
+      _(request.uri).must_equal secondary_uri
     end
 
     it "retries with a new URL: SECONDARY_THEN_PRIMARY" do
@@ -86,7 +86,7 @@ describe Azure::Core::Http::RetryPolicy do
         }
       subject.retry_data = retry_data
       subject.call request, request
-      request.uri.must_equal primary_uri
+      _(request.uri).must_equal primary_uri
     end
 
     it "retries with a new URL: PRIMARY_ONLY" do
@@ -99,7 +99,7 @@ describe Azure::Core::Http::RetryPolicy do
         }
       subject.retry_data = retry_data
       subject.call request, request
-      request.uri.must_equal primary_uri
+      _(request.uri).must_equal primary_uri
     end
 
     it "retries with a new URL: SECONDARY_ONLY" do
@@ -112,7 +112,7 @@ describe Azure::Core::Http::RetryPolicy do
         }
       subject.retry_data = retry_data
       subject.call request, request
-      request.uri.must_equal secondary_uri
+      _(request.uri).must_equal secondary_uri
     end
 
     it "retries with a new URL: PRIMARY_THEN_SECONDARY, API: PRIMARY_ONLY" do
@@ -125,7 +125,7 @@ describe Azure::Core::Http::RetryPolicy do
         }
       subject.retry_data = retry_data
       subject.call request, request
-      request.uri.must_equal primary_uri
+      _(request.uri).must_equal primary_uri
     end
 
     it "retries with a new URL: SECONDARY_THEN_PRIMARY, API: SECONDARY_ONLY" do
@@ -138,7 +138,7 @@ describe Azure::Core::Http::RetryPolicy do
         }
       subject.retry_data = retry_data
       subject.call request, request
-      request.uri.must_equal secondary_uri
+      _(request.uri).must_equal secondary_uri
     end
   end
 end

@@ -37,22 +37,22 @@ describe Azure::Storage::Blob::BlobService do
 
     it "should be possible to break a container lease" do
       lease_id = subject.acquire_container_lease container_name
-      lease_id.wont_be_nil
+      _(lease_id).wont_be_nil
 
       broken_lease = subject.break_container_lease container_name
       # lease should be possible to break immediately
-      broken_lease.must_equal 0
+      _(broken_lease).must_equal 0
     end
 
     it "should be possible to break a blob lease" do
       subject.create_page_blob container_name, blob_name, length
 
       lease_id = subject.acquire_blob_lease container_name, blob_name
-      lease_id.wont_be_nil
+      _(lease_id).wont_be_nil
 
       broken_lease = subject.break_blob_lease container_name, blob_name
       # lease should be possible to break immediately
-      broken_lease.must_equal 0
+      _(broken_lease).must_equal 0
     end
   end
 end

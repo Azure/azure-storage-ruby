@@ -39,18 +39,18 @@ describe Azure::Storage::Queue::QueueService do
 
     it "creates a queue with a valid name" do
       result = subject.create_queue queue_name
-      result.must_be_nil
+      _(result).must_be_nil
     end
 
     it "creates a queue with a valid name and metadata" do
       result = subject.create_queue queue_name, metadata: metadata
-      result.must_be_nil
+      _(result).must_be_nil
 
       message_count, queue_metadata = subject.get_queue_metadata queue_name
 
       metadata.each { |k, v|
-        queue_metadata.must_include k
-        queue_metadata[k].must_equal v
+        _(queue_metadata).must_include k
+        _(queue_metadata[k]).must_equal v
       }
     end
 

@@ -48,10 +48,10 @@ describe Azure::Storage::Blob::BlobService do
       subject.create_block_blob container_name, blob_name, content
       subject.set_container_acl container_name, public_access_level
       result = anonymous_blob_client.list_blobs container_name
-      result.size.must_equal 1
+      _(result.size).must_equal 1
       blob, body = anonymous_blob_client.get_blob container_name, blob_name
-      blob.name.must_equal blob_name
-      body.must_equal content
+      _(blob.name).must_equal blob_name
+      _(body).must_equal content
     end
 
     it "test anonymous access for private container does not work" do
@@ -67,8 +67,8 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "404"
-      description.must_include "The specified resource does not exist."
+      _(status_code).must_equal "404"
+      _(description).must_include "The specified resource does not exist."
     end
   end
 end

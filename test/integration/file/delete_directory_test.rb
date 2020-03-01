@@ -39,7 +39,7 @@ describe Azure::Storage::File::FileService do
       directory = subject.get_directory_properties share_name, directory_name
 
       result = subject.delete_directory share_name, directory_name
-      result.must_be_nil
+      _(result).must_be_nil
 
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.get_directory_properties share_name, directory_name

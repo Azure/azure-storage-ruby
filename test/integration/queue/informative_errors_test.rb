@@ -37,9 +37,9 @@ describe Azure::Storage::Queue::QueueService do
         subject.get_queue_metadata queue_name
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
-        error.status_code.must_equal 404
-        error.type.must_equal "QueueNotFound"
-        error.description.start_with?("The specified queue does not exist.").must_equal true
+        _(error.status_code).must_equal 404
+        _(error.type).must_equal "QueueNotFound"
+        _(error.description.start_with?("The specified queue does not exist.")).must_equal true
       end
     end
   end

@@ -50,10 +50,10 @@ describe Azure::Storage::Blob::BlobService do
       blob_name = BlobNameHelper.name
       subject.create_page_blob_from_content container_name, blob_name, length, content
       blob, body = subject.get_blob(container_name, blob_name)
-      blob.name.must_equal blob_name
-      blob.properties[:content_length].must_equal length
-      blob.properties[:content_type].must_equal "text/plain; charset=UTF-8"
-      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+      _(blob.name).must_equal blob_name
+      _(blob.properties[:content_length]).must_equal length
+      _(blob.properties[:content_type]).must_equal "text/plain; charset=UTF-8"
+      _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
     end
 
     it "4MB string payload works" do
@@ -62,10 +62,10 @@ describe Azure::Storage::Blob::BlobService do
       blob_name = BlobNameHelper.name
       subject.create_page_blob_from_content container_name, blob_name, length, content
       blob, body = subject.get_blob(container_name, blob_name)
-      blob.name.must_equal blob_name
-      blob.properties[:content_length].must_equal length
-      blob.properties[:content_type].must_equal "text/plain; charset=ASCII-8BIT"
-      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+      _(blob.name).must_equal blob_name
+      _(blob.properties[:content_length]).must_equal length
+      _(blob.properties[:content_type]).must_equal "text/plain; charset=ASCII-8BIT"
+      _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
     end
 
     it "5MB string payload works" do
@@ -74,9 +74,9 @@ describe Azure::Storage::Blob::BlobService do
       blob_name = BlobNameHelper.name
       subject.create_page_blob_from_content container_name, blob_name, length, content
       blob, body = subject.get_blob(container_name, blob_name)
-      blob.name.must_equal blob_name
-      blob.properties[:content_length].must_equal length
-      Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+      _(blob.name).must_equal blob_name
+      _(blob.properties[:content_length]).must_equal length
+      _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
     end
 
     it "IO payload works" do
@@ -89,9 +89,9 @@ describe Azure::Storage::Blob::BlobService do
         file.seek 0
         subject.create_page_blob_from_content container_name, blob_name, length, file
         blob, body = subject.get_blob(container_name, blob_name)
-        blob.name.must_equal blob_name
-        blob.properties[:content_length].must_equal length
-        Digest::MD5.hexdigest(body).must_equal Digest::MD5.hexdigest(content)
+        _(blob.name).must_equal blob_name
+        _(blob.properties[:content_length]).must_equal length
+        _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
       ensure
         unless file.nil?
           file.close
@@ -110,10 +110,10 @@ describe Azure::Storage::Blob::BlobService do
       subject.put_blob_pages container_name, blob_name, 1024, 1535, content
 
       ranges = subject.list_page_blob_ranges container_name, blob_name, start_range: 0, end_range: 1536
-      ranges[0][0].must_equal 0
-      ranges[0][1].must_equal 511
-      ranges[1][0].must_equal 1024
-      ranges[1][1].must_equal 1535
+      _(ranges[0][0]).must_equal 0
+      _(ranges[0][1]).must_equal 511
+      _(ranges[1][0]).must_equal 1024
+      _(ranges[1][1]).must_equal 1535
     end
 
     it "lease id works for put_blob_pages" do
@@ -132,17 +132,17 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      _(status_code).must_equal "412"
+      _(description).must_include "There is currently a lease on the blob and no lease ID was specified in the request."
       # assert right lease succeeds
       subject.put_blob_pages container_name, page_blob_name, 0, 511, content, lease_id: lease_id
       subject.put_blob_pages container_name, page_blob_name, 1024, 1535, content, lease_id: lease_id
 
       ranges = subject.list_page_blob_ranges container_name, page_blob_name, start_range: 0, end_range: 1536
-      ranges[0][0].must_equal 0
-      ranges[0][1].must_equal 511
-      ranges[1][0].must_equal 1024
-      ranges[1][1].must_equal 1535
+      _(ranges[0][0]).must_equal 0
+      _(ranges[0][1]).must_equal 511
+      _(ranges[1][0]).must_equal 1024
+      _(ranges[1][1]).must_equal 1535
     end
   end
 
@@ -152,7 +152,7 @@ describe Azure::Storage::Blob::BlobService do
       512.times.each { |i| content << "@" }
 
       blob = subject.put_blob_pages container_name, blob_name2, 0, 511, content
-      is_boolean(blob.encrypted).must_equal true
+      _(is_boolean(blob.encrypted)).must_equal true
 
       assert_raises(Azure::Core::Http::HTTPError) do
         subject.put_blob_pages container_name, blob_name2, 1024, 1535, content, if_none_match: blob.properties[:etag]
@@ -164,7 +164,7 @@ describe Azure::Storage::Blob::BlobService do
       512.times.each { |i| content << "@" }
 
       blob = subject.put_blob_pages container_name, blob_name, 0, 511, content
-      is_boolean(blob.encrypted).must_equal true
+      _(is_boolean(blob.encrypted)).must_equal true
       subject.put_blob_pages container_name, blob_name, 1024, 1535, content, if_match: blob.properties[:etag]
     end
   end
@@ -179,13 +179,13 @@ describe Azure::Storage::Blob::BlobService do
       subject.put_blob_pages container_name, blob_name, 2048, 2559, content
 
       ranges = subject.list_page_blob_ranges container_name, blob_name, start_range: 0, end_range: 2560
-      ranges.length.must_equal 3
-      ranges[0][0].must_equal 0
-      ranges[0][1].must_equal 511
-      ranges[1][0].must_equal 1024
-      ranges[1][1].must_equal 1535
-      ranges[2][0].must_equal 2048
-      ranges[2][1].must_equal 2559
+      _(ranges.length).must_equal 3
+      _(ranges[0][0]).must_equal 0
+      _(ranges[0][1]).must_equal 511
+      _(ranges[1][0]).must_equal 1024
+      _(ranges[1][1]).must_equal 1535
+      _(ranges[2][0]).must_equal 2048
+      _(ranges[2][1]).must_equal 2559
     }
 
     describe "when both start_range and end_range are specified" do
@@ -193,11 +193,11 @@ describe Azure::Storage::Blob::BlobService do
         subject.clear_blob_pages container_name, blob_name, 512, 1535
 
         ranges = subject.list_page_blob_ranges container_name, blob_name, start_range: 0, end_range: 2560
-        ranges.length.must_equal 2
-        ranges[0][0].must_equal 0
-        ranges[0][1].must_equal 511
-        ranges[1][0].must_equal 2048
-        ranges[1][1].must_equal 2559
+        _(ranges.length).must_equal 2
+        _(ranges[0][0]).must_equal 0
+        _(ranges[0][1]).must_equal 511
+        _(ranges[1][0]).must_equal 2048
+        _(ranges[1][1]).must_equal 2559
       end
     end
   end
@@ -213,10 +213,10 @@ describe Azure::Storage::Blob::BlobService do
 
     it "lists the active blob pages" do
       ranges = subject.list_page_blob_ranges container_name, blob_name, start_range: 0, end_range: 1536
-      ranges[0][0].must_equal 0
-      ranges[0][1].must_equal 511
-      ranges[1][0].must_equal 1024
-      ranges[1][1].must_equal 1535
+      _(ranges[0][0]).must_equal 0
+      _(ranges[0][1]).must_equal 511
+      _(ranges[1][0]).must_equal 1024
+      _(ranges[1][1]).must_equal 1535
     end
 
     it "list blob pages in the snapshot" do
@@ -231,17 +231,17 @@ describe Azure::Storage::Blob::BlobService do
       # verify that even the blob has been altered, the returned list
       # will not contain the change if snapshot is specified
       ranges = subject.list_page_blob_ranges container_name, blob_name3, snapshot: snapshot1
-      ranges.length.must_equal 2
+      _(ranges.length).must_equal 2
       # verify the change
       ranges = subject.list_page_blob_ranges container_name, blob_name3
-      ranges.length.must_equal 3
+      _(ranges.length).must_equal 3
       # take another snapshot
       snapshot2 = subject.create_blob_snapshot container_name, blob_name3
       # only change between snapshot1 and snapshot2 will be listed
       ranges = subject.list_page_blob_ranges container_name, blob_name3, snapshot: snapshot2, previous_snapshot: snapshot1
-      ranges.length.must_equal 1
-      ranges[0][0].must_equal 2048
-      ranges[0][1].must_equal 2559
+      _(ranges.length).must_equal 1
+      _(ranges[0][0]).must_equal 2048
+      _(ranges[0][1]).must_equal 2559
     end
 
     it "lease id works for list_page_blob_ranges" do
@@ -265,14 +265,14 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "The lease ID specified did not match the lease ID for the blob."
+      _(status_code).must_equal "412"
+      _(description).must_include "The lease ID specified did not match the lease ID for the blob."
       # assert correct lease works
       ranges = subject.list_page_blob_ranges container_name, page_blob_name, lease_id: new_lease_id
-      ranges.length.must_equal 3
+      _(ranges.length).must_equal 3
       # assert no lease works
       ranges = subject.list_page_blob_ranges container_name, page_blob_name
-      ranges.length.must_equal 3
+      _(ranges.length).must_equal 3
     end
   end
 end

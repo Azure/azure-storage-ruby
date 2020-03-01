@@ -67,8 +67,8 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      _(status_code).must_equal "412"
+      _(description).must_include "There is currently a lease on the blob and no lease ID was specified in the request."
       # assert correct lease works
       subject.delete_blob container_name, page_blob_name, lease_id: lease_id
     end
@@ -89,14 +89,14 @@ describe Azure::Storage::Blob::BlobService do
         result.each { |b|
           snapshot_exists = true if b.name == (blob_name) && b.snapshot == (snapshot)
         }
-        snapshot_exists.must_equal true
+        _(snapshot_exists).must_equal true
 
         # delete blob
         subject.delete_blob container_name, blob_name
 
         # verify blob is gone and snapshot remains
         result = subject.list_blobs(container_name, snapshots: true)
-        result.length.must_equal 0
+        _(result.length).must_equal 0
       end
 
       it "the snapshot parameter deletes a specific blob snapshot" do
@@ -111,7 +111,7 @@ describe Azure::Storage::Blob::BlobService do
         result.each { |b|
           snapshots += 1 if b.name == (blob_name) && b.snapshot != (nil)
         }
-        snapshots.must_equal 2
+        _(snapshots).must_equal 2
 
         subject.delete_blob container_name, blob_name, snapshot: snapshot
 
@@ -124,8 +124,8 @@ describe Azure::Storage::Blob::BlobService do
           blob_exists = true if b.name == (blob_name) && b.snapshot == (nil)
           snapshots += 1 if b.name == (blob_name) && b.snapshot == (second_snapshot)
         }
-        blob_exists.must_equal true
-        snapshots.must_equal 1
+        _(blob_exists).must_equal true
+        _(snapshots).must_equal 1
       end
 
       it "errors if the snapshot id provided does not exist" do
@@ -144,7 +144,7 @@ describe Azure::Storage::Blob::BlobService do
           result.each { |b|
             snapshot_exists = true if b.name == (blob_name) && b.snapshot == (snapshot)
           }
-          snapshot_exists.must_equal true
+          _(snapshot_exists).must_equal true
 
           # delete snapshots
           subject.delete_blob container_name, blob_name, snapshot: nil, delete_snapshots: :only
@@ -158,8 +158,8 @@ describe Azure::Storage::Blob::BlobService do
             blob_exists = true if b.name == (blob_name) && b.snapshot == (nil)
             snapshot_exists = true if b.name == (blob_name) && b.snapshot == (snapshot)
           }
-          blob_exists.must_equal true
-          snapshot_exists.must_equal false
+          _(blob_exists).must_equal true
+          _(snapshot_exists).must_equal false
         end
       end
 
@@ -173,14 +173,14 @@ describe Azure::Storage::Blob::BlobService do
           result.each { |b|
             snapshot_exists = true if b.name == (blob_name) && b.snapshot == (snapshot)
           }
-          snapshot_exists.must_equal true
+          _(snapshot_exists).must_equal true
 
           # delete snapshots
           subject.delete_blob container_name, blob_name, snapshot: nil, delete_snapshots: :include
 
           # verify snapshot is gone and blob remains
           result = subject.list_blobs(container_name, snapshots: true)
-          result.length.must_equal 0
+          _(result.length).must_equal 0
         end
       end
     end

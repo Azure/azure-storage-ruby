@@ -78,7 +78,7 @@ describe "File GB-18030" do
         subject.create_file share_name, directory_name, test_name, file_length
         files = subject.list_directories_and_files share_name, directory_name
         files.each { |value|
-          value.name.must_equal test_name
+          _(value.name).must_equal test_name
         }
         subject.delete_file share_name, directory_name, test_name
       end
@@ -97,7 +97,7 @@ describe "File GB-18030" do
         subject.create_file share_name, directory_name, test_name, file_length
         files = subject.list_directories_and_files share_name, directory_name
         files.each { |value|
-          value.name.encode("UTF-8").must_equal test_name.encode("UTF-8")
+          _(value.name.encode("UTF-8")).must_equal test_name.encode("UTF-8")
         }
         subject.delete_file share_name, directory_name, test_name
       end
@@ -111,7 +111,7 @@ describe "File GB-18030" do
         subject.set_file_metadata share_name, directory_name, file_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
-        error.status_code.must_equal 400
+        _(error.status_code).must_equal 400
       end
     }
   end
@@ -123,7 +123,7 @@ describe "File GB-18030" do
         subject.set_file_metadata share_name, directory_name, file_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
-        error.status_code.must_equal 400
+        _(error.status_code).must_equal 400
       end
     }
   end
@@ -136,7 +136,7 @@ describe "File GB-18030" do
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
         # TODO: Error should really be 400
-        error.status_code.must_equal 403
+        _(error.status_code).must_equal 403
       end
     }
   end
@@ -149,7 +149,7 @@ describe "File GB-18030" do
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
         # TODO: Error should really be 400
-        error.status_code.must_equal 403
+        _(error.status_code).must_equal 403
       end
     }
   end
@@ -161,8 +161,8 @@ describe "File GB-18030" do
       subject.create_file share_name, directory_name, file_name, content.bytesize
       subject.put_file_range share_name, directory_name, file_name, 0, content.bytesize - 1, content
       file, returned_content = subject.get_file share_name, directory_name, file_name
-      file.properties[:content_type].must_equal "application/octet-stream"
-      returned_content.force_encoding("UTF-8").must_equal content
+      _(file.properties[:content_type]).must_equal "application/octet-stream"
+      _(returned_content.force_encoding("UTF-8")).must_equal content
     }
   end
 
@@ -176,7 +176,7 @@ describe "File GB-18030" do
       file, returned_content = subject.get_file share_name, directory_name, file_name
       charset = file.properties[:content_type][file.properties[:content_type].index("charset=") + "charset=".length...file.properties[:content_type].length]
       returned_content.force_encoding(charset)
-      returned_content.must_equal content
+      _(returned_content).must_equal content
     }
   end
 
@@ -193,7 +193,7 @@ describe "File GB-18030" do
       file, returned_content = subject.get_file share_name, directory_name, file_name
       charset = file.properties[:content_type][file.properties[:content_type].index("charset=") + "charset=".length...file.properties[:content_type].length]
       returned_content.force_encoding(charset)
-      returned_content.must_equal content
+      _(returned_content).must_equal content
     }
   end
 
@@ -210,7 +210,7 @@ describe "File GB-18030" do
       file, returned_content = subject.get_file share_name, directory_name, file_name
       charset = file.properties[:content_type][file.properties[:content_type].index("charset=") + "charset=".length...file.properties[:content_type].length]
       returned_content.force_encoding(charset)
-      returned_content.must_equal content
+      _(returned_content).must_equal content
     }
   end
 end

@@ -40,13 +40,13 @@ describe Azure::Storage::Blob::BlobService do
       container_name = ContainerNameHelper.name
       subject.create_container container_name
       result = subject.set_container_metadata container_name, metadata
-      result.must_be_nil
+      _(result).must_be_nil
       container = subject.get_container_metadata container_name
-      container.wont_be_nil
-      container.name.must_equal container_name
+      _(container).wont_be_nil
+      _(container.name).must_equal container_name
       metadata.each { |k, v|
-        container.metadata.must_include k.downcase
-        container.metadata[k.downcase].must_equal v
+        _(container.metadata).must_include k.downcase
+        _(container.metadata[k.downcase]).must_equal v
       }
     end
 
@@ -75,22 +75,22 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "The lease ID specified did not match the lease ID for the container."
+      _(status_code).must_equal "412"
+      _(description).must_include "The lease ID specified did not match the lease ID for the container."
       # assert right lease succeeds
       container = subject.get_container_metadata container_name, lease_id: new_lease_id
-      container.wont_be_nil
-      container.name.must_equal container_name
+      _(container).wont_be_nil
+      _(container.name).must_equal container_name
       metadata.each { |k, v|
-        container.metadata.must_include k.downcase
-        container.metadata[k.downcase].must_equal v
+        _(container.metadata).must_include k.downcase
+        _(container.metadata[k.downcase]).must_equal v
       }
       # assert no lease succeeds
       container = subject.get_container_metadata container_name
-      container.wont_be_nil
+      _(container).wont_be_nil
       metadata.each { |k, v|
-        container.metadata.must_include k.downcase
-        container.metadata[k.downcase].must_equal v
+        _(container.metadata).must_include k.downcase
+        _(container.metadata[k.downcase]).must_equal v
       }
       # release lease afterwards
       subject.release_container_lease container_name, new_lease_id
@@ -111,17 +111,17 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "The lease ID specified did not match the lease ID for the container."
+      _(status_code).must_equal "412"
+      _(description).must_include "The lease ID specified did not match the lease ID for the container."
       # assert right lease succeeds
       result = subject.set_container_metadata container_name, metadata, lease_id: new_lease_id
-      result.must_be_nil
+      _(result).must_be_nil
       container = subject.get_container_metadata container_name
-      container.wont_be_nil
-      container.name.must_equal container_name
+      _(container).wont_be_nil
+      _(container.name).must_equal container_name
       metadata.each { |k, v|
-        container.metadata.must_include k.downcase
-        container.metadata[k.downcase].must_equal v
+        _(container.metadata).must_include k.downcase
+        _(container.metadata[k.downcase]).must_equal v
       }
       # prove that no lease succeeds
       result = subject.set_container_metadata container_name, metadata

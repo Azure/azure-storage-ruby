@@ -40,19 +40,19 @@ describe Azure::Storage::Blob::BlobService do
   describe "#create_block_blob" do
     it "creates a block blob" do
       blob = subject.create_block_blob container_name, blob_name, content
-      blob.name.must_equal blob_name
-      is_boolean(blob.encrypted).must_equal true
+      _(blob.name).must_equal blob_name
+      _(is_boolean(blob.encrypted)).must_equal true
       blob = subject.get_blob_properties container_name, blob_name
-      blob.properties[:content_type].must_equal "text/plain; charset=UTF-8"
+      _(blob.properties[:content_type]).must_equal "text/plain; charset=UTF-8"
     end
 
     it "creates a block blob with empty content" do
       temp = subject.clone
       blob = temp.create_block_blob container_name, blob_name, ""
-      blob.name.must_equal blob_name
-      is_boolean(blob.encrypted).must_equal true
+      _(blob.name).must_equal blob_name
+      _(is_boolean(blob.encrypted)).must_equal true
       blob = subject.get_blob_properties container_name, blob_name
-      blob.properties[:content_type].must_equal "application/octet-stream"
+      _(blob.properties[:content_type]).must_equal "application/octet-stream"
     end
 
     it "creates a block blob with IO" do
@@ -62,10 +62,10 @@ describe Azure::Storage::Blob::BlobService do
         file.seek 0
         subject.create_block_blob container_name, blob_name, file
         blob = subject.get_blob_properties container_name, blob_name
-        blob.name.must_equal blob_name
-        is_boolean(blob.encrypted).must_equal true
-        blob.properties[:content_length].must_equal content.length
-        blob.properties[:content_type].must_equal "application/octet-stream"
+        _(blob.name).must_equal blob_name
+        _(is_boolean(blob.encrypted)).must_equal true
+        _(blob.properties[:content_length]).must_equal content.length
+        _(blob.properties[:content_type]).must_equal "application/octet-stream"
       ensure
         unless file.nil?
           file.close
@@ -81,24 +81,24 @@ describe Azure::Storage::Blob::BlobService do
       content_50_mb.force_encoding "utf-8"
       blob_name = BlobNameHelper.name
       blob = subject.create_block_blob container_name, blob_name, content_50_mb, options
-      blob.name.must_equal blob_name
+      _(blob.name).must_equal blob_name
       # No content length if single upload
-      blob.properties[:content_length].must_equal 50 * 1024 * 1024
-      blob.properties[:content_type].must_equal "text/plain; charset=UTF-8"
+      _(blob.properties[:content_length]).must_equal 50 * 1024 * 1024
+      _(blob.properties[:content_type]).must_equal "text/plain; charset=UTF-8"
     end
 
     it "should create a block blob with spaces in name" do
       blob_name = "blob with spaces"
       blob = subject.create_block_blob container_name, blob_name, "content"
-      blob.name.must_equal blob_name
-      is_boolean(blob.encrypted).must_equal true
+      _(blob.name).must_equal blob_name
+      _(is_boolean(blob.encrypted)).must_equal true
     end
 
     it "should create block blob with complex in name" do
       blob_name = "with фбаф.txt"
       blob = subject.create_block_blob container_name, blob_name, "content"
-      blob.name.must_equal blob_name
-      is_boolean(blob.encrypted).must_equal true
+      _(blob.name).must_equal blob_name
+      _(is_boolean(blob.encrypted)).must_equal true
     end
 
     it "sets additional properties when the options hash is used" do
@@ -112,17 +112,17 @@ describe Azure::Storage::Blob::BlobService do
 
       blob = subject.create_block_blob container_name, blob_name, content, options
       blob = subject.get_blob_properties container_name, blob_name
-      blob.name.must_equal blob_name
-      is_boolean(blob.encrypted).must_equal true
-      blob.properties[:blob_type].must_equal "BlockBlob"
-      blob.properties[:content_type].must_equal options[:content_type]
-      blob.properties[:content_encoding].must_equal options[:content_encoding]
-      blob.properties[:cache_control].must_equal options[:cache_control]
-      blob.metadata["custommetadataproperty"].must_equal "CustomMetadataValue"
+      _(blob.name).must_equal blob_name
+      _(is_boolean(blob.encrypted)).must_equal true
+      _(blob.properties[:blob_type]).must_equal "BlockBlob"
+      _(blob.properties[:content_type]).must_equal options[:content_type]
+      _(blob.properties[:content_encoding]).must_equal options[:content_encoding]
+      _(blob.properties[:cache_control]).must_equal options[:cache_control]
+      _(blob.metadata["custommetadataproperty"]).must_equal "CustomMetadataValue"
 
       blob = subject.get_blob_metadata container_name, blob_name
-      blob.name.must_equal blob_name
-      blob.metadata["custommetadataproperty"].must_equal "CustomMetadataValue"
+      _(blob.name).must_equal blob_name
+      _(blob.metadata["custommetadataproperty"]).must_equal "CustomMetadataValue"
     end
 
     it "errors if the container does not exist" do
@@ -145,11 +145,11 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      _(status_code).must_equal "412"
+      _(description).must_include "There is currently a lease on the blob and no lease ID was specified in the request."
       # assert correct lease works
       blob = subject.create_block_blob container_name, block_blob_name, content, lease_id: lease_id
-      blob.name.must_equal block_blob_name
+      _(blob.name).must_equal block_blob_name
     end
   end
 
@@ -163,9 +163,9 @@ describe Azure::Storage::Blob::BlobService do
       # verify
       block_list = subject.list_blob_blocks container_name, blob_name
       block = block_list[:uncommitted][0]
-      block.type.must_equal :uncommitted
-      block.size.must_equal 512
-      block.name.must_equal blockid1
+      _(block.type).must_equal :uncommitted
+      _(block.size).must_equal 512
+      _(block.name).must_equal blockid1
     end
 
     it "creates a 100M block as part of a block blob" do
@@ -174,9 +174,9 @@ describe Azure::Storage::Blob::BlobService do
       # verify
       block_list = subject.list_blob_blocks container_name, blob_name
       block = block_list[:uncommitted][0]
-      block.type.must_equal :uncommitted
-      block.size.must_equal 100 * 1024 * 1024
-      block.name.must_equal blockid2
+      _(block.type).must_equal :uncommitted
+      _(block.size).must_equal 100 * 1024 * 1024
+      _(block.name).must_equal blockid2
     end
 
     it "lease id works for put_blob_block" do
@@ -193,17 +193,17 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      _(status_code).must_equal "412"
+      _(description).must_include "There is currently a lease on the blob and no lease ID was specified in the request."
       # assert correct lease works
       subject.put_blob_block container_name, block_blob_name, blockid1, content, lease_id: lease_id
 
       # verify
       block_list = subject.list_blob_blocks container_name, block_blob_name
       block = block_list[:uncommitted][0]
-      block.type.must_equal :uncommitted
-      block.size.must_equal 512
-      block.name.must_equal blockid1
+      _(block.type).must_equal :uncommitted
+      _(block.size).must_equal 512
+      _(block.name).must_equal blockid1
     end
   end
 
@@ -221,9 +221,9 @@ describe Azure::Storage::Blob::BlobService do
 
       (0..1).each { |i|
         block = block_list[:uncommitted][i]
-        block.type.must_equal :uncommitted
-        block.size.must_equal 512
-        block.name.must_equal blocklist[i][0]
+        _(block.type).must_equal :uncommitted
+        _(block.size).must_equal 512
+        _(block.name).must_equal blocklist[i][0]
       }
 
       assert_raises(Azure::Core::Http::HTTPError) do
@@ -232,13 +232,13 @@ describe Azure::Storage::Blob::BlobService do
 
       # commit blocks
       result = subject.commit_blob_blocks container_name, blob_name, blocklist
-      result.must_be_nil
+      _(result).must_be_nil
 
       blob, returned_content = subject.get_blob container_name, blob_name
-      is_boolean(blob.encrypted).must_equal true
-      blob.properties[:content_length].must_equal (content.length * 2)
-      blob.properties[:content_type].must_equal "application/octet-stream"
-      returned_content.must_equal (content + content)
+      _(is_boolean(blob.encrypted)).must_equal true
+      _(blob.properties[:content_length]).must_equal (content.length * 2)
+      _(blob.properties[:content_type]).must_equal "application/octet-stream"
+      _(returned_content).must_equal (content + content)
     end
 
     it "lease id works for commit_blob_blocks" do
@@ -252,9 +252,9 @@ describe Azure::Storage::Blob::BlobService do
 
       (0..1).each { |i|
         block = block_list[:uncommitted][i]
-        block.type.must_equal :uncommitted
-        block.size.must_equal 512
-        block.name.must_equal blocklist[i][0]
+        _(block.type).must_equal :uncommitted
+        _(block.size).must_equal 512
+        _(block.name).must_equal blocklist[i][0]
       }
 
       # acquire lease for blob
@@ -269,16 +269,16 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      _(status_code).must_equal "412"
+      _(description).must_include "There is currently a lease on the blob and no lease ID was specified in the request."
       # assert correct lease works
       result = subject.commit_blob_blocks container_name, block_blob_name, blocklist, lease_id: lease_id
-      result.must_be_nil
+      _(result).must_be_nil
 
       blob, returned_content = subject.get_blob container_name, block_blob_name
-      is_boolean(blob.encrypted).must_equal true
-      blob.properties[:content_length].must_equal (content.length * 2)
-      returned_content.must_equal (content + content)
+      _(is_boolean(blob.encrypted)).must_equal true
+      _(blob.properties[:content_length]).must_equal (content.length * 2)
+      _(returned_content).must_equal (content + content)
     end
   end
 
@@ -291,7 +291,7 @@ describe Azure::Storage::Blob::BlobService do
 
       # two committed blocks, two uncommitted blocks
       result = subject.commit_blob_blocks container_name, blob_name, blocklist.slice(0..1)
-      result.must_be_nil
+      _(result).must_be_nil
 
       subject.put_blob_block container_name, blob_name, blocklist[2][0], content
       subject.put_blob_block container_name, blob_name, blocklist[3][0], content
@@ -301,25 +301,25 @@ describe Azure::Storage::Blob::BlobService do
       result = subject.list_blob_blocks container_name, blob_name
 
       committed = result[:committed]
-      committed.length.must_equal 2
+      _(committed.length).must_equal 2
 
       expected_blocks = blocklist.slice(0..1).each
 
       committed.each { |block|
-        block.name.must_equal expected_blocks.next[0]
-        block.type.must_equal :committed
-        block.size.must_equal 512
+        _(block.name).must_equal expected_blocks.next[0]
+        _(block.type).must_equal :committed
+        _(block.size).must_equal 512
       }
 
       uncommitted = result[:uncommitted]
-      uncommitted.length.must_equal 2
+      _(uncommitted.length).must_equal 2
 
       expected_blocks = blocklist.slice(2..3).each
 
       uncommitted.each { |block|
-        block.name.must_equal expected_blocks.next[0]
-        block.type.must_equal :uncommitted
-        block.size.must_equal 512
+        _(block.name).must_equal expected_blocks.next[0]
+        _(block.type).must_equal :uncommitted
+        _(block.size).must_equal 512
       }
     end
 
@@ -332,7 +332,7 @@ describe Azure::Storage::Blob::BlobService do
       subject.put_blob_block container_name, block_blob_name, blocklist[1][0], content
 
       result = subject.commit_blob_blocks container_name, block_blob_name, blocklist.slice(0..1)
-      result.must_be_nil
+      _(result).must_be_nil
 
       subject.put_blob_block container_name, block_blob_name, blocklist[2][0], content
       subject.put_blob_block container_name, block_blob_name, blocklist[3][0], content
@@ -351,56 +351,56 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "The lease ID specified did not match the lease ID for the blob."
+      _(status_code).must_equal "412"
+      _(description).must_include "The lease ID specified did not match the lease ID for the blob."
       # assert correct lease works
       result = subject.list_blob_blocks container_name, block_blob_name, lease_id: new_lease_id
 
       committed = result[:committed]
-      committed.length.must_equal 2
+      _(committed.length).must_equal 2
 
       expected_blocks = blocklist.slice(0..1).each
 
       committed.each { |block|
-        block.name.must_equal expected_blocks.next[0]
-        block.type.must_equal :committed
-        block.size.must_equal 512
+        _(block.name).must_equal expected_blocks.next[0]
+        _(block.type).must_equal :committed
+        _(block.size).must_equal 512
       }
 
       uncommitted = result[:uncommitted]
-      uncommitted.length.must_equal 2
+      _(uncommitted.length).must_equal 2
 
       expected_blocks = blocklist.slice(2..3).each
 
       uncommitted.each { |block|
-        block.name.must_equal expected_blocks.next[0]
-        block.type.must_equal :uncommitted
-        block.size.must_equal 512
+        _(block.name).must_equal expected_blocks.next[0]
+        _(block.type).must_equal :uncommitted
+        _(block.size).must_equal 512
       }
 
       # assert no lease works
       result = subject.list_blob_blocks container_name, block_blob_name
 
       committed = result[:committed]
-      committed.length.must_equal 2
+      _(committed.length).must_equal 2
 
       expected_blocks = blocklist.slice(0..1).each
 
       committed.each { |block|
-        block.name.must_equal expected_blocks.next[0]
-        block.type.must_equal :committed
-        block.size.must_equal 512
+        _(block.name).must_equal expected_blocks.next[0]
+        _(block.type).must_equal :committed
+        _(block.size).must_equal 512
       }
 
       uncommitted = result[:uncommitted]
-      uncommitted.length.must_equal 2
+      _(uncommitted.length).must_equal 2
 
       expected_blocks = blocklist.slice(2..3).each
 
       uncommitted.each { |block|
-        block.name.must_equal expected_blocks.next[0]
-        block.type.must_equal :uncommitted
-        block.size.must_equal 512
+        _(block.name).must_equal expected_blocks.next[0]
+        _(block.type).must_equal :uncommitted
+        _(block.size).must_equal 512
       }
     end
 
@@ -409,17 +409,17 @@ describe Azure::Storage::Blob::BlobService do
         result = subject.list_blob_blocks container_name, blob_name, blocklist_type: :uncommitted
 
         committed = result[:committed]
-        committed.length.must_equal 0
+        _(committed.length).must_equal 0
 
         uncommitted = result[:uncommitted]
-        uncommitted.length.must_equal 2
+        _(uncommitted.length).must_equal 2
 
         expected_blocks = blocklist.slice(2..3).each
 
         uncommitted.each { |block|
-          block.name.must_equal expected_blocks.next[0]
-          block.type.must_equal :uncommitted
-          block.size.must_equal 512
+          _(block.name).must_equal expected_blocks.next[0]
+          _(block.type).must_equal :uncommitted
+          _(block.size).must_equal 512
         }
       end
 
@@ -427,43 +427,43 @@ describe Azure::Storage::Blob::BlobService do
         result = subject.list_blob_blocks container_name, blob_name, blocklist_type: :committed
 
         committed = result[:committed]
-        committed.length.must_equal 2
+        _(committed.length).must_equal 2
 
         expected_blocks = blocklist.slice(0..1).each
 
         committed.each { |block|
-          block.name.must_equal expected_blocks.next[0]
-          block.type.must_equal :committed
-          block.size.must_equal 512
+          _(block.name).must_equal expected_blocks.next[0]
+          _(block.type).must_equal :committed
+          _(block.size).must_equal 512
         }
 
         uncommitted = result[:uncommitted]
-        uncommitted.length.must_equal 0
+        _(uncommitted.length).must_equal 0
       end
 
       it "lists committed and uncommitted blocks if :all is passed" do
         result = subject.list_blob_blocks container_name, blob_name, blocklist_type: :all
 
         committed = result[:committed]
-        committed.length.must_equal 2
+        _(committed.length).must_equal 2
 
         expected_blocks = blocklist.slice(0..1).each
 
         committed.each { |block|
-          block.name.must_equal expected_blocks.next[0]
-          block.type.must_equal :committed
-          block.size.must_equal 512
+          _(block.name).must_equal expected_blocks.next[0]
+          _(block.type).must_equal :committed
+          _(block.size).must_equal 512
         }
 
         uncommitted = result[:uncommitted]
-        uncommitted.length.must_equal 2
+        _(uncommitted.length).must_equal 2
 
         expected_blocks = blocklist.slice(2..3).each
 
         uncommitted.each { |block|
-          block.name.must_equal expected_blocks.next[0]
-          block.type.must_equal :uncommitted
-          block.size.must_equal 512
+          _(block.name).must_equal expected_blocks.next[0]
+          _(block.type).must_equal :uncommitted
+          _(block.size).must_equal 512
         }
       end
     end
@@ -473,35 +473,35 @@ describe Azure::Storage::Blob::BlobService do
         snapshot = subject.create_blob_snapshot container_name, blob_name
 
         result = subject.commit_blob_blocks container_name, blob_name, blocklist
-        result.must_be_nil
+        _(result).must_be_nil
         result = subject.list_blob_blocks container_name, blob_name
 
         committed = result[:committed]
-        committed.length.must_equal 4
+        _(committed.length).must_equal 4
         expected_blocks = blocklist.each
 
         committed.each { |block|
-          block.name.must_equal expected_blocks.next[0]
-          block.type.must_equal :committed
-          block.size.must_equal 512
+          _(block.name).must_equal expected_blocks.next[0]
+          _(block.type).must_equal :committed
+          _(block.size).must_equal 512
         }
 
         result = subject.list_blob_blocks container_name, blob_name, blocklist_type: :all, snapshot: snapshot
 
         committed = result[:committed]
-        committed.length.must_equal 2
+        _(committed.length).must_equal 2
 
         expected_blocks = blocklist.slice(0..1).each
 
         committed.each { |block|
-          block.name.must_equal expected_blocks.next[0]
-          block.type.must_equal :committed
-          block.size.must_equal 512
+          _(block.name).must_equal expected_blocks.next[0]
+          _(block.type).must_equal :committed
+          _(block.size).must_equal 512
         }
 
         # uncommitted blobs aren't copied in a snapshot.
         uncommitted = result[:uncommitted]
-        uncommitted.length.must_equal 0
+        _(uncommitted.length).must_equal 0
       end
     end
   end

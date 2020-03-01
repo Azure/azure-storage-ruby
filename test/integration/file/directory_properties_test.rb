@@ -40,14 +40,14 @@ describe Azure::Storage::File::FileService do
       properties = directory.properties
 
       directory = subject.get_directory_properties share_name, directory_name
-      directory.wont_be_nil
-      directory.name.must_equal directory_name
-      directory.properties[:etag].must_equal properties[:etag]
-      directory.properties[:last_modified].must_equal properties[:last_modified]
+      _(directory).wont_be_nil
+      _(directory.name).must_equal directory_name
+      _(directory.properties[:etag]).must_equal properties[:etag]
+      _(directory.properties[:last_modified]).must_equal properties[:last_modified]
 
       metadata.each { |k, v|
-        directory.metadata.must_include k.downcase
-        directory.metadata[k.downcase].must_equal v
+        _(directory.metadata).must_include k.downcase
+        _(directory.metadata[k.downcase]).must_equal v
       }
     end
 

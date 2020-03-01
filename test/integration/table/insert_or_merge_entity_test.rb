@@ -59,18 +59,18 @@ describe Azure::Storage::Table::TableService do
       assert does_not_exist
 
       etag = subject.insert_or_merge_entity table_name, entity
-      etag.must_be_kind_of String
+      _(etag).must_be_kind_of String
 
       result = subject.get_entity table_name, entity["PartitionKey"], entity["RowKey"]
 
-      result.must_be_kind_of Azure::Storage::Table::Entity
-      result.etag.must_equal etag
+      _(result).must_be_kind_of Azure::Storage::Table::Entity
+      _(result.etag).must_equal etag
 
       entity.each { |k, v|
         unless entity[k].class == Time
-          result.properties[k].must_equal entity[k]
+          _(result.properties[k]).must_equal entity[k]
         else
-          result.properties[k].to_i.must_equal entity[k].to_i
+          _(result.properties[k].to_i).must_equal entity[k].to_i
         end
       }
     end
@@ -98,25 +98,25 @@ describe Azure::Storage::Table::TableService do
         "NewCustomProperty" => "NewCustomValue",
         "NewNilProperty" => nil
 
-      etag.must_be_kind_of String
+      _(etag).must_be_kind_of String
       etag.wont_equal existing_etag
 
       result = subject.get_entity table_name, entity["PartitionKey"], entity["RowKey"]
 
-      result.must_be_kind_of Azure::Storage::Table::Entity
+      _(result).must_be_kind_of Azure::Storage::Table::Entity
 
       # retained all existing props
       entity.each { |k, v|
         if entity[k].class == Time
-          result.properties[k].to_i.must_equal entity[k].to_i
+          _(result.properties[k].to_i).must_equal entity[k].to_i
         else
-          result.properties[k].must_equal entity[k]
+          _(result.properties[k]).must_equal entity[k]
         end
       }
 
       # and has the new one
-      result.properties["NewCustomProperty"].must_equal "NewCustomValue"
-      result.properties["NewNilProperty"].must_equal nil
+      _(result.properties["NewCustomProperty"]).must_equal "NewCustomValue"
+      _(result.properties["NewNilProperty"]).must_equal nil
     end
 
     it "errors on an invalid table name" do

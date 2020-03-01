@@ -41,13 +41,13 @@ describe Azure::Storage::File::FileService do
 
     it "sets and gets custom metadata for the share" do
       result = subject.set_share_metadata share_name, metadata
-      result.must_be_nil
+      _(result).must_be_nil
       share = subject.get_share_metadata share_name
-      share.wont_be_nil
-      share.name.must_equal share_name
+      _(share).wont_be_nil
+      _(share.name).must_equal share_name
       metadata.each { |k, v|
-        share.metadata.must_include k.downcase
-        share.metadata[k.downcase].must_equal v
+        _(share.metadata).must_include k.downcase
+        _(share.metadata[k.downcase]).must_equal v
       }
     end
 

@@ -66,12 +66,12 @@ describe Azure::Storage::Table::TableService do
       etags = subject.execute_batch batch
 
       # etag for first (and only) operation
-      etags[0].must_be_kind_of String
+      _(etags[0]).must_be_kind_of String
       etags[0].wont_equal @existing_etag
 
       result = subject.get_entity table_name, entity_properties["PartitionKey"], entity_properties["RowKey"]
 
-      result.must_be_kind_of Azure::Storage::Table::Entity
+      _(result).must_be_kind_of Azure::Storage::Table::Entity
 
       # removed all existing props
       entity_properties.each { |k, v|
@@ -79,7 +79,7 @@ describe Azure::Storage::Table::TableService do
       }
 
       # and has the new one
-      result.properties["NewCustomProperty"].must_equal "NewCustomValue"
+      _(result.properties["NewCustomProperty"]).must_equal "NewCustomValue"
     end
 
     it "updates an existing entity, removing any properties not included in the update operation and adding nil one" do
@@ -90,12 +90,12 @@ describe Azure::Storage::Table::TableService do
       etags = subject.execute_batch batch
 
       # etag for first (and only) operation
-      etags[0].must_be_kind_of String
+      _(etags[0]).must_be_kind_of String
       etags[0].wont_equal @existing_etag
 
       result = subject.get_entity table_name, entity_properties["PartitionKey"], entity_properties["RowKey"]
 
-      result.must_be_kind_of Azure::Storage::Table::Entity
+      _(result).must_be_kind_of Azure::Storage::Table::Entity
 
       # removed all existing props
       entity_properties.each { |k, v|
@@ -103,7 +103,7 @@ describe Azure::Storage::Table::TableService do
       }
 
       # and has the new one
-      result.properties["NewCustomProperty"].must_equal nil
+      _(result.properties["NewCustomProperty"]).must_equal nil
     end
 
     it "errors on a non-existing row key" do

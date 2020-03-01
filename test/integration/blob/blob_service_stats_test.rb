@@ -31,9 +31,9 @@ describe Azure::Storage::Blob::BlobService do
   describe "#get_service_stats" do
     it "gets service stats" do
       stats = subject.get_service_stats
-      stats.geo_replication.must_be_kind_of Azure::Storage::Common::Service::GeoReplication
-      stats.geo_replication.status.must_equal "live"
-      stats.geo_replication.last_sync_time.must_be_kind_of Time
+      _(stats.geo_replication).must_be_kind_of Azure::Storage::Common::Service::GeoReplication
+      _(stats.geo_replication.status).must_equal "live"
+      _(stats.geo_replication.last_sync_time).must_be_kind_of Time
     end
   end
 end

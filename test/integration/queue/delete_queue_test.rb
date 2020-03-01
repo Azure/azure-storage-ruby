@@ -33,7 +33,7 @@ describe Azure::Storage::Queue::QueueService do
 
     it "deletes a queue and returns nil on success" do
       result = subject.delete_queue(queue_name)
-      result.must_be_nil
+      _(result).must_be_nil
       result = subject.list_queues
       result.each { |q| q.name.wont_equal queue_name }
     end

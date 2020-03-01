@@ -75,7 +75,7 @@ describe "Blob GB-18030" do
         subject.create_block_blob container_name, test_name, "hi"
         blobs = subject.list_blobs container_name
         blobs.each { |value|
-          value.name.must_equal test_name
+          _(value.name).must_equal test_name
         }
         subject.delete_blob container_name, test_name
       end
@@ -93,7 +93,7 @@ describe "Blob GB-18030" do
         subject.create_block_blob container_name, test_name, "hi"
         blobs = subject.list_blobs container_name
         blobs.each { |value|
-          value.name.encode("UTF-8").must_equal test_name.encode("UTF-8")
+          _(value.name.encode("UTF-8")).must_equal test_name.encode("UTF-8")
         }
         subject.delete_blob container_name, test_name
       end
@@ -107,7 +107,7 @@ describe "Blob GB-18030" do
         subject.set_blob_metadata container_name, blob_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
-        error.status_code.must_equal 400
+        _(error.status_code).must_equal 400
       end
     }
   end
@@ -119,7 +119,7 @@ describe "Blob GB-18030" do
         subject.set_blob_metadata container_name, blob_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
-        error.status_code.must_equal 400
+        _(error.status_code).must_equal 400
       end
     }
   end
@@ -132,7 +132,7 @@ describe "Blob GB-18030" do
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
         # TODO: Error should really be 400
-        error.status_code.must_equal 403
+        _(error.status_code).must_equal 403
       end
     }
   end
@@ -145,7 +145,7 @@ describe "Blob GB-18030" do
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
         # TODO: Error should really be 400
-        error.status_code.must_equal 403
+        _(error.status_code).must_equal 403
       end
     }
   end
@@ -156,7 +156,7 @@ describe "Blob GB-18030" do
       content = v.encode("UTF-8")
       subject.create_block_blob container_name, blob_name, content
       blob, returned_content = subject.get_blob container_name, blob_name
-      returned_content.must_equal content
+      _(returned_content).must_equal content
     }
   end
 
@@ -169,7 +169,7 @@ describe "Blob GB-18030" do
       blob, returned_content = subject.get_blob container_name, blob_name
       charset = blob.properties[:content_type][blob.properties[:content_type].index("charset=") + "charset=".length...blob.properties[:content_type].length]
       returned_content.force_encoding(charset)
-      returned_content.must_equal content
+      _(returned_content).must_equal content
     }
   end
 
@@ -186,7 +186,7 @@ describe "Blob GB-18030" do
       blob, returned_content = subject.get_blob container_name, blob_name
       charset = blob.properties[:content_type][blob.properties[:content_type].index("charset=") + "charset=".length...blob.properties[:content_type].length]
       returned_content.force_encoding(charset)
-      returned_content.must_equal content
+      _(returned_content).must_equal content
     }
   end
 
@@ -203,7 +203,7 @@ describe "Blob GB-18030" do
       blob, returned_content = subject.get_blob container_name, blob_name
       charset = blob.properties[:content_type][blob.properties[:content_type].index("charset=") + "charset=".length...blob.properties[:content_type].length]
       returned_content.force_encoding(charset)
-      returned_content.must_equal content
+      _(returned_content).must_equal content
     }
   end
 end

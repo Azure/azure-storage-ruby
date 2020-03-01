@@ -37,7 +37,7 @@ describe Azure::Storage::File::FileService do
 
     it "creates the directory" do
       directory = subject.create_directory share_name, directory_name
-      directory.name.must_equal directory_name
+      _(directory.name).must_equal directory_name
     end
 
     it "creates the directory with custom metadata" do
@@ -45,13 +45,13 @@ describe Azure::Storage::File::FileService do
 
       directory = subject.create_directory share_name, directory_name, metadata: metadata
 
-      directory.name.must_equal directory_name
-      directory.metadata.must_equal metadata
+      _(directory.name).must_equal directory_name
+      _(directory.metadata).must_equal metadata
       directory = subject.get_directory_metadata share_name, directory_name
 
       metadata.each { |k, v|
-        directory.metadata.must_include k.downcase
-        directory.metadata[k.downcase].must_equal v
+        _(directory.metadata).must_include k.downcase
+        _(directory.metadata[k.downcase]).must_equal v
       }
     end
 

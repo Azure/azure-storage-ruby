@@ -39,22 +39,22 @@ describe Azure::Storage::Blob::BlobService do
 
     it "creates a page blob" do
       blob = subject.create_page_blob container_name, blob_name, length
-      blob.name.must_equal blob_name
-      is_boolean(blob.encrypted).must_equal true
+      _(blob.name).must_equal blob_name
+      _(is_boolean(blob.encrypted)).must_equal true
       blob = subject.get_blob_properties container_name, blob_name
-      blob.properties[:content_type].must_equal "application/octet-stream"
+      _(blob.properties[:content_type]).must_equal "application/octet-stream"
     end
 
     it "creates page blob with non uri encoded path" do
       blob = subject.create_page_blob container_name, "фбаф.jpg", length
-      blob.name.must_equal "фбаф.jpg"
-      is_boolean(blob.encrypted).must_equal true
+      _(blob.name).must_equal "фбаф.jpg"
+      _(is_boolean(blob.encrypted)).must_equal true
     end
 
     it "creates a page blob with complex name" do
       blob = subject.create_page_blob container_name, complex_blob_name, length
-      blob.name.must_equal complex_blob_name
-      is_boolean(blob.encrypted).must_equal true
+      _(blob.name).must_equal complex_blob_name
+      _(is_boolean(blob.encrypted)).must_equal true
 
       complex_blob_name.force_encoding("UTF-8")
       found_complex_name = false
@@ -63,7 +63,7 @@ describe Azure::Storage::Blob::BlobService do
         found_complex_name = true if blob.name == complex_blob_name
       }
 
-      found_complex_name.must_equal true
+      _(found_complex_name).must_equal true
     end
 
     it "sets additional properties when the options hash is used" do
@@ -77,17 +77,17 @@ describe Azure::Storage::Blob::BlobService do
 
       blob = subject.create_page_blob container_name, blob_name, length, options
       blob = subject.get_blob_properties container_name, blob_name
-      is_boolean(blob.encrypted).must_equal true
-      blob.name.must_equal blob_name
-      blob.properties[:blob_type].must_equal "PageBlob"
-      blob.properties[:content_type].must_equal options[:content_type]
-      blob.properties[:content_encoding].must_equal options[:content_encoding]
-      blob.properties[:cache_control].must_equal options[:cache_control]
-      blob.metadata["custommetadataproperty"].must_equal "CustomMetadataValue"
+      _(is_boolean(blob.encrypted)).must_equal true
+      _(blob.name).must_equal blob_name
+      _(blob.properties[:blob_type]).must_equal "PageBlob"
+      _(blob.properties[:content_type]).must_equal options[:content_type]
+      _(blob.properties[:content_encoding]).must_equal options[:content_encoding]
+      _(blob.properties[:cache_control]).must_equal options[:cache_control]
+      _(blob.metadata["custommetadataproperty"]).must_equal "CustomMetadataValue"
 
       blob = subject.get_blob_metadata container_name, blob_name
-      blob.name.must_equal blob_name
-      blob.metadata["custommetadataproperty"].must_equal "CustomMetadataValue"
+      _(blob.name).must_equal blob_name
+      _(blob.metadata["custommetadataproperty"]).must_equal "CustomMetadataValue"
     end
 
     it "errors if the container does not exist" do
@@ -116,11 +116,11 @@ describe Azure::Storage::Blob::BlobService do
         status_code = e.status_code.to_s
         description = e.description
       end
-      status_code.must_equal "412"
-      description.must_include "There is currently a lease on the blob and no lease ID was specified in the request."
+      _(status_code).must_equal "412"
+      _(description).must_include "There is currently a lease on the blob and no lease ID was specified in the request."
       # assert correct lease works
       blob = subject.create_page_blob container_name, page_blob_name, length, lease_id: lease_id
-      blob.name.must_equal page_blob_name
+      _(blob.name).must_equal page_blob_name
     end
   end
 end

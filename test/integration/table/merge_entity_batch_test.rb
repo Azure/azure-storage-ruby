@@ -66,26 +66,26 @@ describe Azure::Storage::Table::TableService do
         "NewCustomProperty" => "NewCustomValue"
       etags = subject.execute_batch batch
 
-      etags[0].must_be_kind_of String
+      _(etags[0]).must_be_kind_of String
       etags[0].wont_equal @existing_etag
 
       result = subject.get_entity table_name, entity_properties["PartitionKey"], entity_properties["RowKey"]
 
-      result.must_be_kind_of Azure::Storage::Table::Entity
-      result.properties["PartitionKey"].must_equal entity_properties["PartitionKey"]
-      result.properties["RowKey"].must_equal entity_properties["RowKey"]
+      _(result).must_be_kind_of Azure::Storage::Table::Entity
+      _(result.properties["PartitionKey"]).must_equal entity_properties["PartitionKey"]
+      _(result.properties["RowKey"]).must_equal entity_properties["RowKey"]
 
       # retained all existing props
       entity_properties.each { |k, v|
         unless entity_properties[k].class == Time
-          result.properties[k].must_equal entity_properties[k]
+          _(result.properties[k]).must_equal entity_properties[k]
         else
-          result.properties[k].to_i.must_equal entity_properties[k].to_i
+          _(result.properties[k].to_i).must_equal entity_properties[k].to_i
         end
       }
 
       # and has the new one
-      result.properties["NewCustomProperty"].must_equal "NewCustomValue"
+      _(result.properties["NewCustomProperty"]).must_equal "NewCustomValue"
     end
 
     it "errors on a non-existing row key" do

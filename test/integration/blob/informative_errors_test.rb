@@ -39,9 +39,9 @@ describe Azure::Storage::Blob::BlobService do
         subject.create_container container_name
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
-        error.status_code.must_equal 409
-        error.type.must_equal "ContainerAlreadyExists"
-        error.description.start_with?("The specified container already exists.").must_equal true
+        _(error.status_code).must_equal 409
+        _(error.type).must_equal "ContainerAlreadyExists"
+        _(error.description.start_with?("The specified container already exists.")).must_equal true
       end
     end
   end

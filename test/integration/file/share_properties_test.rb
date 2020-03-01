@@ -36,14 +36,14 @@ describe Azure::Storage::File::FileService do
       properties = share.properties
 
       share = subject.get_share_properties share_name
-      share.wont_be_nil
-      share.name.must_equal share_name
-      share.properties[:etag].must_equal properties[:etag]
-      share.properties[:last_modified].must_equal properties[:last_modified]
+      _(share).wont_be_nil
+      _(share.name).must_equal share_name
+      _(share.properties[:etag]).must_equal properties[:etag]
+      _(share.properties[:last_modified]).must_equal properties[:last_modified]
 
       metadata.each { |k, v|
-        share.metadata.must_include k.downcase
-        share.metadata[k.downcase].must_equal v
+        _(share.metadata).must_include k.downcase
+        _(share.metadata[k.downcase]).must_equal v
       }
     end
 
@@ -64,15 +64,15 @@ describe Azure::Storage::File::FileService do
       properties = share.properties
 
       share = subject.set_share_properties share_name, quota: share_quota
-      share.must_be_nil
+      _(share).must_be_nil
 
       share = subject.get_share_properties share_name
-      share.name.must_equal share_name
-      share.quota.must_equal share_quota
+      _(share.name).must_equal share_name
+      _(share.quota).must_equal share_quota
 
       metadata.each { |k, v|
-        share.metadata.must_include k.downcase
-        share.metadata[k.downcase].must_equal v
+        _(share.metadata).must_include k.downcase
+        _(share.metadata[k.downcase]).must_equal v
       }
     end
 

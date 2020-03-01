@@ -44,28 +44,28 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
       connection_string = "BlobEndpoint=https://#{SERVICE_CREATE_OPTIONS()[:storage_account_name]}.blob.core.windows.net;SharedAccessSignature=#{sas_token}"
       client = Azure::Storage::Blob::BlobService::create_from_connection_string connection_string
       blob_properties = client.get_blob_properties container_name, blob_name
-      blob_properties.wont_be_nil
-      blob_properties.name.must_equal blob_name
-      blob_properties.properties[:last_modified].wont_be_nil
-      blob_properties.properties[:etag].wont_be_nil
-      blob_properties.properties[:content_length].must_equal 512
-      blob_properties.properties[:blob_type].must_equal "BlockBlob"
+      _(blob_properties).wont_be_nil
+      _(blob_properties.name).must_equal blob_name
+      _(blob_properties.properties[:last_modified]).wont_be_nil
+      _(blob_properties.properties[:etag]).wont_be_nil
+      _(blob_properties.properties[:content_length]).must_equal 512
+      _(blob_properties.properties[:blob_type]).must_equal "BlockBlob"
     end
 
     it "access default signer would not throw exception"  do
-      Azure::Storage::Common::Default::signer.must_be_nil
+      _(Azure::Storage::Common::Default::signer).must_be_nil
     end
 
     it "reads the blob properties with an object level SAS" do
       sas_token = generator.generate_account_sas_token service: "b", resource: "o", permissions: "r"
       client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       blob_properties = client.get_blob_properties container_name, blob_name
-      blob_properties.wont_be_nil
-      blob_properties.name.must_equal blob_name
-      blob_properties.properties[:last_modified].wont_be_nil
-      blob_properties.properties[:etag].wont_be_nil
-      blob_properties.properties[:content_length].must_equal 512
-      blob_properties.properties[:blob_type].must_equal "BlockBlob"
+      _(blob_properties).wont_be_nil
+      _(blob_properties.name).must_equal blob_name
+      _(blob_properties.properties[:last_modified]).wont_be_nil
+      _(blob_properties.properties[:etag]).wont_be_nil
+      _(blob_properties.properties[:content_length]).must_equal 512
+      _(blob_properties.properties[:blob_type]).must_equal "BlockBlob"
     end
 
     it "fails to read the blob properties using an object level SAS without permission" do
@@ -80,7 +80,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
       sas_token = generator.generate_account_sas_token service: "b", resource: "c", permissions: "l"
       client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       blobs = client.list_blobs container_name
-      blobs.wont_be_nil
+      _(blobs).wont_be_nil
       assert blobs.length > 0
     end
 
@@ -96,7 +96,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
       sas_token = generator.generate_account_sas_token service: "b", resource: "s", permissions: "l"
       client = Azure::Storage::Blob::BlobService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       containers = client.list_containers
-      containers.wont_be_nil
+      _(containers).wont_be_nil
       assert containers.length > 0
     end
 
@@ -129,24 +129,24 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
       connection_string = "FileEndpoint=https://#{SERVICE_CREATE_OPTIONS()[:storage_account_name]}.file.core.windows.net;SharedAccessSignature=#{sas_token}"
       client = Azure::Storage::File::FileService::create_from_connection_string connection_string
       file_properties = client.get_file_properties share_name, directory_name, file_name
-      file_properties.wont_be_nil
-      file_properties.name.must_equal file_name
-      file_properties.properties[:last_modified].wont_be_nil
-      file_properties.properties[:etag].wont_be_nil
-      file_properties.properties[:content_length].must_equal file_length
-      file_properties.properties[:type].must_equal "File"
+      _(file_properties).wont_be_nil
+      _(file_properties.name).must_equal file_name
+      _(file_properties.properties[:last_modified]).wont_be_nil
+      _(file_properties.properties[:etag]).wont_be_nil
+      _(file_properties.properties[:content_length]).must_equal file_length
+      _(file_properties.properties[:type]).must_equal "File"
     end
 
     it "reads the file properties with an object level SAS" do
       sas_token = generator.generate_account_sas_token service: "f", resource: "o", permissions: "r"
       client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       file_properties = client.get_file_properties share_name, directory_name, file_name
-      file_properties.wont_be_nil
-      file_properties.name.must_equal file_name
-      file_properties.properties[:last_modified].wont_be_nil
-      file_properties.properties[:etag].wont_be_nil
-      file_properties.properties[:content_length].must_equal file_length
-      file_properties.properties[:type].must_equal "File"
+      _(file_properties).wont_be_nil
+      _(file_properties.name).must_equal file_name
+      _(file_properties.properties[:last_modified]).wont_be_nil
+      _(file_properties.properties[:etag]).wont_be_nil
+      _(file_properties.properties[:content_length]).must_equal file_length
+      _(file_properties.properties[:type]).must_equal "File"
     end
 
     it "fails to read the file properties using an object level SAS without permission" do
@@ -161,7 +161,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
       sas_token = generator.generate_account_sas_token service: "f", resource: "c", permissions: "l"
       client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       directories = client.list_directories_and_files share_name, nil
-      directories.wont_be_nil
+      _(directories).wont_be_nil
       assert directories.length > 0
     end
 
@@ -177,7 +177,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
       sas_token = generator.generate_account_sas_token service: "f", resource: "s", permissions: "l"
       client = Azure::Storage::File::FileService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
       shares = client.list_shares
-      shares.wont_be_nil
+      _(shares).wont_be_nil
       assert shares.length > 0
     end
 
