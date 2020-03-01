@@ -24,15 +24,15 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 source "https://rubygems.org" do
-  gem "faraday",             "~> 0.9", :require => false
-  gem "faraday_middleware",  "~> 0.10", :require => false
-  gem "nokogiri",            "~> 1.6", ">= 1.6.8", :require => false
+  gem "faraday",             "~> 1.0", :require => false
+  gem "faraday_middleware", :require => false
+  gem "nokogiri",            "~> 1.10.4", :require => false
 
   gem "dotenv",              "~> 2.0", :require => false
   gem "minitest",            "~> 5", :require => false
   gem "minitest-reporters",  "~> 1", :require => false
   gem "mocha",               "~> 1.0", :require => false
-  gem "rake",                "~> 10.0", :require => false
+  gem "rake",                "~> 13.0", :require => false
   gem "timecop",             "~> 0.7", :require => false
   gem "yard",                "~> 0.9", ">= 0.9.11", :require => false
   gem "coveralls",           require: false
