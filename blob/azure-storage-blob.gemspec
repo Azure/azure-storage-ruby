@@ -38,17 +38,16 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
   s.files       = `git ls-files ./lib/azure/storage/blob/`.split("\n") << "./lib/azure/storage/blob.rb"
 
-  s.required_ruby_version = ">= 1.9.3"
+  s.required_ruby_version = ">= 2.3.0"
 
-  s.add_runtime_dependency("azure-core",              "~> 0.1.13")
   s.add_runtime_dependency("azure-storage-common",    "~> 1.0")
-  s.add_runtime_dependency("nokogiri",                "~> 1.6", ">= 1.6.8")
+  s.add_runtime_dependency("nokogiri",                "~> 1.10.4")
 
   s.add_development_dependency("dotenv",              "~> 2.0")
   s.add_development_dependency("minitest",            "~> 5")
   s.add_development_dependency("minitest-reporters",  "~> 1")
   s.add_development_dependency("mocha",               "~> 1.0")
-  s.add_development_dependency("rake",                "~> 10.0")
+  s.add_development_dependency("rake",                "~> 13.0")
   s.add_development_dependency("timecop",             "~> 0.7")
   s.add_development_dependency("yard",                "~> 0.9", ">= 0.9.11")
 end
