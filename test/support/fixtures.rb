@@ -21,7 +21,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-require "pathname"
+require "azure/core/http/retry_policy"
 
 Fixtures = Hash.new do |hash, fixture|
   if path = Fixtures.xml?(fixture)
@@ -48,4 +48,49 @@ end
 
 def Fixtures.json?(fixture)
   file?("#{fixture}.json")
+end
+
+module Azure
+  module Core
+    Fixtures = Hash.new do |hash, fixture|
+      if path = Fixtures.xml?(fixture)
+        hash[fixture] = path.read
+      elsif path = Fixtures.file?(fixture)
+        hash[fixture] = path
+      end
+    end
+    def Fixtures.root
+      Pathname("../../fixtures").expand_path(__FILE__)
+    end
+    def Fixtures.file?(fixture)
+      path = root.join(fixture)
+      path.file? && path
+    end
+    def Fixtures.xml?(fixture)
+      file?("#{fixture}.xml")
+    end
+    
+    class FixtureRetryPolicy < Azure::Core::Http::RetryPolicy
+      def initialize
+        super &:should_retry?
+      end
+      def should_retry?(response, retry_data)
+        retry_data[:error].inspect.include?('Error: Retry')
+      end
+    end
+
+    class NewUriRetryPolicy < Azure::Core::Http::RetryPolicy
+      def initialize
+        @count = 1
+        super &:should_retry?
+      end
+
+      def should_retry?(response, retry_data)
+        retry_data[:uri] = URI.parse "http://bar.com"
+        @count = @count - 1
+        @count >= 0
+      end
+    end
+
+  end
 end
