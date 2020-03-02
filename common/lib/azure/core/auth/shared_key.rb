@@ -57,6 +57,14 @@ module Azure
         #
         # @return       [Azure::Core::Http::HttpRequest]
         def sign_request(req)
+          # Need to make sure Content-Length is correctly set.
+          if ((!req.body.nil?)) then
+            if (req.body.respond_to? :bytesize) then
+              req.headers['Content-Length'] = req.body.bytesize.to_s
+            elsif (req.body.respond_to? :size)
+              req.headers['Content-Length'] = req.body.size.to_s
+            end
+          end
           req.headers['Authorization'] = "#{name} #{sign(req.method, req.uri, req.headers)}"
           req
         end
