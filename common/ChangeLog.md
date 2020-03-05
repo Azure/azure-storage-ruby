@@ -1,3 +1,8 @@
+2020.3 - version 2.0.0
+* This module now supports Ruby versions to 2.3 through 2.7
+* Add support for generating user delegation shared access signatures.
+* Update the storage API version used to generate shared access signatures to 2018-11-09.
+
 2018.11 - version 1.1.0
 * Added the support for sending a request with a bearer token.
 * Added the configuration for SSL versions.

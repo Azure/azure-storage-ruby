@@ -9,12 +9,12 @@ This project provides a Ruby package that makes it easy to access and manage Mic
 
 # Supported Ruby Versions
 
-* Ruby 1.9.3 to 2.5
+* Ruby 2.3 to 2.7
 
 Note: 
 
 * x64 Ruby for Windows is known to have some compatibility issues.
-* azure-storage-blob depends on gem nokogiri. For Ruby version lower than 2.2, please install the compatible nokogiri before trying to install azure-storage-blob.
+* azure-storage-blob depends on gem nokogiri.
 
 # Getting Started
 

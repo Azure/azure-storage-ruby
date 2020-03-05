@@ -8,12 +8,12 @@ This project provides a Ruby package that supports service client libraries.
 
 # Supported Ruby Versions
 
-* Ruby 1.9.3 to 2.5
+* Ruby 2.3 to 2.7
 
 Note: 
 
 * x64 Ruby for Windows is known to have some compatibility issues.
-* azure-storage-common depends on gem nokogiri. For Ruby version lower than 2.2, please install the compatible nokogiri before trying to install azure-storage.
+* azure-storage-common depends on gem nokogiri.
 
 # Getting Started
 
