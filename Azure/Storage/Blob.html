@@ -6,15 +6,15 @@
 <title>
   Module: Azure::Storage::Blob
   
-    &mdash; Documentation by YARD 0.9.16
+    &mdash; Documentation by YARD 0.9.24
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "Azure::Storage::Blob";
   relpath = '../../';
 </script>
@@ -918,8 +918,7 @@ destination blob has an active infinite lease</p>
 <p><code>:request_id</code>           - String. Provides a client-generated,
 opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1012,57 +1011,49 @@ client must provide a lease ID.</p>
 <p><code>:duration</code>                  - Integer. Default -1. Specifies
 the duration of the lease, in seconds, or negative one (-1)</p>
 
-<pre class="code ruby"><code class="ruby">for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. (optional)
-</code></pre>
+<pre class="code ruby"><code class="ruby">for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. (optional)</code></pre>
 </li><li>
 <p><code>:proposed_lease_id</code>         - String. Proposed lease ID, in a
 GUID string format. The Blob service returns 400 (Invalid request)</p>
 
-<pre class="code ruby"><code class="ruby">if the proposed lease ID is not in the correct format. (optional)
-</code></pre>
+<pre class="code ruby"><code class="ruby">if the proposed lease ID is not in the correct format. (optional)</code></pre>
 </li><li>
 <p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to acquire the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to acquire the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to acquire the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to acquire the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:origin</code>                    - String. Optional. Specifies the
 origin from which the request is issued. The presence of this header
 results</p>
 
-<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1146,42 +1137,36 @@ equal to this number</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to append a block only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to append a block only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to append a block only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to append a block only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. Required if the blob has
 an active lease. To perform this operation on a blob with an</p>
 
-<pre class="code ruby"><code class="ruby">active lease, specify the valid lease ID for this header.
-</code></pre>
+<pre class="code ruby"><code class="ruby">active lease, specify the valid lease ID for this header.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1297,51 +1282,44 @@ new lease will not be available before the break period has expired, but the lea
 be held for longer than the break period.
 
 If this option is not used, a fixed-duration lease breaks after the remaining lease
-period elapses, and an infinite lease breaks immediately.
-</code></pre>
+period elapses, and an infinite lease breaks immediately.</code></pre>
 </li><li>
 <p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to break the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to break the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to break the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to break the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:origin</code>                    - String. Optional. Specifies the
 origin from which the request is issued. The presence of this header
 results</p>
 
-<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1404,8 +1382,7 @@ immediate, 0 is returned.</p>
 <p><code>proposed_lease</code>             - String. Proposed lease ID, in a
 GUID string format. The Blob service returns 400 (Invalid request)</p>
 
-<pre class="code ruby"><code class="ruby">if the proposed lease ID is not in the correct format. (optional).
-</code></pre>
+<pre class="code ruby"><code class="ruby">if the proposed lease ID is not in the correct format. (optional).</code></pre>
 </li><li>
 <p><code>options</code>                    - Hash. Optional parameters.</p>
 </li></ul>
@@ -1419,43 +1396,37 @@ GUID string format. The Blob service returns 400 (Invalid request)</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to change the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to change the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to change the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to change the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:origin</code>                    - String. Optional. Specifies the
 origin from which the request is issued. The presence of this header
 results</p>
 
-<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1528,36 +1499,31 @@ of last page.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to clear the page only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to clear the page only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to clear the page only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to clear the page only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1704,8 +1670,7 @@ blob. Will be saved with blob.</p>
 <p><code>:content_disposition</code>       - String. Conveys additional
 information about how to process the response payload,</p>
 
-<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata
-</code></pre>
+<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata</code></pre>
 </li><li>
 <p><code>:metadata</code>                  - Hash. Custom metadata values to
 store with the blob.</p>
@@ -1715,14 +1680,12 @@ store with the blob.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. Required if the blob has
 an active lease. To perform this operation on a blob with an</p>
 
-<pre class="code ruby"><code class="ruby">active lease, specify the valid lease ID for this header.
-</code></pre>
+<pre class="code ruby"><code class="ruby">active lease, specify the valid lease ID for this header.</code></pre>
 </li></ul>
 
 <p>This operation also supports the use of conditional headers to commit the
@@ -1849,72 +1812,62 @@ store with the copy. If this parameter is not</p>
 
 <pre class="code ruby"><code class="ruby">specified, the operation will copy the source blob metadata to the destination
 blob. If this parameter is specified, the destination blob is created with the
-specified metadata, and metadata is not copied from the source blob.
-</code></pre>
+specified metadata, and metadata is not copied from the source blob.</code></pre>
 </li><li>
 <p><code>:source_if_modified_since</code>   - String. A DateTime value.
 Specify this option to write the page only if the source blob</p>
 
 <pre class="code ruby"><code class="ruby">has been modified since the specified date/time. If the blob has not been
-modified, the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+modified, the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:source_if_unmodified_since</code> - String. A DateTime value.
 Specify this option to write the page only if the source blob</p>
 
 <pre class="code ruby"><code class="ruby">has not been modified since the specified date/time. If the blob has been
-modified, the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+modified, the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:source_if_match</code>            - String. An ETag value. Specify
 an ETag value to write the page only if the source blob&#39;s</p>
 
 <pre class="code ruby"><code class="ruby">ETag value matches the value specified. If the values do not match, the Blob
-service returns status code 412 (Precondition Failed).
-</code></pre>
+service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:source_if_none_match</code>       - String. An ETag value. Specify
 an ETag value to write the page only if the source blob&#39;s</p>
 
 <pre class="code ruby"><code class="ruby">ETag value does not match the value specified. If the values are identical, the
-Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:dest_if_modified_since</code>     - String. A DateTime value.
 Specify this option to write the page only if the destination</p>
 
 <pre class="code ruby"><code class="ruby">blob has been modified since the specified date/time. If the blob has not been
-modified, the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+modified, the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:dest_if_unmodified_since</code>   - String. A DateTime value.
 Specify this option to write the page only if the destination</p>
 
 <pre class="code ruby"><code class="ruby">blob has not been modified since the specified date/time. If the blob has been
-modified, the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+modified, the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:dest_if_match</code>              - String. An ETag value. Specify
 an ETag value to write the page only if the destination</p>
 
 <pre class="code ruby"><code class="ruby">blob&#39;s ETag value matches the value specified. If the values do not match, the
-Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:dest_if_none_match</code>         - String. An ETag value. Specify
 an ETag value to write the page only if the destination</p>
 
 <pre class="code ruby"><code class="ruby">blob&#39;s ETag value does not match the value specified. If the values are
-identical, the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+identical, the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:timeout</code>                    - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                 - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:lease_id</code>                   - String. Required if the
 destination blob has an active lease. The lease ID specified for</p>
@@ -1924,8 +1877,7 @@ the lease ID or it is not valid, the operation fails with status code 412 (Preco
 If this header is specified and the destination blob does not currently have an active lease,
 the operation will also fail with status code 412 (Precondition Failed).
 In version 2012-02-12 and newer, this value must specify an active, infinite lease for a
-leased blob. A finite-duration lease ID fails with 412 (Precondition Failed).
-</code></pre>
+leased blob. A finite-duration lease ID fails with 412 (Precondition Failed).</code></pre>
 </li></ul>
 
 <p>See <a
@@ -1936,15 +1888,13 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd894037.aspx">msdn.microsof
 <p><code>copy_id</code>                    - String identifier for this copy
 operation. Use with get_blob or get_blob_properties to check</p>
 
-<pre class="code ruby"><code class="ruby">the status of this copy operation, or pass to abort_copy_blob to abort a pending copy.
-</code></pre>
+<pre class="code ruby"><code class="ruby">the status of this copy operation, or pass to abort_copy_blob to abort a pending copy.</code></pre>
 </li><li>
 <p><code>copy_status</code>                - String. The state of the copy
 operation, with these values:</p>
 
 <pre class="code ruby"><code class="ruby">&quot;success&quot; - The copy completed successfully.
-&quot;pending&quot; - The copy is in progress.
-</code></pre>
+&quot;pending&quot; - The copy is in progress.</code></pre>
 </li></ul>
 
 
@@ -2018,72 +1968,62 @@ store with the copy. If this parameter is not</p>
 
 <pre class="code ruby"><code class="ruby">specified, the operation will copy the source blob metadata to the destination
 blob. If this parameter is specified, the destination blob is created with the
-specified metadata, and metadata is not copied from the source blob.
-</code></pre>
+specified metadata, and metadata is not copied from the source blob.</code></pre>
 </li><li>
 <p><code>:source_if_modified_since</code>   - String. A DateTime value.
 Specify this option to write the page only if the source blob</p>
 
 <pre class="code ruby"><code class="ruby">has been modified since the specified date/time. If the blob has not been
-modified, the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+modified, the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:source_if_unmodified_since</code> - String. A DateTime value.
 Specify this option to write the page only if the source blob</p>
 
 <pre class="code ruby"><code class="ruby">has not been modified since the specified date/time. If the blob has been
-modified, the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+modified, the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:source_if_match</code>            - String. An ETag value. Specify
 an ETag value to write the page only if the source blob&#39;s</p>
 
 <pre class="code ruby"><code class="ruby">ETag value matches the value specified. If the values do not match, the Blob
-service returns status code 412 (Precondition Failed).
-</code></pre>
+service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:source_if_none_match</code>       - String. An ETag value. Specify
 an ETag value to write the page only if the source blob&#39;s</p>
 
 <pre class="code ruby"><code class="ruby">ETag value does not match the value specified. If the values are identical, the
-Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:dest_if_modified_since</code>     - String. A DateTime value.
 Specify this option to write the page only if the destination</p>
 
 <pre class="code ruby"><code class="ruby">blob has been modified since the specified date/time. If the blob has not been
-modified, the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+modified, the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:dest_if_unmodified_since</code>   - String. A DateTime value.
 Specify this option to write the page only if the destination</p>
 
 <pre class="code ruby"><code class="ruby">blob has not been modified since the specified date/time. If the blob has been
-modified, the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+modified, the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:dest_if_match</code>              - String. An ETag value. Specify
 an ETag value to write the page only if the destination</p>
 
 <pre class="code ruby"><code class="ruby">blob&#39;s ETag value matches the value specified. If the values do not match, the
-Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:dest_if_none_match</code>         - String. An ETag value. Specify
 an ETag value to write the page only if the destination</p>
 
 <pre class="code ruby"><code class="ruby">blob&#39;s ETag value does not match the value specified. If the values are
-identical, the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+identical, the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:timeout</code>                    - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                 - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:lease_id</code>                   - String. Required if the
 destination blob has an active lease. The lease ID specified for</p>
@@ -2093,8 +2033,7 @@ the lease ID or it is not valid, the operation fails with status code 412 (Preco
 If this header is specified and the destination blob does not currently have an active lease,
 the operation will also fail with status code 412 (Precondition Failed).
 In version 2012-02-12 and newer, this value must specify an active, infinite lease for a
-leased blob. A finite-duration lease ID fails with 412 (Precondition Failed).
-</code></pre>
+leased blob. A finite-duration lease ID fails with 412 (Precondition Failed).</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2105,15 +2044,13 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd894037.aspx">msdn.microsof
 <p><code>copy_id</code>                    - String identifier for this copy
 operation. Use with get_blob or get_blob_properties to check</p>
 
-<pre class="code ruby"><code class="ruby">the status of this copy operation, or pass to abort_copy_blob to abort a pending copy.
-</code></pre>
+<pre class="code ruby"><code class="ruby">the status of this copy operation, or pass to abort_copy_blob to abort a pending copy.</code></pre>
 </li><li>
 <p><code>copy_status</code>                - String. The state of the copy
 operation, with these values:</p>
 
 <pre class="code ruby"><code class="ruby">&quot;success&quot; - The copy completed successfully.
-&quot;pending&quot; - The copy is in progress.
-</code></pre>
+&quot;pending&quot; - The copy is in progress.</code></pre>
 </li></ul>
 
 
@@ -2218,8 +2155,7 @@ blob. Will be saved with blob.</p>
 <p><code>:content_disposition</code>       - String. Conveys additional
 information about how to process the response payload,</p>
 
-<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata
-</code></pre>
+<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata</code></pre>
 </li><li>
 <p><code>:metadata</code>                  - Hash. Custom metadata values to
 store with the blob.</p>
@@ -2229,42 +2165,36 @@ store with the blob.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. Required if the blob has
 an active lease. To perform this operation on a blob with an active lease,</p>
 
-<pre class="code ruby"><code class="ruby">specify the valid lease ID for this header.
-</code></pre>
+<pre class="code ruby"><code class="ruby">specify the valid lease ID for this header.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2412,8 +2342,7 @@ blob. Will be saved with blob.</p>
 <p><code>:content_disposition</code>       - String. Conveys additional
 information about how to process the response payload,</p>
 
-<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata
-</code></pre>
+<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata</code></pre>
 </li><li>
 <p><code>:max_size</code>                  - Integer. The max length in bytes
 permitted for the append blob.</p>
@@ -2426,42 +2355,36 @@ store with the blob.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. Required if the blob has
 an active lease. To perform this operation on a blob with an active lease,</p>
 
-<pre class="code ruby"><code class="ruby">specify the valid lease ID for this header.
-</code></pre>
+<pre class="code ruby"><code class="ruby">specify the valid lease ID for this header.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2595,36 +2518,31 @@ store with the blob snapshot.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to create the blob snapshot</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to create the blob snapshot</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to create the blob snapshot</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to create the blob snapshot</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. If this header is
 specified, the operation will be performed only if both of the</p>
@@ -2633,8 +2551,7 @@ specified, the operation will be performed only if both of the</p>
  - The blob&#39;s lease is currently active.
  - The lease ID specified in the request matches that of the blob.
 If this header is specified and both of these conditions are not met, the request will fail
-and the Snapshot Blob operation will fail with status code 412 (Precondition Failed).
-</code></pre>
+and the Snapshot Blob operation will fail with status code 412 (Precondition Failed).</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2745,8 +2662,7 @@ content. This hash is used to verify the integrity of the blob during
 transport.</p>
 
 <pre class="code ruby"><code class="ruby">When this header is specified, the storage service checks the hash that has arrived with the one that was sent.
-If the two hashes do not match, the operation will fail with error code 400 (Bad Request).
-</code></pre>
+If the two hashes do not match, the operation will fail with error code 400 (Bad Request).</code></pre>
 </li><li>
 <p><code>:single_upload_threshold</code>   - Integer. Threshold in bytes for
 single upload, must be lower than 256MB or 256MB will be used.</p>
@@ -2773,8 +2689,7 @@ blob. Will be saved with blob.</p>
 <p><code>:content_disposition</code>       - String. Conveys additional
 information about how to process the response payload,</p>
 
-<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata
-</code></pre>
+<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata</code></pre>
 </li><li>
 <p><code>:metadata</code>                  - Hash. Custom metadata values to
 store with the blob.</p>
@@ -2784,42 +2699,36 @@ store with the blob.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. Required if the blob has
 an active lease. To perform this operation on a blob with an active lease,</p>
 
-<pre class="code ruby"><code class="ruby">specify the valid lease ID for this header.
-</code></pre>
+<pre class="code ruby"><code class="ruby">specify the valid lease ID for this header.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -2905,8 +2814,7 @@ blob, call put_blob_pages method.</p>
 <p><code>length</code>                     - Integer. Specifies the maximum
 size for the page blob, up to 1 TB.</p>
 
-<pre class="code ruby"><code class="ruby">The page blob size must be aligned to a 512-byte boundary.
-</code></pre>
+<pre class="code ruby"><code class="ruby">The page blob size must be aligned to a 512-byte boundary.</code></pre>
 </li><li>
 <p><code>options</code>                    - Hash. Optional parameters.</p>
 </li></ul>
@@ -2920,8 +2828,7 @@ content. This hash is used to verify the integrity of the blob during
 transport.</p>
 
 <pre class="code ruby"><code class="ruby">When this header is specified, the storage service checks the hash that has arrived with the one that was sent.
-If the two hashes do not match, the operation will fail with error code 400 (Bad Request).
-</code></pre>
+If the two hashes do not match, the operation will fail with error code 400 (Bad Request).</code></pre>
 </li><li>
 <p><code>:content_type</code>              - String. Content type for the
 blob. Will be saved with blob.</p>
@@ -2941,8 +2848,7 @@ blob. Will be saved with blob.</p>
 <p><code>:content_disposition</code>       - String. Conveys additional
 information about how to process the response payload,</p>
 
-<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata
-</code></pre>
+<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata</code></pre>
 </li><li>
 <p><code>:metadata</code>                  - Hash. Custom metadata values to
 store with the blob.</p>
@@ -2950,50 +2856,43 @@ store with the blob.</p>
 <p><code>:sequence_number</code>           - Integer. The sequence number is a
 user-controlled value that you can use to track requests.</p>
 
-<pre class="code ruby"><code class="ruby">The value of the sequence number must be between 0 and 2^63 - 1.The default value is 0.
-</code></pre>
+<pre class="code ruby"><code class="ruby">The value of the sequence number must be between 0 and 2^63 - 1.The default value is 0.</code></pre>
 </li><li>
 <p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. Required if the blob has
 an active lease. To perform this operation on a blob with an active lease,</p>
 
-<pre class="code ruby"><code class="ruby">specify the valid lease ID for this header.
-</code></pre>
+<pre class="code ruby"><code class="ruby">specify the valid lease ID for this header.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -3127,8 +3026,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx">msdn.microsof
 <p><code>length</code>                     - Integer. Specifies the maximum
 size for the page blob, up to 1 TB.</p>
 
-<pre class="code ruby"><code class="ruby">The page blob size must be aligned to a 512-byte boundary.
-</code></pre>
+<pre class="code ruby"><code class="ruby">The page blob size must be aligned to a 512-byte boundary.</code></pre>
 </li><li>
 <p><code>content</code>                    - String or IO. The content to put
 in the page blob.</p>
@@ -3158,8 +3056,7 @@ blob. Will be saved with blob.</p>
 <p><code>:content_disposition</code>       - String. Conveys additional
 information about how to process the response payload,</p>
 
-<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata
-</code></pre>
+<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata</code></pre>
 </li><li>
 <p><code>:metadata</code>                  - Hash. Custom metadata values to
 store with the blob.</p>
@@ -3167,50 +3064,43 @@ store with the blob.</p>
 <p><code>:sequence_number</code>           - Integer. The sequence number is a
 user-controlled value that you can use to track requests.</p>
 
-<pre class="code ruby"><code class="ruby">The value of the sequence number must be between 0 and 2^63 - 1.The default value is 0.
-</code></pre>
+<pre class="code ruby"><code class="ruby">The value of the sequence number must be between 0 and 2^63 - 1.The default value is 0.</code></pre>
 </li><li>
 <p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to create a new blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. Required if the blob has
 an active lease. To perform this operation on a blob with an active lease,</p>
 
-<pre class="code ruby"><code class="ruby">specify the valid lease ID for this header.
-</code></pre>
+<pre class="code ruby"><code class="ruby">specify the valid lease ID for this header.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -3318,51 +3208,44 @@ snapshot is specified in the snapshot parameter. (optional)
 
 Possible values include:
   * +:only+     - Deletes only the snapshots for the blob, but leaves the blob
-  * +:include+  - Deletes the blob and all of the snapshots for the blob
-</code></pre>
+  * +:include+  - Deletes the blob and all of the snapshots for the blob</code></pre>
 </li><li>
 <p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to create the blob snapshot</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to create the blob snapshot</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to create the blob snapshot</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to create the blob snapshot</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. Required if the blob has
 an active lease. To perform this operation on a blob with an</p>
 
 <pre class="code ruby"><code class="ruby">active lease, specify the valid lease ID for this header. If a valid lease ID is not specified
-on the request, the operation will fail with status code 403 (Forbidden).
-</code></pre>
+on the request, the operation will fail with status code 403 (Forbidden).</code></pre>
 </li></ul>
 
 <p>See <a
@@ -3476,42 +3359,36 @@ the range. This option only valid if</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:location_mode</code>             - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.
-</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to get the blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to get the blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to get the blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to get the blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. If this header is
 specified, the operation will be performed only if both of the</p>
@@ -3520,8 +3397,7 @@ specified, the operation will be performed only if both of the</p>
  - The blob&#39;s lease is currently active.
  - The lease ID specified in the request matches that of the blob.
 If this header is specified and both of these conditions are not met, the request will fail
-and the Get Blob operation will fail with status code 412 (Precondition Failed).
-</code></pre>
+and the Get Blob operation will fail with status code 412 (Precondition Failed).</code></pre>
 </li></ul>
 
 <p>See <a
@@ -3626,50 +3502,43 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179440.aspx">msdn.microsof
 <p><code>:snapshot</code>                  - String. An opaque DateTime value
 that specifies the blob snapshot to</p>
 
-<pre class="code ruby"><code class="ruby">retrieve information from.
-</code></pre>
+<pre class="code ruby"><code class="ruby">retrieve information from.</code></pre>
 </li><li>
 <p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:location_mode</code>             - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.
-</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to get the blob metadata</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to get the blob metadata</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to get the blob metadata</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to get the blob metadata</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. If this header is
 specified, the operation will be performed only if both of the</p>
@@ -3680,8 +3549,7 @@ specified, the operation will be performed only if both of the</p>
  - The lease ID specified in the request matches that of the blob.
 
 If this header is specified and both of these conditions are not met, the request will fail
-and the Get Blob Metadata operation will fail with status code 412 (Precondition Failed).
-</code></pre>
+and the Get Blob Metadata operation will fail with status code 412 (Precondition Failed).</code></pre>
 </li></ul>
 
 <p>See <a
@@ -3782,50 +3650,43 @@ href="http://msdn.microsoft.com/en-us/library/azure/dd179350.aspx">msdn.microsof
 <p><code>:snapshot</code>                  - String. An opaque DateTime value
 that specifies the blob snapshot to</p>
 
-<pre class="code ruby"><code class="ruby">retrieve information from.
-</code></pre>
+<pre class="code ruby"><code class="ruby">retrieve information from.</code></pre>
 </li><li>
 <p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:location_mode</code>             - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.
-</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to get the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to get the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to get the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to get the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. If this header is
 specified, the operation will be performed only if both of the</p>
@@ -3836,8 +3697,7 @@ specified, the operation will be performed only if both of the</p>
  - The lease ID specified in the request matches that of the blob.
 
 If this header is specified and both of these conditions are not met, the request will fail
-and the Get Blob Properties operation will fail with status code 412 (Precondition Failed).
-</code></pre>
+and the Get Blob Properties operation will fail with status code 412 (Precondition Failed).</code></pre>
 </li></ul>
 
 <p>See <a
@@ -3953,8 +3813,7 @@ source page blob snapshot.</p>
 value should be URL-encoded as it would appear in a request URI. The source blob must
 either be public or must be authenticated via a shared access signature. Here is an
 example of a source blob URL:
-  https://myaccount.blob.core.windows.net/mycontainer/myblob?snapshot=&lt;DateTime&gt;
-</code></pre>
+  https://myaccount.blob.core.windows.net/mycontainer/myblob?snapshot=&lt;DateTime&gt;</code></pre>
 </li><li>
 <p><code>options</code>                     - Hash. Optional parameters.</p>
 </li></ul>
@@ -3968,30 +3827,26 @@ store with the copy. If this parameter is not</p>
 
 <pre class="code ruby"><code class="ruby">specified, the operation will copy the source blob metadata to the destination
 blob. If this parameter is specified, the destination blob is created with the
-specified metadata, and metadata is not copied from the source blob.
-</code></pre>
+specified metadata, and metadata is not copied from the source blob.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>          - String. A DateTime value.
 Specify this conditional header to copy the blob only if the</p>
 
 <pre class="code ruby"><code class="ruby">destination blob has been modified since the specified date/time. If the destination blob
-has not been modified, the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+has not been modified, the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>        - String. A DateTime value.
 Specify this conditional header to copy the blob only if the</p>
 
 <pre class="code ruby"><code class="ruby">destination blob has not been modified since the specified date/time. If the destination
-blob has been modified, the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+blob has been modified, the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                   - String. An ETag value. Specify
 an ETag value for this conditional header to copy the blob</p>
 
 <pre class="code ruby"><code class="ruby">only if the specified ETag value matches the ETag value for an existing destination blob.
 If the ETag for the destination blob does not match the ETag specified for If-Match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>              - String. An ETag value, or the
 wildcard character (*). Specify an ETag value for this</p>
@@ -3999,16 +3854,14 @@ wildcard character (*). Specify an ETag value for this</p>
 <pre class="code ruby"><code class="ruby">conditional header to copy the blob only if the specified ETag value does not match the
 ETag value for the destination blob. Specify the wildcard character (*) to perform the
 operation only if the destination blob does not exist. If the specified condition isn&#39;t met,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:timeout</code>                    - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                 - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:lease_id</code>                   - String. If this header is
 specified, the operation will be performed only if both of the</p>
@@ -4017,8 +3870,7 @@ specified, the operation will be performed only if both of the</p>
   - The blob&#39;s lease is currently active.
   - The lease ID specified in the request matches that of the blob.
 If this header is specified and both of these conditions are not met, the request will fail
-and the Snapshot Blob operation will fail with status code 412 (Precondition Failed).
-</code></pre>
+and the Snapshot Blob operation will fail with status code 412 (Precondition Failed).</code></pre>
 </li></ul>
 
 <p>See <a
@@ -4029,14 +3881,12 @@ href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy
 <p><code>copy_id</code>                    - String. String identifier for
 this copy operation. Use with Get Blob Properties to check</p>
 
-<pre class="code ruby"><code class="ruby">the status of this copy operation, or pass to Abort Copy Blob to abort a pending copy.
-</code></pre>
+<pre class="code ruby"><code class="ruby">the status of this copy operation, or pass to Abort Copy Blob to abort a pending copy.</code></pre>
 </li><li>
 <p><code>copy_status</code>                - String. State of the copy
 operation. This is always pending to indicate that the copy has</p>
 
-<pre class="code ruby"><code class="ruby">started and is in progress.
-</code></pre>
+<pre class="code ruby"><code class="ruby">started and is in progress.</code></pre>
 </li></ul>
 
 
@@ -4118,15 +3968,13 @@ block blob.</p>
 <p>There are two block lists maintained for a blob: 1) Committed Block List:
 The list of blocks that have been successfully</p>
 
-<pre class="code ruby"><code class="ruby">committed to a given blob with commitBlobBlocks.
-</code></pre>
+<pre class="code ruby"><code class="ruby">committed to a given blob with commitBlobBlocks.</code></pre>
 
 <p>2) Uncommitted Block List: The list of blocks that have been uploaded for a</p>
 
 <pre class="code ruby"><code class="ruby">blob using Put Block (REST API), but that have not yet been committed.
 These blocks are stored in Microsoft Azure in association with a blob, but do
-not yet form part of the blob.
-</code></pre>
+not yet form part of the blob.</code></pre>
 
 <h4 id="label-Attributes">Attributes</h4>
 <ul><li>
@@ -4155,14 +4003,12 @@ that specifies the blob snapshot to</p>
 <p><code>:request_id</code>               - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:location_mode</code>            - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.
-</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
 </li><li>
 <p><code>:lease_id</code>                 - String. If this header is
 specified, the operation will be performed only if both of the</p>
@@ -4171,8 +4017,7 @@ specified, the operation will be performed only if both of the</p>
   - The blob&#39;s lease is currently active.
   - The lease ID specified in the request matches that of the blob.
 If this header is specified and both of these conditions are not met, the request will fail
-and the operation will fail with status code 412 (Precondition Failed).
-</code></pre>
+and the operation will fail with status code 412 (Precondition Failed).</code></pre>
 </li></ul>
 
 <p>See <a
@@ -4280,50 +4125,43 @@ that specifies the blob snapshot to</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:location_mode</code>             - LocationMode. Specifies the
 location mode used to decide</p>
 
-<pre class="code ruby"><code class="ruby">which location the request should be sent to.
-</code></pre>
+<pre class="code ruby"><code class="ruby">which location the request should be sent to.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to list the pages only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to list the pages only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to list the pages only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to list the pages only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:previous_snapshot</code>         - String. An opaque DateTime value
 that specifies that the response will contain only pages that</p>
 
 <pre class="code ruby"><code class="ruby">were changed between target blob and previous snapshot. Changed pages include both updated and
 cleared pages. The target blob may be a snapshot, as long as the snapshot specified by this
-is the older of the two.
-</code></pre>
+is the older of the two.</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. If this header is
 specified, the operation will be performed only if both of the</p>
@@ -4332,8 +4170,7 @@ specified, the operation will be performed only if both of the</p>
  - The blob&#39;s lease is currently active.
  - The lease ID specified in the request matches that of the blob.
 If this header is specified and both of these conditions are not met, the request will fail
-and the Get Blob operation will fail with status code 412 (Precondition Failed).
-</code></pre>
+and the Get Blob operation will fail with status code 412 (Precondition Failed).</code></pre>
 </li></ul>
 
 <p>See <a
@@ -4342,8 +4179,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691973.aspx">msdn.microsof
 <p>Returns a list of page ranges in the format [ [start, end], [start, end], …
 ]</p>
 
-<pre class="code ruby"><code class="ruby">e.g. [ [0, 511], [512, 1024], ... ]
-</code></pre>
+<pre class="code ruby"><code class="ruby">e.g. [ [0, 511], [512, 1024], ... ]</code></pre>
 
 
   </div>
@@ -4448,14 +4284,12 @@ contents.</p>
 <p><code>:request_id</code>            - String. Provides a client-generated,
 opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:lease_id</code>              - String. Required if the blob has an
 active lease. To perform this operation on a blob with an</p>
 
-<pre class="code ruby"><code class="ruby">active lease, specify the valid lease ID for this header.
-</code></pre>
+<pre class="code ruby"><code class="ruby">active lease, specify the valid lease ID for this header.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -4552,69 +4386,59 @@ Length in bytes should equal end_range - start_range + 1</p>
 content. This hash is used to verify the integrity of the page during
 transport.</p>
 
-<pre class="code ruby"><code class="ruby">When this header is specified, the storage service checks the hash that has arrived with the one that was sent.
-</code></pre>
+<pre class="code ruby"><code class="ruby">When this header is specified, the storage service checks the hash that has arrived with the one that was sent.</code></pre>
 </li><li>
 <p><code>:if_sequence_number_le</code>     - Integer. If the blob&#39;s
 sequence number is less than or equal to the specified value, the request
 proceeds;</p>
 
-<pre class="code ruby"><code class="ruby">otherwise it fails with the SequenceNumberConditionNotMet error (HTTP status code 412 - Precondition Failed).
-</code></pre>
+<pre class="code ruby"><code class="ruby">otherwise it fails with the SequenceNumberConditionNotMet error (HTTP status code 412 - Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_sequence_number_lt</code>     - Integer. If the blob&#39;s
 sequence number is less than the specified value, the request proceeds;</p>
 
-<pre class="code ruby"><code class="ruby">otherwise it fails with SequenceNumberConditionNotMet error (HTTP status code 412 - Precondition Failed).
-</code></pre>
+<pre class="code ruby"><code class="ruby">otherwise it fails with SequenceNumberConditionNotMet error (HTTP status code 412 - Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_sequence_number_eq</code>     - Integer. If the blob&#39;s
 sequence number is equal to the specified value, the request proceeds;</p>
 
-<pre class="code ruby"><code class="ruby">otherwise it fails with SequenceNumberConditionNotMet error (HTTP status code 412 - Precondition Failed).
-</code></pre>
+<pre class="code ruby"><code class="ruby">otherwise it fails with SequenceNumberConditionNotMet error (HTTP status code 412 - Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to write the page only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to write the page only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to write the page only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to write the page only if</p>
 
 <pre class="code ruby"><code class="ruby">the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. Required if the blob has
 an active lease. To perform this operation on a blob with an active lease,</p>
 
-<pre class="code ruby"><code class="ruby">specify the valid lease ID for this header.
-</code></pre>
+<pre class="code ruby"><code class="ruby">specify the valid lease ID for this header.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -4732,43 +4556,37 @@ blob as soon as the release is complete.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to release the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to release the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to release the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to release the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:origin</code>                    - String. Optional. Specifies the
 origin from which the request is issued. The presence of this header
 results</p>
 
-<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -4841,43 +4659,37 @@ renew a lease, the lease duration clock resets.</p>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to renew the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to renew the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to renew the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to renew the lease</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:origin</code>                    - String. Optional. Specifies the
 origin from which the request is issued. The presence of this header
 results</p>
 
-<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in cross-origin resource sharing headers on the response.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -4936,8 +4748,7 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx">msdn.microsof
 page blob to the specified size.</p>
 
 <pre class="code ruby"><code class="ruby">If the specified value is less than the current size of the blob,
-then all pages above the specified value are cleared.
-</code></pre>
+then all pages above the specified value are cleared.</code></pre>
 </li><li>
 <p><code>options</code>                    - Hash. Optional parameters.</p>
 </li></ul>
@@ -4951,36 +4762,31 @@ then all pages above the specified value are cleared.
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to set the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to set the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to set the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to set the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li></ul>
 
 <p>See <a
@@ -5051,42 +4857,36 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691966.aspx">msdn.microsof
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to set the blob metadata</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to set the blob metadata</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to set the blob metadata</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to set the blob metadata</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. Required if the blob has
 an active lease. To perform this operation on a blob with an active</p>
 
-<pre class="code ruby"><code class="ruby">lease, specify the valid lease ID for this header.
-</code></pre>
+<pre class="code ruby"><code class="ruby">lease, specify the valid lease ID for this header.</code></pre>
 </li></ul>
 
 <p>See <a
@@ -5192,8 +4992,7 @@ blob. Will be saved with blob.</p>
 <p><code>:content_disposition</code>       - String. Conveys additional
 information about how to process the response payload,</p>
 
-<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata
-</code></pre>
+<pre class="code ruby"><code class="ruby">and also can be used to attach additional metadata</code></pre>
 </li><li>
 <p><code>:content_length</code>            - Integer. Resizes a page blob to
 the specified size. If the specified</p>
@@ -5201,8 +5000,7 @@ the specified size. If the specified</p>
 <pre class="code ruby"><code class="ruby">value is less than the current size of the blob, then all pages above
 the specified value are cleared. This property cannot be used to change
 the size of a block blob. Setting this property for a block blob returns
-status code 400 (Bad Request).
-</code></pre>
+status code 400 (Bad Request).</code></pre>
 </li><li>
 <p><code>:sequence_number_action</code>    - Symbol. This property indicates
 how the service should modify the sequence</p>
@@ -5217,8 +5015,7 @@ how the service should modify the sequence</p>
 * +:update+                    - Sets the sequence number to the value included with the request.
 * +:increment+                 - Increments the value of the sequence number by 1. If specifying this
                                  option, do not include the sequence_number option; doing so will return
-                                 status code 400 (Bad Request).
-</code></pre>
+                                 status code 400 (Bad Request).</code></pre>
 </li><li>
 <p><code>:sequence_number</code>           - Integer. This property sets the
 blob&#39;s sequence number. The sequence number is a</p>
@@ -5235,50 +5032,43 @@ This header should not be specified if :sequence_number_action is set to :increm
 in this case the service automatically increments the sequence number by one.
 
 To set the sequence number to a value of your choosing, this property must be specified
-together with :sequence_number_action
-</code></pre>
+together with :sequence_number_action</code></pre>
 </li><li>
 <p><code>:timeout</code>                   - Integer. A timeout in seconds.</p>
 </li><li>
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to set the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to set the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to set the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to set the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:lease_id</code>                  - String. Required if the blob has
 an active lease. To perform this operation on a blob with an active</p>
 
-<pre class="code ruby"><code class="ruby">lease, specify the valid lease ID for this header.
-</code></pre>
+<pre class="code ruby"><code class="ruby">lease, specify the valid lease ID for this header.</code></pre>
 </li></ul>
 
 <p>Remarks:</p>
@@ -5290,8 +5080,7 @@ either of the following conditions:</p>
 
 <pre class="code ruby"><code class="ruby">* The :sequence_number_action property is set to :max or :update, and a value for :sequence_number is also set.
 * The :sequence_number_action property is set to :increment, indicating that the service should increment
-  the sequence number by one.
-</code></pre>
+  the sequence number by one.</code></pre>
 </li><li>
 <p>The size of the page blob is modified only if a value for :content_length
 is specified.</p>
@@ -5309,8 +5098,7 @@ property will be cleared for the blob.</p>
 * :content_md5
 * :content_encoding
 * :content_language
-* :content_disposition
-</code></pre>
+* :content_disposition</code></pre>
 </li></ul>
 
 <p>See <a
@@ -5432,8 +5220,7 @@ should modify the sequence</p>
 * +:update+                    - Sets the sequence number to the value included with the request.
 * +:increment+                 - Increments the value of the sequence number by 1. If specifying this
                                  option, do not include the sequence_number option; doing so will return
-                                 status code 400 (Bad Request).
-</code></pre>
+                                 status code 400 (Bad Request).</code></pre>
 </li><li>
 <p><code>number</code>                     - Integer. Sets the blob&#39;s
 sequence number. The sequence number is a</p>
@@ -5450,8 +5237,7 @@ This header should not be specified if the &#39;action&#39; parameter is set to 
 in this case the service automatically increments the sequence number by one.
 
 To set the sequence number to a value of your choosing, this property must be specified
-together with the &#39;action&#39; parameter
-</code></pre>
+together with the &#39;action&#39; parameter</code></pre>
 </li><li>
 <p><code>options</code>                    - Hash. Optional parameters.</p>
 </li></ul>
@@ -5465,36 +5251,31 @@ together with the &#39;action&#39; parameter
 <p><code>:request_id</code>                - String. Provides a
 client-generated, opaque value with a 1 KB character limit that is recorded</p>
 
-<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.
-</code></pre>
+<pre class="code ruby"><code class="ruby">in the analytics logs when storage analytics logging is enabled.</code></pre>
 </li><li>
 <p><code>:if_modified_since</code>         - String. A DateTime value. Specify
 this conditional header to set the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has been modified since the specified date/time. If the blob has not been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_unmodified_since</code>       - String. A DateTime value. Specify
 this conditional header to set the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob has not been modified since the specified date/time. If the blob has been modified,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_match</code>                  - String. An ETag value. Specify an
 ETag value for this conditional header to set the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value matches the value specified. If the values do not match,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li><li>
 <p><code>:if_none_match</code>             - String. An ETag value. Specify an
 ETag value for this conditional header to set the blob properties</p>
 
 <pre class="code ruby"><code class="ruby">only if the blob&#39;s ETag value does not match the value specified. If the values are identical,
-the Blob service returns status code 412 (Precondition Failed).
-</code></pre>
+the Blob service returns status code 412 (Precondition Failed).</code></pre>
 </li></ul>
 
 <p>See <a
@@ -5536,9 +5317,9 @@ href="http://msdn.microsoft.com/en-us/library/azure/ee691966.aspx">msdn.microsof
 </div>
 
       <div id="footer">
-  Generated on Mon Dec  3 15:51:00 2018 by
+  Generated on Mon Mar  9 14:04:06 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.16 (ruby-2.5.1).
+  0.9.24 (ruby-2.4.9).
 </div>
 
     </div>
