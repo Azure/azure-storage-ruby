@@ -1,3 +1,7 @@
+2020.3 - version 2.0.1
+* Resolved an issue where the rubygem 'azure-storage-common' cannot resolve 'faraday_middleware' version automatically.
+* Resolved an issue where automation does not report error for sanity check failure.
+
 2020.3 - version 2.0.0
 * This module now supports Ruby versions to 2.3 through 2.7
 * Service version is upgraded to 2018-11-09.
