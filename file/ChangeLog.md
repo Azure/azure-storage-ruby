@@ -1,3 +1,6 @@
+2020.3 - version 2.0.0
+* This module now supports Ruby versions to 2.3 through 2.7
+
 2018.1 - version 1.0.1
 * Resolved an issue where user cannot use Gem package using `gem install`.
 

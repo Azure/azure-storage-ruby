@@ -29,9 +29,9 @@ module Azure
     module Table
       class Version
         # Fields represent the parts defined in http://semver.org/
-        MAJOR = 1 unless defined? MAJOR
+        MAJOR = 2 unless defined? MAJOR
         MINOR = 0 unless defined? MINOR
-        UPDATE = 1 unless defined? UPDATE
+        UPDATE = 0 unless defined? UPDATE
 
         class << self
           # @return [String]

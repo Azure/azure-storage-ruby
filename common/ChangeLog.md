@@ -2,6 +2,12 @@
 * This module now supports Ruby versions to 2.3 through 2.7
 * Add support for generating user delegation shared access signatures.
 * Update the storage API version used to generate shared access signatures to 2018-11-09.
+* This module now contains azure-core which was originally in azure-ruby-asm-core.
+* The following dependency version was bumped up to the specified version for security update:
+    Nokogiri 1.10.4
+    Faraday  1.0.0
+    Rake     13.0
+* Now reuses the HTTP Client on host level.
 
 2018.11 - version 1.1.0
 * Added the support for sending a request with a bearer token.

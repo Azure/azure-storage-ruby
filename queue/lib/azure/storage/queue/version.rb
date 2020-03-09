@@ -29,8 +29,8 @@ module Azure
     module Queue
       class Version
         # Fields represent the parts defined in http://semver.org/
-        MAJOR = 1 unless defined? MAJOR
-        MINOR = 1 unless defined? MINOR
+        MAJOR = 2 unless defined? MAJOR
+        MINOR = 0 unless defined? MINOR
         UPDATE = 0 unless defined? UPDATE
 
         class << self
