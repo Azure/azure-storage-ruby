@@ -30,31 +30,31 @@ require "yard"
 
 task :build_common do
   Dir.chdir("./common") do
-    system "gem build azure-storage-common.gemspec"
+    abort "[ABORTING] build gem failed" unless system "gem build azure-storage-common.gemspec"
   end
 end
 
 task :build_blob do
   Dir.chdir("./blob") do
-    system "gem build azure-storage-blob.gemspec"
+    abort "[ABORTING] build gem failed" unless system "gem build azure-storage-blob.gemspec"
   end
 end
 
 task :build_table do
   Dir.chdir("./table") do
-    system "gem build azure-storage-table.gemspec"
+    abort "[ABORTING] build gem failed" unless system "gem build azure-storage-table.gemspec"
   end
 end
 
 task :build_file do
   Dir.chdir("./file") do
-    system "gem build azure-storage-file.gemspec"
+    abort "[ABORTING] build gem failed" unless system "gem build azure-storage-file.gemspec"
   end
 end
 
 task :build_queue do
   Dir.chdir("./queue") do
-    system "gem build azure-storage-queue.gemspec"
+    abort "[ABORTING] build gem failed" unless system "gem build azure-storage-queue.gemspec"
   end
 end
 
@@ -190,27 +190,27 @@ end
 task test: %w(test:unit test:integration)
 
 task :sanity_check do
-  system "rake build_common"
-  system "rake build_blob"
-  system "rake build_file"
-  system "rake build_table"
-  system "rake build_queue"
+  abort "[ABORTING] build common gem failed" unless system "rake build_common"
+  abort "[ABORTING] build blob gem failed" unless system "rake build_blob"
+  abort "[ABORTING] build file gem failed" unless system "rake build_file"
+  abort "[ABORTING] build table gem failed" unless system "rake build_table"
+  abort "[ABORTING] build qeueue gem failed" unless system "rake build_queue"
   Dir.chdir("./common") do
-    system "gem install azure-storage-common -l"
+    abort "[ABORTING] installing common gem failed" unless system "gem install azure-storage-common -l"
   end
   Dir.chdir("./blob") do
-    system "gem install azure-storage-blob -l"
+    abort "[ABORTING] installing blob gem failed" unless system "gem install azure-storage-blob -l"
   end
   Dir.chdir("./table") do
-    system "gem install azure-storage-table -l"
+    abort "[ABORTING] installing table gem failed" unless system "gem install azure-storage-table -l"
   end
   Dir.chdir("./queue") do
-    system "gem install azure-storage-queue -l"
+    abort "[ABORTING] installing queue gem failed" unless system "gem install azure-storage-queue -l"
   end
   Dir.chdir("./file") do
-    system "gem install azure-storage-file -l"
+    abort "[ABORTING] installing file gem failed" unless system "gem install azure-storage-file -l"
   end
-  system "ruby ./test/sanity_check.rb"
+  abort "[ABORTING] run sanity_check.rb failed" unless system "ruby ./test/sanity_check.rb"
 end
 
 task default: :test
