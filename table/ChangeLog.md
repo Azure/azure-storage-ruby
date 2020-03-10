@@ -1,3 +1,6 @@
+2020.3 - version 2.0.1
+* Resolved the issue where a wrong version of 'azure-storage-common' is depended on.
+
 2020.3 - version 2.0.0
 * This module now supports Ruby versions to 2.3 through 2.7
 
