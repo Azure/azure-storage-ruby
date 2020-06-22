@@ -16,6 +16,7 @@ require 'digest/md5'
 require 'base64'
 require 'net/http'
 require 'time'
+require 'tempfile'
 
 require 'azure/core/version'
 require 'azure/core/http/http_response'
