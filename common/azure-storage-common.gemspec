@@ -43,6 +43,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency('faraday',                 '~> 1.0')
   s.add_runtime_dependency('faraday_middleware',      '~> 1.0.0.rc1')
+  s.add_runtime_dependency("net-http-persistent",     '~> 4.0')
   s.add_runtime_dependency("nokogiri",                "~> 1.10.4")
 
   s.add_development_dependency("dotenv",              "~> 2.0")
