@@ -7,6 +7,14 @@ describe Azure::Storage::Common::Core::HttpClient do
     URI("https://management.core.windows.net")
   end
 
+  let :storage_account_name do
+    "mockaccount"
+  end
+
+  let :storage_access_key do
+    "YWNjZXNzLWtleQ=="
+  end
+
   describe "#agents" do
     describe "reusing a connection when connecting to the same host" do
       let(:client) { Azure::Storage::Common::Client::create }
@@ -32,7 +40,26 @@ describe Azure::Storage::Common::Core::HttpClient do
       end
     end
 
-    describe "when using a http proxy" do
+    describe "when using a http proxy set via config" do
+      let(:http_proxy_uri) { URI("http://example.com:80") }
+ 
+      it "should set the proxy configuration information on the http connection" do
+        client = Azure::Storage::Common::Client::create(proxy_uri: http_proxy_uri.to_s, storage_account_name: storage_account_name, storage_access_key: storage_access_key)
+
+        _(client.agents(uri).proxy.uri).must_equal http_proxy_uri
+      end
+    end
+
+    describe "when using a https proxy set via config" do
+      let(:https_proxy_uri) { URI("https://example.com:443") }
+
+      it "should set the proxy configuration information on the https connection" do
+        client = Azure::Storage::Common::Client::create(proxy_uri: https_proxy_uri.to_s, storage_account_name: storage_account_name, storage_access_key: storage_access_key)
+        _(client.agents(uri).proxy.uri).must_equal https_proxy_uri
+      end
+    end
+
+    describe "when using a http proxy set via env" do
       let(:http_proxy_uri) { URI("http://localhost:80") }
 
       before do
@@ -48,7 +75,7 @@ describe Azure::Storage::Common::Core::HttpClient do
       end
     end
 
-    describe "when using a https proxy" do
+    describe "when using a https proxy set via env" do
       let(:https_proxy_uri) { URI("https://localhost:443") }
 
       before do

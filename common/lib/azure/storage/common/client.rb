@@ -40,6 +40,7 @@ module Azure::Storage::Common
     #
     # Accepted key/value pairs in options parameter are:
     #
+    # * +:proxy_uri+                      - String. The URI of the HTTP proxy to use.
     # * +:use_development_storage+        - TrueClass|FalseClass. Whether to use storage emulator.
     # * +:development_storage_proxy_uri+  - String. Used with +:use_development_storage+ if emulator is hosted other than localhost.
     # * +:storage_connection_string+      - String. The storage connection string.
@@ -91,6 +92,7 @@ module Azure::Storage::Common
       #
       # Accepted key/value pairs in options parameter are:
       #
+      # * +:proxy_uri+                      - String. The URI of the HTTP proxy to use.
       # * +:use_development_storage+        - TrueClass|FalseClass. Whether to use storage emulator.
       # * +:development_storage_proxy_uri+  - String. Used with +:use_development_storage+ if emulator is hosted other than localhost.
       # * +:storage_account_name+           - String. The name of the storage account.

@@ -33,6 +33,7 @@ describe Azure::Storage::Common::Client do
     @access_key = "YWNjZXNzLWtleQ=="
     @mock_blob_host_with_protocol = "http://www.blob.net"
     @mock_sas = "?sv=2014-02-14&sr=b&sig=T42yqGMPksTcuMENIOyM%2F25P%2BMO1z2w1NdFwKucbGaA%3D&se=2015-07-10T03%3A26%3A27Z&sp=rwd"
+    @proxy_uri = "https://localhost:8080"
 
     @account_key_options = {
       storage_account_name: @account_name,
@@ -190,6 +191,13 @@ describe Azure::Storage::Common::Client do
       _(c.storage_account_name).must_equal(@account_name)
       _(lambda { c.options.storage_access_key }).must_raise(NoMethodError)
       _(c.storage_sas_token).must_equal(@mock_sas)
+    end
+
+    it "should set proxy if given" do
+      opts = { storage_account_name: @account_name, storage_sas_token: @mock_sas, proxy_uri: @proxy_uri }
+      c = Azure::Storage::Common::Client.create(opts)
+      _(c).wont_be_nil
+      _(c.proxy_uri).must_equal(@proxy_uri)
     end
 
     it "should fail if both sas_token and key" do

@@ -30,7 +30,7 @@ require "azure/storage/common/core/auth/anonymous_signer"
 
 module Azure::Storage::Common
   module ClientOptions
-    attr_accessor :ca_file, :ssl_version, :ssl_min_version, :ssl_max_version
+    attr_accessor :ca_file, :ssl_version, :ssl_min_version, :ssl_max_version, :proxy_uri
 
     # Public: Reset options for [Azure::Storage::Common::Client]
     #
@@ -42,6 +42,7 @@ module Azure::Storage::Common
     #
     # Accepted key/value pairs in options parameter are:
     #
+    # * +:proxy_uri+                      - String. The URI of the HTTP proxy to use.
     # * +:use_development_storage+        - TrueClass|FalseClass. Whether to use storage emulator.
     # * +:development_storage_proxy_uri+  - String. Used with +:use_development_storage+ if emulator is hosted other than localhost.
     # * +:storage_connection_string+      - String. The storage connection string.
@@ -91,6 +92,8 @@ module Azure::Storage::Common
       @ssl_version = options.delete(:ssl_version)
       @ssl_min_version = options.delete(:ssl_min_version)
       @ssl_max_version = options.delete(:ssl_max_version)
+      @proxy_uri = options.delete(:proxy_uri)
+      
       @options = filter(options)
       self.send(:reset_config!, @options) if self.respond_to?(:reset_config!)
       self
@@ -307,6 +310,7 @@ module Azure::Storage::Common
         raise InvalidOptionsError, "At least one of #{at_least_one} is required" unless at_least_one.length == 0 || at_least_one.any? { |k| opts.key? k }
 
         @@option_validators ||= {
+          proxy_uri: is_url,
           use_development_storage: is_true,
           development_storage_proxy_uri: is_url,
           storage_account_name: lambda { |i| i.is_a?(String) },
