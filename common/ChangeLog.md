@@ -1,3 +1,8 @@
+2020.8 - version 2.0.2
+* Bumped up Nokogiri version to 1.11.0.rc2 for Ruby version later than or equal to 2.4.0.
+* Changed to use persistent HTTP client to speed up requests #168.
+* Explicitly requiring `tempfile` to avoid runtime errors.
+
 2020.3 - version 2.0.1
 * Resolved an issue where the rubygem 'azure-storage-common' cannot resolve 'faraday_middleware' version automatically.
 * Resolved an issue where automation does not report error for sanity check failure.

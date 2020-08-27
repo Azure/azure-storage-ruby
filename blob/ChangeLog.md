@@ -1,3 +1,6 @@
+2020.8 - version 2.0.1
+* Bumped up Nokogiri version to 1.11.0.rc2 for Ruby version later than or equal to 2.4.0.
+
 2020.3 - version 2.0.0
 * This module now supports Ruby versions to 2.3 through 2.7.
 * Service version is upgraded to 2018-11-09.
