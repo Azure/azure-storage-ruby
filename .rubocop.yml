@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 1.9.3
+  TargetRubyVersion: 2.5.0
   # Turns off the default Rubocop rules.
   DisabledByDefault: true
   Exclude:
