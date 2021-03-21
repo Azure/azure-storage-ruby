@@ -125,7 +125,7 @@ module Azure::Storage::Common
       #
       # @return [Azure::Storage::Common::Client]
       def create(options = {}, &block)
-        client = Client.new(options, &block)
+        Client.new(options, &block)
       end
 
       # Public: Creates an instance of [Azure::Storage::Common::Client] with Storage Emulator
@@ -137,14 +137,14 @@ module Azure::Storage::Common
       # @return [Azure::Storage::Common::Client]
       def create_development(proxy_uri = nil, &block)
         proxy_uri ||= StorageServiceClientConstants::DEV_STORE_URI
-        client = create(use_development_storage: true, development_storage_proxy_uri: proxy_uri, &block)
+        create(use_development_storage: true, development_storage_proxy_uri: proxy_uri, &block)
       end
 
       # Public: Creates an instance of [Azure::Storage::Common::Client] from Environment Variables
       #
       # @return [Azure::Storage::Client]
       def create_from_env(&block)
-        client = create(&block)
+        create(&block)
       end
 
       # Public: Creates an instance of [Azure::Storage::Common::Client] from Environment Variables
@@ -155,7 +155,7 @@ module Azure::Storage::Common
       #
       # @return [Azure::Storage::Common::Client]
       def create_from_connection_string(connection_string, &block)
-        client = Client.new(connection_string, &block)
+        Client.new(connection_string, &block)
       end
     end
   end
