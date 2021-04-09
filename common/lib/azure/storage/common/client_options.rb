@@ -347,7 +347,7 @@ module Azure::Storage::Common
       def parse_connection_string(connection_string)
         opts = {}
         connection_string.split(";").each do |i|
-          e = i.index("=")
+          e = i.index("=") || -1
           raise InvalidConnectionStringError, Azure::Storage::Common::Core::SR::INVALID_CONNECTION_STRING if e < 0 || e == i.length - 1
           key, value = i[0..e - 1], i[e + 1..i.length - 1]
           raise InvalidConnectionStringError, Azure::Storage::Common::Core::SR::INVALID_CONNECTION_STRING_BAD_KEY % key unless ClientOptions.connection_string_mapping.key? key
