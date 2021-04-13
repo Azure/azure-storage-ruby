@@ -191,7 +191,7 @@ module Azure::Storage::Common
                           storage_file_host: "#{proxy_uri}:#{StorageServiceClientConstants::DEVSTORE_FILE_HOST_PORT}",
                           use_path_style_uri: true)
           return results
-        rescue InvalidOptionsError => e
+        rescue InvalidOptionsError
         end
 
         # P2 - explicit hosts with account connection string
@@ -202,7 +202,7 @@ module Azure::Storage::Common
           results[:use_path_style_uri] = results.key?(:use_path_style_uri)
           normalize_hosts(results)
           return results
-        rescue InvalidOptionsError => e
+        rescue InvalidOptionsError
         end
 
         # P3 - account name and key or sas with default hosts or an end suffix
@@ -220,7 +220,7 @@ module Azure::Storage::Common
                           storage_file_host: "#{protocol}://#{account}.#{ServiceType::FILE}.#{suffix}",
                           use_path_style_uri: false)
           return results
-        rescue InvalidOptionsError => e
+        rescue InvalidOptionsError
         end
 
         # P4 - explicit hosts with account name and key
@@ -232,7 +232,7 @@ module Azure::Storage::Common
           results[:use_path_style_uri] = results.key?(:use_path_style_uri)
           normalize_hosts(results)
           return results
-        rescue InvalidOptionsError => e
+        rescue InvalidOptionsError
         end
 
         # P5 - anonymous or sas only for one or more particular services, options with account name/key + hosts should be already validated in P4
@@ -245,7 +245,7 @@ module Azure::Storage::Common
           # Adds anonymous signer if no sas token
           results[:signer] = Azure::Storage::Common::Core::Auth::AnonymousSigner.new unless results.key?(:storage_sas_token)
           return results
-        rescue InvalidOptionsError => e
+        rescue InvalidOptionsError
         end
 
         # P6 - account name and key or sas with explicit hosts
@@ -257,7 +257,7 @@ module Azure::Storage::Common
           results[:use_path_style_uri] = results.key?(:use_path_style_uri)
           normalize_hosts(results)
           return results
-        rescue InvalidOptionsError => e
+        rescue InvalidOptionsError
         end
 
         raise InvalidOptionsError, "options provided are not valid set: #{opts}" # wrong opts if move to this line
