@@ -38,14 +38,10 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
   s.files       = `git ls-files ./lib/azure/storage/queue/`.split("\n") << "./lib/azure/storage/queue.rb"
 
-  s.required_ruby_version = ">= 2.3.0"
+  s.required_ruby_version = ">= 2.5.0"
 
   s.add_runtime_dependency("azure-storage-common",    "~> 2.0")
-  if RUBY_VERSION < "2.4.0"
-    s.add_runtime_dependency("nokogiri",                "~> 1.10.4")
-  else
-    s.add_runtime_dependency("nokogiri",                "~> 1.11.0.rc2")
-  end
+  s.add_runtime_dependency("nokogiri",                "~> 1.11.1")
 
   s.add_development_dependency("dotenv",              "~> 2.0")
   s.add_development_dependency("minitest",            "~> 5")
