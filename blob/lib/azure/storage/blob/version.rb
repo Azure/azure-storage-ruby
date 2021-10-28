@@ -31,7 +31,7 @@ module Azure
         # Fields represent the parts defined in http://semver.org/
         MAJOR = 2 unless defined? MAJOR
         MINOR = 0 unless defined? MINOR
-        UPDATE = 1 unless defined? UPDATE
+        UPDATE = 2 unless defined? UPDATE
 
         class << self
           # @return [String]
