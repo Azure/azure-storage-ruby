@@ -46,6 +46,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("net-http-persistent",     '~> 4.0')
   if RUBY_VERSION < "2.4.0"
     s.add_runtime_dependency("nokogiri",                "~> 1.10.4")
+  elsif RUBY_VERSION < "2.5.0"
+    s.add_runtime_dependency("nokogiri",                "~> 1.11.0.rc2")
   else
     s.add_runtime_dependency("nokogiri",                "~> 1", ">= 1.12.5")
   end
