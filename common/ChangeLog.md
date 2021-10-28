@@ -1,5 +1,6 @@
 2021.10 - version 2.0.3
-* Allow to use any version 1.x of Nokogiri for Ruby version later than or equal to 2.5.0.
+* Allowed to use any version 1.x of Nokogiri for Ruby version later than or equal to 2.5.0.
+* Fixed handling of invalid connection strings
 
 2020.8 - version 2.0.2
 * Bumped up Nokogiri version to 1.11.0.rc2 for Ruby version later than or equal to 2.4.0.
