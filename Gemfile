@@ -27,13 +27,7 @@ source "https://rubygems.org" do
   gem "faraday",             "~> 1.0", :require => false
   gem "faraday_middleware",  "~> 1.0.0.rc1", :require => false
   gem "net-http-persistent", "~> 4.0", :require => false
-  if RUBY_VERSION < "2.4.0"
-    gem "nokogiri",          "~> 1.10.4", :require => false
-  elsif RUBY_VERSION < "2.5.0"
-    gem "nokogiri",          "~> 1.11.0.rc2", :require => false
-  else
-    gem "nokogiri",          "~> 1", ">= 1.12.5", :require => false
-  end
+  gem "nokogiri",          "~> 1", ">= 1.10.8", :require => false
   gem "adal",                "~> 1.0", :require => false
   gem "dotenv",              "~> 2.0", :require => false
   gem "minitest",            "~> 5", :require => false
