@@ -28,6 +28,17 @@ require "securerandom"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
+  let(:parallel_subject) {
+    Azure::Storage::Blob::BlobService::create(
+    {
+      storage_account_name: "mockaccount",
+      storage_access_key: "YWNjZXNzLWtleQ==",
+      storage_blob_parallel_threads: 2,
+      storage_blob_parallel_threshold: 4,
+      storage_blob_write_block_size: 4
+    })
+  }
+
   after { ContainerNameHelper.clean }
 
   let(:container_name) { ContainerNameHelper.name }
@@ -86,6 +97,20 @@ describe Azure::Storage::Blob::BlobService do
       _(blob.properties[:content_length]).must_equal 50 * 1024 * 1024
       _(blob.properties[:content_type]).must_equal "text/plain; charset=UTF-8"
     end
+
+    it "creates a block that is larger than single upload in parallel" do
+      options = {}
+      options[:single_upload_threshold] = Azure::Storage::Blob::BlobConstants::DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES
+      content_50_mb = SecureRandom.random_bytes(50 * 1024 * 1024)
+      content_50_mb.force_encoding "utf-8"
+      blob_name = BlobNameHelper.name
+      blob = parallel_subject.create_block_blob container_name, blob_name, content_50_mb, options
+      _(blob.name).must_equal blob_name
+      # No content length if single upload
+      _(blob.properties[:content_length]).must_equal 50 * 1024 * 1024
+      _(blob.properties[:content_type]).must_equal "text/plain; charset=UTF-8"
+    end
+
 
     it "should create a block blob with spaces in name" do
       blob_name = "blob with spaces"

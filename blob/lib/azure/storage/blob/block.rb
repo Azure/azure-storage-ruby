@@ -468,10 +468,25 @@ module Azure::Storage
         # Get the number of blocks
         block_count = (Float(size) / Float(block_size)).ceil
         block_list = []
-        for block_id in 0...block_count
-          id = block_id.to_s.rjust(6, "0")
-          put_blob_block(container, blob, id, content.read(block_size), timeout: options[:timeout], lease_id: options[:lease_id])
-          block_list.push([id])
+
+        # Split the block list into groups of threads and upload in parallel
+        max_thread_count = client.options[:storage_blob_parallel_threads] || 1
+        (0..block_count - 1).to_a.each_slice(max_thread_count) do |block_slice|
+          threads = []
+          thread_count = block_slice.length
+          block_slice_data = content.read(block_size * thread_count)
+
+          block_slice.each_with_index do |block_id, index_in_block_slice|
+            thread = Thread.new do
+              id = block_id.to_s.rjust(6, "0")
+              put_blob_block(container, blob, id, block_slice_data.slice(index_in_block_slice * block_size, block_size), timeout: options[:timeout], lease_id: options[:lease_id])
+              [id]
+            end
+            thread.abort_on_exception = true
+            threads << thread
+          end
+
+          block_list.concat threads.map(&:value).sort
         end
 
         # Commit the blocks put
@@ -521,7 +536,7 @@ module Azure::Storage
         if size > BlobConstants::MAX_BLOCK_BLOB_SIZE
           raise ArgumentError, "Block blob size should be less than #{BlobConstants::MAX_BLOCK_BLOB_SIZE} bytes in size"
         elsif (size / BlobConstants::MAX_BLOCK_COUNT) < BlobConstants::DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES
-          BlobConstants::DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES
+          client.options[:storage_blob_write_block_size] || BlobConstants::DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES
         else
           BlobConstants::MAX_BLOCK_SIZE
         end

@@ -115,6 +115,18 @@ module Azure::Storage::Common
         ENV["AZURE_STORAGE_BLOB_HOST"]
       end
 
+      def storage_blob_write_block_size
+        ENV["AZURE_STORAGE_BLOB_WRITE_BLOCK_SIZE"]&.to_i
+      end
+
+      def storage_blob_parallel_threads
+        ENV["AZURE_STORAGE_BLOB_PARALLEL_THREADS"]&.to_i
+      end
+
+      def storage_blob_parallel_threshold
+        ENV["AZURE_STORAGE_BLOB_PARALLEL_THRESHOLD"]&.to_i
+      end
+
       # Default storage queue host
       # @return [String]
       def storage_queue_host

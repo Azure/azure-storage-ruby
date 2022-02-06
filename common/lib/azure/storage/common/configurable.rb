@@ -39,6 +39,12 @@ module Azure::Storage::Common
     #     emulator). This should be the complete host, including http:// at the
     #     start. When using the emulator, make sure to include your account name at
     #     the end.
+    # @!attribute storage_blob_write_block_size
+    #  @return [Integer] Set the block size in bytes for blob writes
+    # @!attribute storage_blob_parallel_threshold
+    #  @return [Integer] Set the range threshold in bytes for blob operation parallelization.
+    # @!attribute storage_blob_parallel_threads
+    #  @return [Integer] Set the number of threads for blob operation parallelization.
     # @!attribute storage_table_host
     #   @return [String] Set the host for the Table service. Only set this if you want
     #     something custom (like, for example, to point this to a LocalStorage
@@ -55,7 +61,10 @@ module Azure::Storage::Common
     attr_accessor :storage_access_key,
                   :storage_account_name,
                   :storage_connection_string,
-                  :storage_sas_token
+                  :storage_sas_token,
+                  :storage_blob_write_block_size,
+                  :storage_blob_parallel_threshold,
+                  :storage_blob_parallel_threads
 
     attr_writer :storage_table_host,
                 :storage_blob_host,
@@ -79,6 +88,9 @@ module Azure::Storage::Common
           :storage_sas_token,
           :storage_table_host,
           :storage_blob_host,
+          :storage_blob_write_block_size,
+          :storage_blob_parallel_threshold,
+          :storage_blob_parallel_threads,
           :storage_queue_host,
           :storage_file_host,
           :signer

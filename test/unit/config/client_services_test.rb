@@ -85,5 +85,19 @@ describe Azure::Storage::Common::Client do
       _(subjectA.storage_queue_host).must_equal subjectB.storage_queue_host
       _(subjectA.storage_file_host).must_equal subjectB.storage_file_host
     end
+
+    it "storage with optional blob options works" do
+      subject = Azure::Storage::Common::Client.create(
+        storage_account_name: azure_storage_account,
+        storage_access_key: azure_storage_access_key,
+        storage_blob_parallel_threads: 3,
+        storage_blob_parallel_threshold: 6 * 1024 * 1024,
+        storage_blob_write_block_size: 9 * 1024 * 1024,
+        )
+
+      _(subject.storage_blob_parallel_threads).must_equal 3
+      _(subject.storage_blob_parallel_threshold).must_equal 6 * 1024 * 1024
+      _(subject.storage_blob_write_block_size).must_equal 9 * 1024 * 1024
+    end
   end
 end
