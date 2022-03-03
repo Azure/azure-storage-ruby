@@ -1,3 +1,9 @@
+2021.12 - version 2.0.4
+* Lifted Ruby-version-based restrictions on Nokogiri version.
+
+2021.10 - version 2.0.3
+* Allowed to use any version 1.x of Nokogiri for Ruby version later than or equal to 2.5.0.
+
 2020.8 - version 2.0.2
 * Bumped up Nokogiri version to 1.11.0.rc2 for Ruby version later than or equal to 2.4.0.
 

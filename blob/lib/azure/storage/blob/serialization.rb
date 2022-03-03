@@ -199,6 +199,9 @@ module Azure::Storage
 
         props = {}
 
+        props[:access_tier] = (xml > "AccessTier").text if (xml > "AccessTier").any?
+        props[:access_tier_change_time] = (xml > "AccessTierChangeTime").text if (xml > "AccessTierChangeTime").any?
+        props[:creation_Time] = (xml > "Creation-Time").text if (xml > "Creation-Time").any?
         props[:last_modified] = (xml > "Last-Modified").text if (xml > "Last-Modified").any?
         props[:etag] = xml.Etag.text if (xml > "Etag").any?
         props[:lease_status] = xml.LeaseStatus.text if (xml > "LeaseStatus").any?

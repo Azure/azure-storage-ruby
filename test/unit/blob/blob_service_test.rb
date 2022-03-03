@@ -64,6 +64,16 @@ describe Azure::Storage::Blob::BlobService do
     parallel_response.stubs(:headers).returns(parallel_response_headers)
   }
 
+  describe "#create_from_connection_string" do
+    let(:service) { Azure::Storage::Blob::BlobService }
+
+    it "returns nil for a valid connection string" do
+      assert_raises(Azure::Storage::Common::InvalidConnectionStringError) {
+        Azure::Storage::Blob::BlobService.create_from_connection_string("invalid")
+      }
+    end
+  end
+
   describe "#get_user_delegation_key" do
     let(:response_body) {
       '<?xml version="1.0" encoding="utf-8"?>
