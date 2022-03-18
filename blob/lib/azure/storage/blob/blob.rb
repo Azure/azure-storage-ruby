@@ -948,7 +948,7 @@ module Azure::Storage
 
         # if after calculating the real end_range it is below threshold, return
         if total_bytes < parallel_threshold(options)
-          return get_blob(container, blob, options.merge({parallel_threshold: Float::INFINITY, start_range: start, end_range: fin}))
+          return get_blob(container, blob, options.merge({parallel_threshold: Float::INFINITY, start_range: start_range, end_range: end_range}))
         end
 
         thread_count = client.storage_blob_parallel_threads
