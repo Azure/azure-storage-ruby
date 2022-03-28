@@ -23,6 +23,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
+require "cgi"
 require "azure/storage/table/auth/shared_key"
 
 module Azure::Storage
@@ -234,7 +235,7 @@ module Azure::Storage
       # * +:timeout+                 - Integer. A timeout in seconds.
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide
       #                                which location the request should be sent to.
       #
       # Returns the last updated time for the table
@@ -263,7 +264,7 @@ module Azure::Storage
       # * +:timeout+                 - Integer. A timeout in seconds.
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide
       #                                which location the request should be sent to.
       # * +:accept+                  - String. Specifies the accepted content-type of the response payload. Possible values are:
       #                                 :no_meta
@@ -306,7 +307,7 @@ module Azure::Storage
       # * +:timeout+                 - Integer. A timeout in seconds.
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide
       #                                which location the request should be sent to.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/jj159100
@@ -412,7 +413,7 @@ module Azure::Storage
       # * +:timeout+                 - Integer. A timeout in seconds.
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide
       #                                which location the request should be sent to.
       # * +:accept+                  - String. Specifies the accepted content-type of the response payload. Possible values are:
       #                                 :no_meta
@@ -621,7 +622,7 @@ module Azure::Storage
       # * +:timeout+                 - Integer. A timeout in seconds.
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide
       #                                which location the request should be sent to.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd894038
@@ -657,7 +658,7 @@ module Azure::Storage
       # * +:timeout+                 - Integer. A timeout in seconds.
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide
       #                                which location the request should be sent to.
       #
       # Returns an Azure::Storage::Table::Entity instance on success
@@ -746,7 +747,7 @@ module Azure::Storage
           value = value.gsub("'", "''")
 
           # Encode the special URL characters
-          value = URI.escape(value)
+          value = CGI.escape(value)
 
           value
         end
