@@ -3,9 +3,8 @@ require "unit/test_helper"
 describe Azure::Storage::Common::Core::HttpClient do
   subject { Azure::Storage }
 
-  let :uri do
-    URI("https://management.core.windows.net")
-  end
+  let(:uri) { URI("https://management.core.windows.net") }
+  let(:proxy_uri) { URI("http://localhost:3128") }
 
   describe "#agents" do
     describe "reusing a connection when connecting to the same host" do
@@ -33,26 +32,22 @@ describe Azure::Storage::Common::Core::HttpClient do
     end
 
     describe "when using a http proxy" do
-      let(:http_proxy_uri) { URI("http://localhost:80") }
-
       before do
-        ENV["HTTP_PROXY"] = http_proxy_uri.to_s
+        ENV["HTTP_PROXY"] = proxy_uri.to_s
       end
 
       after do
         ENV["HTTP_PROXY"] = nil
       end
 
-      it "should set the proxy configuration information on the http connection" do
-        _(Azure::Storage::Common::Client::create.agents(uri).proxy.uri).must_equal http_proxy_uri
+      it "should not set the proxy configuration information if only a http is configured" do
+        _(Azure::Storage::Common::Client::create.agents(uri).proxy).must_be_nil
       end
     end
 
     describe "when using a https proxy" do
-      let(:https_proxy_uri) { URI("https://localhost:443") }
-
       before do
-        ENV["HTTPS_PROXY"] = https_proxy_uri.to_s
+        ENV["HTTPS_PROXY"] = proxy_uri.to_s
       end
 
       after do
@@ -60,7 +55,41 @@ describe Azure::Storage::Common::Core::HttpClient do
       end
 
       it "should set the proxy configuration information on the https connection" do
-        _(Azure::Storage::Common::Client::create.agents(uri).proxy.uri).must_equal https_proxy_uri
+        _(Azure::Storage::Common::Client::create.agents(uri).proxy.uri).must_equal proxy_uri
+      end
+    end
+
+    describe "when using a https proxy with no_proxy containing the URL" do
+      let(:https_proxy_uri) { URI("http://localhost:3128") }
+
+      before do
+        ENV["HTTPS_PROXY"] = https_proxy_uri.to_s
+        ENV["NO_PROXY"] = "localhost,.windows.net"
+      end
+
+      after do
+        ENV["HTTPS_PROXY"] = nil
+        ENV["NO_PROXY"] = nil
+      end
+
+      it "should not set the proxy configuration because of the NO_PROXY" do
+        _(Azure::Storage::Common::Client::create.agents(uri).proxy).must_be_nil
+      end
+    end
+
+    describe "when using a https proxy with no_proxy that doesn't contain the URL" do
+      before do
+        ENV["HTTPS_PROXY"] = proxy_uri.to_s
+        ENV["NO_PROXY"] = "localhost,.microsoft.net"
+      end
+
+      after do
+        ENV["HTTPS_PROXY"] = nil
+        ENV["NO_PROXY"] = nil
+      end
+
+      it "should not set the proxy configuration because of the NO_PROXY" do
+        _(Azure::Storage::Common::Client::create.agents(uri).proxy.uri).must_equal proxy_uri
       end
     end
   end
