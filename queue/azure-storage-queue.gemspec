@@ -41,14 +41,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ">= 2.3.0"
 
   s.add_runtime_dependency("azure-storage-common",    "~> 2.0")
-  if RUBY_VERSION < "2.4.0"
-    s.add_runtime_dependency("nokogiri",                "~> 1.10.4")
-  elsif RUBY_VERSION < "2.5.0"
-    s.add_runtime_dependency("nokogiri",                "~> 1.11.0.rc2")
-  else
-    s.add_runtime_dependency("nokogiri",                "~> 1", ">= 1.12.5")
-  end
-
+  s.add_runtime_dependency("nokogiri",                "~> 1", ">= 1.10.8")
   s.add_development_dependency("dotenv",              "~> 2.0")
   s.add_development_dependency("minitest",            "~> 5")
   s.add_development_dependency("minitest-reporters",  "~> 1")

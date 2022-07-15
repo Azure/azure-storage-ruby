@@ -1,3 +1,6 @@
+2021.12 - version 2.0.3
+* Lifted Ruby-version-based restrictions on Nokogiri version.
+
 2021.10 - version 2.0.2
 * Allowed to use any version 1.x of Nokogiri for Ruby version later than or equal to 2.5.0.
 * Added access tier information and creation time of blob in response.

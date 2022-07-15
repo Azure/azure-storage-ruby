@@ -411,7 +411,7 @@ module Azure::Storage
 
         StorageService.add_metadata_to_headers options[:metadata], headers
         add_blob_conditional_headers options, headers
-        headers["x-ms-blob-content-type"] = get_or_apply_content_type(content, options[:content_type])
+        StorageService.with_header headers, "x-ms-blob-content-type", get_or_apply_content_type(content, options[:content_type])
         # call PutBlob
         response = call(:put, uri, content, headers, options)
 
