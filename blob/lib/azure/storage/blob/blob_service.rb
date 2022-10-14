@@ -688,6 +688,12 @@ module Azure::Storage
           # Conditional headers for append blob
           StorageService.with_header headers, "x-ms-blob-condition-maxsize", options[:max_size]
           StorageService.with_header headers, "x-ms-blob-condition-appendpos", options[:append_position]
+
+          # Encryption headers for customer-provided keys https://learn.microsoft.com/en-us/azure/storage/blobs/encryption-customer-provided-keys
+          StorageService.with_header headers, "x-ms-encryption-key", options[:encryption_key]
+          StorageService.with_header headers, "x-ms-encryption-key-sha256", options[:encryption_key_sha256]
+          StorageService.with_header headers, "x-ms-encryption-algorithm", options[:encryption_algorithm]
+          StorageService.with_header headers, "x-ms-encryption-scope", options[:encryption_scope]
         end
 
       # Get the content type according to the blob content type header and request body.
