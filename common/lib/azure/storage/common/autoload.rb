@@ -30,7 +30,7 @@ require "base64"
 require "openssl"
 require "uri"
 require "faraday"
-require "faraday_middleware"
+require 'faraday/follow_redirects'
 
 require "azure/storage/common/core/autoload"
 require "azure/storage/common/default"
