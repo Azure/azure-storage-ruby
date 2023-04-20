@@ -24,7 +24,7 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 source "https://rubygems.org" do
-  gem "faraday",             "~> 1.0", :require => false
+  gem "faraday",             "~> 2.0", :require => false
   gem "faraday_middleware",  "~> 1.0.0.rc1", :require => false
   gem "net-http-persistent", "~> 4.0", :require => false
   gem "nokogiri",          "~> 1", ">= 1.10.8", :require => false
