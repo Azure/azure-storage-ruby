@@ -239,8 +239,8 @@ module Azure::Storage::Common
 
         # Registers the callback when sending the request
         # The headers in the request can be viewed or changed in the code block
-        def register_request_callback
-          @request_callback = Proc.new
+        def register_request_callback(&block)
+          @request_callback = block
         end
 
         # Get the request location.
