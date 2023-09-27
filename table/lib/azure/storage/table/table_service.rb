@@ -741,14 +741,8 @@ module Azure::Storage
 
       protected
         def encodeODataUriValue(value)
-          # Replace each single quote (') with double single quotes ('') not double
-          # quotes (")
-          value = value.gsub("'", "''")
-
           # Encode the special URL characters
-          value = URI.escape(value)
-
-          value
+          CGI.escape(value)
         end
 
       protected
