@@ -38,7 +38,7 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
   s.files       = `git ls-files ./lib/azure/storage/table/`.split("\n") << "./lib/azure/storage/table.rb"
 
-  s.required_ruby_version = ">= 2.3.0"
+  s.required_ruby_version = ">= 2.5.0"
 
   s.add_runtime_dependency("azure-storage-common",    "~> 2.0")
   s.add_runtime_dependency("nokogiri",                "~> 1", ">= 1.10.8")

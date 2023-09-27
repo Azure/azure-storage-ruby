@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.files       = `git ls-files ./lib/azure/storage/common/`.split("\n") << "./lib/azure/storage/common.rb"
   s.files       += `git ls-files ./lib/azure/core/`.split("\n") << "./lib/azure/core.rb" << "./lib/azure/http_response_helper.rb"
 
-  s.required_ruby_version = ">= 2.3.0"
+  s.required_ruby_version = ">= 2.5.0"
 
   s.add_runtime_dependency('faraday',                 '~> 1.0')
   s.add_runtime_dependency('faraday_middleware',      "~> 1.0", ">= 1.0.0.rc1")
