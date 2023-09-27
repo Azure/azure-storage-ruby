@@ -29,6 +29,16 @@ describe Azure::Storage::Blob::BlobService do
   subject {
     Azure::Storage::Blob::BlobService::create({ storage_account_name: "mockaccount", storage_access_key: "YWNjZXNzLWtleQ==" })
   }
+  let(:parallel_subject) {
+    Azure::Storage::Blob::BlobService::create(
+    {
+      storage_account_name: "mockaccount",
+      storage_access_key: "YWNjZXNzLWtleQ==",
+      storage_blob_parallel_threads: 2,
+      storage_blob_parallel_threshold: 4,
+      storage_blob_write_block_size: 4
+    })
+  }
   let(:serialization) { Azure::Storage::Blob::Serialization }
   let(:uri) { URI.parse "http://foo.com" }
   let(:query) { {} }
@@ -41,10 +51,17 @@ describe Azure::Storage::Blob::BlobService do
   let(:response_body) { mock() }
   let(:response) { mock() }
 
+  let(:parallel_response_headers) { {} }
+  let(:parallel_response_body) { "AB" }
+  let(:parallel_response) { mock() }
+
   before {
     response.stubs(:body).returns(response_body)
     response.stubs(:headers).returns(response_headers)
     subject.stubs(:call).returns(response)
+
+    parallel_response.stubs(:body).returns(parallel_response_body)
+    parallel_response.stubs(:headers).returns(parallel_response_headers)
   }
 
   describe "#create_from_connection_string" do
@@ -2060,6 +2077,35 @@ describe Azure::Storage::Blob::BlobService do
           _(returned_blob).must_equal blob
 
           _(returned_blob_contents).must_equal response_body
+        end
+
+        it "fetches in parallel when parallel options are set" do
+          blob_length = 4
+          end_range = 4
+          parallel_subject.expects(:call).twice.returns(parallel_response)
+          parallel_subject.stubs(:get_blob_properties).returns(OpenStruct.new(properties: {content_length: blob_length}))
+          _, returned_blob_contents = parallel_subject.get_blob container_name, blob_name, {start_range: 0, end_range: end_range}
+
+          # The response is stubbed to return "AB" so fetching 4 bytes returns "AB" + "AB"
+          _(returned_blob_contents).must_equal (parallel_response_body + parallel_response_body)
+        end
+
+        it "fetches in parallel limited to blob size" do
+          blob_length = 4
+          end_range = 6
+          parallel_subject.expects(:call).twice.returns(parallel_response)
+          parallel_subject.stubs(:get_blob_properties).returns(OpenStruct.new(properties: {content_length: blob_length}))
+          _, returned_blob_contents = parallel_subject.get_blob container_name, blob_name, {start_range: 0, end_range: end_range}
+
+          # The response is stubbed to return "AB" so fetching 4 bytes returns "AB" + "AB"
+          _(returned_blob_contents).must_equal (parallel_response_body + parallel_response_body)
+        end
+
+        it "fetches in serial when below parallel threshold" do
+          parallel_subject.expects(:call).once.returns(parallel_response)
+          _, returned_blob_contents = parallel_subject.get_blob container_name, blob_name, {start_range: 0, end_range: 3}
+
+          _(returned_blob_contents).must_equal parallel_response_body
         end
 
         describe "when snapshot is provided" do

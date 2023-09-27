@@ -30,7 +30,7 @@ require "azure/storage/common/core/auth/anonymous_signer"
 
 module Azure::Storage::Common
   module ClientOptions
-    attr_accessor :ca_file, :ssl_version, :ssl_min_version, :ssl_max_version
+    attr_accessor :ca_file, :ssl_version, :ssl_min_version, :ssl_max_version, :http_pool_size
 
     # Public: Reset options for [Azure::Storage::Common::Client]
     #
@@ -49,9 +49,13 @@ module Azure::Storage::Common
     # * +:storage_access_key+             - Base64 String. The access key of the storage account.
     # * +:storage_sas_token+              - String. The signed access signature for the storage account or one of its service.
     # * +:storage_blob_host+              - String. Specified Blob serivce endpoint or hostname
+    # * +:storage_blob_write_block_size+  - Integer. Block size in bytes for blob writes. Default is 5MB.
+    # * +:storage_blob_parallel_threshold+ - Integer. Complete requests concurrently if the range greater than or equal to this value.
+    # * +:storage_blob_parallel_threads+  - Integer. Number of threads for parallel operations. Should be less than http_pool_size.
     # * +:storage_table_host+             - String. Specified Table serivce endpoint or hostname
     # * +:storage_queue_host+             - String. Specified Queue serivce endpoint or hostname
     # * +:storage_dns_suffix+             - String. The suffix of a regional Storage Serivce, to
+    # * +:http_pool_size+                 - Integer. Persistent HTTP Client pool size. Default is 5.
     # * +:default_endpoints_protocol+     - String. http or https
     # * +:use_path_style_uri+             - String. Whether use path style URI for specified endpoints
     # * +:ca_file+                        - String. File path of the CA file if having issue with SSL
@@ -91,6 +95,7 @@ module Azure::Storage::Common
       @ssl_version = options.delete(:ssl_version)
       @ssl_min_version = options.delete(:ssl_min_version)
       @ssl_max_version = options.delete(:ssl_max_version)
+      @http_pool_size = options.delete(:http_pool_size)
       @options = filter(options)
       self.send(:reset_config!, @options) if self.respond_to?(:reset_config!)
       self
@@ -120,6 +125,9 @@ module Azure::Storage::Common
         :storage_connection_string,
         :storage_sas_token,
         :storage_blob_host,
+        :storage_blob_write_block_size,
+        :storage_blob_parallel_threshold,
+        :storage_blob_parallel_threads,
         :storage_table_host,
         :storage_queue_host,
         :storage_file_host,
@@ -139,6 +147,9 @@ module Azure::Storage::Common
         "AZURE_STORAGE_ACCESS_KEY" => :storage_access_key,
         "AZURE_STORAGE_CONNECTION_STRING" => :storage_connection_string,
         "AZURE_STORAGE_BLOB_HOST" => :storage_blob_host,
+        "AZURE_STORAGE_WRITE_BLOCK_SIZE" => :storage_blob_write_block_size,
+        "AZURE_STORAGE_BLOB_PARALLEL_THRESHOLD" => :storage_blob_parallel_threshold,
+        "AZURE_STORAGE_BLOB_PARALLEL_THREADS" => :storage_blob_parallel_threads,
         "AZURE_STORAGE_TABLE_HOST" => :storage_table_host,
         "AZURE_STORAGE_QUEUE_HOST" => :storage_queue_host,
         "AZURE_STORAGE_FILE_HOST" => :storage_file_host,
@@ -154,10 +165,14 @@ module Azure::Storage::Common
       @connection_string_mapping ||= {
         "UseDevelopmentStorage" => :use_development_storage,
         "DevelopmentStorageProxyUri" => :development_storage_proxy_uri,
+        "HttpPoolSize" => :http_pool_size,
         "DefaultEndpointsProtocol" => :default_endpoints_protocol,
         "AccountName" => :storage_account_name,
         "AccountKey" => :storage_access_key,
         "BlobEndpoint" => :storage_blob_host,
+        "BlobParallelThreshold" => :storage_blob_parallel_threshold,
+        "BlobParallelThreads" => :storage_blob_parallel_threads,
+        "BlobWriteBlockSize" => :storage_blob_write_block_size,
         "TableEndpoint" => :storage_table_host,
         "QueueEndpoint" => :storage_queue_host,
         "FileEndpoint" => :storage_file_host,
@@ -300,7 +315,7 @@ module Azure::Storage::Common
         required = requirements[:required] || []
         at_least_one = requirements[:at_least_one] || []
         only_one = requirements[:only_one] || []
-        optional = requirements[:optional] || []
+        optional = (requirements[:optional] || []).concat([:storage_blob_write_block_size, :storage_blob_parallel_threshold, :storage_blob_parallel_threads])
 
         raise InvalidOptionsError, "Not all required keys are provided: #{required}" if required.any? { |k| !opts.key? k }
         raise InvalidOptionsError, "Only one of #{only_one} is required" unless only_one.length == 0 || only_one.count { |k| opts.key? k } == 1
@@ -313,6 +328,9 @@ module Azure::Storage::Common
           storage_access_key: is_base64_encoded,
           storage_sas_token: lambda { |i| i.is_a?(String) },
           storage_blob_host: is_url,
+          storage_blob_write_block_size: lambda { |i| i.is_a?(Integer) },
+          storage_blob_parallel_threshold: lambda { |i| i.is_a?(Integer) },
+          storage_blob_parallel_threads: lambda { |i| i.is_a?(Integer) },
           storage_table_host: is_url,
           storage_queue_host: is_url,
           storage_file_host: is_url,

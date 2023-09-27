@@ -86,7 +86,7 @@ module Azure::Storage::Blob
     DEFAULT_SINGLE_BLOB_PUT_THRESHOLD_IN_BYTES = 128 * 1024 * 1024
 
     # The default write block size, in bytes, used by blob streams.
-    DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES = 4 * 1024 * 1024
+    DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES = 5 * 1024 * 1024
 
     # The maximum size of a single block.
     MAX_BLOCK_SIZE = 100 * 1024 * 1024

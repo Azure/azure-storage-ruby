@@ -47,9 +47,12 @@ module Azure::Storage::Common
     # * +:storage_access_key+             - Base64 String. The access key of the storage account.
     # * +:storage_sas_token+              - String. The signed access signature for the storage account or one of its service.
     # * +:storage_blob_host+              - String. Specified Blob serivce endpoint or hostname
+    # * +:storage_blob_parallel_threshold+ - Integer. Complete requests concurrently if the range greater than or equal to this value.
+    # * +:storage_blob_parallel_threads+  - Integer. Number of threads for parallel operations. Should be less than http_pool_size.
     # * +:storage_table_host+             - String. Specified Table serivce endpoint or hostname
     # * +:storage_queue_host+             - String. Specified Queue serivce endpoint or hostname
     # * +:storage_dns_suffix+             - String. The suffix of a regional Storage Serivce, to
+    # * +:http_pool_size+                 - Integer. Persistent HTTP Client pool size.
     # * +:default_endpoints_protocol+     - String. http or https
     # * +:use_path_style_uri+             - String. Whether use path style URI for specified endpoints
     # * +:ca_file+                        - String. File path of the CA file if having issue with SSL
@@ -97,9 +100,12 @@ module Azure::Storage::Common
       # * +:storage_access_key+             - Base64 String. The access key of the storage account.
       # * +:storage_sas_token+              - String. The signed access signature for the storage account or one of its service.
       # * +:storage_blob_host+              - String. Specified Blob service endpoint or hostname
+      # * +:storage_blob_parallel_threshold+ - Integer. Complete requests concurrently if the range greater than or equal to this value.
+      # * +:storage_blob_parallel_threads+  - Integer. Number of threads for parallel operations. Should be less than http_pool_size.
       # * +:storage_table_host+             - String. Specified Table service endpoint or hostname
       # * +:storage_queue_host+             - String. Specified Queue service endpoint or hostname
       # * +:storage_dns_suffix+             - String. The suffix of a regional Storage Service, to
+      # * +:http_pool_size+                 - Integer. Persistent HTTP Client pool size.
       # * +:default_endpoints_protocol+     - String. http or https
       # * +:use_path_style_uri+             - String. Whether use path style URI for specified endpoints
       # * +:ca_file+                        - String. File path of the CA file if having issue with SSL

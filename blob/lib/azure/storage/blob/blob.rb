@@ -23,6 +23,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
+require 'thread'
 
 module Azure::Storage
   module Blob
@@ -82,11 +83,17 @@ module Azure::Storage
     #                                   - The lease ID specified in the request matches that of the blob.
     #                                  If this header is specified and both of these conditions are not met, the request will fail
     #                                  and the Get Blob operation will fail with status code 412 (Precondition Failed).
+    # * +:parallel_threshold+        - Integer. Complete the request concurrently if the specified range >= this threshold.
+    #                                  Takes precedence over the storage_blob_parallel_threshold client option.
     #
     # See http://msdn.microsoft.com/en-us/library/azure/dd179440.aspx
     #
     # Returns a blob and the blob body
     def get_blob(container, blob, options = {})
+      if options[:end_range].to_i - options[:start_range].to_i >= parallel_threshold(options)
+        return get_blob_parallel(container, blob, options)
+      end
+
       query = {}
       StorageService.with_query query, "snapshot", options[:snapshot]
       StorageService.with_query query, "timeout", options[:timeout] if options[:timeout]
@@ -928,5 +935,50 @@ module Azure::Storage
       call(:delete, uri, nil, headers, options)
       nil
     end
+
+    # Private: executes get_blob with threads
+    #
+    # Returns a blob and the blob body
+    private
+      def get_blob_parallel(container, blob, options)
+        blob_size = get_blob_properties(container, blob, options).properties[:content_length]
+        end_range = [options[:end_range], blob_size].min
+        start_range = options[:start_range]
+        total_bytes = end_range - start_range
+
+        # if after calculating the real end_range it is below threshold, return
+        if total_bytes < parallel_threshold(options)
+          return get_blob(container, blob, options.merge({parallel_threshold: Float::INFINITY, start_range: start_range, end_range: end_range}))
+        end
+
+        thread_count = client.storage_blob_parallel_threads
+        single_thread_chunk = (total_bytes.to_f / thread_count).ceil
+        ranges = (1..thread_count).to_a.map do |i|
+          start = options[:start_range] + ((i - 1) * single_thread_chunk)
+          fin = [start + single_thread_chunk - 1, options[:end_range]].min
+          [start, fin]
+        end
+
+        threads = []
+        ranges.each do |start, fin|
+          thread = Thread.new do
+            get_blob(container, blob, options.merge({parallel_threshold: Float::INFINITY, start_range: start, end_range: fin}))
+          end
+          thread.abort_on_exception = true
+          threads << thread
+        end
+
+        # each get_blob returns a [result, body]. Transpose into results, bodies 
+        results, bodies = threads.map(&:value).transpose
+        result = results.first
+        result.properties[:content_length] = total_bytes if result
+        return result, bodies.join
+      end
+
+    # Private: The number of bytes used to determine if a request should be parallelized
+    private
+      def parallel_threshold(options)
+        options[:parallel_threshold] || client.storage_blob_parallel_threshold || Float::INFINITY
+      end
   end
 end
