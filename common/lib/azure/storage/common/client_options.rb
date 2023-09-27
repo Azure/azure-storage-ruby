@@ -283,7 +283,7 @@ module Azure::Storage::Common
       def is_url
         Proc.new do |i|
           i = "http://" + i unless i =~ /\Ahttps?:\/\//
-          i =~ URI.regexp(["http", "https"])
+          i =~ URI::DEFAULT_PARSER.make_regexp(["http", "https"])
         end
       end
 
