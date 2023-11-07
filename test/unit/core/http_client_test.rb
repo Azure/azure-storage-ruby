@@ -63,5 +63,24 @@ describe Azure::Storage::Common::Core::HttpClient do
         _(Azure::Storage::Common::Client::create.agents(uri).proxy.uri).must_equal https_proxy_uri
       end
     end
+
+    describe "when net_http_persistent pool is set" do
+      let(:pool_size) { 10 }
+
+      before do
+        ENV["AZURE_STORAGE_HTTP_POOL"] = pool_size.to_s
+      end
+
+      after do
+        ENV["AZURE_STORAGE_HTTP_POOL"] = nil
+      end
+
+      it "should set the pool size for connection" do
+        agent = Azure::Storage::Common::Client::create.agents(uri)
+        size = agent.builder.adapter.instance_variable_get(:@args)[0][:pool_size]
+
+        _(size).must_equal pool_size
+      end
+    end
   end
 end

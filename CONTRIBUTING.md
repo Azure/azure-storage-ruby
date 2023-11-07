@@ -44,6 +44,7 @@ You can use the following commands to run:
 * All the tests: ``rake test``. **This will run integration tests if you have .env file or env vars setup**
 * Run storage suite of tests: ``rake test:unit``, ``rake test:integration``
 * One particular test file: ``ruby -I".\blob\lib;.\common\lib;.\table\lib;.\queue\lib;.\file\lib;test" "<path of the test file>"``
+* Use ``MT_COMPAT=1 rake test`` environment variable in case you get ``NameError: uninitialized constant MiniTest`` (see https://github.com/minitest/minitest/commit/a2c6c18570f6f0a1bf6af70fe3b6d9599a13fdd6)
 
 ### Testing Features
 As you develop a feature, you'll need to write tests to ensure quality. Your changes should be covered by both unit tests and integration tests. You should also run existing tests related to your change to address any unexpected breaks.
